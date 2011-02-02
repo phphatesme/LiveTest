@@ -1,0 +1,16 @@
+Extensions:
+     
+ ProgressBar:
+  class: LiveTest\Extensions\ProgressBar
+  
+ Report:
+  class: LiveTest\Extensions\Report
+  parameter:
+   writer:
+    class: LiveTest\Report\Writer\EchoWriter
+
+ StatusBar:
+  class: LiveTest\Extensions\StatusBar
+  
+ RunInfoHeader:
+  class: LiveTest\Extensions\RunInfoHeader

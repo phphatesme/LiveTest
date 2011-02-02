@@ -1,0 +1,14 @@
+TestSuite:
+ TestCases:
+  TextPresentHtml_standard: 
+   TestCase: LiveTest\TestCase\General\Html\TextPresentHtmlTestCase
+   Parameter: 
+    Text: Stern
+  CorrectHttpHeader_standard: 
+   TestCase: LiveTest\TestCase\General\Http\CorrectHttpStatusCode
+   Parameter: 
+    StatusCode: 400
+ Pages:
+  - http://www.stern.de
+  - /
+  - http://beta.phphatesme.com/guj.php

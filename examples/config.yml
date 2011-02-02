@@ -1,0 +1,19 @@
+ResultHandler:
+ Standard_logger:
+  class: LiveTest\TestRun\Result\Handler\ReportHandler
+
+ LiveOutput:
+  class: LiveTest\TestRun\Result\Handler\LiveWatchHandler
+  
+ PrintResultOutput:
+  class: LiveTest\TestRun\Result\Handler\PrintResultHandler  
+
+ #Sleeper:
+ # class: LiveTest\TestRun\Result\Handler\SleepHandler 
+ # parameter:
+ #  sleep_time: 5
+      
+ #ResponseLog_1:
+ # class: LiveTest\TestRun\Result\Handler\ResponseLogHandler
+ # parameter:
+ #  log_path: /tmp/run
