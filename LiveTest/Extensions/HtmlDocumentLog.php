@@ -2,6 +2,8 @@
 
 namespace LiveTest\TestRun\Result\Handler;
 
+use Base\Http\ConnectionStatus;
+
 use LiveTest\TestRun\Properties;
 use Base\Http\Response;
 
@@ -25,10 +27,15 @@ class HtmlDocumentLog implements Extension
     
   }
   
-  public function handleResult(Result $result, Test $test, \Zend_Http_Response $response)
+  public function handleResult(Result $result, \Zend_Http_Response $response)
   {
     $filename = $this->logPath . '/' . urlencode($result->getUrl());
     file_put_contents($filename, $response->getBody() );
+  }
+  
+  public function handleConnectionStatus(ConnectionStatus $status)
+  {
+    
   }
   
   public function postRun()

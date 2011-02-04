@@ -3,6 +3,8 @@
 
 namespace LiveTest\Extensions;
 
+use Base\Http\ConnectionStatus;
+
 use LiveTest\TestRun\Properties;
 use Base\Http\Response;
 
@@ -27,7 +29,12 @@ class Report implements Extension
     
   }
   
-  public function handleResult(Result $result, Test $test, \Zend_Http_Response $response)
+  public function handleConnectionStatus(ConnectionStatus $status)
+  {
+    
+  }
+  
+  public function handleResult(Result $result, \Zend_Http_Response $response)
   {
     if ($result->getStatus() != Result::STATUS_SUCCESS)
     {

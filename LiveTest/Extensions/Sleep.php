@@ -2,6 +2,8 @@
 
 namespace LiveTest\Extensions;
 
+use Base\Http\ConnectionStatus;
+
 use Base\Http\Response;
 
 use LiveTest\TestRun\Test;
@@ -22,9 +24,14 @@ class Sleep implements Extension
     
   }
   
-  public function handleResult(Result $result, Test $test, \Zend_Http_Response $response)
+  public function handleResult(Result $result, \Zend_Http_Response $response)
   {
      sleep( $this->sleepTime );
+  }
+  
+  public function handleConnectionStatus(ConnectionStatus $status)
+  {
+    
   }
   
   public function postRun()

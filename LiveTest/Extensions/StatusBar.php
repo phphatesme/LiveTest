@@ -3,6 +3,8 @@
 namespace LiveTest\Extensions;
 
 
+use Base\Http\ConnectionStatus;
+
 use Base\Http\Response;
 
 use LiveTest\TestRun\Properties;
@@ -30,7 +32,7 @@ class StatusBar implements Extension
   
   }
   
-  public function handleResult(Result $result, Test $test,\Zend_Http_Response $response)
+  public function handleResult(Result $result, \Zend_Http_Response $response)
   {
     $this->testCount++;
     
@@ -46,6 +48,11 @@ class StatusBar implements Extension
         $this->failureCount++;
         break;    
     }
+  }
+  
+  public function handleConnectionStatus(ConnectionStatus $status)
+  {
+    
   }
   
   private function getFormattedDuration($duration)
