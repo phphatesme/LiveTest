@@ -17,6 +17,11 @@ class Uri
     $this->uri = $uriString;
   }
   
+  public function __toString()
+  {
+    return $this->toString();
+  }
+  
   public function toString()
   {
     return $this->uri;
