@@ -7,8 +7,7 @@
 //        - Config Merge vll. Teil einer anderen Klasse
 
 // @todo PageLists auf TestCase-Ebene
-// @todo Urls auf Gültigkeit testen 
-
+// @todo Urls auf Gültigkeit prüfen 
 
 namespace LiveTest\TestRun;
 
