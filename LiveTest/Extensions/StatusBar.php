@@ -4,9 +4,7 @@ namespace LiveTest\Extensions;
 
 
 use Base\Timer\Timer;
-
 use Base\Http\ConnectionStatus;
-
 use Base\Http\Response;
 
 use LiveTest\TestRun\Properties;
