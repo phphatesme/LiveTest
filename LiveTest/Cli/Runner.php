@@ -2,6 +2,8 @@
 
 namespace LiveTest\Cli;
 
+use Base\Www\Uri;
+
 use LiveTest\TestRun;
 
 use LiveTest\TestRun\Result\Handler\ResultSetHandler;
@@ -106,7 +108,7 @@ class Runner extends ArgumentRunner
   
   private function initTestRun()
   {
-    $testRunProperties = new Properties($this->testSuiteConfig, $this->defaultDomain);
+    $testRunProperties = new Properties($this->testSuiteConfig, new Uri($this->defaultDomain));
     $this->testRun = new Run($testRunProperties);
     
     foreach ($this->extensions as $extension)

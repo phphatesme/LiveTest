@@ -17,7 +17,7 @@ class Uri
     $this->uri = $uriString;
   }
   
-  public function toString( )
+  public function toString()
   {
     return $this->uri;
   }
@@ -39,7 +39,8 @@ class Uri
     {
       $url = $uriString;
     }
-    return $url;
+    
+    return new self($url);
   }
   
   /**

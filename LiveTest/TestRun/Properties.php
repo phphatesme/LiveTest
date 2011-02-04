@@ -26,7 +26,7 @@ class Properties
   
   private $testSets = array();
   
-  public function __construct(Config $config, $defaultDomain)
+  public function __construct(Config $config, Uri $defaultDomain)
   {
     $this->configPath = dirname($config->getFilename());
     
@@ -91,11 +91,10 @@ class Properties
     }
     
     $pages = array();
-    $domain = new Uri($this->defaultDomain);
     
     foreach ($pageConfig as $page)
     {
-      $pages[] = $domain->concatUri((string)$page);
+      $pages[] = $this->defaultDomain->concatUri((string)$page)->toString();
     }
     return $pages;
   }
@@ -109,14 +108,13 @@ class Properties
     }
     $pages = array();
     $pagesListPage = array();
-    $domain = new Uri($this->defaultDomain);
     foreach ($config as $pageList)
     {
       $pageListConfig = new Yaml($this->configPath . '/' . (string)$pageList);
       $pageList = $pageListConfig->Pages->toArray();
       foreach ($pageList as $page)
       {
-        $pageListPage[] = $domain->concatUri((string)$page);
+        $pageListPage[] = $this->defaultDomain->concatUri((string)$page)->toString();
       }
       $pages = array_merge($pages, $pageListPage);
     }
@@ -139,6 +137,11 @@ class Properties
     return $this->pages;
   }
   
+  /**
+   * This function returns the default domain
+   * 
+   * @return \Base\Www\Uri
+   */
   public function getDefaultDomain( )
   {
     return $this->defaultDomain;
