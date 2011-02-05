@@ -1,3 +1,3 @@
 #LiveTest
 
-Please see our [Wiki](https://github.com/phphatesme/LiveTest/wiki/)Wiki for more information.
+Please see our [Wiki](https://github.com/phphatesme/LiveTest/wiki/) for more information.
