@@ -5,7 +5,7 @@ namespace LiveTest\Report\Format;
 use LiveTest\TestRun\Result\ResultSet;
 use LiveTest\TestRun\Result\Result;
 
-class ListFormat implements Format
+class List implements Format
 {
   public function formatSet(ResultSet $set)
   {

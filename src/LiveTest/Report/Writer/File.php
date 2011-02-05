@@ -2,7 +2,7 @@
 
 namespace LiveTest\Report\Writer;
 
-class FileWriter implements Writer
+class File implements Writer
 {
   private $filename;
   

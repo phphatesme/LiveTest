@@ -2,7 +2,7 @@
 
 namespace LiveTest\Report\Writer;
 
-class EchoWriter implements Writer
+class Echo implements Writer
 {
   public function write($formatedText)
   {

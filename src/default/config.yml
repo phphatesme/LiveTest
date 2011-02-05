@@ -7,13 +7,13 @@ Extensions:
   class: LiveTest\Extensions\Report
   parameter:
    writer:
-    class: LiveTest\Report\Writer\EchoWriter
+    class: LiveTest\Report\Writer\Echo
     
  Report_File:
   class: LiveTest\Extensions\Report
   parameter:
    writer:
-    class: LiveTest\Report\Writer\FileWriter
+    class: LiveTest\Report\Writer\File
     parameter:
      filename: tmp.log    
 
