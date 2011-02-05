@@ -31,7 +31,7 @@ class Report implements Extension
   
   public function handleConnectionStatus(ConnectionStatus $status)
   {
-    \\@todo handle connections errors
+    // @todo handle connections errors
   }
   
   public function handleResult(Result $result, \Zend_Http_Response $response)
