@@ -8,7 +8,7 @@ use Base\Http\ConnectionStatus;
 use LiveTest\TestRun\Properties;
 use Base\Http\Response;
 
-use LiveTest\Report\Format\List;
+use LiveTest\Report\Format\SimpleList;
 use LiveTest\TestRun\Result\ResultSet;
 use LiveTest\TestRun\Test;
 use LiveTest\TestRun\Result\Result;
@@ -52,7 +52,7 @@ class Report implements Extension
   public function postRun()
   {
     $writer = $this->getWriter();
-    $report = new \LiveTest\Report\Report($writer, new List(), $this->resultSet);
+    $report = new \LiveTest\Report\Report($writer, new SimpleList(), $this->resultSet);
     $report->render();
   }
 }
