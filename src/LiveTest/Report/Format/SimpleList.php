@@ -7,10 +7,15 @@ use LiveTest\TestRun\Result\Result;
 
 class SimpleList implements Format
 {
+  public function __construct($params)
+  {
+  
+  }
+  
   public function formatSet(ResultSet $set)
   {
     $text = '';
-    foreach ($set->getResults() as $result)
+    foreach ( $set->getResults() as $result )
     {
       $test = $result->getTest();
       /* @var $test Test*/
@@ -24,11 +29,11 @@ class SimpleList implements Format
           break;
         case Result::STATUS_FAILED :
           $text .= '     Status     :  Failed' . "\n";
-          $text .= '     Message    :  ' . $result->getMessage()."\n";
+          $text .= '     Message    :  ' . $result->getMessage() . "\n";
           break;
         case Result::STATUS_ERROR :
           $text .= '     Status     :  Error' . "\n";
-          $text .= '     Message    :  ' . $result->getMessage()."\n";
+          $text .= '     Message    :  ' . $result->getMessage() . "\n";
           break;
         default :
       }

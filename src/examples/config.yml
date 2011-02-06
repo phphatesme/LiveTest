@@ -1,19 +1,13 @@
-ResultHandler:
- Standard_logger:
-  class: LiveTest\TestRun\Result\Handler\ReportHandler
+Extensions:
 
- LiveOutput:
-  class: LiveTest\TestRun\Result\Handler\LiveWatchHandler
-  
- PrintResultOutput:
-  class: LiveTest\TestRun\Result\Handler\PrintResultHandler  
-
- #Sleeper:
- # class: LiveTest\TestRun\Result\Handler\SleepHandler 
- # parameter:
- #  sleep_time: 5
-      
- #ResponseLog_1:
- # class: LiveTest\TestRun\Result\Handler\ResponseLogHandler
- # parameter:
- #  log_path: /tmp/run
+ Report_Html_File:
+  class: LiveTest\Extensions\Report
+  parameter:
+   format:
+    class: LiveTest\Report\Format\Html
+    parameter:
+     css_file: http://www.phphatesme.com/LiveTest/report.css
+   writer:
+    class: LiveTest\Report\Writer\File
+    parameter:
+     filename: logs\log.html

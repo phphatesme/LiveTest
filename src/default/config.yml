@@ -6,16 +6,26 @@ Extensions:
  Report_Echo:
   class: LiveTest\Extensions\Report
   parameter:
+   log_statuses: 
+    - error
+    - failure
+   format:
+    class: LiveTest\Report\Format\SimpleList
    writer:
     class: LiveTest\Report\Writer\SimpleEcho
     
  Report_File:
   class: LiveTest\Extensions\Report
   parameter:
+   log_statuses: 
+    - error
+    - failure
+   format:
+    class: LiveTest\Report\Format\SimpleList
    writer:
     class: LiveTest\Report\Writer\File
     parameter:
-     filename: tmp.log    
+     filename: logs\tmp.log    
 
  StatusBar:
   class: LiveTest\Extensions\StatusBar
