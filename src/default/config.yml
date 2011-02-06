@@ -7,7 +7,7 @@ Extensions:
   class: LiveTest\Extensions\Report
   parameter:
    writer:
-    class: LiveTest\Report\Writer\Echo
+    class: LiveTest\Report\Writer\SimpleEcho
     
  Report_File:
   class: LiveTest\Extensions\Report
