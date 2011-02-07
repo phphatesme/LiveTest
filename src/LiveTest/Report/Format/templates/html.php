@@ -40,11 +40,24 @@
 	<link rel="stylesheet" media="all" type="text/css" href="http://www.phphatesme.com/LiveTest/report.css" />
 </head>
 <body>
-	<table>
+  <table>
+    <tr>
+      <td id="legend">Legend</td>
+      <td class="result_success result_column">Success</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td class="result_failed result_column">Failure</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td class="result_error result_column">Error</td>
+    </tr>
+    <tr style="height: 30px"><td></td></tr>
 		<tr>
 			<td></td>
     	    <?php foreach ( $tests as $test ): ?>
-    		<td>
+    		<td class="test_label">
         		<b><?php echo $test->getName(); ?></b><br/>
         		<?php echo $test->getClass()?>
     		</td>
