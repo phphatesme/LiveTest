@@ -83,7 +83,7 @@ class Html implements Format
       }
       $this->content .= '</tr>';
     }
-    
+    $this->content .= '</table>';
     $this->createFooter();
     
     return $this->content;
