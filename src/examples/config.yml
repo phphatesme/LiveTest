@@ -10,4 +10,4 @@ Extensions:
    writer:
     class: LiveTest\Report\Writer\File
     parameter:
-     filename: logs\log.html
+     filename: logs/log.html

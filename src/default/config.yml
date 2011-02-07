@@ -25,7 +25,7 @@ Extensions:
    writer:
     class: LiveTest\Report\Writer\File
     parameter:
-     filename: logs\tmp.log    
+     filename: logs/tmp.log    
 
  StatusBar:
   class: LiveTest\Extensions\StatusBar
