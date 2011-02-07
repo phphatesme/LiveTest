@@ -6,9 +6,9 @@ use LiveTest\TestRun\Test;
 
 class Result
 {
-  const STATUS_SUCCESS = '1';
-  const STATUS_FAILED = '2';
-  const STATUS_ERROR = '3';
+  const STATUS_SUCCESS = 'success';
+  const STATUS_FAILED = 'failure';
+  const STATUS_ERROR = 'error';
   
   private $status;
   private $message;
