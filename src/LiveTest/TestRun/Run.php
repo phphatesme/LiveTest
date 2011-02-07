@@ -107,11 +107,11 @@ class Run
       {
         $client->setUri($testSet->getUrl());
         $response = $client->request();
-        $this->handleConnectionStatus(new ConnectionStatus(ConnectionStatus::SUCCESS));
+        $this->handleConnectionStatus(new ConnectionStatus(ConnectionStatus::SUCCESS, new Uri($testSet->getUrl())));
       }
       catch ( \Zend_Http_Client_Adapter_Exception $e )
       {
-        $this->handleConnectionStatus(new ConnectionStatus(ConnectionStatus::ERROR, $e->getMessage()));
+        $this->handleConnectionStatus(new ConnectionStatus(ConnectionStatus::ERROR, new Uri($testSet->getUrl()), $e->getMessage()));
         continue;
       }
       $this->runTests($testSet, $response);

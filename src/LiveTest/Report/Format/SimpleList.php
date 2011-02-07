@@ -12,7 +12,7 @@ class SimpleList implements Format
   
   }
   
-  public function formatSet(ResultSet $set)
+  public function formatSet(ResultSet $set, $connectionStatuses)
   {
     $text = '';
     foreach ( $set->getResults() as $result )

@@ -18,9 +18,10 @@ class Report implements Extension
 {
   private $resultSet;
   private $config;
-  private $logStatuses = array ();
+  private $logStatuses = array();
+  private $connectionStatuses = array( );
   
-  public function __construct($runId, \Zend_Config $config = null)
+  public function __construct($runId,\Zend_Config $config = null)
   {
     $this->resultSet = new ResultSet();
     $this->config = $config;
@@ -28,9 +29,10 @@ class Report implements Extension
     if (!is_null($config->log_statuses))
     {
       $this->logStatuses = $config->log_statuses->toArray();
-    } else
+    }
+    else
     {
-      $this->logStatuses = array (Result::STATUS_ERROR, Result::STATUS_FAILED, Result::STATUS_SUCCESS );
+      $this->logStatuses = array(Result::STATUS_ERROR,Result::STATUS_FAILED,Result::STATUS_SUCCESS);
     }
   }
   
@@ -41,10 +43,14 @@ class Report implements Extension
   
   public function handleConnectionStatus(ConnectionStatus $status)
   {
-    // @todo handle connections errors
+    if ($status->getType() == ConnectionStatus::ERROR)
+    {
+      $this->connectionStatuses[] = $status;
+      var_dump($status->getUri()->toString());
+    }
   }
   
-  public function handleResult(Result $result, \Zend_Http_Response $response)
+  public function handleResult(Result $result,\Zend_Http_Response $response)
   {
     if (in_array($result->getStatus(), $this->logStatuses))
     {
@@ -70,7 +76,7 @@ class Report implements Extension
   {
     $writer = $this->getWriter();
     $format = $this->getFormat();
-    $report = new \LiveTest\Report\Report($writer, $format, $this->resultSet);
+    $report = new \LiveTest\Report\Report($writer, $format, $this->resultSet, $this->connectionStatuses);
     $report->render();
   }
 }
