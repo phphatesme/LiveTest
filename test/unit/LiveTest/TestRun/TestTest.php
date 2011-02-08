@@ -21,7 +21,7 @@ class TestTest extends PHPUnit_Framework_TestCase
 
   public function testGetClass()
   {
-    $this->assertInstanceOf('ClassMockup', $this->test->getClass());
+    $this->assertInstanceOf('ClassMockup', $this->test->getClassName());
   }
   
   public function testGetName()

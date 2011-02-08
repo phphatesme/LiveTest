@@ -4,6 +4,7 @@
 
 namespace LiveTest\Extensions;
 
+use LiveTest\TestRun\Information;
 use Base\Http\ConnectionStatus;
 
 use LiveTest\TestRun\Properties;
@@ -72,11 +73,11 @@ class Report implements Extension
     return new $formatClass($formatParams);
   }
   
-  public function postRun()
+  public function postRun(Information $information)
   {
     $writer = $this->getWriter();
-    $format = $this->getFormat();
-    $report = new \LiveTest\Report\Report($writer, $format, $this->resultSet, $this->connectionStatuses);
+    $format = $this->getFormat($information);
+    $report = new \LiveTest\Report\Report($writer, $format, $this->resultSet, $this->connectionStatuses, $information);
     $report->render();
   }
 }

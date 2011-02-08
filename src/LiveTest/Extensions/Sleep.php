@@ -2,6 +2,7 @@
 
 namespace LiveTest\Extensions;
 
+use LiveTest\TestRun\Information;
 use Base\Http\ConnectionStatus;
 
 use Base\Http\Response;
@@ -34,7 +35,7 @@ class Sleep implements Extension
     
   }
   
-  public function postRun()
+  public function postRun(Information $information)
   {
   }
 }

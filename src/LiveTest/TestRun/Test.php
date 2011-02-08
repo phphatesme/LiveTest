@@ -11,7 +11,7 @@ class Test
    * Dataholder for a class
    * @var Object
    */
-  private $class;
+  private $className;
   
   /**
    * 
@@ -34,26 +34,21 @@ class Test
    * @param Object $class
    * @param array $parameter
    */
-  public function __construct( $name, $class, $parameter)
+  public function __construct( $name, $className, \Zend_Config $parameter)
   {    
-//    if( !is_object( $class ) )
-//    {
-//      throw new WrongTypeException('Parameter class has to be a object');
-//    }
-    
     if( !is_string( $name ) )
     {
       throw new WrongTypeException('Parameter name has to be a string');
     }
     
-    $this->class = $class;
+    $this->className = $className;
     $this->name = $name;
     $this->parameter = $parameter;
   }
 
-  public function getClass()
+  public function getClassName()
   {
-    return $this->class;
+    return $this->className;
   }
 
   public function getName()

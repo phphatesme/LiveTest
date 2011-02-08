@@ -2,6 +2,8 @@
 
 namespace LiveTest\TestRun;
 
+use Base\Timer\Timer;
+
 use Base\Http\ConnectionStatus;
 
 use Base\Www\Uri;
@@ -35,11 +37,11 @@ class Run
     $this->properties = $properties;
   }
   
-  private function extensionsPostRun()
+  private function extensionsPostRun($information)
   {
     foreach ($this->extensions as $extension)
     {
-      $extension->postRun();
+      $extension->postRun($information);
     }
   }
   
@@ -71,7 +73,7 @@ class Run
   {
     foreach ($testSet->getTests() as $test)
     {
-      $testCaseName = $test->getClass();
+      $testCaseName = $test->getClassName();
       try
       {
         $testCaseObject = new $testCaseName($test->getParameter());
@@ -97,7 +99,7 @@ class Run
   public function run()
   {
     $this->extensionsPreRun();
-    
+    $timer = new Timer();
     $testSets = $this->properties->getTestSets();
     $client = new \Zend_Http_Client();
     
@@ -116,6 +118,8 @@ class Run
       }
       $this->runTests($testSet, $response);
     }
-    $this->extensionsPostRun();
+    $timer->stop();
+    $information = new Information($timer->getElapsedTime());
+    $this->extensionsPostRun($information);
   }
 }

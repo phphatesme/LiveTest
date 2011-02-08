@@ -2,6 +2,7 @@
 
 namespace LiveTest\TestRun\Result\Handler;
 
+use LiveTest\TestRun\Information;
 use Base\Http\ConnectionStatus;
 
 use LiveTest\TestRun\Properties;
@@ -38,7 +39,7 @@ class HtmlDocumentLog implements Extension
     
   }
   
-  public function postRun()
+  public function postRun(Information $information)
   {
   }
 }
