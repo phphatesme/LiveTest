@@ -3,7 +3,6 @@
 namespace Test\Unit\LiveTest\Extensions;
 
 use Base\Www\Uri;
-
 use Base\Http\ConnectionStatus;
 
 use LiveTest\TestRun\Test;
