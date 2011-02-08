@@ -47,7 +47,15 @@
     </tr>
     <tr>
       <td></td>
+      <td>Default Domain: <b><?php echo $information->getDefaultDomain(); ?></b></td>
+    </tr>
+    <tr>
+      <td></td>
       <td>Duration: <b><?php echo $information->getDuration(); ?></b> second(s)</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>Number of Tests: <b><?php echo $testCount; ?></b></td>
     </tr>
     
     <tr style="height: 30px"><td></td></tr>

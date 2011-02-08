@@ -33,9 +33,11 @@ class Html implements Format
   {
     $matrix = array();
     $tests = array();
+    $testCount = 0;
     
     foreach ($set->getResults() as $result)
     {
+      $testCount++;
       $matrix[$result->getUrl()]['tests'][$result->getTest()->getName()] = $result;
       if (array_key_exists('status', $matrix[$result->getUrl()]))
       {

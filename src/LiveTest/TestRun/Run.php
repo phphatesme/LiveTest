@@ -37,7 +37,7 @@ class Run
     $this->properties = $properties;
   }
   
-  private function extensionsPostRun($information)
+  private function extensionsPostRun(Information $information)
   {
     foreach ($this->extensions as $extension)
     {
@@ -119,7 +119,7 @@ class Run
       $this->runTests($testSet, $response);
     }
     $timer->stop();
-    $information = new Information($timer->getElapsedTime());
+    $information = new Information($timer->getElapsedTime(), $this->properties->getDefaultDomain());
     $this->extensionsPostRun($information);
   }
 }
