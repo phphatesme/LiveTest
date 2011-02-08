@@ -42,8 +42,18 @@
 <body>
   <table>
     <tr>
+      <td id="legend">Run Information</td>
+      <td>Date: <?php echo date( 'Y-m-d H:i:m'); ?></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>Duration: <b><?php echo $information->getDuration(); ?></b> second(s)</td>
+    </tr>
+    
+    <tr style="height: 30px"><td></td></tr>
+    <tr>
       <td id="legend">Legend</td>
-      <td class="result_success result_column">Success</td>
+      <td class="result_success result_column">Success</td>     
     </tr>
     <tr>
       <td></td>
