@@ -10,7 +10,7 @@ use LiveTest\Extensions\RunInfoHeader;
 
 class RunInfoHeaderTest extends \PHPUnit_Framework_TestCase
 {
-  private $yamlTestSuiteConfig = 'fixtures/RunInfoHeaderTestSuiteConfig.yml';
+  private $yamlTestSuiteConfig = '/fixtures/RunInfoHeaderTestSuiteConfig.yml';
   
   private $extension;
   
@@ -21,7 +21,7 @@ class RunInfoHeaderTest extends \PHPUnit_Framework_TestCase
   
   public function testPreRun( )
   {
-    $config = new Yaml($this->yamlTestSuiteConfig);
+    $config = new Yaml(__DIR__.$this->yamlTestSuiteConfig);
     $properties = new Properties($config, new Uri('http://www.example.com'));
     
     ob_start();

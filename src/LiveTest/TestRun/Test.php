@@ -31,14 +31,19 @@ class Test
    * 
    * Constructor for Test
    * @param String $name
-   * @param Object $class
-   * @param array $parameter
+   * @param String $class
+   * @param \Zend_Config $parameter
    */
   public function __construct( $name, $className, \Zend_Config $parameter)
   {    
     if( !is_string( $name ) )
     {
       throw new WrongTypeException('Parameter name has to be a string');
+    }
+    
+   if( !is_string( $className ) )
+    {
+      throw new WrongTypeException('Parameter className has to be a string');
     }
     
     $this->className = $className;

@@ -32,6 +32,11 @@ class Run
     $this->extensions[] = $extension;
   }
   
+  public function getExtensions()
+  {
+    return $this->extensions;
+  }
+  
   public function __construct(Properties $properties)
   {
     $this->properties = $properties;

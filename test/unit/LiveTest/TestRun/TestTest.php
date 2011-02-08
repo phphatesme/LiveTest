@@ -1,14 +1,7 @@
 <?php
 use LiveTest\TestRun\Test;
+use Base\Config\Yaml;
 
-class ClassMockup
-{
-  public $testAttribute = true;
-  function getTestAttribute()
-  {
-    return $this->testAttribute;
-  }
-}
 
 class TestTest extends PHPUnit_Framework_TestCase
 {
@@ -16,12 +9,13 @@ class TestTest extends PHPUnit_Framework_TestCase
 
   public function setUp()
   {
-    $this->test = new Test('testName', new ClassMockup(), array('properties'));
+    $this->test = new Test('testName', 'ClassMockup', new Yaml(__DIR__.'/Fixtures/config.yml', true));
   }
 
-  public function testGetClass()
+  public function testGetClassName()
   {
-    $this->assertInstanceOf('ClassMockup', $this->test->getClassName());
+    $this->assertEquals(true, is_string($this->test->getClassName()));
+    $this->assertEquals('ClassMockup', $this->test->getClassName());
   }
   
   public function testGetName()
@@ -32,16 +26,16 @@ class TestTest extends PHPUnit_Framework_TestCase
   
   public function testGetParameter()
   {
-    $this->assertEquals(true, is_string($this->test->getName()));
-    $this->assertEquals('testName', $this->test->getName());
+    $this->assertObjectHasAttribute('filename', $this->test->getParameter());
+    $this->assertObjectHasAttribute('_data', $this->test->getParameter());
   }
   
    /**
      * @expectedException Base\Cli\WrongTypeException
      */
-  public function testConstructorParameterClassException()
+  public function testConstructorParameterClassNameException()
   {
-    new Test('testName', 'ClassMockup', array('properties'));
+    new Test('testName', 1, new Yaml(__DIR__.'/Fixtures/config.yml', true));
   }
   
  /**
@@ -49,7 +43,7 @@ class TestTest extends PHPUnit_Framework_TestCase
      */
   public function testConstructorParameterNameException()
   {
-    new Test(1, new ClassMockup(), array('properties'));
+    new Test(1, 'ClassMockup', new Yaml(__DIR__.'/Fixtures/config.yml', true));
   }
   
   /**
@@ -57,6 +51,6 @@ class TestTest extends PHPUnit_Framework_TestCase
      */
   public function testConstructorParameterPropertiesException()
   {
-    new Test('testName', new ClassMockup(), 'properties');
+    new Test('testName', 'ClassMockup', 'properties');
   }
 }
