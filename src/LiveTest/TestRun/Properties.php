@@ -10,9 +10,8 @@
 
 namespace LiveTest\TestRun;
 
-use Base\Config\Yaml;
-
 use Base\Www\Uri;
+use Base\Config\Yaml;
 use Base\Config\Config;
 
 class Properties
@@ -25,16 +24,16 @@ class Properties
   
   private $testSets = array();
   
-  public function __construct(Config $config, Uri $defaultDomain)
+  public function __construct(\Zend_Config $testSuiteConfig, Uri $defaultDomain)
   {
-    $this->configPath = dirname($config->getFilename());
+    $this->configPath = dirname($testSuiteConfig->getFilename());
     
-    if (is_null($config->TestSuite))
+    if (is_null($testSuiteConfig->TestSuite))
     {
       throw new Exception('The mandatory "TestSuite" root element is missing.');
     }
     $this->defaultDomain = $defaultDomain;
-    $this->config = $config->TestSuite;
+    $this->config = $testSuiteConfig->TestSuite;
     $this->extractConfig();
   }
   

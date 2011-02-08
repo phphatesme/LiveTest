@@ -2,6 +2,8 @@
 
 namespace LiveTest\Report\Format;
 
+use LiveTest\TestRun\Information;
+
 use LiveTest\TestRun\Result\ResultSet;
 use LiveTest\TestRun\Result\Result;
 
@@ -27,7 +29,7 @@ class Html implements Format
     }
   }
   
-  public function formatSet(ResultSet $set, $connectionStatuses)
+  public function formatSet(ResultSet $set, $connectionStatuses, Information $information)
   {
     $matrix = array();
     $tests = array();

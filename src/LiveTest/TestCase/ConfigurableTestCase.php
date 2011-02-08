@@ -4,8 +4,8 @@ namespace LiveTest\TestCase;
 
 use LiveTest\TestCase\TestCase;
 
-// @todo diese Funktionalität könnte auch von Außen passieren. Dann müsste hasParameter aber public sein. Andererseits 
-//       sollte die Klasse auch selbst für ihre Konsistenz sorgen-
+// @todo diese Funktionalitï¿½t kï¿½nnte auch von Auï¿½en passieren. Dann mï¿½sste hasParameter aber public sein. Andererseits 
+//       sollte die Klasse auch selbst fï¿½r ihre Konsistenz sorgen-
 
 abstract class ConfigurableTestCase implements TestCase
 {

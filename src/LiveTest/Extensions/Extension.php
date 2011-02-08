@@ -2,6 +2,8 @@
 
 namespace LiveTest\Extensions;
 
+use LiveTest\TestRun\Information;
+
 use Base\Http\ConnectionStatus;
 use Base\Http\Response;
 
@@ -19,5 +21,5 @@ interface Extension
   
   public function handleResult(Result $result,\Zend_Http_Response $response);
   
-  public function postRun();
+  public function postRun(Information $information);
 }

@@ -2,8 +2,7 @@
 
 namespace LiveTest\Extensions;
 
-
-use Base\Timer\Timer;
+use LiveTest\TestRun\Information;
 use Base\Http\ConnectionStatus;
 use Base\Http\Response;
 
@@ -15,7 +14,6 @@ use LiveTest\TestRun\Result\Result;
 
 class StatusBar implements Extension
 {
-  private $timer;
   private $testCount = 0;
   
   private $errorCount = 0;
@@ -24,7 +22,6 @@ class StatusBar implements Extension
   
   public function __construct($runId, Zend_Config $config = null)
   {
-    $this->timer = new Timer();
   }
   
   public function preRun(Properties $properties)
@@ -77,9 +74,8 @@ class StatusBar implements Extension
     return $duration . ' seconds';
   }
   
-  public function postRun()
+  public function postRun(Information $information)
   {
-    $duration = $this->timer->stop();
-    echo "\n  Tests: " . $this->testCount . ' (failed: '.$this->failureCount.', error: '.$this->errorCount.') - Duration: ' . $this->getFormattedDuration($duration);
+    echo "\n  Tests: " . $this->testCount . ' (failed: '.$this->failureCount.', error: '.$this->errorCount.') - Duration: ' . $this->getFormattedDuration($information->getDuration());
   }
 }

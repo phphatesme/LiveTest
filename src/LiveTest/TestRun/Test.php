@@ -2,22 +2,53 @@
 
 namespace LiveTest\TestRun;
 
+use Base\Cli\WrongTypeException;
+
 class Test
 {
-  private $class;
+  /**
+   * 
+   * Dataholder for a class
+   * @var Object
+   */
+  private $className;
+  
+  /**
+   * 
+   * Name
+   * @var String
+   */
   private $name;
+  
+  /**
+   * 
+   * Properties of a test
+   * @var \ArrayIterator
+   */
   private $parameter;
   
-  public function __construct( $name, $class, $parameter)
-  {
-    $this->class = $class;
+  /**
+   * 
+   * Constructor for Test
+   * @param String $name
+   * @param Object $class
+   * @param array $parameter
+   */
+  public function __construct( $name, $className, \Zend_Config $parameter)
+  {    
+    if( !is_string( $name ) )
+    {
+      throw new WrongTypeException('Parameter name has to be a string');
+    }
+    
+    $this->className = $className;
     $this->name = $name;
     $this->parameter = $parameter;
   }
 
-  public function getClass()
+  public function getClassName()
   {
-    return $this->class;
+    return $this->className;
   }
 
   public function getName()

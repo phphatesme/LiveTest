@@ -59,7 +59,7 @@
     	    <?php foreach ( $tests as $test ): ?>
     		<td class="test_label">
         		<b><?php echo $test->getName(); ?></b><br/>
-        		<?php echo $test->getClass()?>
+        		<?php echo $test->getClassName()?>
     		</td>
     	    <?php endforeach;?>
     	</tr>

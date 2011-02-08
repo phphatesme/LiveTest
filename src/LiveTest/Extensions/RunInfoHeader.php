@@ -2,6 +2,7 @@
 
 namespace LiveTest\Extensions;
 
+use LiveTest\TestRun\Information;
 use Base\Http\ConnectionStatus;
 
 use LiveTest\TestRun\Properties;
@@ -43,7 +44,7 @@ class RunInfoHeader implements Extension
     
   }
   
-  public function postRun()
+  public function postRun(Information $information)
   {
   }
 }

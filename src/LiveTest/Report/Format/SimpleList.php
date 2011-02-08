@@ -2,6 +2,8 @@
 
 namespace LiveTest\Report\Format;
 
+use LiveTest\TestRun\Information;
+
 use LiveTest\TestRun\Result\ResultSet;
 use LiveTest\TestRun\Result\Result;
 
@@ -12,7 +14,7 @@ class SimpleList implements Format
   
   }
   
-  public function formatSet(ResultSet $set, $connectionStatuses)
+  public function formatSet(ResultSet $set, $connectionStatuses, Information $information)
   {
     $text = '';
     foreach ( $set->getResults() as $result )
@@ -21,7 +23,7 @@ class SimpleList implements Format
       /* @var $test Test*/
       $text .= '     Url        :  ' . $result->getUrl() . "\n";
       $text .= '     Test       :  ' . $test->getName() . "\n";
-      $text .= '     Test Class :  ' . $test->getClass() . "\n";
+      $text .= '     Test Class :  ' . $test->getClassName() . "\n";
       switch ($result->getStatus())
       {
         case Result::STATUS_SUCCESS :
