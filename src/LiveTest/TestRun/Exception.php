@@ -2,9 +2,7 @@
 
 namespace LiveTest\TestRun;
 
-use LiveTest\Exception;
-
-class Exception extends Exception
+class Exception extends \LiveTest\Exception
 {
   
 }
