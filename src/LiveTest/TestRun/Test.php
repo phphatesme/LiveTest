@@ -34,13 +34,12 @@ class Test
    * @param Object $class
    * @param array $parameter
    */
-  public function __construct( $name, $class, array $parameter)
-  {
-    
-    if( !is_object( $class ) )
-    {
-      throw new WrongTypeException('Parameter class has to be a object');
-    }
+  public function __construct( $name, $class, $parameter)
+  {    
+//    if( !is_object( $class ) )
+//    {
+//      throw new WrongTypeException('Parameter class has to be a object');
+//    }
     
     if( !is_string( $name ) )
     {

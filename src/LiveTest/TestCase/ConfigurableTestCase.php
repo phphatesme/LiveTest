@@ -12,7 +12,7 @@ abstract class ConfigurableTestCase implements TestCase
   private $parameter;
   protected $mandatoryParameter = array();
   
-  public function __construct(array $parameter)
+  public function __construct($parameter)
   {
     $this->parameter = $parameter;
     $this->checkMandatoryParameter();
