@@ -22,7 +22,7 @@ use LiveTest\TestCase\General\Html\TextPresentHtmlTestCase;
 
 class Runner extends ArgumentRunner
 {
-  protected $mandatoryArguments = array('testsuite','config');
+  protected $mandatoryArguments = array('testsuite');
   
   private $config;
   private $testSuiteConfig;
@@ -45,13 +45,14 @@ class Runner extends ArgumentRunner
     $this->initDefaultDomain();
   }
   
-  private function initDefaultDomain( )
+  private function initDefaultDomain()
   {
     $domain = $this->config->DefaultDomain;
-    if( $domain != '' ) {
+    if ($domain != '')
+    {
       $this->defaultDomain = (string)$domain;
     }
-  } 
+  }
   
   private function initRunId()
   {
@@ -60,27 +61,32 @@ class Runner extends ArgumentRunner
   
   private function initConfig()
   {
-    $configFileName = $this->getArgument('config');
-    if ($configFileName == '')
+    if ($this->hasArgument('config'))
     {
-      throw new \LiveTest\Exception('The config file name is emtpy');
+      $configFileName = $this->getArgument('config');
     }
-    
+    else
+    {
+      $configFileName = __DIR__ . '/../../default/config.yml';
+    }
+        
     if (!file_exists($configFileName))
     {
       throw new \LiveTest\Exception('The config file (' . $configFileName . ') was not found.');
     }
     
-    $defaultConfig = new Yaml( __DIR__.'/../../default/config.yml', true);    
+    $defaultConfig = new Yaml(__DIR__ . '/../../default/config.yml', true);
     $currentConfig = new Yaml($configFileName, true);
-
-    if( !is_null( $currentConfig->Extensions ) )
+    
+    if (!is_null($currentConfig->Extensions))
     {
-      $currentConfig->Extensions = $defaultConfig->Extensions->merge($currentConfig->Extensions);    
-    }else{
-      $currentConfig->Extensions = $defaultConfig->Extensions;    
+      $currentConfig->Extensions = $defaultConfig->Extensions->merge($currentConfig->Extensions);
     }
-    $this->config = $currentConfig;    
+    else
+    {
+      $currentConfig->Extensions = $defaultConfig->Extensions;
+    }
+    $this->config = $currentConfig;
   }
   
   private function initTestSuiteConfig()
