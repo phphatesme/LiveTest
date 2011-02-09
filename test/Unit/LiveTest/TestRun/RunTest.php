@@ -1,4 +1,5 @@
 <?php
+use Base\Http\Client;
 use LiveTest\TestRun\Run;
 use LiveTest\TestRun\Properties;
 use Base\Config\Yaml;
@@ -32,7 +33,7 @@ class RunTest extends \PHPUnit_Framework_TestCase
       $this->uri = new Uri('http://www.example.com/index.html');
       
       $this->configProperties = new Properties($this->config, $this->uri);
-      $this->object = new Run($this->configProperties);
+      $this->object = new Run($this->configProperties, new Client());
     }
     
      /**
@@ -46,7 +47,7 @@ class RunTest extends \PHPUnit_Framework_TestCase
     public function testAddExtension()
     {
        $this->object->addExtension(new Null(1));
-       $extensions = $this->object->getExtensions();
+       $this->object->run();
        
        
     }

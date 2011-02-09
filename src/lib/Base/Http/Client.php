@@ -2,7 +2,7 @@
 
 namespace Base\Http;
 
-class Client extends \Zend_Http_Client
+class Client extends \Zend_Http_Client implements HttpClient
 {
   public function request($method = null)
   {
