@@ -11,7 +11,7 @@ class ExpectedStatusCode extends HttpTestCase
 {
   protected $mandatoryParameter = array('StatusCode');
   
-  protected function runTest(\Zend_Http_Response $httpClient)
+  protected function runTest(Response $httpClient)
   {
     $status = $httpClient->getStatus();
     if ($status != $this->getParameter('StatusCode'))

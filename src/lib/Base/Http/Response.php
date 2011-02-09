@@ -1,10 +1,12 @@
 <?php
 
-// @todo muss sauber implementiert werde. so gibt es kein autocompletion.
 namespace Base\Http;
 
 class Response
 {
+  /**
+   * @var \Zend_Http_Response
+   */
   private $zendResponse;
   
   public function __construct(\Zend_Http_Response $response)
@@ -12,8 +14,13 @@ class Response
     $this->zendResponse = $response;
   }
   
-  public function __call($method, $args)
+  public function getStatus( )
   {
-    return call_user_func_array(array($this->zendResponse,$method), $args);
+    return $this->zendResponse->getStatus( );
+  }
+  
+  public function getBody( )
+  {
+    return $this->zendResponse->getBody();
   }
 }

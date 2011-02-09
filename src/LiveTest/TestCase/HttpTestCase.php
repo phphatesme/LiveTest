@@ -11,10 +11,10 @@ abstract class HttpTestCase extends ConfigurableTestCase
 {
   protected $mandatoryParameter = array();
     
-  public function test(\Zend_Http_Response $httpResponse, Uri $uri)
+  public function test(Response $httpResponse, Uri $uri)
   {
     $this->runTest($httpResponse);
   }
 
-  abstract protected function runTest(\Zend_Http_Response $httpClient);
+  abstract protected function runTest(Response $httpClient);
 }

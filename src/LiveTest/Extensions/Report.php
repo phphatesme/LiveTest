@@ -50,7 +50,7 @@ class Report implements Extension
     }
   }
   
-  public function handleResult(Result $result,\Zend_Http_Response $response)
+  public function handleResult(Result $result, Response $response)
   {
     if (in_array($result->getStatus(), $this->logStatuses))
     {

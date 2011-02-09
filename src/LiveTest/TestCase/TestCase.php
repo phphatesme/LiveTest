@@ -12,5 +12,5 @@ use Base\Http\Client;
 interface TestCase
 {
   public function __construct( $parameter );
-  public function test(\Zend_Http_Response $httpResponse, Uri $uri);
+  public function test(Response $httpResponse, Uri $uri);
 }

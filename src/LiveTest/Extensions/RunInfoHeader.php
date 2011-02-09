@@ -35,7 +35,7 @@ class RunInfoHeader implements Extension
     return $count;
   }
   
-  public function handleResult(Result $result, \Zend_Http_Response $response)
+  public function handleResult(Result $result, Response $response)
   {
   }
   

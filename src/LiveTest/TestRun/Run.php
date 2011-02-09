@@ -50,7 +50,7 @@ class Run
     }
   }
   
-  private function handleResult(Result $result, \Zend_Http_Response $response)
+  private function handleResult(Result $result, Response $response)
   {
     foreach ($this->extensions as $extension)
     {
@@ -74,7 +74,7 @@ class Run
     }
   }
   
-  private function runTests(TestSet $testSet, \Zend_Http_Response $response)
+  private function runTests(TestSet $testSet, Response $response)
   {
     foreach ($testSet->getTests() as $test)
     {
@@ -113,7 +113,7 @@ class Run
       try
       {
         $client->setUri($testSet->getUrl());
-        $response = $client->request();
+        $response = new Response($client->request());
         $this->handleConnectionStatus(new ConnectionStatus(ConnectionStatus::SUCCESS, new Uri($testSet->getUrl())));
       }
       catch ( \Zend_Http_Client_Adapter_Exception $e )

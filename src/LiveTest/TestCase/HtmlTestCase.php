@@ -21,7 +21,7 @@ abstract class HtmlTestCase extends ConfigurableTestCase
     return $this->uri;
   }
   
-  public function test(\Zend_Http_Response $httpResponse, Uri $uri)
+  public function test(Response $httpResponse, Uri $uri)
   {
     $this->httpResponse = $httpResponse;
     $this->uri = $uri;

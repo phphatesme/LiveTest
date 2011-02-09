@@ -2,6 +2,8 @@
 
 namespace Test\Unit\LiveTest\Extensions;
 
+use Base\Http\Response;
+
 use Base\Www\Uri;
 use Base\Http\ConnectionStatus;
 
@@ -21,7 +23,7 @@ class ProgressBarTest extends \PHPUnit_Framework_TestCase
   public function testHandleResult()
   {
     $test = new Test('', '', new \Zend_Config(array()));
-    $response = new \Zend_Http_Response(200, array());
+    $response = new Response(new \Zend_Http_Response(200, array()));
     
     ob_start();
     $result = new Result($test, Result::STATUS_SUCCESS, '', '');
