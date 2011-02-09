@@ -1,8 +1,0 @@
-TestSuite:
- TestCases:
-  TextPresentHtml_standard: 
-   TestCase: LiveTest\TestCase\General\Html\TextPresent
-   Parameter: 
-    Text: NichtFindbarerString
- Pages:
-  - http://www.phphatesme.com

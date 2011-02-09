@@ -2,6 +2,8 @@
 
 namespace Test\Unit\LiveTest\Extensions;
 
+use Base\Http\Response;
+
 use Base\Config\Yaml;
 
 use LiveTest\TestRun\Result\Result;
@@ -31,7 +33,7 @@ class HtmlDocumentLogTest extends \PHPUnit_Framework_TestCase
   public function testHandleResult()
   {
     $test = new Test('', '', new \Zend_Config(array()));    
-    $response = new \Zend_Http_Response(200, array(), '<body></body>');
+    $response = new Response(new \Zend_Http_Response(200, array(), '<body></body>'));
     
     $result = new Result($test, Result::STATUS_FAILED, '', 'http://www.phphatesme.com');
     $this->extension->handleResult($result, $response);
