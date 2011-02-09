@@ -96,7 +96,7 @@
     			<a href="<?php echo $url ?>" target="_blank"><?php echo $url; ?></a>
     		</td>
   			<?php foreach ($tests as $test): $content = getHtmlContent( $testList[$test->getName()] ); ?>    				
-				  <td class="<?php echo $content['css_class']; ?> result_column"><?php echo $content['message']; ?></td>					  			
+				  <td class="<?php echo $content['css_class']; ?> result_column"><?php echo htmlentities($content['message']); ?></td>					  			
   			<?php endforeach; ?>
     	</tr>
     	<?php endforeach; ?>    
