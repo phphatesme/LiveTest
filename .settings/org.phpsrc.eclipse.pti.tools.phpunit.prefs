@@ -1,0 +1,11 @@
+#Wed Feb 09 19:17:15 CET 2011
+bootstrap=/LiveTest/test/bootstrap.php
+debug_print_output=true
+eclipse.preferences.version=1
+generate_code_coverage=true
+pear_library=ExternalMacosx
+php_executable=PHP5.3
+source_file_pattern_folder=/%p/src/%d
+test_file_pattern_file=%fTest.%e
+test_file_pattern_folder=/%p/test/unit/%d
+test_file_super_class=PHPUnit_Framework_TestCase

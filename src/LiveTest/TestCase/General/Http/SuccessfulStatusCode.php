@@ -9,7 +9,7 @@ use Base\Http\Response;
 
 class SuccessfulStatusCode extends HttpTestCase
 {
-  protected function runTest(\Zend_Http_Response $httpClient)
+  protected function runTest(Response $httpClient)
   {
     $status = (int)$httpClient->getStatus();
     if ($status >= 400 )

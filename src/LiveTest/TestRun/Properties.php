@@ -6,7 +6,9 @@
 //        - doppelter Code bei Page Und PageList
 //        - Config Merge vll. Teil einer anderen Klasse
 
+
 // @todo PageLists auf TestCase-Ebene
+
 
 namespace LiveTest\TestRun;
 
@@ -24,7 +26,7 @@ class Properties
   
   private $testSets = array();
   
-  public function __construct(\Zend_Config $testSuiteConfig, Uri $defaultDomain)
+  public function __construct( \Zend_Config $testSuiteConfig, Uri $defaultDomain)
   {
     $this->configPath = dirname($testSuiteConfig->getFilename());
     
@@ -72,7 +74,14 @@ class Properties
         {
           $this->testSets[$testCasePage] = new TestSet($testCasePage);
         }
-        $parameter = $testCase->Parameter;
+        if (!is_null($testCase->Parameter))
+        {
+          $parameter = $testCase->Parameter;
+        }
+        else
+        {
+          $parameter = new \Zend_Config(array());
+        }
         $this->testSets[$testCasePage]->addTest(new Test($testEntityName, $testCase->TestCase, $parameter));
       }
     }
@@ -140,7 +149,7 @@ class Properties
    * 
    * @return \Base\Www\Uri
    */
-  public function getDefaultDomain( )
+  public function getDefaultDomain()
   {
     return $this->defaultDomain;
   }

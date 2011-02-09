@@ -31,7 +31,7 @@ class HtmlDocumentLog implements Extension
   
   }
   
-  public function handleResult(Result $result,\Zend_Http_Response $response)
+  public function handleResult(Result $result, Response $response)
   {
     $filename = $this->logPath . '/' . urlencode($result->getUrl());
     file_put_contents($filename, $response->getBody());

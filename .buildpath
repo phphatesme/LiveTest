@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<buildpath>
+	<buildpathentry external="true" kind="lib" path="/Applications/eclipse/plugins/org.phpsrc.eclipse.pti.library.pear_1.2.2.R20101122000000/php/library/PEAR"/>
+	<buildpathentry kind="src" path=""/>
+	<buildpathentry kind="con" path="org.eclipse.php.core.LANGUAGE"/>
+	<buildpathentry external="true" kind="lib" path="/usr/local/PEAR"/>
+	<buildpathentry external="true" kind="lib" path="/Applications/eclipse/plugins/org.phpsrc.eclipse.pti.library.pear_1.2.2.R20101002000000/php/library/PEAR"/>
+</buildpath>

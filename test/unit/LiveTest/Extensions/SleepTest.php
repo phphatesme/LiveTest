@@ -2,6 +2,8 @@
 
 namespace Test\Unit\LiveTest\Extensions;
 
+use Base\Http\Response;
+
 use Base\Timer\Timer;
 
 use LiveTest\Extensions\Sleep;
@@ -27,7 +29,7 @@ class SleepTest extends \PHPUnit_Framework_TestCase
   public function testHandleResult()
   {
     $test = new Test('', '', new \Zend_Config(array()));
-    $response = new \Zend_Http_Response(200, array());
+    $response = new Response(new \Zend_Http_Response(200, array()));
     
     $timer = new Timer();
     $this->extension->handleResult(new Result($test, Result::STATUS_SUCCESS, '', new Uri( 'http://www.example.com')), $response);

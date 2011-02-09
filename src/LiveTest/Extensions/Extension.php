@@ -19,7 +19,7 @@ interface Extension
   
   public function handleConnectionStatus(ConnectionStatus $status);
   
-  public function handleResult(Result $result,\Zend_Http_Response $response);
+  public function handleResult(Result $result, Response $response);
   
   public function postRun(Information $information);
 }

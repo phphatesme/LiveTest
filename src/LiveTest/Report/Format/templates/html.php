@@ -56,8 +56,7 @@
     <tr>
       <td></td>
       <td>Number of Tests: <b><?php echo $testCount; ?></b></td>
-    </tr>
-    
+    </tr>    
     <tr style="height: 30px"><td></td></tr>
     <tr>
       <td id="legend">Legend</td>
@@ -71,6 +70,16 @@
       <td></td>
       <td class="result_error result_column">Error</td>
     </tr>
+    <?php if( count( $connectionStatuses ) > 0 ): ?> 
+    <tr style="height: 30px"><td></td></tr>
+    <tr>
+    	<td id="legend">Connection Errors</td>
+    	<td>
+    	<?php foreach ($connectionStatuses as $status ):?>
+    		<li><?php echo $status->getUri()->toString(); ?><li>
+    	<?php endforeach; ?>
+    	</td>
+	<?php endif; ?>    	
     <tr style="height: 30px"><td></td></tr>
 		<tr>
 			<td></td>
@@ -87,7 +96,7 @@
     			<a href="<?php echo $url ?>" target="_blank"><?php echo $url; ?></a>
     		</td>
   			<?php foreach ($tests as $test): $content = getHtmlContent( $testList[$test->getName()] ); ?>    				
-				  <td class="<?php echo $content['css_class']; ?> result_column"><?php echo $content['message']; ?></td>					  			
+				  <td class="<?php echo $content['css_class']; ?> result_column"><?php echo htmlentities($content['message']); ?></td>					  			
   			<?php endforeach; ?>
     	</tr>
     	<?php endforeach; ?>    
