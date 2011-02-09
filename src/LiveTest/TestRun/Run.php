@@ -2,6 +2,8 @@
 
 namespace LiveTest\TestRun;
 
+use Base\Http\HttpClient;
+
 use Base\Timer\Timer;
 
 use Base\Http\ConnectionStatus;
@@ -25,6 +27,8 @@ class Run
    */
   private $properties;
   
+  private $httpClient = null;
+  
   private $extensions = array();
   
   public function addExtension(Extension $extension)
@@ -32,13 +36,9 @@ class Run
     $this->extensions[] = $extension;
   }
   
-  public function getExtensions()
+  public function __construct(Properties $properties, HttpClient $httpClient)
   {
-    return $this->extensions;
-  }
-  
-  public function __construct(Properties $properties)
-  {
+    $this->httpClient = $httpClient;
     $this->properties = $properties;
   }
   
@@ -74,7 +74,7 @@ class Run
     }
   }
   
-  private function runTests(TestSet $testSet, \Zend_Http_Response $response)
+  private function runTests(TestSet $testSet, \Base\Http\Response $response)
   {
     foreach ($testSet->getTests() as $test)
     {
@@ -101,12 +101,29 @@ class Run
     }
   }
   
+  public function setHttpClient(\Base\Http\HttpClient $httpClient)
+  {
+    $this->httpClient;
+  }
+  
+  public function getHttpClient()
+  {
+    if(is_null($this->httpClient))
+    {
+      return new \Base\Http\Client();
+    }
+    else
+    {
+      return $this->httpClient;
+    }
+  }
+  
   public function run()
   {
     $this->extensionsPreRun();
     $timer = new Timer();
     $testSets = $this->properties->getTestSets();
-    $client = new \Zend_Http_Client();
+    $client = $this->getHttpClient();
     
     foreach ($testSets as $testSet)
     {
