@@ -29,7 +29,7 @@ class Html implements Format
     }
   }
   
-  public function formatSet(ResultSet $set, $connectionStatuses, Information $information)
+  public function formatSet(ResultSet $set, array $connectionStatuses, Information $information)
   {
     $matrix = array();
     $tests = array();

@@ -9,5 +9,5 @@ use LiveTest\TestRun\Result\ResultSet;
 interface Format
 {
   public function __construct($params);  
-  public function formatSet(ResultSet $set, $connectionStatuses, Information $information);
+  public function formatSet(ResultSet $set, array $connectionStatuses, Information $information);
 }

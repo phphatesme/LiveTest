@@ -1,6 +1,6 @@
 <?php
-// @todo: defensiver programmieren
 
+// @todo: defensiver programmieren
 
 namespace LiveTest\Extensions;
 
@@ -47,7 +47,6 @@ class Report implements Extension
     if ($status->getType() == ConnectionStatus::ERROR)
     {
       $this->connectionStatuses[] = $status;
-      var_dump($status->getUri()->toString());
     }
   }
   
