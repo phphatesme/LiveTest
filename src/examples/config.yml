@@ -5,9 +5,7 @@ Extensions:
   parameter:
    format:
     class: LiveTest\Report\Format\Html
-    parameter:
-     css_file: http://www.phphatesme.com/LiveTest/report.css
    writer:
     class: LiveTest\Report\Writer\File
     parameter:
-     filename: logs/log.html
+     filename: logs/example.html
