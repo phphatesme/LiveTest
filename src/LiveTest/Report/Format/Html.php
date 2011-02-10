@@ -51,7 +51,7 @@ class Html implements Format
     }
     
     ob_start();
-    require_once $this->template;
+    require $this->template;
     $this->content = ob_get_contents();
     ob_clean();
     

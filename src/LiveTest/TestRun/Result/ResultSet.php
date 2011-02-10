@@ -24,7 +24,8 @@ class ResultSet
     return $this->status;
   }
   
-  public function getResultCount( ){
+  public function getResultCount()
+  {
     return count($this->results);
   }
   
@@ -32,5 +33,5 @@ class ResultSet
   {
     return $this->results;
   }
- 
-}
+
+} 
