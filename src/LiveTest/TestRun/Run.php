@@ -102,49 +102,31 @@ class Run
     }
   }
   
-  public function setHttpClient(\Base\Http\HttpClient $httpClient)
-  {
-    $this->httpClient;
-  }
   
   public function getHttpClient()
   {
-    if(is_null($this->httpClient))
-    {
-      return new \Base\Http\Client();
-    }
-    else
-    {
       return $this->httpClient;
-    }
   }
   
   public function run()
   {
-<<<<<<< HEAD
-    $this->extensionsPreRun();
-    $timer = new Timer();
-    $testSets = $this->properties->getTestSets();
-    $client = $this->getHttpClient();
-    
-    foreach ($testSets as $testSet)
-=======
+
     $continueRun = $this->extensionsPreRun();
     if ($continueRun)
->>>>>>> c01b0dd66ead350dc71952832eaf6b1140d063fc
     {
       $timer = new Timer();
       $testSets = $this->properties->getTestSets();
-      $client = new \Zend_Http_Client();
+      $client = $this->getHttpClient();
       
       foreach ( $testSets as $testSet )
       {
         try
         {
           $client->setUri($testSet->getUrl());
-          $response = new Response($client->request());
+          $response = new Response( $client->request() );
           $this->handleConnectionStatus(new ConnectionStatus(ConnectionStatus::SUCCESS, new Uri($testSet->getUrl())));
-        } catch ( \Zend_Http_Client_Adapter_Exception $e )
+        } 
+        catch ( \Zend_Http_Client_Adapter_Exception $e )
         {
           $this->handleConnectionStatus(new ConnectionStatus(ConnectionStatus::ERROR, new Uri($testSet->getUrl()), $e->getMessage()));
           continue;
