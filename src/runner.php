@@ -5,7 +5,7 @@ use Base\Cli\ArgumentConverter;
 
 include 'bootstrap.php';
 
-echo "\nLiveTest 1.0.0 by Nils Langner & Mike Lohmann\n\n"; // (visit http://livetest.phphatesme.com)\n\n";
+echo "\nLiveTest 0.1.0 by Nils Langner & Mike Lohmann\n\n"; // (visit http://livetest.phphatesme.com)\n\n";
 
 
 try
