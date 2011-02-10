@@ -73,10 +73,10 @@
     <?php if( count( $connectionStatuses ) > 0 ): ?> 
     <tr style="height: 30px"><td></td></tr>
     <tr>
-    	<td id="legend">Connection Errors</td>
+    	<td id="legend" valign="top">Connection Errors</td>
     	<td>
     	<?php foreach ($connectionStatuses as $status ):?>
-    		<li><?php echo $status->getUri()->toString(); ?><li>
+    		<li><a href="<?php echo $status->getUri()->toString(); ?>"><?php echo $status->getUri()->toString(); ?></a></li>
     	<?php endforeach; ?>
     	</td>
 	<?php endif; ?>    	
