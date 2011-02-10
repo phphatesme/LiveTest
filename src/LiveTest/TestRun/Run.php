@@ -25,11 +25,11 @@ class Run
    */
   private $properties;
   
-  private $extensions = array();
+  private $extensions = array ();
   
   public function addExtension(Extension $extension)
   {
-    $this->extensions[] = $extension;
+    $this->extensions [] = $extension;
   }
   
   public function getExtensions()
@@ -44,7 +44,7 @@ class Run
   
   private function extensionsPostRun(Information $information)
   {
-    foreach ($this->extensions as $extension)
+    foreach ( $this->extensions as $extension )
     {
       $extension->postRun($information);
     }
@@ -52,7 +52,7 @@ class Run
   
   private function handleResult(Result $result, Response $response)
   {
-    foreach ($this->extensions as $extension)
+    foreach ( $this->extensions as $extension )
     {
       $extension->handleResult($result, $response);
     }
@@ -60,7 +60,7 @@ class Run
   
   private function handleConnectionStatus(ConnectionStatus $status)
   {
-    foreach ($this->extensions as $extension)
+    foreach ( $this->extensions as $extension )
     {
       $extension->handleConnectionStatus($status);
     }
@@ -68,15 +68,19 @@ class Run
   
   private function extensionsPreRun()
   {
-    foreach ($this->extensions as $extension)
+    foreach ( $this->extensions as $extension )
     {
-      $extension->preRun($this->properties);
+      if ($extension->preRun($this->properties) === false)
+      {
+        return false;
+      }
     }
+    return true;
   }
   
   private function runTests(TestSet $testSet, Response $response)
   {
-    foreach ($testSet->getTests() as $test)
+    foreach ( $testSet->getTests() as $test )
     {
       $testCaseName = $test->getClassName();
       try
@@ -84,16 +88,13 @@ class Run
         $testCaseObject = new $testCaseName($test->getParameter());
         $testCaseObject->test($response, new Uri($testSet->getUrl()));
         $result = new Result($test, Result::STATUS_SUCCESS, '', $testSet->getUrl());
-      }
-      catch ( \LiveTest\TestCase\Exception $e )
+      } catch ( \LiveTest\TestCase\Exception $e )
       {
         $result = new Result($test, Result::STATUS_FAILED, $e->getMessage(), $testSet->getUrl());
-      }
-      catch ( Exception $e )
+      } catch ( Exception $e )
       {
         $result = new Result($test, Result::STATUS_ERROR, $e->getMessage(), $testSet->getUrl());
-      }
-      catch ( \Base\Www\Exception $e )
+      } catch ( \Base\Www\Exception $e )
       {
         $result = new Result($test, Result::STATUS_ERROR, $e->getMessage(), $testSet->getUrl());
       }
@@ -103,28 +104,30 @@ class Run
   
   public function run()
   {
-    $this->extensionsPreRun();
-    $timer = new Timer();
-    $testSets = $this->properties->getTestSets();
-    $client = new \Zend_Http_Client();
-    
-    foreach ($testSets as $testSet)
+    $continueRun = $this->extensionsPreRun();
+    if ($continueRun)
     {
-      try
+      $timer = new Timer();
+      $testSets = $this->properties->getTestSets();
+      $client = new \Zend_Http_Client();
+      
+      foreach ( $testSets as $testSet )
       {
-        $client->setUri($testSet->getUrl());
-        $response = new Response($client->request());
-        $this->handleConnectionStatus(new ConnectionStatus(ConnectionStatus::SUCCESS, new Uri($testSet->getUrl())));
+        try
+        {
+          $client->setUri($testSet->getUrl());
+          $response = new Response($client->request());
+          $this->handleConnectionStatus(new ConnectionStatus(ConnectionStatus::SUCCESS, new Uri($testSet->getUrl())));
+        } catch ( \Zend_Http_Client_Adapter_Exception $e )
+        {
+          $this->handleConnectionStatus(new ConnectionStatus(ConnectionStatus::ERROR, new Uri($testSet->getUrl()), $e->getMessage()));
+          continue;
+        }
+        $this->runTests($testSet, $response);
       }
-      catch ( \Zend_Http_Client_Adapter_Exception $e )
-      {
-        $this->handleConnectionStatus(new ConnectionStatus(ConnectionStatus::ERROR, new Uri($testSet->getUrl()), $e->getMessage()));
-        continue;
-      }
-      $this->runTests($testSet, $response);
+      $timer->stop();
+      $information = new Information($timer->getElapsedTime(), $this->properties->getDefaultDomain());
+      $this->extensionsPostRun($information);
     }
-    $timer->stop();
-    $information = new Information($timer->getElapsedTime(), $this->properties->getDefaultDomain());
-    $this->extensionsPostRun($information);
   }
 }

@@ -36,7 +36,7 @@ class Runner extends ArgumentRunner
     $this->initRunId();
     $this->initConfig();
     $this->initTestSuiteConfig();
-    $this->initExtensions();
+    $this->initExtensions($arguments);
     $this->initDefaultDomain();
   }
   
@@ -90,7 +90,7 @@ class Runner extends ArgumentRunner
     $this->testSuiteConfig = new Yaml($testSuiteFileName);
   }
   
-  private function initExtensions()
+  private function initExtensions($arguments)
   {
     if (!is_null($this->config->Extensions))
     {
@@ -102,7 +102,7 @@ class Runner extends ArgumentRunner
           throw new Exception('The class name for the "' . $name . '" extension is missing. Please check your configuration.');
         }
         $parameter = $extensionConfig->parameter;
-        $this->extensions[$name] = new $className($this->runId, $parameter);
+        $this->extensions[$name] = new $className($this->runId, $parameter, $arguments);
       }
     }
   }

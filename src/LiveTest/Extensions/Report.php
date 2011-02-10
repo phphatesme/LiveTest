@@ -22,7 +22,7 @@ class Report implements Extension
   private $logStatuses = array();
   private $connectionStatuses = array( );
   
-  public function __construct($runId,\Zend_Config $config = null)
+  public function __construct($runId,\Zend_Config $config = null, $arguments = null)
   {
     $this->resultSet = new ResultSet();
     $this->config = $config;
