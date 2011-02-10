@@ -17,7 +17,7 @@ class HtmlDocumentLog implements Extension
   private $logPath;
   private $runId;
   
-  public function __construct($runId,\Zend_Config $config = null)
+  public function __construct($runId,\Zend_Config $config = null, $arguments = null)
   {
     $this->logPath = $config->log_path . '/' . $runId . '/';
     if (!file_exists($this->logPath))

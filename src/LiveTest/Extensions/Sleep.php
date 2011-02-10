@@ -15,7 +15,7 @@ class Sleep implements Extension
 {
   private $sleepTime;
   
-  public function __construct($runId, \Zend_Config $config = null)
+  public function __construct($runId, \Zend_Config $config = null, $arguments = null)
   {
     $this->sleepTime = $config->sleep_time;
   }

@@ -5,22 +5,22 @@ namespace Base\Http;
 class Response
 {
   /**
-   * @var \Zend_Http_Response
+   * @var \Base\Http\Response
    */
-  private $zendResponse;
+  private $Response;
   
-  public function __construct(\Zend_Http_Response $response)
+  public function __construct(\Base\Http\Response $response)
   {
-    $this->zendResponse = $response;
+    $this->Response = $response;
   }
   
   public function getStatus( )
   {
-    return $this->zendResponse->getStatus( );
+    return $this->Response->getStatus( );
   }
   
   public function getBody( )
   {
-    return $this->zendResponse->getBody();
+    return $this->Response->getBody();
   }
 }

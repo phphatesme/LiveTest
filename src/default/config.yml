@@ -1,5 +1,8 @@
 Extensions:
      
+ Help:
+  class: LiveTest\Extensions\Help    
+     
  ProgressBar:
   class: LiveTest\Extensions\ProgressBar
   
