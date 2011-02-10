@@ -1,14 +1,11 @@
 TestSuite:
  TestCases:
-  TextPresentHtml_standard: 
-   TestCase: LiveTest\TestCase\General\Html\TextPresent
-   Parameter: 
-    Text: Stern
-  CorrectHttpHeader_standard: 
+  CorrectHttpHeader_standard:
    TestCase: LiveTest\TestCase\General\Http\SuccessfulStatusCode
-   Parameter: 
-    StatusCode: 400
+  TextPresent_body:
+   TestCase: LiveTest\TestCase\General\Html\TextPresent
+   Parameter:
+    Text: "unpresent_text"
  Pages:
   - http://www.stern.de
-  - /
   - http://www.phphatesme.com

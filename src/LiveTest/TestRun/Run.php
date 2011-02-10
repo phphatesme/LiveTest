@@ -39,6 +39,7 @@ class Run
   
   public function __construct(Properties $properties)
   {
+    // @todo is the properties object needed? TestSet would work as well
     $this->properties = $properties;
   }
   

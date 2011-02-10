@@ -15,7 +15,7 @@ class Help implements Extension
 {
   private $arguments;
   
-  private $template = 'Help/template.php'; 
+  private $template = 'Help/template.tpl'; 
   
   public function __construct($runId, \Zend_Config $config = null, $arguments = null)
   {
@@ -24,9 +24,9 @@ class Help implements Extension
   
   public function preRun(Properties $properties)
   {
-    if (array_key_exists('help', $this->arguments) || count( $this->arguments ) == 0)
+    if (array_key_exists('help', $this->arguments))
     {
-      require_once __DIR__.DIRECTORY_SEPARATOR.$this->template;
+      echo file_get_contents( __DIR__.DIRECTORY_SEPARATOR.$this->template );
       return false;
     }
     return true;

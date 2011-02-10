@@ -4,7 +4,7 @@ namespace LiveTest\TestCase;
 
 use LiveTest\TestCase\TestCase;
 
-// @todo diese Funktionalit�t k�nnte auch von Au�en passieren. Dann m�sste hasParameter aber public sein. Andererseits 
+// @todo diese Funktionalitaet koennte auch von Au�en passieren. Dann m�sste hasParameter aber public sein. Andererseits 
 //       sollte die Klasse auch selbst f�r ihre Konsistenz sorgen-
 
 abstract class ConfigurableTestCase implements TestCase

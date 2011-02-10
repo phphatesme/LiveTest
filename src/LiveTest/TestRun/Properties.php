@@ -26,7 +26,7 @@ class Properties
   
   private $testSets = array();
   
-  public function __construct( \Zend_Config $testSuiteConfig, Uri $defaultDomain)
+  public function __construct( Config $testSuiteConfig, Uri $defaultDomain)
   {
     $this->configPath = dirname($testSuiteConfig->getFilename());
     
