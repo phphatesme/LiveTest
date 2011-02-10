@@ -25,14 +25,10 @@ class Run
    * @var LiveTest\TestRun\Properties
    */
   private $properties;
-  
-<<<<<<< HEAD
   private $httpClient = null;
   
   private $extensions = array();
-=======
-  private $extensions = array ();
->>>>>>> c01b0dd66ead350dc71952832eaf6b1140d063fc
+
   
   public function addExtension(Extension $extension)
   {
