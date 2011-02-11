@@ -8,7 +8,7 @@ Extensions:
    writer:
     class: LiveTest\Report\Writer\File
     parameter:
-     filename: logs/example.html
+     filename: /tmp/example.html
      
  Report_Html_Email_Attachment:
   class: LiveTest\Extensions\Report
