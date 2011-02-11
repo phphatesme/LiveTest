@@ -1,8 +1,0 @@
-#Mon Feb 07 17:16:32 CET 2011
-debug_print_output=true
-eclipse.preferences.version=1
-file_suffixes=
-min_lines=5
-min_tokens=70
-pear_library=ExternalMacosx
-php_executable=PHP5.3
