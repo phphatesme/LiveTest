@@ -11,6 +11,7 @@ use LiveTest\TestRun\Result\Handler\ResultSetHandler;
 use Base\Cli\ArgumentRunner;
 use Base\Logger\NullLogger;
 use Base\Config\Yaml;
+use Base\Http\Client;
 
 use LiveTest\TestRun\Properties;
 use LiveTest\TestRun\Run;
