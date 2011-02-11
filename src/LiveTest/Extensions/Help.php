@@ -24,7 +24,7 @@ class Help implements Extension
   
   public function preRun(Properties $properties)
   {
-    if (array_key_exists('help', $this->arguments))
+    if (array_key_exists('help', $this->arguments) || count( $this->arguments ) == 0)
     {
       echo file_get_contents( __DIR__.DIRECTORY_SEPARATOR.$this->template );
       return false;
