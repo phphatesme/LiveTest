@@ -96,7 +96,7 @@ class Runner extends ArgumentRunner
   {
     if (!is_null($this->config->Global))
     {
-      if (!is_null($this->config->Global->external_paths)
+      if (!is_null($this->config->Global->external_paths))
       {
         $this->addAdditionalIncludePaths($this->config->Global->external_paths->toArray());
       }
