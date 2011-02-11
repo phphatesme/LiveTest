@@ -103,7 +103,7 @@ class Run
   }
   
   
-  public function getHttpClient()
+  private function getHttpClient()
   {
       return $this->httpClient;
   }
@@ -123,7 +123,7 @@ class Run
         try
         {
           $client->setUri($testSet->getUrl());          
-$response =  $client->request() ;
+          $response =  $client->request() ;
           $this->handleConnectionStatus(new ConnectionStatus(ConnectionStatus::SUCCESS, new Uri($testSet->getUrl())));
         } 
         catch ( \Zend_Http_Client_Adapter_Exception $e )

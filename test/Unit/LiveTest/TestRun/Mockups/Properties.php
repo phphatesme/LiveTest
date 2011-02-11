@@ -1,5 +1,5 @@
 <?php
-namespace \test\Unit\LiveTest\TestRun\Mockups;
+namespace Unit\LiveTest\TestRun\Mockups;
 
 class Properties
 {

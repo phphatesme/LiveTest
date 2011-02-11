@@ -1,4 +1,9 @@
 <?php
+namespace Unit\LiveTest\TestRun;
+
+use Unit\LiveTest\TestRun\Mockups\TestExtension;
+use Unit\LiveTest\TestRun\Mockups\ResponseMockup;
+use Unit\LiveTest\TestRun\Mockups\HttpClientMockup;
 use Base\Http\Client;
 use LiveTest\TestRun\Run;
 use LiveTest\TestRun\Properties;
@@ -8,7 +13,6 @@ use Base\Www\Uri;
 use Base\Config\Config;
 use LiveTest\Extensions\Null;
 
-include_once __DIR__.'/Mockups/HttpClientMockup.php';
 
 /**
  * Test class for Run.
@@ -33,7 +37,7 @@ class RunTest extends \PHPUnit_Framework_TestCase
       $this->uri = new Uri('http://www.example.com/index.html');
       
       $this->configProperties = new Properties($this->config, $this->uri);
-      $this->object = new Run($this->configProperties, new Client());
+      $this->object = new Run($this->configProperties, new HttpClientMockup(new ResponseMockup()));
     }
     
      /**
@@ -46,7 +50,8 @@ class RunTest extends \PHPUnit_Framework_TestCase
     
     public function testAddExtension()
     {
-       $this->object->addExtension(new Null(1));
+      
+       $this->object->addExtension(new TestExtension(1));
        $this->object->run();
        
        
@@ -65,7 +70,6 @@ class RunTest extends \PHPUnit_Framework_TestCase
     public function testRunZendHttpClientAdapterException()
     {
       $this->object->addExtension(new Null(1));
-      $this->object->setHttpClient(new HttpClientMockup());
        
     }
 }
