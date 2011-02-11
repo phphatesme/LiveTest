@@ -1,1 +1,3 @@
-php `pwd`/../src/runner.php $@
+cd `pwd`/../src;
+ls
+php ./runner.php $@;
