@@ -2,6 +2,7 @@
 
 namespace LiveTest\TestRun;
 
+use Base\Http\HttpClient;
 use Base\Timer\Timer;
 
 use Base\Http\ConnectionStatus;
@@ -24,21 +25,19 @@ class Run
    * @var LiveTest\TestRun\Properties
    */
   private $properties;
+  private $httpClient = null;
   
-  private $extensions = array ();
+  private $extensions = array();
+
   
   public function addExtension(Extension $extension)
   {
     $this->extensions [] = $extension;
   }
   
-  public function getExtensions()
+  public function __construct(Properties $properties, HttpClient $httpClient)
   {
-    return $this->extensions;
-  }
-  
-  public function __construct(Properties $properties)
-  {
+    $this->httpClient = $httpClient;
     // @todo is the properties object needed? TestSet would work as well
     $this->properties = $properties;
   }
@@ -79,6 +78,7 @@ class Run
     return true;
   }
   
+
   private function runTests(TestSet $testSet, Response $response)
   {
     foreach ( $testSet->getTests() as $test )
@@ -103,23 +103,31 @@ class Run
     }
   }
   
+  
+  private function getHttpClient()
+  {
+      return $this->httpClient;
+  }
+  
   public function run()
   {
+
     $continueRun = $this->extensionsPreRun();
     if ($continueRun)
     {
       $timer = new Timer();
       $testSets = $this->properties->getTestSets();
-      $client = new \Zend_Http_Client();
+      $client = $this->getHttpClient();
       
       foreach ( $testSets as $testSet )
       {
         try
         {
-          $client->setUri($testSet->getUrl());
-          $response = new Response($client->request());
+          $client->setUri($testSet->getUrl());          
+          $response =  $client->request() ;
           $this->handleConnectionStatus(new ConnectionStatus(ConnectionStatus::SUCCESS, new Uri($testSet->getUrl())));
-        } catch ( \Zend_Http_Client_Adapter_Exception $e )
+        } 
+        catch ( \Zend_Http_Client_Adapter_Exception $e )
         {
           $this->handleConnectionStatus(new ConnectionStatus(ConnectionStatus::ERROR, new Uri($testSet->getUrl()), $e->getMessage()));
           continue;

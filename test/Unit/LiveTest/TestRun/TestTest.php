@@ -1,9 +1,11 @@
 <?php
+namespace Unit\LiveTest\TestRun;
+
 use LiveTest\TestRun\Test;
 use Base\Config\Yaml;
 
 
-class TestTest extends PHPUnit_Framework_TestCase
+class TestTest extends \PHPUnit_Framework_TestCase
 {
   private $test;
 

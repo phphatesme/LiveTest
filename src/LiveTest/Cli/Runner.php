@@ -110,7 +110,7 @@ class Runner extends ArgumentRunner
   private function initTestRun()
   {
     $testRunProperties = new Properties($this->testSuiteConfig, new Uri($this->defaultDomain));
-    $this->testRun = new Run($testRunProperties);
+    $this->testRun = new Run($testRunProperties, new Client());
     
     foreach ($this->extensions as $extension)
     {

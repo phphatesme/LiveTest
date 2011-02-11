@@ -1,1 +1,3 @@
-php /app1/ela/var/www/app/LiveTest/runner.php $@
+cd `pwd`/../src;
+ls
+php ./runner.php $@;
