@@ -1,15 +1,22 @@
 <?php
 
 namespace Base\Http;
+use Base\Http\HttpResponse;
 
-class Response
+/**
+ * 
+ * @todo this is not really logical. Lets discuss if a response is of Type HttpResponse and
+ * extends ZendResponse.
+ * @author mikelohmann
+ *
+ */
+class Response implements HttpResponse
 {
   /**
-   * @var \Zend_Http_Response
+   * @todo readd Type for $response....(after discussion) :)
+   * @param unknown_type $response
    */
-  private $zendResponse;
-  
-  public function __construct(\Zend_Http_Response $response)
+  public function __construct($response)
   {
     $this->zendResponse = $response;
   }
