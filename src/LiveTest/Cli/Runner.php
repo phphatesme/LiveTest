@@ -36,6 +36,7 @@ class Runner extends ArgumentRunner
     
     $this->initRunId();
     $this->initConfig();
+    $this->initGlobalSettings();
     $this->initTestSuiteConfig();
     $this->initExtensions($arguments);
     $this->initDefaultDomain();
@@ -65,7 +66,7 @@ class Runner extends ArgumentRunner
     {
       $configFileName = __DIR__ . '/../../default/config.yml';
     }
-        
+    
     if (!file_exists($configFileName))
     {
       throw new \LiveTest\Exception('The config file (' . $configFileName . ') was not found.');
@@ -89,6 +90,25 @@ class Runner extends ArgumentRunner
   {
     $testSuiteFileName = $this->getArgument('testsuite');
     $this->testSuiteConfig = new Yaml($testSuiteFileName);
+  }
+  
+  private function initGlobalSettings()
+  {
+    if (!is_null($this->config->Global))
+    {
+      if (!is_null($this->config->Global->external_paths)
+      {
+        $this->addAdditionalIncludePaths($this->config->Global->external_paths->toArray());
+      }
+    }
+  }
+  
+  private function addAdditionalIncludePaths(array $additionalIncludePaths)
+  {
+    foreach ($additionalIncludePaths as $path)
+    {
+      set_include_path(get_include_path() . PATH_SEPARATOR . $path);
+    }
   }
   
   private function initExtensions($arguments)
