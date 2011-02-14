@@ -22,7 +22,9 @@ class RunInfoHeader implements Extension
   public function preRun(Properties $properties)
   {
     echo "  Default Domain  : " . $properties->getDefaultDomain()->toString()."\n";
-    echo "  Number of Tests : " . $this->getTotalTestCount($properties)."\n\n";  
+    echo "  Start Time      : " . date( 'Y-m-d H:i:s' )."\n\n";
+    echo "  Number of URIs  : " . count($properties->getTestSets())."\n";  
+    echo "  Number of Tests : " . $this->getTotalTestCount($properties)."\n\n";
   }
   
   private function getTotalTestCount(Properties $properties)
