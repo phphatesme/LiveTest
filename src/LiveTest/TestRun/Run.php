@@ -122,6 +122,7 @@ class Run
           $client->setUri($testSet->getUrl());
           $response = $client->request();
           $this->handleConnectionStatus(new ConnectionStatus(ConnectionStatus::SUCCESS, new Uri($testSet->getUrl())));
+          
         }
         catch (\Zend_Http_Client_Adapter_Exception $e )
         {

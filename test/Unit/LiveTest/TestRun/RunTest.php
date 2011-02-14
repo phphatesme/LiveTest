@@ -2,6 +2,7 @@
 namespace Unit\LiveTest\TestRun;
 
 use Unit\LiveTest\TestRun\Mockups\TestExtension;
+use Unit\LiveTest\TestRun\Mockups\TestHandleConnectionStatusExtension;
 use Unit\LiveTest\TestRun\Mockups\ResponseMockup;
 use Unit\LiveTest\TestRun\Mockups\HttpClientMockup;
 use Base\Http\Client;
@@ -40,6 +41,7 @@ class RunTest extends \PHPUnit_Framework_TestCase
       $this->object = new Run($this->configProperties, new HttpClientMockup(new ResponseMockup()));
     }
     
+    
      /**
      * @expectedException PHPUnit_Framework_Error
      */
@@ -51,14 +53,16 @@ class RunTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException Unit\LiveTest\TestRun\Mockups\SuccessException
      */
-    public function testAddExtension()
+    public function testHandleConnectionStatusOk()
     {
        $this->object = new Run($this->configProperties, new HttpClientMockup(new ResponseMockup()));
-       $this->object->addExtension(new TestExtension(1));
+       $this->object->addExtension(new TestHandleConnectionStatusExtension(1));
        $this->object->run();
        
        
     }
+    
+ 
     
      /**
      * @expectedException PHPUnit_Framework_Error
@@ -70,11 +74,20 @@ class RunTest extends \PHPUnit_Framework_TestCase
        
     }
     
-     
-    public function testRunZendHttpClientAdapterException()
+	/**
+     * @expectedException \ErrorException
+     */
+    public function testHandleConnectionStatusFailed()
     {
-      $this->object->addExtension(new TestExtension(2));
+       $this->uri = new Uri('http://test.rrrrrrrrrrrr.rr');
+       $this->configProperties = new Properties($this->config, $this->uri);
+       $client = new \Base\Http\Client();
+       $this->object = new Run($this->configProperties, $client);
+       $this->object->addExtension(new TestHandleConnectionStatusExtension(1));
+       $this->object->run();
+       
        
     }
+    
 }
 ?>

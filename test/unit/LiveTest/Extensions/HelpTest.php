@@ -25,11 +25,13 @@ class HelpTest extends \PHPUnit_Framework_TestCase
     $this->extension = new Help('', $config, array() );
     
     ob_start();
-    $this->extension->preRun(new Properties(new Yaml($this->testsuite), new Uri( 'http://www.example.com' )));
+    $this->extension->preRun(new Properties(new Yaml(__DIR__.'/'.$this->testsuite), new Uri( 'http://www.example.com' )));
     $output = ob_get_contents(); 
     ob_clean();
     
-    $this->assertEquals( '', $output );
+    $expected = file_get_contents(__DIR__.'/../../../../src/LiveTest/Extensions/Help/template.tpl');
+    
+    $this->assertEquals( $expected, $output );
   }
   
   public function testPreRunHelp()
@@ -38,7 +40,7 @@ class HelpTest extends \PHPUnit_Framework_TestCase
     $this->extension = new Help('', $config, array('help' => '') );
     
     ob_start();
-    $this->extension->preRun(new Properties(new Yaml($this->testsuite), new Uri( 'http://www.example.com' )));
+    $this->extension->preRun(new Properties(new Yaml(__DIR__.'/'.$this->testsuite), new Uri( 'http://www.example.com' )));
     $output = ob_get_contents();
     ob_clean();
     
