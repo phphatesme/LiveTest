@@ -27,6 +27,11 @@ class Yaml extends \Zend_Config implements Config
     parent::__construct($content, $allowModifications);
   }
 
+  /**
+   * This function returns the filename of the information providing file
+   * 
+   * @see Base\Config\Config::getFilename()
+   */
   public function getFilename( )
   {
     return $this->filename;

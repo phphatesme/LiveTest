@@ -28,22 +28,22 @@ class Run
   private $httpClient = null;
   
   private $extensions = array();
-
   
   public function addExtension(Extension $extension)
   {
-    $this->extensions [] = $extension;
+    $this->extensions[] = $extension;
   }
   
   public function __construct(Properties $properties, HttpClient $httpClient)
   {
     $this->httpClient = $httpClient;
+    // @todo is the properties object needed? TestSet would work as well
     $this->properties = $properties;
   }
   
   private function extensionsPostRun(Information $information)
   {
-    foreach ( $this->extensions as $extension )
+    foreach ($this->extensions as $extension)
     {
       $extension->postRun($information);
     }
@@ -51,7 +51,7 @@ class Run
   
   private function handleResult(Result $result, Response $response)
   {
-    foreach ( $this->extensions as $extension )
+    foreach ($this->extensions as $extension)
     {
       $extension->handleResult($result, $response);
     }
@@ -59,7 +59,7 @@ class Run
   
   private function handleConnectionStatus(ConnectionStatus $status)
   {
-    foreach ( $this->extensions as $extension )
+    foreach ($this->extensions as $extension)
     {
       $extension->handleConnectionStatus($status);
     }
@@ -67,7 +67,7 @@ class Run
   
   private function extensionsPreRun()
   {
-    foreach ( $this->extensions as $extension )
+    foreach ($this->extensions as $extension)
     {
       if ($extension->preRun($this->properties) === false)
       {
@@ -77,10 +77,9 @@ class Run
     return true;
   }
   
-
   private function runTests(TestSet $testSet, Response $response)
   {
-    foreach ( $testSet->getTests() as $test )
+    foreach ($testSet->getTests() as $test)
     {
       $testCaseName = $test->getClassName();
       try
@@ -88,13 +87,12 @@ class Run
         $testCaseObject = new $testCaseName($test->getParameter());
         $testCaseObject->test($response, new Uri($testSet->getUrl()));
         $result = new Result($test, Result::STATUS_SUCCESS, '', $testSet->getUrl());
-      } catch ( \LiveTest\TestCase\Exception $e )
+      }
+      catch (\LiveTest\TestCase\Exception $e )
       {
         $result = new Result($test, Result::STATUS_FAILED, $e->getMessage(), $testSet->getUrl());
-      } catch ( Exception $e )
-      {
-        $result = new Result($test, Result::STATUS_ERROR, $e->getMessage(), $testSet->getUrl());
-      } catch ( \Base\Www\Exception $e )
+      }
+      catch ( \Exception $e )
       {
         $result = new Result($test, Result::STATUS_ERROR, $e->getMessage(), $testSet->getUrl());
       }
@@ -102,15 +100,14 @@ class Run
     }
   }
   
-  
   private function getHttpClient()
   {
-      return $this->httpClient;
+    return $this->httpClient;
   }
   
   public function run()
   {
-
+    
     $continueRun = $this->extensionsPreRun();
     if ($continueRun)
     {
@@ -118,18 +115,22 @@ class Run
       $testSets = $this->properties->getTestSets();
       $client = $this->getHttpClient();
       
-      foreach ( $testSets as $testSet )
+      foreach ($testSets as $testSet)
       {
         try
         {
-          $client->setUri($testSet->getUrl());          
-          $response =  $client->request() ;
+          $client->setUri($testSet->getUrl());
+          $response = $client->request();
           $this->handleConnectionStatus(new ConnectionStatus(ConnectionStatus::SUCCESS, new Uri($testSet->getUrl())));
-        } 
-        catch ( \Zend_Http_Client_Adapter_Exception $e )
+        }
+        catch (\Zend_Http_Client_Adapter_Exception $e )
         {
           $this->handleConnectionStatus(new ConnectionStatus(ConnectionStatus::ERROR, new Uri($testSet->getUrl()), $e->getMessage()));
           continue;
+        }
+        catch (\Zend_Http_Client_Exception $e )
+        {
+          $this->handleConnectionStatus(new ConnectionStatus(ConnectionStatus::ERROR, new Uri($testSet->getUrl()), $e->getMessage()));
         }
         $this->runTests($testSet, $response);
       }
