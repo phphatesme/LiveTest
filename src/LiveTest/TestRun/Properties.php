@@ -51,7 +51,7 @@ class Properties
       
       if (!is_null($testCase->Pages))
       {
-        $testCasePages = $this->getPageArray($testCase->Pages);
+        $testCasePages = $this->convertToAbsoluteUris($testCase->Pages);
       }
       elseif ((!is_null($testCase->RemovedPages)) || !is_null($testCase->AdditionalPages))
       {
