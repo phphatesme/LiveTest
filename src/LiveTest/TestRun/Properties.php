@@ -26,7 +26,7 @@ class Properties
   
   private $testSets = array();
   
-  public function __construct( \Zend_Config $testSuiteConfig, Uri $defaultDomain)
+  public function __construct(Config $testSuiteConfig, Uri $defaultDomain)
   {
     $this->configPath = dirname($testSuiteConfig->getFilename());
     
@@ -45,21 +45,25 @@ class Properties
     $pages = $this->getStandardUrls();
     foreach ($this->config->TestCases as $testEntityName => $testCase)
     {
+      $removedPages = array();
+      $testCasePages = array();
+      $additionalPages = array();
+      
       if (!is_null($testCase->Pages))
       {
-        $testCasePages = $this->getPageArray($testCase->Pages);
+        $testCasePages = $this->convertToAbsoluteUris($testCase->Pages);
       }
       elseif ((!is_null($testCase->RemovedPages)) || !is_null($testCase->AdditionalPages))
       {
-        $testCasePages = $pages;
+        $testCasePages = $pages;        
         if (!is_null($testCase->RemovedPages))
         {
-          $removedPages = $this->getPageArray($testCase->RemovedPages);
+          $removedPages = $this->convertToAbsoluteUris($testCase->RemovedPages);
           $testCasePages = array_diff($testCasePages, $removedPages);
         }
         if (!is_null($testCase->AdditionalPages))
         {
-          $additionalPages = $this->getPageArray($testCase->AdditionalPages);
+          $additionalPages = $this->convertToAbsoluteUris($testCase->AdditionalPages);
           $testCasePages = array_merge($testCasePages, $additionalPages);
         }
       }
@@ -95,17 +99,25 @@ class Properties
     if ($pageConfig == null)
     {
       $pageConfig = array();
-    }
+    }        
+    return $this->convertToAbsoluteUris($pageConfig);
+  }
+  
+  private function convertToAbsoluteUris( $relativeUris )
+  {
+    $pages = array( );
     
-    $pages = array();
-    
-    foreach ($pageConfig as $page)
+    foreach ($relativeUris as $page)
     {
       $pages[] = $this->defaultDomain->concatUri((string)$page)->toString();
     }
+    
     return $pages;
-  }
+  } 
   
+  /**
+   * @throws Exception
+   */
   private function getPageLists()
   {
     $config = $this->config->PageLists;
@@ -117,7 +129,11 @@ class Properties
     $pagesListPage = array();
     foreach ($config as $pageList)
     {
-      $pageListConfig = new Yaml($this->configPath . '/' . (string)$pageList);
+      $yamlFile = $this->configPath . '/' . (string)$pageList;
+      if( !(file_exists($yamlFile) && is_file($yamlFile))) {
+        throw new Exception('The file "'.$yamlFile.'" defined as page list was not found');
+      }
+      $pageListConfig = new Yaml($yamlFile);
       $pageList = $pageListConfig->Pages->toArray();
       foreach ($pageList as $page)
       {

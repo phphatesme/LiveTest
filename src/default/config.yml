@@ -2,6 +2,9 @@ Extensions:
      
  Help:
   class: LiveTest\Extensions\Help    
+  
+ Verbose:
+  class: LiveTest\Extensions\Verbose   
      
  ProgressBar:
   class: LiveTest\Extensions\ProgressBar
