@@ -48,9 +48,12 @@ class RunTest extends \PHPUnit_Framework_TestCase
        $this->object->addExtension();
     }
     
+    /**
+     * @expectedException Unit\LiveTest\TestRun\Mockups\SuccessException
+     */
     public function testAddExtension()
     {
-      
+       $this->object = new Run($this->configProperties, new HttpClientMockup(new ResponseMockup()));
        $this->object->addExtension(new TestExtension(1));
        $this->object->run();
        
@@ -67,9 +70,10 @@ class RunTest extends \PHPUnit_Framework_TestCase
        
     }
     
+     
     public function testRunZendHttpClientAdapterException()
     {
-      $this->object->addExtension(new Null(1));
+      $this->object->addExtension(new TestExtension(2));
        
     }
 }

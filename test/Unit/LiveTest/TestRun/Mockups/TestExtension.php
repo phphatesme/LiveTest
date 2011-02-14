@@ -2,6 +2,8 @@
 
 namespace Unit\LiveTest\TestRun\Mockups;
 
+use Base\Cli\Exception;
+
 use LiveTest\TestRun\Information;
 use Base\Http\ConnectionStatus;
 
@@ -11,6 +13,7 @@ use Base\Http\Response;
 use LiveTest\Extensions\Extension;
 use LiveTest\TestRun\Test;
 use LiveTest\TestRun\Result\Result;
+use Unit\LiveTest\TestRun\Mockups\SuccessException;
 
 class TestExtension implements Extension
 {
@@ -30,7 +33,14 @@ class TestExtension implements Extension
   
   public function handleConnectionStatus(ConnectionStatus $status)
   {
-    
+  	if($status->getType() == $status::ERROR)
+  	{
+  		throw new ErrorException('Connection Failed');
+  	}
+  	else
+  	{
+  		throw new SuccessException('Connection OK');
+  	}
   }
   
   public function postRun(Information $information)

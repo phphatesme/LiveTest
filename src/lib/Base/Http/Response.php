@@ -23,7 +23,7 @@ class Response implements HttpResponse
   
   public function getStatus( )
   {
-    return $this->zendResponse->getStatus( );
+    return $this->zendResponse->getStatus();
   }
   
   public function getBody( )
