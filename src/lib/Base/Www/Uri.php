@@ -2,15 +2,13 @@
 
 namespace Base\Www;
 
-use Base\Exception;
-
 class Uri
 {
   private $uri;
   
   public function __construct($uriString)
   {
-    if (!self::isValidUri($uriString))
+    if (!self::isValid($uriString))
     {
       throw new \Base\Www\Exception('The given string (' . $uriString . ') does not represent a valid uri');
     }
@@ -53,16 +51,16 @@ class Uri
    * 
    * @param string $uriString
    */
-  public static function isValidUri($uriString)
+  public static function isValid($uriString)
   {
-    $http = '(http(s)?://)?';
+    $http = '((http(s)?|ftp):\/\/)?';
     $www = '(www\.)?';
     $domain = '([a-zA-Z]((\.|\-)?[a-zA-Z0-9])*)';
     $tld = '([a-zA-Z]{2,8})';
-    $usw = '[a-zA-Z0-9|_|-|+|.|,|/|:|;|\?|=|%|&|-]*';
+    $usw = '(\/|\/([a-zA-Z0-9|_|-|+|\.|,|\/|\:|;|\?|=|%|&|-])*)*';
     
-    $regEx = '^' . $http . $www . $domain . '\.' . $tld . $usw . '$';
+    $regEx = '@^' . $http . $www . $domain . '\.' . $tld . $usw . '$@';
     
-    return (bool)ereg($regEx, $uriString);
+    return (bool)preg_match($regEx, $uriString);
   }
 }
