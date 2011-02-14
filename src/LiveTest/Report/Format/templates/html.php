@@ -95,7 +95,13 @@
     		<td class="url_column <?php echo getRowClass( $testInfo['status'] );?>">
     			<a href="<?php echo $url ?>" target="_blank"><?php echo $url; ?></a>
     		</td>
-  			<?php foreach ($tests as $test): $content = getHtmlContent( $testList[$test->getName()] ); ?>    				
+  			<?php foreach ($tests as $test): 
+  			      if( array_key_exists($test->getName(), $testList) ) {
+  			        $content = getHtmlContent( $testList[$test->getName()] );
+  			      }else{
+  			        $content = array( 'css_class'=> 'result_none', 'message' => ''); 
+  			      }
+  			?>  			            				
 				  <td class="<?php echo $content['css_class']; ?> result_column"><?php echo htmlentities($content['message']); ?></td>					  			
   			<?php endforeach; ?>
     	</tr>
