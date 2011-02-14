@@ -29,8 +29,13 @@ class RunInfoHeaderTest extends \PHPUnit_Framework_TestCase
     $output = ob_get_contents();
     ob_clean();
     
-    $expected = "  Default Domain  : http://www.example.com\n  Number of Tests : 6\n\n";  
+    $expected = "  Default Domain  : http://www.example.com\n  Start Time      : 2011-02-14 16:43:09\n\n".
+                "  Number of URIs  : 3\n  Number of Tests : 6\n\n";  
 
-    $this->assertEquals( $expected, $output );
+    $output = explode("\n", $output); 
+    
+    $this->assertEquals( '  Default Domain  : http://www.example.com', $output[0] );
+    $this->assertEquals( '  Number of URIs  : 3', $output[3] );
+    $this->assertEquals( '  Number of Tests : 6', $output[4] );
   }
 }
