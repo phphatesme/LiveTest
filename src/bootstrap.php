@@ -4,6 +4,8 @@
 include_once 'lib/SymfonyComponents/Yaml/sfYaml.php';
 include_once 'lib/Base/bootstrap.php';
 
+include_once 'lib/Annovent/bootstrap.php';
+
 set_include_path(__DIR__ . '/lib' . PATH_SEPARATOR . get_include_path());
 require_once 'Zend/Loader/Autoloader.php';
 Zend_Loader_Autoloader::getInstance();

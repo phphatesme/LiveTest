@@ -1,34 +1,24 @@
 <?php
 
-namespace LiveTest\Extensions;
+namespace LiveTest\Listener;
 
-use LiveTest\TestRun\Information;
-use Base\Http\ConnectionStatus;
 use Base\Http\Response;
-
-use LiveTest\TestRun\Properties;
-use LiveTest\Extensions\Extention;
-use LiveTest\TestRun\Result\ResultSet;
-use LiveTest\TestRun\Test;
 use LiveTest\TestRun\Result\Result;
 
-class StatusBar implements Extension
+class StatusBar extends Base
 {
   private $testCount = 0;
   
   private $errorCount = 0;
   private $failureCount = 0;
   private $successCount = 0;
-  
-  public function __construct($runId, \Zend_Config $config = null, $arguments = null)
-  {
-  }
-  
-  public function preRun(Properties $properties)
-  {
-  
-  }
-  
+     
+  /**
+   * @event LiveTest.Run.HandleResult
+   *
+   * @param Result $result
+   * @param Response $response
+   */
   public function handleResult(Result $result, Response $response)
   {
     $this->testCount++;
@@ -46,12 +36,7 @@ class StatusBar implements Extension
         break;    
     }
   }
-  
-  public function handleConnectionStatus(ConnectionStatus $status)
-  {
-    
-  }
-  
+   
   private function getFormattedDuration($duration)
   {
     if ($duration < 60)
@@ -74,6 +59,11 @@ class StatusBar implements Extension
     return $duration . ' seconds';
   }
   
+  /**
+   * @event LiveTest.Run.PostRun
+   * 
+   * @param Information $information
+   */
   public function postRun(Information $information)
   {
     echo "\n  Tests: " . $this->testCount . ' (failed: '.$this->failureCount.', error: '.$this->errorCount.') - Duration: ' . $this->getFormattedDuration($information->getDuration());

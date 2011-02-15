@@ -1,14 +1,19 @@
-Extensions:
-     
- Help:
-  class: LiveTest\Extensions\Help    
+Listener:
+
+ ProgressBar:
+  class: LiveTest\Listener\ProgressBar
   
+ Help:
+  class: LiveTest\Listener\Help
+  
+ StatusBar:
+  class: LiveTest\Listener\StatusBar
+
+Extensions:
+       
  Verbose:
   class: LiveTest\Extensions\Verbose   
      
- ProgressBar:
-  class: LiveTest\Extensions\ProgressBar
-  
  Report_Echo:
   class: LiveTest\Extensions\Report
   parameter:
@@ -33,8 +38,7 @@ Extensions:
     parameter:
      filename: logs/tmp.log    
 
- StatusBar:
-  class: LiveTest\Extensions\StatusBar
+
   
  RunInfoHeader:
   class: LiveTest\Extensions\RunInfoHeader

@@ -2,6 +2,10 @@
 
 namespace LiveTest\Cli;
 
+use Annovent\Event\Event;
+
+use Annovent\Event\Dispatcher;
+
 use Base\Www\Uri;
 
 use LiveTest\TestRun;
@@ -23,19 +27,28 @@ class Runner extends ArgumentRunner
   private $config;
   private $testSuiteConfig;
   
+  private $eventDispatcher;
+  
   private $extensions = array();
   
   private $testRun;
   private $runId;
   
+  private $runAllowed = true;
+  
   private $defaultDomain = 'http://www.example.com';
   
-  public function __construct($arguments)
+  public function __construct($arguments, Dispatcher $dispatcher)
   {
     parent::__construct($arguments);
     
+    $this->eventDispatcher = $dispatcher;
+    
     $this->initRunId();
     $this->initConfig();
+    
+    $this->initListener($arguments);
+    
     $this->initGlobalSettings();
     $this->initTestSuiteConfig();
     $this->initExtensions($arguments);
@@ -83,6 +96,16 @@ class Runner extends ArgumentRunner
     {
       $currentConfig->Extensions = $defaultConfig->Extensions;
     }
+    
+    if (!is_null($currentConfig->Listener))
+    {
+      $currentConfig->Listener = $defaultConfig->Listener->merge($currentConfig->Listener);
+    }
+    else
+    {
+      $currentConfig->Listener = $defaultConfig->Listener;
+    }
+    
     $this->config = $currentConfig;
   }
   
@@ -111,6 +134,42 @@ class Runner extends ArgumentRunner
     }
   }
   
+  private function initListener($arguments)
+  {
+    if (!is_null($this->config->Listener))
+    {
+      foreach ($this->config->Listener as $name => $extensionConfig)
+      {
+        $className = (string)$extensionConfig->class;
+        if ($className == '')
+        {
+          throw new Exception('The class name for the "' . $name . '" listener is missing. Please check your configuration.');
+        }
+        if (is_null($extensionConfig->parameter))
+        {
+          $parameter = new \Zend_Config(array());
+        }
+        else
+        {
+          $parameter = $extensionConfig->parameter;
+        }
+        $this->eventDispatcher->registerListener(new $className($this->runId, $parameter, $arguments, $this->eventDispatcher));
+      }
+    }
+    $event = new Event('LiveTest.Runner.Init');
+    $result = $this->eventDispatcher->notify($event);
+    
+    if (!$result)
+    {
+      $this->runAllowed = false;
+    }
+  }
+  
+  public function isRunAllowed()
+  {
+    return $this->runAllowed;
+  }
+  
   private function initExtensions($arguments)
   {
     if (!is_null($this->config->Extensions))
@@ -131,7 +190,7 @@ class Runner extends ArgumentRunner
   private function initTestRun()
   {
     $testRunProperties = new Properties($this->testSuiteConfig, new Uri($this->defaultDomain));
-    $this->testRun = new Run($testRunProperties, new Client());
+    $this->testRun = new Run($testRunProperties, new Client(), $this->eventDispatcher);
     
     foreach ($this->extensions as $extension)
     {
@@ -141,7 +200,14 @@ class Runner extends ArgumentRunner
   
   public function run()
   {
-    $this->initTestRun();
-    $this->testRun->run();
+    if ($this->isRunAllowed())
+    {
+      $this->initTestRun();
+      $this->testRun->run();
+    }
+    else
+    {
+      throw new Exception('Not allowed to run');
+    }
   }
 }
