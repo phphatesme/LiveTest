@@ -16,7 +16,8 @@ class Dispatcher
         $listener = $listenerInfo['listener'];
         $method = $listenerInfo['method'];
         
-        $result = $result &&\call_user_func_named_array(array($listener,$method), $event->getParameters());
+        $callResult = \call_user_func_named_array(array($listener,$method), $event->getParameters());
+        $result = $result && !($callResult == false);
       }
     }
     return $result;
@@ -55,7 +56,7 @@ class Dispatcher
         {
           $eventName = str_replace(chr(13), '', $matches[1]);
           $eventName = str_replace(' ', '', $eventName);
-
+          
           $listenerInfo = array('listener' => $listener,'method' => $reflectedMethod->getName());
           
           $this->eventListenerMatrix[$eventName][] = $listenerInfo;

@@ -32,5 +32,5 @@ function call_user_func_named_array($function, array $param_arr = null)
     }
   }
   
-  call_user_func_array($function, $orderedParameters);
+  return call_user_func_array($function, $orderedParameters);
 }
