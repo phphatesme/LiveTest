@@ -3,6 +3,8 @@
 namespace LiveTest\Listener;
 
 use Base\Http\Response;
+
+use LiveTest\TestRun\Information;
 use LiveTest\TestRun\Result\Result;
 
 class StatusBar extends Base
@@ -37,6 +39,11 @@ class StatusBar extends Base
     }
   }
    
+  /**
+   * This function returns the formatted duration. Splits the given seconds into minuts and hours.
+   * 
+   * @param int $duration
+   */
   private function getFormattedDuration($duration)
   {
     if ($duration < 60)
@@ -60,12 +67,15 @@ class StatusBar extends Base
   }
   
   /**
+   * This function echoes the the duration, number of tests (errors and failures).
+   * 
    * @event LiveTest.Run.PostRun
    * 
    * @param Information $information
    */
-  public function postRun(Information $information)
+  public function postRun(Information  $information)
   {
-    echo "\n  Tests: " . $this->testCount . ' (failed: '.$this->failureCount.', error: '.$this->errorCount.') - Duration: ' . $this->getFormattedDuration($information->getDuration());
+    echo "\n\n  Tests: " . $this->testCount . ' (failed: '.$this->failureCount.', error: '.$this->errorCount.') - Duration: ' . $this->getFormattedDuration($information->getDuration());
+    echo "\n";
   }
 }

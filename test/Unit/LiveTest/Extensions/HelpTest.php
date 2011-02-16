@@ -19,33 +19,18 @@ class HelpTest extends \PHPUnit_Framework_TestCase
   
   private $extension;
     
-  public function testPreRunArguments()
+  public function testPreRunNone()
   {
     $config = new \Zend_Config(array() );
-    $this->extension = new Help('', $config, array('testsuite' => '' ) );
+    $this->extension = new Help('', $config, array() );
     
     ob_start();
-    $this->extension->preRun(new Properties(new Yaml(__DIR__.DIRECTORY_SEPARATOR.$this->testsuite), new Uri( 'http://www.example.com' )));
+    $this->extension->preRun(new Properties(new Yaml($this->testsuite), new Uri( 'http://www.example.com' )));
     $output = ob_get_contents(); 
     ob_clean();
     
     $this->assertEquals( '', $output );
   }
-  
-  public function testPreRunNone()
-  {
-    $config = new \Zend_Config(array() );
-    $this->extension = new Help('', $config, array( ) );
-    
-    ob_start();
-    $this->extension->preRun(new Properties(new Yaml(__DIR__.DIRECTORY_SEPARATOR.$this->testsuite), new Uri( 'http://www.example.com' )));
-    $output = ob_get_contents(); 
-    ob_clean();
-    
-    $expected = file_get_contents(__DIR__.'/../../../../src/LiveTest/Extensions/Help/template.tpl');
-    
-    $this->assertEquals( $expected, $output );
-  }  
   
   public function testPreRunHelp()
   {
@@ -53,7 +38,7 @@ class HelpTest extends \PHPUnit_Framework_TestCase
     $this->extension = new Help('', $config, array('help' => '') );
     
     ob_start();
-    $this->extension->preRun(new Properties(new Yaml(__DIR__.DIRECTORY_SEPARATOR.$this->testsuite), new Uri( 'http://www.example.com' )));
+    $this->extension->preRun(new Properties(new Yaml($this->testsuite), new Uri( 'http://www.example.com' )));
     $output = ob_get_contents();
     ob_clean();
     

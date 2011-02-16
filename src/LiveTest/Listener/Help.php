@@ -23,11 +23,10 @@ class Help extends Base
    * 
    * @event LiveTest.Runner.Init
    * 
-   * @param Properties $properties
+   * @param array $arguments
    */
-  public function runnerInit()
+  public function runnerInit(array $arguments)
   {
-    $arguments = $this->getArguments();
     if (array_key_exists('help', $arguments) || count($arguments) == 0)
     {
       echo file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . $this->template);

@@ -16,7 +16,7 @@ class Dispatcher
         $listener = $listenerInfo['listener'];
         $method = $listenerInfo['method'];
         
-        $callResult = \call_user_func_named_array(array($listener,$method), $event->getParameters());
+        $callResult = \Annovent\call_user_func_assoc_array(array($listener,$method), $event->getParameters());
         $result = $result && !($callResult == false);
       }
     }
@@ -32,7 +32,7 @@ class Dispatcher
         $listener = $listenerInfo['listener'];
         $method = $listenerInfo['method'];
         
-        if (\call_user_func_named_array(array($listener,$method), $event->getParameters()))
+        if (\Annovent\call_user_func_assoc_array(array($listener,$method), $event->getParameters()))
         {
           return false;
         }

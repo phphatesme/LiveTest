@@ -7,26 +7,12 @@ use Annovent\Event\Dispatcher;
 abstract class Base implements Listener
 {
   private $runId;
-  private $config;
   private $eventDispatcher;
-  private $arguments;
   
-  public function __construct($runId, \Zend_Config $config, array $arguments, Dispatcher $eventDispatcher)
+  public function __construct($runId, Dispatcher $eventDispatcher)
   {
     $this->runId = $runId;
-    $this->config = $config;
     $this->eventDispatcher = $eventDispatcher;
-    $this->arguments = $arguments;
-  }
-  
-  /**
-   * Returns the command line arguments
-   * 
-   * @return array
-   */
-  protected function getArguments( )
-  {
-    return $this->arguments;
   }
   
   /**
@@ -37,16 +23,6 @@ abstract class Base implements Listener
   protected function getRunId( )
   {
     return $this->runId;
-  }
-  
-  /**
-   * This function returns the config for this listener.
-   * 
-   * @return \Zend_Config
-   */
-  protected function getConfig( )
-  {
-    return $this->config;
   }
   
   /**
