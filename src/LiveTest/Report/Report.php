@@ -16,7 +16,18 @@ class Report
   private $connectionStatuses;
   private $information;
   
-  public function __construct( Writer $writer, Format $format, ResultSet $resultSet, $connectionStatuses, Information $information )
+  /**
+   * @param Writer $writer
+   * @param Format $format
+   * @param ResultSet $resultSet
+   * @param array $connectionStatuses
+   * @param Information $information
+   */
+  public function __construct( Writer $writer, 
+                               Format $format, 
+                               ResultSet $resultSet, 
+                               array $connectionStatuses, 
+                               Information $information )
   {
     $this->writer = $writer;
     $this->format = $format;
@@ -25,6 +36,9 @@ class Report
     $this->connectionStatuses = $connectionStatuses;
   }
   
+  /**
+   * Renders the report.
+   */
   public function render( )
   {
     $content = $this->format->formatSet($this->resultSet, $this->connectionStatuses, $this->information);
