@@ -6,7 +6,16 @@ use Annovent\Event\Dispatcher;
 
 abstract class Base implements Listener
 {
+  /**
+   * The unique run id
+   * @var string
+   */
   private $runId;
+  
+  /**
+   * The event dispatcher.
+   * @var Dispatcher
+   */
   private $eventDispatcher;
   
   public function __construct($runId, Dispatcher $eventDispatcher)

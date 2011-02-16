@@ -7,12 +7,36 @@ use Base\Http\Response;
 use LiveTest\TestRun\Information;
 use LiveTest\TestRun\Result\Result;
 
+/**
+ * This listener is used to echo a status bar with all important collected information
+ * of the test run.
+ * 
+ * @author Nils Langner
+ */
 class StatusBar extends Base
 {
+  /**
+   * Number of tests that were called
+   * @var int
+   */
   private $testCount = 0;
   
+  /**
+   * Number of tests with errors
+   * @var int
+   */
   private $errorCount = 0;
+  
+  /**
+   * Number of failures 
+   * @var int
+   */
   private $failureCount = 0;
+  
+  /**
+   * Number of succeeded tests
+   * @var int
+   */
   private $successCount = 0;
      
   /**

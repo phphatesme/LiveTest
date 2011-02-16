@@ -13,6 +13,15 @@ use Base\Http\Response;
 use LiveTest\TestRun\Result\ResultSet;
 use LiveTest\TestRun\Result\Result;
 
+/**
+ * This listener is used to provide all kind of reporting mechanism. Creating a report
+ * is a two step task. You need to define a format (e.g Html or plain text) that will 
+ * create a formatted string. The second step is to definethe writer. A writer takes a format 
+ * and writes it (e.g file writer or e-mail writer).
+ * 
+ * @author Nils Langner
+ *
+ */
 class Report extends Base
 {
   private $resultSet;
@@ -22,7 +31,14 @@ class Report extends Base
   private $writerConfig = array ();
   private $formatConfig = array ();
   
-  public function init(array $format, array $writer, $logStatuses = null)
+  /**
+   * Initializing the format, writer and define the log statuses.
+   * 
+   * @param array $format
+   * @param array $writer
+   * @param array $logStatuses
+   */
+  public function init(array $format, array $writer, array $logStatuses = null)
   {
     $this->resultSet = new ResultSet();
     if (!is_null($logStatuses))
@@ -39,6 +55,8 @@ class Report extends Base
   }
   
   /**
+   * Collect all information about the connection errors.
+   * 
    * @event LiveTest.Run.HandleConnectionStatus
    * 
    * @param ConnectionStatus $status
@@ -52,6 +70,8 @@ class Report extends Base
   }
   
   /**
+   * Collect all information about all tests.
+   * 
    * @event LiveTest.Run.HandleResult
    * 
    * @param Result $result
@@ -65,6 +85,9 @@ class Report extends Base
     }
   }
   
+  /**
+   * Creates and returns the writer class
+   */
   private function getWriter()
   {
     $writerClass = $this->writerConfig ['class'];
@@ -78,6 +101,9 @@ class Report extends Base
     return $writer;
   }
   
+  /**
+   * Creates and returns the fomrat class
+   */
   private function getFormat()
   {
     $formatClass = $this->formatConfig ['class'];
@@ -92,6 +118,8 @@ class Report extends Base
   }
   
   /**
+   * Writes the report.
+   * 
    * @event LiveTest.Run.PostRun
    * 
    * @param Information $information
