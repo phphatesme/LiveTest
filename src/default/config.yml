@@ -6,30 +6,28 @@ Listener:
  Help:
   class: LiveTest\Listener\Help
   
- StatusBar:
-  class: LiveTest\Listener\StatusBar
   
  RunInfoHeader:
   class: LiveTest\Listener\InfoHeader
 
  Verbose:
-  class: LiveTest\Listener\Verbose   
+  class: LiveTest\Listener\Verbose
 
  Report_Echo:
   class: LiveTest\Listener\Report
   parameter:
-   log_statuses: 
+   logStatuses:
     - error
     - failure
    format:
     class: LiveTest\Report\Format\SimpleList
    writer:
     class: LiveTest\Report\Writer\SimpleEcho
-   
+
  Report_File:
   class: LiveTest\Listener\Report
   parameter:
-   log_statuses: 
+   logStatuses:
     - error
     - failure
    format:
@@ -37,4 +35,7 @@ Listener:
    writer:
     class: LiveTest\Report\Writer\File
     parameter:
-     filename: logs/tmp.log    
+     filename: logs/tmp.log
+     
+ StatusBar:
+  class: LiveTest\Listener\StatusBar

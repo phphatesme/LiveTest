@@ -1,9 +1,9 @@
 Listener:
 
-# HtmlLogger:
-#  class: LiveTest\Listener\HtmlDocumentLog
-#  parameter:
-#   logPath: logs/
+ HtmlLogger:
+  class: LiveTest\Listener\HtmlDocumentLog
+  parameter:
+   logPath: logs/
 
  Report_Html_File:
   class: LiveTest\Listener\Report

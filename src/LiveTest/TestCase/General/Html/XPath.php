@@ -20,7 +20,7 @@ use LiveTest\TestCase\HtmlTestCase;
  * If the XPath doesn't match at all this is also regarded as a test
  * failure.
  */
-class XPath extends HtmlTestCase
+class XPath extends TestCase
 {
   protected $mandatoryParameter = array('XPath','RegEx');
   

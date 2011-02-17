@@ -154,8 +154,7 @@ class Runner extends ArgumentRunner
         $this->registerListener($listener, $parameter->toArray());
       }
     }
-    $event = new Event('LiveTest.Runner.Init', array( 'arguments' => $arguments ));
-    $result = $this->eventDispatcher->notify($event);
+    $result = $this->eventDispatcher->notify('LiveTest.Runner.Init', array( 'arguments' => $arguments ));
     if (!$result)
     {
       $this->runAllowed = false;

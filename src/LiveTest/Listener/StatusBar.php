@@ -99,7 +99,6 @@ class StatusBar extends Base
    */
   public function postRun(Information  $information)
   {
-    echo "\n\n  Tests: " . $this->testCount . ' (failed: '.$this->failureCount.', error: '.$this->errorCount.') - Duration: ' . $this->getFormattedDuration($information->getDuration());
-    echo "\n";
+    echo "  Tests: " . $this->testCount . ' (failed: '.$this->failureCount.', error: '.$this->errorCount.') - Duration: ' . $this->getFormattedDuration($information->getDuration());
   }
 }

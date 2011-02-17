@@ -2,16 +2,27 @@
 
 namespace LiveTest\TestCase\General\Http;
 
-use LiveTest\TestCase\Exception;
-
-use LiveTest\TestCase\HttpTestCase;
+use Base\Www\Uri;
 use Base\Http\Response;
 
-class SuccessfulStatusCode extends HttpTestCase
+use LiveTest\TestCase\TestCase;
+use LiveTest\TestCase\Exception;
+
+/**
+ * This test case is used to check if the http status is < 400
+ * 
+ * @author Nils Langner
+ */
+class SuccessfulStatusCode implements TestCase
 {
-  protected function runTest(Response $httpClient)
+  /**
+   * This function checks if the status code is < 400
+   * 
+   * @see LiveTest\TestCase.HttpTestCase::test()
+   */
+  public function test(Response $httpResponse, Uri $uri)
   {
-    $status = (int)$httpClient->getStatus();
+    $status = (int)$httpResponse->getStatus();
     if ($status >= 400 )
     {
       throw new Exception('The http status code ' . $status . ' was found (<400 expected).');

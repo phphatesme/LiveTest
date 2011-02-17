@@ -5,8 +5,14 @@ namespace Annovent\Event;
 class Dispatcher
 {
   private $eventListenerMatrix = array();
+    
+  public function notify( $name, array $namedParameters = null )
+  {
+    $event = new Event($name, $namedParameters);
+    return $this->notifyEvent($event);
+  }
   
-  public function notify(Event $event)
+  public function notifyEvent(Event $event)
   {
     $result = true;
     if (array_key_exists($event->getName(), $this->eventListenerMatrix))
