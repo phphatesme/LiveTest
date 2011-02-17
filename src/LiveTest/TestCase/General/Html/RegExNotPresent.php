@@ -7,7 +7,7 @@ use LiveTest\TestCase\Exception;
 
 /**
  * This test case is used to check the non-existence of are given regular expression.
-
+ *
  * @author Nils Langner
  */
 class RegExNotPresent extends TestCase
