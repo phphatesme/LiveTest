@@ -1,5 +1,4 @@
 <?php
-
 namespace Test\Unit\LiveTest\Extensions;
 
 use Base\Config\Yaml;
@@ -7,6 +6,8 @@ use Base\Www\Uri;
 
 use LiveTest\TestRun\Properties;
 use LiveTest\Extensions\RunInfoHeader;
+
+date_default_timezone_set('Europe/Berlin');
 
 class RunInfoHeaderTest extends \PHPUnit_Framework_TestCase
 {
