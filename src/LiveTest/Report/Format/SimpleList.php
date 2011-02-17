@@ -8,12 +8,7 @@ use LiveTest\TestRun\Result\ResultSet;
 use LiveTest\TestRun\Result\Result;
 
 class SimpleList implements Format
-{
-  public function __construct($params)
-  {
-  
-  }
-  
+{ 
   public function formatSet(ResultSet $set, array $connectionStatuses, Information $information)
   {
     $text = '';

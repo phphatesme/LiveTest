@@ -1,16 +1,22 @@
-Extensions:
-     
- Help:
-  class: LiveTest\Extensions\Help    
-  
- Verbose:
-  class: LiveTest\Extensions\Verbose   
-     
+Listener:
+
  ProgressBar:
-  class: LiveTest\Extensions\ProgressBar
+  class: LiveTest\Listener\ProgressBar
   
+ Help:
+  class: LiveTest\Listener\Help
+  
+ StatusBar:
+  class: LiveTest\Listener\StatusBar
+  
+ RunInfoHeader:
+  class: LiveTest\Listener\InfoHeader
+
+ Verbose:
+  class: LiveTest\Listener\Verbose   
+
  Report_Echo:
-  class: LiveTest\Extensions\Report
+  class: LiveTest\Listener\Report
   parameter:
    log_statuses: 
     - error
@@ -19,9 +25,9 @@ Extensions:
     class: LiveTest\Report\Format\SimpleList
    writer:
     class: LiveTest\Report\Writer\SimpleEcho
-    
+   
  Report_File:
-  class: LiveTest\Extensions\Report
+  class: LiveTest\Listener\Report
   parameter:
    log_statuses: 
     - error
@@ -32,9 +38,3 @@ Extensions:
     class: LiveTest\Report\Writer\File
     parameter:
      filename: logs/tmp.log    
-
- StatusBar:
-  class: LiveTest\Extensions\StatusBar
-  
- RunInfoHeader:
-  class: LiveTest\Extensions\RunInfoHeader

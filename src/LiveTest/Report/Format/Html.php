@@ -15,13 +15,13 @@ class Html implements Format
   private $template;
   private $statuses;
   
-  public function __construct($params)
+  public function init($template = null)
   {
-    $this->statuses = array(Result::STATUS_SUCCESS => 1,Result::STATUS_FAILED => 2,Result::STATUS_ERROR => 3);
+    $this->statuses = array (Result::STATUS_SUCCESS => 1, Result::STATUS_FAILED => 2, Result::STATUS_ERROR => 3 );
     
-    if (!is_null($params) && !is_null($params->template))
+    if (!is_null($template))
     {
-      $this->template = $params->template;
+      $this->template = $template;
     }
     else
     {
@@ -31,23 +31,23 @@ class Html implements Format
   
   public function formatSet(ResultSet $set, array $connectionStatuses, Information $information)
   {
-    $matrix = array();
-    $tests = array();
+    $matrix = array ();
+    $tests = array ();
     $testCount = 0;
     
-    foreach ($set->getResults() as $result)
+    foreach ( $set->getResults() as $result )
     {
       $testCount++;
-      $matrix[$result->getUrl()]['tests'][$result->getTest()->getName()] = $result;
-      if (array_key_exists('status', $matrix[$result->getUrl()]))
+      $matrix [$result->getUrl()] ['tests'] [$result->getTest()->getName()] = $result;
+      if (array_key_exists('status', $matrix [$result->getUrl()]))
       {
-        $matrix[$result->getUrl()]['status'] = max($matrix[$result->getUrl()]['status'], $this->statuses[$result->getStatus()]);
+        $matrix [$result->getUrl()] ['status'] = max($matrix [$result->getUrl()] ['status'], $this->statuses [$result->getStatus()]);
       }
       else
       {
-        $matrix[$result->getUrl()]['status'] = $this->statuses[$result->getStatus()];
+        $matrix [$result->getUrl()] ['status'] = $this->statuses [$result->getStatus()];
       }
-      $tests[$result->getTest()->getName()] = $result->getTest();
+      $tests [$result->getTest()->getName()] = $result->getTest();
     }
     
     ob_start();
