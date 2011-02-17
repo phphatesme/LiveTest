@@ -49,7 +49,6 @@ class HtmlDocumentLog extends Base
     }
   }
     
-
   /**
    * This function writes the html documents to a specified directory
    * 
@@ -62,6 +61,5 @@ class HtmlDocumentLog extends Base
       $filename = $this->logPath . '/' . urlencode($result->getUrl());
       file_put_contents($filename, $response->getBody());
     }
-  }
-  
+  }  
 }

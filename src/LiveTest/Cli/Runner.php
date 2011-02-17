@@ -24,7 +24,7 @@ use LiveTest\TestRun\Run;
 
 class Runner extends ArgumentRunner
 {
-  protected $mandatoryArguments = array ('testsuite' );
+//  protected $mandatoryArguments = array ('testsuite' );
   
   private $config;
   private $testSuiteConfig;
@@ -49,11 +49,12 @@ class Runner extends ArgumentRunner
     $this->initRunId();
     $this->initConfig();
     
-    $this->initListener($arguments);
-    
-    $this->initGlobalSettings();
-    $this->initTestSuiteConfig();
-    $this->initDefaultDomain();
+    if( !$this->initListener($arguments) ) 
+    {    
+      $this->initGlobalSettings();
+      $this->initTestSuiteConfig();
+      $this->initDefaultDomain();
+    }
   }
   
   private function initDefaultDomain()
@@ -154,8 +155,7 @@ class Runner extends ArgumentRunner
         $this->registerListener($listener, $parameter->toArray());
       }
     }
-    $event = new Event('LiveTest.Runner.Init', array( 'arguments' => $arguments ));
-    $result = $this->eventDispatcher->notify($event);
+    $result = $this->eventDispatcher->notify('LiveTest.Runner.Init', array( 'arguments' => $arguments ));
     if (!$result)
     {
       $this->runAllowed = false;

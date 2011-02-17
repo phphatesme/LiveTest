@@ -20,7 +20,6 @@ use LiveTest\TestRun\Result\Result;
  * and writes it (e.g file writer or e-mail writer).
  * 
  * @author Nils Langner
- *
  */
 class Report extends Base
 {
@@ -49,9 +48,9 @@ class Report extends Base
     {
       $this->logStatuses = array (Result::STATUS_ERROR, Result::STATUS_FAILED, Result::STATUS_SUCCESS );
     }
-    
-    $this->writerConfig = $writer;
-    $this->formatConfig = $format;
+
+    $this->initWriter( $writer );
+    $this->initFormat( $format );    
   }
   
   /**
@@ -86,35 +85,33 @@ class Report extends Base
   }
   
   /**
-   * Creates and returns the writer class
+   * Creates the writer class
    */
-  private function getWriter()
+  private function initWriter($writerConfig)
   {
-    $writerClass = $this->writerConfig ['class'];
-    $writer = new $writerClass();
+    $writerClass = $writerConfig ['class'];
+    $this->writer = new $writerClass();
     $parameter = array ();
-    if (array_key_exists('parameter', $this->writerConfig))
+    if (array_key_exists('parameter', $writerConfig))
     {
-      $parameter = $this->writerConfig ['parameter'];
+      $parameter = $writerConfig['parameter'];
     }
-    \LiveTest\initializeObject($writer, $parameter);
-    return $writer;
+    \LiveTest\initializeObject($this->writer, $parameter);
   }
   
   /**
-   * Creates and returns the fomrat class
+   * Creates format class
    */
-  private function getFormat()
+  private function initFormat($formatConfig)
   {
-    $formatClass = $this->formatConfig ['class'];
-    $format = new $formatClass();
+    $formatClass = $formatConfig ['class'];
+    $this->format = new $formatClass();
     $parameter = array ();
-    if (array_key_exists('parameter', $this->formatConfig))
+    if (array_key_exists('parameter', $formatConfig))
     {
-      $parameter = $this->formatConfig ['parameter'];
+      $parameter = $formatConfig ['parameter'];
     }
-    \LiveTest\initializeObject($format, $parameter);
-    return $format;
+    \LiveTest\initializeObject($this->format, $parameter);
   }
   
   /**
@@ -126,9 +123,11 @@ class Report extends Base
    */
   public function postRun(Information $information)
   {
-    $writer = $this->getWriter();
-    $format = $this->getFormat($information);
-    $report = new \LiveTest\Report\Report($writer, $format, $this->resultSet, $this->connectionStatuses, $information);
+    $report = new \LiveTest\Report\Report($this->writer, 
+                                          $this->format, 
+                                          $this->resultSet, 
+                                          $this->connectionStatuses, 
+                                          $information);
     $report->render();
   }
 }

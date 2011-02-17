@@ -5,7 +5,6 @@ namespace LiveTest\TestRun;
 use LiveTest\Listener\ProgressBar;
 
 use Annovent\Event\Event;
-
 use Annovent\Event\Dispatcher;
 
 use Base\Http\HttpClient;
@@ -38,7 +37,6 @@ class Run
   {    
     $this->eventDispatcher = $dispatcher;    
     $this->httpClient = $httpClient;
-    // @todo is the properties object needed? TestSet would work as well
     $this->properties = $properties;
   }
    
@@ -49,7 +47,8 @@ class Run
       $testCaseName = $test->getClassName();
       try
       {
-        $testCaseObject = new $testCaseName($test->getParameter());
+        $testCaseObject = new $testCaseName();        
+        \LiveTest\initializeObject($testCaseObject, $test->getParameter()->toArray());        
         $testCaseObject->test($response, new Uri($testSet->getUrl()));
         $result = new Result($test, Result::STATUS_SUCCESS, '', $testSet->getUrl());
       }
@@ -61,53 +60,41 @@ class Run
       {
         $result = new Result($test, Result::STATUS_ERROR, $e->getMessage(), $testSet->getUrl());
       }
-      $event = new Event('LiveTest.Run.HandleResult', array( 'result' => $result, 'response' => $response ));
-      $this->eventDispatcher->notify($event);
+      $this->eventDispatcher->notify('LiveTest.Run.HandleResult', array( 'result' => $result, 'response' => $response ));
     }
   }
    
   public function run()
   {    
-    $event = new Event('LiveTest.Run.PreRun', array('properties' => $this->properties));
-    $continueRun = $this->eventDispatcher->notify($event);
+    $continueRun = $this->eventDispatcher->notify('LiveTest.Run.PreRun', array('properties' => $this->properties));
     
     if ($continueRun)
     {
       $timer = new Timer();
       $testSets = $this->properties->getTestSets();
-      $client = $this->httpClient;
       
       foreach ($testSets as $testSet)
       {
         try
         {
-          $client->setUri($testSet->getUrl());
-          $response = $client->request();
+          $this->httpClient->setUri($testSet->getUrl());
+          $response = $this->httpClient->request();
           $connectionStatus = new ConnectionStatus(ConnectionStatus::SUCCESS, new Uri($testSet->getUrl()));
-          $event = new Event('LiveTest.Run.HandleConnectionStatus', array( 'connectionStatus' => $connectionStatus ));
-          $this->eventDispatcher->notify($event);
-        }
-        catch ( \Zend_Http_Client_Adapter_Exception $e )
-        {
-          $connectionStatus = new ConnectionStatus(ConnectionStatus::ERROR, new Uri($testSet->getUrl()), $e->getMessage());
-          $event = new Event('LiveTest.Run.HandleConnectionStatus', array( 'connectionStatus' => $connectionStatus ));
-          $this->eventDispatcher->notify($event);
-          continue;
+          $this->eventDispatcher->notify('LiveTest.Run.HandleConnectionStatus', array( 'connectionStatus' => $connectionStatus ));
         }
         catch ( \Zend_Http_Client_Exception $e )
         {
           $connectionStatus = new ConnectionStatus(ConnectionStatus::ERROR, new Uri($testSet->getUrl()), $e->getMessage());
-          $event = new Event('LiveTest.Run.HandleConnectionStatus', array( 'connectionStatus' => $connectionStatus ));
-          $this->eventDispatcher->notify($event);
+          $this->eventDispatcher->notify('LiveTest.Run.HandleConnectionStatus', array( 'connectionStatus' => $connectionStatus ));
           continue;
         }
         $this->runTests($testSet, $response);
       }
+      
       $timer->stop();
       $information = new Information($timer->getElapsedTime(), $this->properties->getDefaultDomain());
 
-      $event = new Event('LiveTest.Run.PostRun', array( 'information' => $information ));
-      $this->eventDispatcher->notify($event);
+      $this->eventDispatcher->notify('LiveTest.Run.PostRun', array( 'information' => $information ));
     }
   }
 }
