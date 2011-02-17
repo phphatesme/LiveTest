@@ -158,7 +158,6 @@ class Runner extends ArgumentRunner
     }
     $event = new Event('LiveTest.Runner.Init');
     $result = $this->eventDispatcher->notify($event);
-    var_dump( $result );
     if (!$result)
     {
       $this->runAllowed = false;
