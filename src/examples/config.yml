@@ -1,7 +1,12 @@
-Extensions:
+Listener:
+
+# HtmlLogger:
+#  class: LiveTest\Listener\HtmlDocumentLog
+#  parameter:
+#   logPath: logs/
 
  Report_Html_File:
-  class: LiveTest\Extensions\Report
+  class: LiveTest\Listener\Report
   parameter:
    format:
     class: LiveTest\Report\Format\Html
@@ -9,16 +14,16 @@ Extensions:
     class: LiveTest\Report\Writer\File
     parameter:
      filename: logs/example.html
-     
- Report_Html_Email_Attachment:
-  class: LiveTest\Extensions\Report
-  parameter:
-   format:
-    class: LiveTest\Report\Format\Html
-   writer:
-    class: LiveTest\Report\Writer\EmailAttachment
-    parameter:
-     to: livetest@phphatesme.com
-     from: livetest@phphatesme.com
-     subject: LiveTest Report - example.com - <?php echo date( 'Y-m-d' ); ?>
-     attachment: report.html
+
+# Report_Html_Email_Attachment:
+#  class: LiveTest\Listener\Report
+#  parameter:
+#   format:
+#    class: LiveTest\Report\Format\Html
+#   writer:
+#    class: LiveTest\Report\Writer\EmailAttachment
+#    parameter:
+#     to: livetest@phphatesme.com
+#     from: livetest@phphatesme.com
+#     subject: LiveTest Report - example.com - <?php echo date( 'Y-m-d' ); ?>
+#     attachmentName: report.html

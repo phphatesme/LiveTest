@@ -7,10 +7,10 @@ use LiveTest\Exception;
 class File implements Writer
 {
   private $filename;
-  
-  public function __construct(\Zend_Config $config)
+    
+  public function init($filename)
   {
-    $this->filename = $config->filename;    
+    $this->filename = $filename;
   }
   
   public function write($formatedText)

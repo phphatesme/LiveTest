@@ -33,13 +33,6 @@ class Run
   private $properties;
   private $httpClient = null;
   private $eventDispatcher;
-    
-  private $extensions = array();
-  
-  public function addExtension(Extension $extension)
-  {
-    $this->extensions[] = $extension;
-  }
   
   public function __construct(Properties $properties, HttpClient $httpClient, Dispatcher $dispatcher)
   {    
@@ -48,43 +41,7 @@ class Run
     // @todo is the properties object needed? TestSet would work as well
     $this->properties = $properties;
   }
-  
-  private function extensionsPostRun(Information $information)
-  {
-    foreach ($this->extensions as $extension)
-    {
-      $extension->postRun($information);
-    }
-  }
-  
-  private function handleResult(Result $result, Response $response)
-  {
-    foreach ($this->extensions as $extension)
-    {
-      $extension->handleResult($result, $response);
-    }
-  }
-  
-  private function handleConnectionStatus(ConnectionStatus $status)
-  {
-    foreach ($this->extensions as $extension)
-    {
-      $extension->handleConnectionStatus($status);
-    }
-  }
-  
-  private function extensionsPreRun()
-  {
-    foreach ($this->extensions as $extension)
-    {
-      if ($extension->preRun($this->properties) === false)
-      {
-        return false;
-      }
-    }
-    return true;
-  }
-  
+   
   private function runTests(TestSet $testSet, Response $response)
   {
     foreach ($testSet->getTests() as $test)
@@ -96,7 +53,7 @@ class Run
         $testCaseObject->test($response, new Uri($testSet->getUrl()));
         $result = new Result($test, Result::STATUS_SUCCESS, '', $testSet->getUrl());
       }
-      catch ( LiveTest\TestCase\Exception $e )
+      catch ( \LiveTest\TestCase\Exception $e )
       {
         $result = new Result($test, Result::STATUS_FAILED, $e->getMessage(), $testSet->getUrl());
       }
@@ -106,26 +63,19 @@ class Run
       }
       $event = new Event('LiveTest.Run.HandleResult', array( 'result' => $result, 'response' => $response ));
       $this->eventDispatcher->notify($event);
-      $this->handleResult($result, $response);
     }
   }
-  
-  private function getHttpClient()
-  {
-    return $this->httpClient;
-  }
-  
+   
   public function run()
   {    
-    $continueRun = $this->extensionsPreRun();
     $event = new Event('LiveTest.Run.PreRun', array('properties' => $this->properties));
-    $continueRun = $this->eventDispatcher->notify($event) && $continueRun;
+    $continueRun = $this->eventDispatcher->notify($event);
     
     if ($continueRun)
     {
       $timer = new Timer();
       $testSets = $this->properties->getTestSets();
-      $client = $this->getHttpClient();
+      $client = $this->httpClient;
       
       foreach ($testSets as $testSet)
       {
@@ -136,11 +86,12 @@ class Run
           $connectionStatus = new ConnectionStatus(ConnectionStatus::SUCCESS, new Uri($testSet->getUrl()));
           $event = new Event('LiveTest.Run.HandleConnectionStatus', array( 'connectionStatus' => $connectionStatus ));
           $this->eventDispatcher->notify($event);
-          $this->handleConnectionStatus($connectionStatus);
         }
         catch ( \Zend_Http_Client_Adapter_Exception $e )
         {
-          $this->handleConnectionStatus(new ConnectionStatus(ConnectionStatus::ERROR, new Uri($testSet->getUrl()), $e->getMessage()));
+          $connectionStatus = new ConnectionStatus(ConnectionStatus::ERROR, new Uri($testSet->getUrl()), $e->getMessage());
+          $event = new Event('LiveTest.Run.HandleConnectionStatus', array( 'connectionStatus' => $connectionStatus ));
+          $this->eventDispatcher->notify($event);
           continue;
         }
         catch ( \Zend_Http_Client_Exception $e )
@@ -148,13 +99,15 @@ class Run
           $connectionStatus = new ConnectionStatus(ConnectionStatus::ERROR, new Uri($testSet->getUrl()), $e->getMessage());
           $event = new Event('LiveTest.Run.HandleConnectionStatus', array( 'connectionStatus' => $connectionStatus ));
           $this->eventDispatcher->notify($event);
-          $this->handleConnectionStatus($connectionStatus);
+          continue;
         }
         $this->runTests($testSet, $response);
       }
       $timer->stop();
       $information = new Information($timer->getElapsedTime(), $this->properties->getDefaultDomain());
-      $this->extensionsPostRun($information);
+
+      $event = new Event('LiveTest.Run.PostRun', array( 'information' => $information ));
+      $this->eventDispatcher->notify($event);
     }
   }
 }

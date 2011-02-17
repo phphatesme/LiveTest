@@ -8,14 +8,15 @@ Listener:
   
  StatusBar:
   class: LiveTest\Listener\StatusBar
+  
+ RunInfoHeader:
+  class: LiveTest\Listener\InfoHeader
 
-Extensions:
-       
  Verbose:
-  class: LiveTest\Extensions\Verbose   
-     
+  class: LiveTest\Listener\Verbose   
+
  Report_Echo:
-  class: LiveTest\Extensions\Report
+  class: LiveTest\Listener\Report
   parameter:
    log_statuses: 
     - error
@@ -24,9 +25,9 @@ Extensions:
     class: LiveTest\Report\Format\SimpleList
    writer:
     class: LiveTest\Report\Writer\SimpleEcho
-    
+   
  Report_File:
-  class: LiveTest\Extensions\Report
+  class: LiveTest\Listener\Report
   parameter:
    log_statuses: 
     - error
@@ -37,8 +38,3 @@ Extensions:
     class: LiveTest\Report\Writer\File
     parameter:
      filename: logs/tmp.log    
-
-
-  
- RunInfoHeader:
-  class: LiveTest\Extensions\RunInfoHeader
