@@ -14,7 +14,7 @@ function initializeObject( $object, $parameter )
     }
     catch ( \Annovent\Exception $e )
     {
-      throw new LiveTest\ConfigurationException('Unable to initialize object ('.get_class($object).'). '.
+      throw new \LiveTest\ConfigurationException('Unable to initialize object ('.get_class($object).'). '.
                                                 'Mandatory parameter "'.$e->getMissingParameter().'" is missing.');
     }
   }
