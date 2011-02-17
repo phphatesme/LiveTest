@@ -38,7 +38,6 @@ class Run
   {    
     $this->eventDispatcher = $dispatcher;    
     $this->httpClient = $httpClient;
-    // @todo is the properties object needed? TestSet would work as well
     $this->properties = $properties;
   }
    
@@ -74,22 +73,15 @@ class Run
     {
       $timer = new Timer();
       $testSets = $this->properties->getTestSets();
-      $client = $this->httpClient;
       
       foreach ($testSets as $testSet)
       {
         try
         {
-          $client->setUri($testSet->getUrl());
-          $response = $client->request();
+          $this->httpClient->setUri($testSet->getUrl());
+          $response = $this->httpClient->request();
           $connectionStatus = new ConnectionStatus(ConnectionStatus::SUCCESS, new Uri($testSet->getUrl()));
           $this->eventDispatcher->notify('LiveTest.Run.HandleConnectionStatus', array( 'connectionStatus' => $connectionStatus ));
-        }
-        catch ( \Zend_Http_Client_Adapter_Exception $e )
-        {
-          $connectionStatus = new ConnectionStatus(ConnectionStatus::ERROR, new Uri($testSet->getUrl()), $e->getMessage());
-          $this->eventDispatcher->notify('LiveTest.Run.HandleConnectionStatus', array( 'connectionStatus' => $connectionStatus ));
-          continue;
         }
         catch ( \Zend_Http_Client_Exception $e )
         {
@@ -99,6 +91,7 @@ class Run
         }
         $this->runTests($testSet, $response);
       }
+      
       $timer->stop();
       $information = new Information($timer->getElapsedTime(), $this->properties->getDefaultDomain());
 
