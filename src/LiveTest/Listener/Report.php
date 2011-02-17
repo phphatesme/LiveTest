@@ -123,7 +123,11 @@ class Report extends Base
    */
   public function postRun(Information $information)
   {
-    $report = new \LiveTest\Report\Report($this->writer, $this->format, $this->resultSet, $this->connectionStatuses, $information);
+    $report = new \LiveTest\Report\Report($this->writer, 
+                                          $this->format, 
+                                          $this->resultSet, 
+                                          $this->connectionStatuses, 
+                                          $information);
     $report->render();
   }
 }

@@ -5,7 +5,6 @@ namespace LiveTest\TestRun;
 use LiveTest\Listener\ProgressBar;
 
 use Annovent\Event\Event;
-
 use Annovent\Event\Dispatcher;
 
 use Base\Http\HttpClient;
