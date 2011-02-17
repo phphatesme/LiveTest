@@ -27,27 +27,38 @@ class HtmlDocumentLog implements Extension
    * @var string
    */
   private $logPath;
+  private $runId;
+  
+  private $logStatuses = array();
   
   /**
-   * This function stores the log_path and if neccessary it creates the path.
-   * 
+   * This cobstructor is used to configure the log levels and to create the log path 
+
    * @param string $runId
-   * @param \Zend_Config $config
+   * @param Zend_Config $config
    * @param array $arguments
    */
-  public function __construct($runId,\Zend_Config $config = null, $arguments = null)
+  public function __construct($runId, \Zend_Config $config = null, $arguments = null)
   {
     $this->logPath = $config->log_path . '/' . $runId . '/';
     if (!file_exists($this->logPath))
     {
       mkdir($this->logPath);
     }
+    
+    if (!is_null($config->log_statuses))
+    {
+      $this->logStatuses = $config->log_statuses->toArray();
+    }
+    else
+    {
+      $this->logStatuses = array(Result::STATUS_ERROR,Result::STATUS_FAILED);
+    }
   }
   
   /**
    * not used
-   * 
-   * @param Properties $properties
+   * @see LiveTest\Extensions.Extension::preRun()
    */
   public function preRun(Properties $properties)
   {
@@ -55,21 +66,23 @@ class HtmlDocumentLog implements Extension
   }
   
   /**
-   * This function stores the html document in a specified directory
+   * This function writes the html documents to a specified directory
    * 
-   * @param Result $result
-   * @param Response $response
+   * @see LiveTest\Extensions.Extension::handleResult()
    */
   public function handleResult(Result $result, Response $response)
   {
-    $filename = $this->logPath . '/' . urlencode($result->getUrl());
-    file_put_contents($filename, $response->getBody());
+    if (in_array($result->getStatus(), $this->logStatuses))
+    {
+      $filename = $this->logPath . '/' . urlencode($result->getUrl());
+      file_put_contents($filename, $response->getBody());
+    }
   }
   
   /**
    * not used
    * 
-   * @param ConnectionStatus $status
+   * @see LiveTest\Extensions.Extension::handleConnectionStatus()
    */
   public function handleConnectionStatus(ConnectionStatus $status)
   {
@@ -79,7 +92,7 @@ class HtmlDocumentLog implements Extension
   /**
    * not used
    * 
-   * @param Information $information
+   * @see LiveTest\Extensions.Extension::postRun()
    */
   public function postRun(Information $information)
   {
