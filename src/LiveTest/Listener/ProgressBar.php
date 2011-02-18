@@ -3,12 +3,13 @@
 namespace LiveTest\Listener;
 
 use LiveTest\TestRun\Result\Result;
+
 use Base\Http\ConnectionStatus;
-use Base\Http\Response;
+use Base\Http\Response\Response;
 
 /**
  * This listener is used to visualize the test results as a pogress bar
- * 
+ *
  * @author Nils Langner
  */
 class ProgressBar extends Base
@@ -18,18 +19,18 @@ class ProgressBar extends Base
    * @var int
    */
   const LINE_BREAK_AT = 70;
-  
+
   /**
-   * The internal echo counter. Used to create new lines at the right position. 
+   * The internal echo counter. Used to create new lines at the right position.
    * @var int
    */
   private $counter = 0;
-    
+
   /**
-   * This function echoes a '*' if a test succeeded, 'e' if an error occured and 'f' if a test failed.  
-   * 
+   * This function echoes a '*' if a test succeeded, 'e' if an error occured and 'f' if a test failed.
+   *
    * @event LiveTest.Run.HandleResult
-   * 
+   *
    * @param Result $result
    * @param Response $response
    */
@@ -48,13 +49,13 @@ class ProgressBar extends Base
         break;
     }
   }
-  
+
   /**
    * This function echoes a E if the connection failed.
-   * 
+   *
    * @event LiveTest.Run.HandleConnectionStatus
-   * 
-   * @param ConnectionStatus 
+   *
+   * @param ConnectionStatus
    */
   public function handleConnectionStatus(ConnectionStatus $connectionStatus)
   {
@@ -63,10 +64,10 @@ class ProgressBar extends Base
       $this->echoChar('E');
     }
   }
-  
+
   /**
    * Prints a character a the right position. Creates new lines a the "Running: " prefix.
-   * 
+   *
    * @param char $char
    */
   private function echoChar($char)
@@ -75,7 +76,7 @@ class ProgressBar extends Base
     {
       echo '  Running: ';
     }
-    
+
     if ($this->counter % self::LINE_BREAK_AT == 0 && $this->counter != 0)
     {
       echo "\n           ";

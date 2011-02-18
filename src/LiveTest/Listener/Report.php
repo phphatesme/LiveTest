@@ -8,17 +8,17 @@ use Base\Http\ConnectionStatus;
 
 use LiveTest\TestRun\Properties;
 use LiveTest\TestRun\Information;
-use Base\Http\Response;
+use Base\Http\Response\Response;
 
 use LiveTest\TestRun\Result\ResultSet;
 use LiveTest\TestRun\Result\Result;
 
 /**
  * This listener is used to provide all kind of reporting mechanism. Creating a report
- * is a two step task. You need to define a format (e.g Html or plain text) that will 
- * create a formatted string. The second step is to definethe writer. A writer takes a format 
+ * is a two step task. You need to define a format (e.g Html or plain text) that will
+ * create a formatted string. The second step is to definethe writer. A writer takes a format
  * and writes it (e.g file writer or e-mail writer).
- * 
+ *
  * @author Nils Langner
  */
 class Report extends Base
@@ -26,13 +26,13 @@ class Report extends Base
   private $resultSet;
   private $logStatuses = array ();
   private $connectionStatuses = array ();
-  
+
   private $writerConfig = array ();
   private $formatConfig = array ();
-  
+
   /**
    * Initializing the format, writer and define the log statuses.
-   * 
+   *
    * @param array $format
    * @param array $writer
    * @param array $logStatuses
@@ -50,14 +50,14 @@ class Report extends Base
     }
 
     $this->initWriter( $writer );
-    $this->initFormat( $format );    
+    $this->initFormat( $format );
   }
-  
+
   /**
    * Collect all information about the connection errors.
-   * 
+   *
    * @event LiveTest.Run.HandleConnectionStatus
-   * 
+   *
    * @param ConnectionStatus $status
    */
   public function handleConnectionStatus(ConnectionStatus $connectionStatus)
@@ -67,12 +67,12 @@ class Report extends Base
       $this->connectionStatuses [] = $connectionStatus;
     }
   }
-  
+
   /**
    * Collect all information about all tests.
-   * 
+   *
    * @event LiveTest.Run.HandleResult
-   * 
+   *
    * @param Result $result
    * @param Response $response
    */
@@ -83,7 +83,7 @@ class Report extends Base
       $this->resultSet->addResult($result);
     }
   }
-  
+
   /**
    * Creates the writer class
    */
@@ -98,7 +98,7 @@ class Report extends Base
     }
     \LiveTest\initializeObject($this->writer, $parameter);
   }
-  
+
   /**
    * Creates format class
    */
@@ -113,20 +113,20 @@ class Report extends Base
     }
     \LiveTest\initializeObject($this->format, $parameter);
   }
-  
+
   /**
    * Writes the report.
-   * 
+   *
    * @event LiveTest.Run.PostRun
-   * 
+   *
    * @param Information $information
    */
   public function postRun(Information $information)
   {
-    $report = new \LiveTest\Report\Report($this->writer, 
-                                          $this->format, 
-                                          $this->resultSet, 
-                                          $this->connectionStatuses, 
+    $report = new \LiveTest\Report\Report($this->writer,
+                                          $this->format,
+                                          $this->resultSet,
+                                          $this->connectionStatuses,
                                           $information);
     $report->render();
   }

@@ -2,9 +2,11 @@
 
 namespace Test\Unit\LiveTest\Listener;
 
+use Base\Http\Response\Zend;
+
 use Annovent\Event\Dispatcher;
 
-use Base\Http\Response;
+use Base\Http\Response\Response;
 
 use Base\Config\Yaml;
 
@@ -35,7 +37,7 @@ class HtmlDocumentLogTest extends \PHPUnit_Framework_TestCase
     $this->listener->init(__DIR__ . DIRECTORY_SEPARATOR . $this->logPath);
 
     $test = new Test('', '', new \Zend_Config(array()));
-    $response = new Response(new \Zend_Http_Response(200, array(), '<body></body>'));
+    $response = new Zend(new \Zend_Http_Response(200, array(), '<body></body>'));
     $result = new Result($test, Result::STATUS_FAILED, '', 'http://www.phphatesme.com');
 
     $this->listener->handleResult($result, $response);
@@ -48,7 +50,7 @@ class HtmlDocumentLogTest extends \PHPUnit_Framework_TestCase
     $this->listener->init(__DIR__ . DIRECTORY_SEPARATOR . $this->logPath, array( Result::STATUS_SUCCESS) );
 
     $test = new Test('', '', new \Zend_Config(array()));
-    $response = new Response(new \Zend_Http_Response(200, array(), '<body></body>'));
+    $response = new Zend(new \Zend_Http_Response(200, array(), '<body></body>'));
     $result = new Result($test, Result::STATUS_FAILED, '', 'http://www.phphatesme.com');
 
     $this->listener->handleResult($result, $response);

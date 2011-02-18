@@ -2,12 +2,13 @@
 
 namespace LiveTest\TestRun;
 
+use Base\Http\Client\Client;
+
 use LiveTest\Listener\ProgressBar;
 
 use Annovent\Event\Event;
 use Annovent\Event\Dispatcher;
 
-use Base\Http\HttpClient;
 use Base\Timer\Timer;
 
 use Base\Http\ConnectionStatus;
@@ -19,27 +20,26 @@ use LiveTest\TestCase\Exception;
 use LiveTest\TestRun\Result\ResultSet;
 use LiveTest\TestRun\Result\Result;
 
-use Base\Http\Response;
-use Base\Http\Client;
+use Base\Http\Response\Response;
 
 class Run
 {
   /**
    * All properties for the test run
-   * 
+   *
    * @var LiveTest\TestRun\Properties
    */
   private $properties;
   private $httpClient = null;
   private $eventDispatcher;
-  
-  public function __construct(Properties $properties, HttpClient $httpClient, Dispatcher $dispatcher)
-  {    
-    $this->eventDispatcher = $dispatcher;    
+
+  public function __construct(Properties $properties, Client $httpClient, Dispatcher $dispatcher)
+  {
+    $this->eventDispatcher = $dispatcher;
     $this->httpClient = $httpClient;
     $this->properties = $properties;
   }
-   
+
   private function runTests(TestSet $testSet, Response $response)
   {
     foreach ($testSet->getTests() as $test)
@@ -47,8 +47,8 @@ class Run
       $testCaseName = $test->getClassName();
       try
       {
-        $testCaseObject = new $testCaseName();        
-        \LiveTest\initializeObject($testCaseObject, $test->getParameter()->toArray());        
+        $testCaseObject = new $testCaseName();
+        \LiveTest\initializeObject($testCaseObject, $test->getParameter()->toArray());
         $testCaseObject->test($response, new Uri($testSet->getUrl()));
         $result = new Result($test, Result::STATUS_SUCCESS, '', $testSet->getUrl());
       }
@@ -63,16 +63,16 @@ class Run
       $this->eventDispatcher->notify('LiveTest.Run.HandleResult', array( 'result' => $result, 'response' => $response ));
     }
   }
-   
+
   public function run()
-  {    
+  {
     $continueRun = $this->eventDispatcher->notify('LiveTest.Run.PreRun', array('properties' => $this->properties));
-    
+
     if ($continueRun)
     {
       $timer = new Timer();
       $testSets = $this->properties->getTestSets();
-      
+
       foreach ($testSets as $testSet)
       {
         try
@@ -90,7 +90,7 @@ class Run
         }
         $this->runTests($testSet, $response);
       }
-      
+
       $timer->stop();
       $information = new Information($timer->getElapsedTime(), $this->properties->getDefaultDomain());
 
