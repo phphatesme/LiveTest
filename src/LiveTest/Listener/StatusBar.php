@@ -2,7 +2,7 @@
 
 namespace LiveTest\Listener;
 
-use Base\Http\Response;
+use Base\Http\Response\Response;
 
 use LiveTest\TestRun\Information;
 use LiveTest\TestRun\Result\Result;

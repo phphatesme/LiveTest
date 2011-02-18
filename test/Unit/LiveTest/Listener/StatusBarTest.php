@@ -2,11 +2,13 @@
 
 namespace Test\Unit\LiveTest\Extensions;
 
+use Base\Http\Response\Zend;
+
 use Base\Www\Uri;
 
 use Annovent\Event\Dispatcher;
 
-use Base\Http\Response;
+use Base\Http\Response\Response;
 
 use LiveTest\Listener\StatusBar;
 use LiveTest\TestRun\Information;
@@ -20,7 +22,7 @@ class StatusBarTest extends \PHPUnit_Framework_TestCase
     $listener = new StatusBar('', new Dispatcher());
 
     $test = new Test('', '', new \Zend_Config(array()));
-    $response = new Response(new \Zend_Http_Response(200, array()));
+    $response = new Zend(new \Zend_Http_Response(200, array()));
 
     $result = new Result($test, Result::STATUS_SUCCESS, '', '');
     $listener->handleResult($result, $response);

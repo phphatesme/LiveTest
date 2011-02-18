@@ -6,17 +6,17 @@ use LiveTest\TestCase\TestCase;
 use LiveTest\TestCase\Exception;
 
 use Base\Www\Uri;
-use Base\Http\Response;
+use Base\Http\Response\Response;
 
 /**
  * This test case is used to check for an speficed http status code.
- * 
+ *
  * @author Nils Langner
  */
 class ExpectedStatusCode implements TestCase
 {
   private $statusCode;
-  
+
   /**
    * Sets the http status code
 
@@ -26,10 +26,10 @@ class ExpectedStatusCode implements TestCase
   {
     $this->statusCode = $statusCode;
   }
-  
+
   /**
    * Checks if the actual http status equals the expected.
-   * 
+   *
    * @see LiveTest\TestCase.HttpTestCase::test()
    */
   public function test(Response $response, Uri $uri)

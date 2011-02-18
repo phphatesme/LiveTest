@@ -2,13 +2,13 @@
 
 namespace LiveTest\Listener;
 
-use Base\Http\Response;
+use Base\Http\Response\Response;
 use LiveTest\TestRun\Result\Result;
 
 /**
- * This listener writes all specified html documents in to a defined directory. The 
+ * This listener writes all specified html documents in to a defined directory. The
  * listener creates a directory with the value of the runId within the log path.
- * 
+ *
  * @author Nils Langner
  */
 class HtmlDocumentLog extends Base
@@ -24,10 +24,10 @@ class HtmlDocumentLog extends Base
    * @var array
    */
   private $logStatuses = array();
-  
+
   /**
    * This function initializes the log path and if given the log statuses
-   * 
+   *
    * @param string $logPath
    * @param array $logStatuses
    */
@@ -38,7 +38,7 @@ class HtmlDocumentLog extends Base
     {
       mkdir($this->logPath);
     }
-    
+
     if (!is_null($logStatuses))
     {
       $this->logStatuses = $logStatuses;
@@ -48,10 +48,10 @@ class HtmlDocumentLog extends Base
       $this->logStatuses = array(Result::STATUS_ERROR,Result::STATUS_FAILED);
     }
   }
-    
+
   /**
    * This function writes the html documents to a specified directory
-   * 
+   *
    * @event LiveTest.Run.HandleResult
    */
   public function handleResult(Result $result, Response $response)
@@ -61,5 +61,5 @@ class HtmlDocumentLog extends Base
       $filename = $this->logPath . '/' . urlencode($result->getUrl());
       file_put_contents($filename, $response->getBody());
     }
-  }  
+  }
 }

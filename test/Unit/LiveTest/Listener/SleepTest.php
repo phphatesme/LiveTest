@@ -2,9 +2,11 @@
 
 namespace Test\Unit\LiveTest\Extensions;
 
+use Base\Http\Response\Zend;
+
 use Annovent\Event\Dispatcher;
 
-use Base\Http\Response;
+use Base\Http\Response\Response;
 
 use Base\Timer\Timer;
 
@@ -28,7 +30,7 @@ class SleepTest extends \PHPUnit_Framework_TestCase
     $this->listener->init(1);
 
     $test = new Test('', '', new \Zend_Config(array()));
-    $response = new Response(new \Zend_Http_Response(200, array()));
+    $response = new Zend(new \Zend_Http_Response(200, array()));
 
     $timer = new Timer();
     $this->listener->handleConnectionStatus( new ConnectionStatus(ConnectionStatus::SUCCESS, new Uri( 'http://www.example.com')));

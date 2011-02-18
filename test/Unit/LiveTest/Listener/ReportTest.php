@@ -2,11 +2,13 @@
 
 namespace Test\Unit\LiveTest\Extensions;
 
+use Base\Http\Response\Zend;
+
 use LiveTest\TestRun\Information;
 
 use Annovent\Event\Dispatcher;
 
-use Base\Http\Response;
+use Base\Http\Response\Response;
 
 use LiveTest\Listener\Report;
 
@@ -35,7 +37,7 @@ class ReportTest extends \PHPUnit_Framework_TestCase
     $this->initReportListener();
 
     $test = new Test('TestName', 'ClassName', new \Zend_Config(array()));
-    $response = new Response(new \Zend_Http_Response(200, array()));
+    $response = new Zend(new \Zend_Http_Response(200, array()));
 
     $result = new Result($test, Result::STATUS_SUCCESS, 'Success', 'http://www.example.com');
     $this->listener->handleResult($result, $response);
@@ -60,7 +62,7 @@ class ReportTest extends \PHPUnit_Framework_TestCase
     $this->listener->init($formatConfig, $writerConfig, array(Result::STATUS_FAILED));
 
     $test = new Test('TestName', 'ClassName', new \Zend_Config(array()));
-    $response = new Response(new \Zend_Http_Response(200, array()));
+    $response = new Zend(new \Zend_Http_Response(200, array()));
 
     $result = new Result($test, Result::STATUS_SUCCESS, 'Success', 'http://www.example.com');
     $this->listener->handleResult($result, $response);
