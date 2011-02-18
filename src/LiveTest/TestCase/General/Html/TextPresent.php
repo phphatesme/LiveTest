@@ -14,27 +14,28 @@ use LiveTest\TestCase\Exception;
 class TextPresent extends TestCase
 {
   private $text;
-  
+
   /**
    * This function initializes the text to search for.
-   * 
+   *
    * @param string $text
    */
   public function init($text)
   {
     $this->text = $text;
   }
-  
+
   /**
-   * This function checks for a string to occur. 
-   * 
+   * This function checks for a string to occur.
+   *
    * @see LiveTest\TestCase\General\Html.TestCase::runTest()
-   * 
+   *
    * @throws Exception
    */
   protected function runTest(Document $htmlDocument)
   {
     $htmlCode = $htmlDocument->getHtml();
+
     if (strpos($htmlCode, $this->text) === false)
     {
       throw new Exception('The given text "' . $this->text . '" was not found.');

@@ -3,7 +3,6 @@
 namespace Test\Unit\LiveTest\TestCases\General\Http;
 
 use Base\Www\Uri;
-
 use Base\Http\Response\Zend;
 
 use LiveTest\TestCase\General\Http\ExpectedStatusCode;
