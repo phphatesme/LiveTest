@@ -19,11 +19,6 @@ try
     $runner->run();
   }
 }
-catch ( Base\Cli\MissingArgumentException $e )
-{
-  echo ' A mandatory argument is missing: ' . $e->getArgument() . "\n";
-  echo " Please use --help for more information. \n\n";
-}
 catch ( Exception $e )
 {
   if ($converter->hasArgument('debug'))
