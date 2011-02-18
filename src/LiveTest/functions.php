@@ -5,7 +5,7 @@ namespace LiveTest;
 function initializeObject( $object, $parameter )
 {
   $result = '';
-  
+
   if (method_exists($object, 'init'))
   {
     try
@@ -18,5 +18,6 @@ function initializeObject( $object, $parameter )
                                                 'Mandatory parameter "'.$e->getMissingParameter().'" is missing.');
     }
   }
+
   return $result;
 }
