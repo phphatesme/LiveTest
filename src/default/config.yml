@@ -1,14 +1,14 @@
 Listener:
 
  ProgressBar:
-  class: LiveTest\Listener\ProgressBar
+  class: LiveTest\Listener\Cli\ProgressBar
   
  Help:
-  class: LiveTest\Listener\Help
+  class: LiveTest\Listener\Cli\Help
   
   
  RunInfoHeader:
-  class: LiveTest\Listener\InfoHeader
+  class: LiveTest\Listener\Cli\InfoHeader
 
  Verbose:
   class: LiveTest\Listener\Verbose
@@ -38,4 +38,4 @@ Listener:
      filename: logs/tmp.log
      
  StatusBar:
-  class: LiveTest\Listener\StatusBar
+  class: LiveTest\Listener\Cli\StatusBar
