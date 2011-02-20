@@ -2,6 +2,8 @@
 
 namespace LiveTest\Listener;
 
+use LiveTest\TestRun\Result;
+
 use LiveTest;
 
 use Base\Http\ConnectionStatus;
@@ -26,7 +28,8 @@ class Report extends Base
   private $resultSet;
   private $logStatuses = array ();
   private $connectionStatuses = array ();
-
+  private $reportOnSuccess = true;
+  
   private $writerConfig = array ();
   private $formatConfig = array ();
 
@@ -37,7 +40,7 @@ class Report extends Base
    * @param array $writer
    * @param array $logStatuses
    */
-  public function init(array $format, array $writer, array $logStatuses = null)
+  public function init(array $format, array $writer, array $logStatuses = null, $reportOnSuccess = true)
   {
     $this->resultSet = new ResultSet();
     if (!is_null($logStatuses))
@@ -48,7 +51,8 @@ class Report extends Base
     {
       $this->logStatuses = array (Result::STATUS_ERROR, Result::STATUS_FAILED, Result::STATUS_SUCCESS );
     }
-
+    $this->reportOnSuccess = $reportOnSuccess;
+    
     $this->initWriter( $writer );
     $this->initFormat( $format );
   }
@@ -123,11 +127,14 @@ class Report extends Base
    */
   public function postRun(Information $information)
   {
-    $report = new \LiveTest\Report\Report($this->writer,
-                                          $this->format,
-                                          $this->resultSet,
-                                          $this->connectionStatuses,
-                                          $information);
-    $report->render();
+    if( $this->reportOnSuccess || $this->resultSet->getStatus() != Result::STATUS_SUCCESS) 
+    {      
+      $report = new \LiveTest\Report\Report($this->writer,
+                                            $this->format,
+                                            $this->resultSet,
+                                            $this->connectionStatuses,
+                                            $information);
+      $report->render();
+    }
   }
 }
