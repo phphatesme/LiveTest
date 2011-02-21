@@ -13,5 +13,24 @@ use LiveTest\Report\Format\SimpleList;
 
 abstract class FormatTest extends \PHPUnit_Framework_TestCase
 {
+  abstract protected function getFormat();
 
+  protected function getStandardFormattedContent()
+  {
+    $format = $this->getFormat();
+
+    $set = new ResultSet();
+
+    $uri = new Uri('http://www.example.com');
+    $test = new Test('TestName', 'TestClass', new \Zend_Config(array('foo' => 'bar')));
+
+    $successResult = new Result($test, Result::STATUS_SUCCESS, 'Success Message', $uri);
+    $failureResult = new Result($test, Result::STATUS_FAILED, 'Failed Message', $uri);
+
+    $set->addResult($successResult);
+    $set->addResult($failureResult);
+
+    $information = new Information(1, $uri);
+    return $format->formatSet($set, array(), $information);
+  }
 }
