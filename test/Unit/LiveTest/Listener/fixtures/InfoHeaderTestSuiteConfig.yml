@@ -9,4 +9,6 @@ TestSuite:
    Parameter: 
     StatusCode: 400
  Pages:
+  - http://www.stern.de
   - /
+  - http://www.phphatesme.com

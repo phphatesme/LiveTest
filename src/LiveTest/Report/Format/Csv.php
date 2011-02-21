@@ -16,7 +16,11 @@ class Csv implements Format
     {
       $test = $result->getTest();
 
+<<<<<<< HEAD
       $text .= $result->getUri() . ";".$test->getName().";".$test->getClassName().";"
+=======
+      $text .= $result->getUrl() . ";".$test->getName().";".$test->getClassName().";"
+>>>>>>> 0dedd828b6fbccfed8a07eb12de3ccf8e5bfce07
                . $result->getStatus()."\n";
     }
     return $text;

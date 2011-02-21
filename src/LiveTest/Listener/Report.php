@@ -27,7 +27,6 @@ class Report extends Base
   private $logStatuses = array ();
   private $connectionStatuses = array ();
   private $reportOnSuccess = true;
-
   private $writerConfig = array ();
   private $formatConfig = array ();
 

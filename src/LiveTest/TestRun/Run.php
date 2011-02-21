@@ -1,3 +1,4 @@
+<<<<<<< HEAD:src/LiveTest/TestRun/Run.php
 <?php
 
 namespace LiveTest\TestRun;
