@@ -13,7 +13,7 @@ Listener:
    writer:
     class: LiveTest\Report\Writer\File
     parameter:
-     filename: logs/example.html
+    filename: logs/example.html
 
 # Report_Html_Email_Attachment:
 #  class: LiveTest\Listener\Report

@@ -53,34 +53,34 @@ class XPath extends TestCase
       // result objects
       switch (get_class($element))
       {
-        case 'DOMAttr' :
+        case 'DOMAttr':
           $value = $element->value;
           break;
-        case 'DOMNode' :
-        case 'DOMElement' :
+        case 'DOMNode':
+        case 'DOMElement':
           $value = $element->textContent;
       }
-      
+
       // if a result doesn't match the given regular expression the test fails
       if (0 === preg_match($regEx, $value))
       {
         return false;
       }
     }
-    
+
     return true;
   }
   
   protected function runTest(Document $htmlDocument)
   {
     $htmlCode = $htmlDocument->getHtml();
-    
+
     $doc = new \DOMDocument();
     if (!@$doc->loadHTML($htmlCode))
     {
       throw new Exception('Can\'t create DOMDocument from HTML');
     }
-    
+
     $xPath = $this->getParameter('XPath');
     $regEx = $this->getParameter('RegEx');
     if (!$this->matchXPath($doc, $xPath, $regEx))
