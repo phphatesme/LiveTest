@@ -29,13 +29,13 @@ class ProgressBarTest extends \PHPUnit_Framework_TestCase
     $response = new Zend(new \Zend_Http_Response(200, array()));
 
     ob_start();
-    $result = new Result($test, Result::STATUS_SUCCESS, '', '');
+    $result = new Result($test, Result::STATUS_SUCCESS, '', new Uri( 'http://www.example.com'));
     $this->listener->handleResult($result, $response);
 
-    $result = new Result($test, Result::STATUS_FAILED, '', '');
+    $result = new Result($test, Result::STATUS_FAILED, '', new Uri( 'http://www.example.com'));
     $this->listener->handleResult($result, $response);
 
-    $result = new Result($test, Result::STATUS_ERROR, '', '');
+    $result = new Result($test, Result::STATUS_ERROR, '', new Uri( 'http://www.example.com'));
     $this->listener->handleResult($result, $response);
 
     $output = ob_get_contents();

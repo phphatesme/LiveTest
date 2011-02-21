@@ -24,13 +24,13 @@ class StatusBarTest extends \PHPUnit_Framework_TestCase
     $test = new Test('', '', new \Zend_Config(array()));
     $response = new Zend(new \Zend_Http_Response(200, array()));
 
-    $result = new Result($test, Result::STATUS_SUCCESS, '', '');
+    $result = new Result($test, Result::STATUS_SUCCESS, '', new Uri( 'http://www.example.com'));
     $listener->handleResult($result, $response);
 
-    $result = new Result($test, Result::STATUS_FAILED, '', '');
+    $result = new Result($test, Result::STATUS_FAILED, '', new Uri( 'http://www.example.com'));
     $listener->handleResult($result, $response);
 
-    $result = new Result($test, Result::STATUS_ERROR, '', '');
+    $result = new Result($test, Result::STATUS_ERROR, '', new Uri( 'http://www.example.com'));
     $listener->handleResult($result, $response);
 
     ob_start();

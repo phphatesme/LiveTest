@@ -39,7 +39,7 @@ class ReportTest extends \PHPUnit_Framework_TestCase
     $test = new Test('TestName', 'ClassName', new \Zend_Config(array()));
     $response = new Zend(new \Zend_Http_Response(200, array()));
 
-    $result = new Result($test, Result::STATUS_SUCCESS, 'Success', 'http://www.example.com');
+    $result = new Result($test, Result::STATUS_SUCCESS, 'Success', new Uri('http://www.example.com'));
     $this->listener->handleResult($result, $response);
 
     ob_start();
@@ -64,10 +64,10 @@ class ReportTest extends \PHPUnit_Framework_TestCase
     $test = new Test('TestName', 'ClassName', new \Zend_Config(array()));
     $response = new Zend(new \Zend_Http_Response(200, array()));
 
-    $result = new Result($test, Result::STATUS_SUCCESS, 'Success', 'http://www.example.com');
+    $result = new Result($test, Result::STATUS_SUCCESS, 'Success', new Uri( 'http://www.example.com'));
     $this->listener->handleResult($result, $response);
 
-    $result = new Result($test, Result::STATUS_FAILED, 'Failed', 'http://www.example.com');
+    $result = new Result($test, Result::STATUS_FAILED, 'Failed', new Uri( 'http://www.example.com'));
     $this->listener->handleResult($result, $response);
 
     ob_start();
@@ -78,5 +78,27 @@ class ReportTest extends \PHPUnit_Framework_TestCase
     $expected = "\n\nhttp://www.example.com;TestName;ClassName;failure\n";
 
     $this->assertEquals($expected, $actual);
+  }
+
+  public function testSendOnSuccessFalse( )
+  {
+    $this->listener = new Report('', new Dispatcher());
+
+    $writerConfig = array('class' => 'LiveTest\Report\Writer\SimpleEcho');
+    $formatConfig = array('class' => 'LiveTest\Report\Format\Csv');
+
+    $this->listener->init($formatConfig, $writerConfig, null, false);
+
+    $test = new Test('TestName', 'ClassName', new \Zend_Config(array()));
+    $response = new Zend(new \Zend_Http_Response(200, array()));
+
+    $result = new Result($test, Result::STATUS_SUCCESS, 'Success', new Uri( 'http://www.example.com'));
+    $this->listener->handleResult($result, $response);
+    ob_start();
+    $this->listener->postRun(new Information('5000', new Uri('http://www.example.com')));
+    $actual = ob_get_contents();
+    ob_clean();
+
+    $this->assertEquals("", $actual);
   }
 }

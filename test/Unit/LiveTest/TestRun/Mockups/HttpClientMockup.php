@@ -1,26 +1,27 @@
 <?php
 namespace Unit\LiveTest\TestRun\Mockups;
 
-use Base\Http\HttpResponse;
-use Base\Http\HttpClient;
-use Base\Http\Response;
+use Base\Http\Response\Zend;
 
-class HttpClientMockup implements HttpClient
+use Base\Http\Response\Response;
+use Base\Http\Client\Client;
+
+class HttpClientMockup implements Client
 {
-  
+
   private $response;
   private $uri;
-  
-  public function __construct(HttpResponse $response)
+
+  public function __construct(Response $response)
   {
     $this->response = $response;
   }
-  
+
   public function request($method = null)
   {
-    return new Response( $this->response );
+    return new Zend($this->response );
   }
-  
+
   public function setUri($uri)
   {
     $this->uri = $uri;
