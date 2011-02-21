@@ -7,14 +7,12 @@ use Base\Cli\WrongTypeException;
 class Test
 {
   /**
-   * 
    * Dataholder for a class
    * @var Object
    */
   private $className;
   
   /**
-   * 
    * Name
    * @var String
    */

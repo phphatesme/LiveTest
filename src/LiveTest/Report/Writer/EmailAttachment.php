@@ -9,20 +9,24 @@ class EmailAttachment implements Writer
   private $emailTemplate = 'templates/email_attachment.tpl';
   
   private $to;
-  private $attachmentName;
+  private $attachmentName = 'LiveTest Report';
   private $from;
   private $subject;
   
-  public function __construct(\Zend_Config $config)
+  public function init($to, $from, $subject, $attachmentName = null, $emailTemplate = null)
   {
-    $this->to = $config->to;
-    $this->from = $config->from;
-    $this->subject = $config->subject;
-    $this->attachmentName = $config->attachment_name;
+    $this->to = $to;
+    $this->from = $from;
+    $this->subject = $subject;
     
-    if (!is_null($config->email_template))
+    if (!is_null($attachmentName))
     {
-      $this->emailTemplate = $config->email_template;
+      $this->attachmentName = $attachmentName;
+    }
+    
+    if (!is_null($emailTemplate))
+    {
+      $this->emailTemplate = $emailTemplate;
     }
     else
     {

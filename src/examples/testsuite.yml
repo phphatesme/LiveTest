@@ -1,7 +1,10 @@
 TestSuite:
+
  TestCases:
+
   CorrectHttpHeader_standard:
    TestCase: LiveTest\TestCase\General\Http\SuccessfulStatusCode
+
   TextPresent_body:
    TestCase: LiveTest\TestCase\General\Html\TextPresent
    Parameter:
@@ -11,6 +14,7 @@ TestSuite:
    Parameter:
     XPath: /html/head/meta[@name="robots"]/attribute::content
     RegEx: /^.+$/
+   
  Pages:
   - http://www.stern.de
   - http://www.phphatesme.com

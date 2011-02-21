@@ -3,24 +3,16 @@
 namespace LiveTest\TestCase;
 
 use Base\Www\Uri;
-
-use Base\Http\Response;
-use Base\Http\Client;
-
-// @todo die Parameter können bis jetzt nur eine Liste sein, keine Struktur möglich.
+use Base\Http\Response\Response;
 
 interface TestCase
 {
   /**
-   * @param Base\Config\Config $parameter The parameters defined in the external configuration
-   */
-  public function __construct( $parameter );
-  
-  /**
-   * This function runs the test case
-   * 
+   * This function runs the test case. If a test fails a LiveTest\TestCase\Exception has to be
+   * thrown. The idea was adapted from the PHPUnit concept.
+   *
    * @param Base\Http\Response $httpResponse
    * @param Base\Www\Uri $uri
    */
-  public function test(Response $httpResponse, Uri $uri);
+  public function test(Response $response, Uri $uri);
 }

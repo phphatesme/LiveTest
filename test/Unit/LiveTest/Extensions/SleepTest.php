@@ -23,7 +23,7 @@ class SleepTest extends \PHPUnit_Framework_TestCase
   protected function setUp()
   {
     $config = new \Zend_Config(array('sleep_time' => $this->sleepTime ) );
-    $this->extension = new Sleep('', $config);
+    $this->extension = new Sleep(1, $config);
   }
   
   public function testHandleResult()
@@ -33,6 +33,6 @@ class SleepTest extends \PHPUnit_Framework_TestCase
     
     $timer = new Timer();
     $this->extension->handleResult(new Result($test, Result::STATUS_SUCCESS, '', new Uri( 'http://www.example.com')), $response);
-    $this->assertGreaterThanOrEqual($this->sleepTime, $timer->stop());
+    $this->assertGreaterThanOrEqual($timer->stop(), $this->sleepTime);
   }
 }

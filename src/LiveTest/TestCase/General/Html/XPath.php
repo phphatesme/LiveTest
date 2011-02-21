@@ -7,7 +7,6 @@ use Base\Www\Html\Document;
 use LiveTest\TestCase\Exception;
 use LiveTest\TestCase\HtmlTestCase;
 
-
 /**
  * XPath testcase
  * 
@@ -21,11 +20,10 @@ use LiveTest\TestCase\HtmlTestCase;
  * If the XPath doesn't match at all this is also regarded as a test
  * failure.
  */
-class XPath extends HtmlTestCase
+class XPath extends TestCase
 {
-  protected $mandatoryParameter = array('XPath', 'RegEx');
-
-
+  protected $mandatoryParameter = array('XPath','RegEx');
+  
   /**
    * XXX call this function multiple times with different xPaths
    * on the same document
@@ -38,19 +36,19 @@ class XPath extends HtmlTestCase
     if (false === $elements)
     {
       // XXX configuration Exception?!
-      throw new Exception('Invalid XPath "' . $xPath .'" in configuration');
+      throw new Exception('Invalid XPath "' . $xPath . '" in configuration');
     }
-
+    
     // no matching xPath value found
     if (empty($elements))
     {
       return false;
     }
-
+    
     foreach ($elements as $element)
     {
       $value = '';
-
+      
       // depending on the xPath query we may be provided with different
       // result objects
       switch (get_class($element))
@@ -87,8 +85,7 @@ class XPath extends HtmlTestCase
     $regEx = $this->getParameter('RegEx');
     if (!$this->matchXPath($doc, $xPath, $regEx))
     {
-      throw new Exception('The result of the given XPath "' . $xPath .
-          '" doesn\'t match the RegEx "' . $regEx . '"');
+      throw new Exception('The result of the given XPath "' . $xPath . '" doesn\'t match the RegEx "' . $regEx . '"');
     }
   }
 }
