@@ -2,6 +2,8 @@
 
 namespace LiveTest\TestRun\Result;
 
+use Base\Www\Uri;
+
 use LiveTest\TestRun\Test;
 
 class Result
@@ -12,14 +14,14 @@ class Result
 
   private $status;
   private $message;
-  private $url;
+  private $uri;
   private $test;
 
-  public function __construct(Test $test, $status, $message, $url)
+  public function __construct(Test $test, $status, $message, Uri $uri)
   {
     $this->status = $status;
     $this->message = $message;
-    $this->url = $url;
+    $this->uri = $uri;
     $this->test = $test;
   }
 
@@ -33,9 +35,9 @@ class Result
     return $this->message;
   }
 
-  public function getUrl()
+  public function getUri()
   {
-    return $this->url;
+    return $this->uri;
   }
 
   public function getTest()

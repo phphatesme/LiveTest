@@ -2,8 +2,6 @@
 
 namespace LiveTest\Listener;
 
-use LiveTest\TestRun\Result;
-
 use LiveTest;
 
 use Base\Http\ConnectionStatus;
@@ -18,7 +16,7 @@ use LiveTest\TestRun\Result\Result;
 /**
  * This listener is used to provide all kind of reporting mechanism. Creating a report
  * is a two step task. You need to define a format (e.g Html or plain text) that will
- * create a formatted string. The second step is to definethe writer. A writer takes a format
+ * create a formatted string. The second step is to define the writer. A writer takes a format
  * and writes it (e.g file writer or e-mail writer).
  *
  * @author Nils Langner
@@ -29,7 +27,7 @@ class Report extends Base
   private $logStatuses = array ();
   private $connectionStatuses = array ();
   private $reportOnSuccess = true;
-  
+
   private $writerConfig = array ();
   private $formatConfig = array ();
 
@@ -52,7 +50,7 @@ class Report extends Base
       $this->logStatuses = array (Result::STATUS_ERROR, Result::STATUS_FAILED, Result::STATUS_SUCCESS );
     }
     $this->reportOnSuccess = $reportOnSuccess;
-    
+
     $this->initWriter( $writer );
     $this->initFormat( $format );
   }
@@ -89,7 +87,7 @@ class Report extends Base
   }
 
   /**
-   * Creates the writer class
+   * Creates the writer class.
    */
   private function initWriter($writerConfig)
   {
@@ -104,7 +102,7 @@ class Report extends Base
   }
 
   /**
-   * Creates format class
+   * Creates format class.
    */
   private function initFormat($formatConfig)
   {
@@ -119,7 +117,8 @@ class Report extends Base
   }
 
   /**
-   * Writes the report.
+   * Writes the report. If the flag ReportOnSuccess is set to false nothing will be happen
+   * if no error occurs.
    *
    * @event LiveTest.Run.PostRun
    *
@@ -127,8 +126,8 @@ class Report extends Base
    */
   public function postRun(Information $information)
   {
-    if( $this->reportOnSuccess || $this->resultSet->getStatus() != Result::STATUS_SUCCESS) 
-    {      
+    if( $this->reportOnSuccess || $this->resultSet->getStatus() != Result::STATUS_SUCCESS)
+    {
       $report = new \LiveTest\Report\Report($this->writer,
                                             $this->format,
                                             $this->resultSet,

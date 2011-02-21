@@ -58,7 +58,7 @@ class HtmlDocumentLog extends Base
   {
     if (in_array($result->getStatus(), $this->logStatuses))
     {
-      $filename = $this->logPath . '/' . urlencode($result->getUrl());
+      $filename = $this->logPath . urlencode($result->getUri()->toString());
       file_put_contents($filename, $response->getBody());
     }
   }

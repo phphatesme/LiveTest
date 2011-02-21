@@ -65,7 +65,7 @@ class Verbose extends Base
   {
     if ($this->verbose)
     {
-      echo "\n  HandleResult: - " . $result->getUrl();
+      echo "\n  HandleResult: - " . $result->getUri()->toString();
     }
   }
 }

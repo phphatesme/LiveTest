@@ -50,15 +50,15 @@ class Run
         $testCaseObject = new $testCaseName();
         \LiveTest\initializeObject($testCaseObject, $test->getParameter()->toArray());
         $testCaseObject->test($response, new Uri($testSet->getUrl()));
-        $result = new Result($test, Result::STATUS_SUCCESS, '', $testSet->getUrl());
+        $result = new Result($test, Result::STATUS_SUCCESS, '', new Uri($testSet->getUrl()));
       }
       catch ( \LiveTest\TestCase\Exception $e )
       {
-        $result = new Result($test, Result::STATUS_FAILED, $e->getMessage(), $testSet->getUrl());
+        $result = new Result($test, Result::STATUS_FAILED, $e->getMessage(), new Uri($testSet->getUrl()));
       }
       catch (\Exception $e )
       {
-        $result = new Result($test, Result::STATUS_ERROR, $e->getMessage(), $testSet->getUrl());
+        $result = new Result($test, Result::STATUS_ERROR, $e->getMessage(), new Uri($testSet->getUrl()));
       }
       $this->eventDispatcher->notify('LiveTest.Run.HandleResult', array( 'result' => $result, 'response' => $response ));
     }
