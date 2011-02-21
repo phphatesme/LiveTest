@@ -15,17 +15,17 @@ class Html implements Format
   private $template;
   private $statuses;
 
-  public function init($template = null)
+  public function __construct()
   {
     $this->statuses = array (Result::STATUS_SUCCESS => 1, Result::STATUS_FAILED => 2, Result::STATUS_ERROR => 3 );
+    $this->template = __DIR__ . $this->standardTemplate;
+  }
 
+  public function init($template = null)
+  {
     if (!is_null($template))
     {
       $this->template = $template;
-    }
-    else
-    {
-      $this->template = __DIR__ . $this->standardTemplate;
     }
   }
 
