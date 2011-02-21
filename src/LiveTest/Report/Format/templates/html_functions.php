@@ -35,4 +35,4 @@ function getRowClass($status)
     case 3 :
       return 'url_error';
   }
-}   
+}
