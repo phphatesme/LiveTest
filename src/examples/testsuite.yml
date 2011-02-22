@@ -8,7 +8,7 @@ TestSuite:
   TextPresent_body:
    TestCase: LiveTest\TestCase\General\Html\TextPresent
    Parameter:
-    Text: "unpresent_text"
+    text: "unpresent_text"
    
  Pages:
   - http://www.stern.de
