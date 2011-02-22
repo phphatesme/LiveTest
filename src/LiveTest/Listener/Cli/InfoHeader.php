@@ -25,8 +25,6 @@ class InfoHeader extends Base
     echo "  Start Time      : " . date( 'Y-m-d H:i:s' )."\n\n";
     echo "  Number of URIs  : " . count($properties->getTestSets())."\n";
     echo "  Number of Tests : " . $this->getTotalTestCount($properties)."\n\n";
-
-    return true;
   }
 
   /**

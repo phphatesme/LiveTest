@@ -101,7 +101,6 @@ class Run
    * This function runs all test sets defined in the properties file.
    *
    * @todo function is "very long" but don't know where to split.
-   * @todo why can a preRun listener stop the run?
    *
    * @notify LiveTest.Run.HandleConnectionStatus
    * @notify LiveTest.Run.PostRun
@@ -109,35 +108,31 @@ class Run
    */
   public function run()
   {
-    $continueRun = $this->eventDispatcher->notify('LiveTest.Run.PreRun', array('properties' => $this->properties));
+    $this->eventDispatcher->notify('LiveTest.Run.PreRun', array('properties' => $this->properties));
 
-    if ($continueRun)
+    $timer = new Timer();
+
+    foreach ($this->properties->getTestSets() as $testSet)
     {
-      $timer = new Timer();
-      $testSets = $this->properties->getTestSets();
-
-      foreach ($testSets as $testSet)
+      try
       {
-        try
-        {
-          $this->httpClient->setUri($testSet->getUri()->toString());
-          $response = $this->httpClient->request();
-          $connectionStatus = new ConnectionStatus(ConnectionStatus::SUCCESS, $testSet->getUri());
-          $this->eventDispatcher->notify('LiveTest.Run.HandleConnectionStatus', array('connectionStatus' => $connectionStatus));
-        }
-        catch ( \Zend_Http_Client_Exception $e )
-        {
-          $connectionStatus = new ConnectionStatus(ConnectionStatus::ERROR, $testSet->getUri(), $e->getMessage());
-          $this->eventDispatcher->notify('LiveTest.Run.HandleConnectionStatus', array('connectionStatus' => $connectionStatus));
-          continue;
-        }
-        $this->runTests($testSet, $response);
+        $this->httpClient->setUri($testSet->getUri()->toString());
+        $response = $this->httpClient->request();
+        $connectionStatus = new ConnectionStatus(ConnectionStatus::SUCCESS, $testSet->getUri());
+        $this->eventDispatcher->notify('LiveTest.Run.HandleConnectionStatus', array('connectionStatus' => $connectionStatus));
       }
-
-      $timer->stop();
-      $information = new Information($timer->getElapsedTime(), $this->properties->getDefaultDomain());
-
-      $this->eventDispatcher->notify('LiveTest.Run.PostRun', array('information' => $information));
+      catch ( \Zend_Http_Client_Exception $e )
+      {
+        $connectionStatus = new ConnectionStatus(ConnectionStatus::ERROR, $testSet->getUri(), $e->getMessage());
+        $this->eventDispatcher->notify('LiveTest.Run.HandleConnectionStatus', array('connectionStatus' => $connectionStatus));
+        continue;
+      }
+      $this->runTests($testSet, $response);
     }
+
+    $timer->stop();
+    $information = new Information($timer->getElapsedTime(), $this->properties->getDefaultDomain());
+
+    $this->eventDispatcher->notify('LiveTest.Run.PostRun', array('information' => $information));
   }
 }
