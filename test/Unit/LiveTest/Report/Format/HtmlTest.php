@@ -35,9 +35,6 @@ class HtmlTest extends FormatTest
     $expected = preg_replace( "^<td>Duration: (.*)</td>^", "<td>Duration: removed for unit test</td>", $expected);
     $formattedText = preg_replace( "^<td>Duration: (.*)</td>^", "<td>Duration: removed for unit test</td>", $formattedText);
 
-    file_put_contents('expected.html', $expected);
-    file_put_contents('actual.html', $formattedText);
-
     $this->assertEquals($expected, $formattedText);
   }
 }
