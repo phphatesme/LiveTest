@@ -7,7 +7,7 @@ use LiveTest\TestRun\Result\Result;
 use Annovent\Event\Dispatcher;
 use LiveTest\Listener\Listener;
 
-class postRunListener implements Listener
+class PostRunListener implements Listener
 {
   private $postRunCalled = false;
   private $information;

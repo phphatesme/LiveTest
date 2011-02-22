@@ -1,6 +1,8 @@
 <?php
 namespace Unit\LiveTest\TestRun;
 
+use Base\Http\ConnectionStatus;
+
 use Annovent\Event\Dispatcher;
 
 use Unit\LiveTest\TestRun\Mockups\TestExtension;
@@ -16,6 +18,7 @@ use Base\Www\Uri;
 include_once 'helper/InfoListener.php';
 include_once 'helper/PreRunListener.php';
 include_once 'helper/PostRunListener.php';
+include_once 'helper/ConnectionStatusListener.php';
 
 /**
  * Test class for Run.
@@ -27,9 +30,11 @@ class RunTest extends \PHPUnit_Framework_TestCase
   private $infoListener;
   private $preRunListener;
   private $postRunListener;
+  private $connectionStatusListener;
 
   private $properties;
   private $defaultUri;
+  private $httpClient;
 
   /**
    * Sets up the fixture, for example, opens a network connection.
@@ -48,11 +53,15 @@ class RunTest extends \PHPUnit_Framework_TestCase
     $this->postRunListener = new \postRunListener('', $dispatcher);
     $dispatcher->registerListener($this->postRunListener);
 
+    $this->connectionStatusListener = new \ConnectionStatusListener('', $dispatcher);
+    $dispatcher->registerListener($this->connectionStatusListener);
+
     $this->infoListener = new \InfoListener('', $dispatcher);
     $dispatcher->registerListener($this->infoListener);
 
     $this->properties = new Properties($yamlConfig, $this->defaultUri);
-    $this->run = new Run($this->properties, new HttpClientMockup(new ResponseMockup()), $dispatcher);
+    $this->httpClient = new HttpClientMockup(new ResponseMockup());
+    $this->run = new Run($this->properties, $this->httpClient, $dispatcher);
   }
 
   public function testNotifications()
@@ -61,8 +70,8 @@ class RunTest extends \PHPUnit_Framework_TestCase
 
     $this->assertTrue($this->preRunListener->isPreRunCalled());
     $this->assertTrue($this->postRunListener->isPostRunCalled());
+    $this->assertTrue($this->connectionStatusListener->isHandleConnectionStatusCalled());
     $this->assertTrue($this->infoListener->isHandleResultCalled());
-    $this->assertTrue($this->infoListener->isHandleConnectionStatusCalled());
   }
 
   public function testPreRunNotification( )
@@ -79,5 +88,31 @@ class RunTest extends \PHPUnit_Framework_TestCase
 
     $this->assertEquals(0, $information->getDuration());
     $this->assertEquals($this->defaultUri, $information->getDefaultDomain());
+  }
+
+  public function testHandleSuccessConnectionStatus( )
+  {
+    $this->run->run();
+
+    $status = $this->connectionStatusListener->getConnectionStatus();
+    $this->assertEquals( $status->getType(), ConnectionStatus::SUCCESS );
+    $this->assertEquals( $status->getUri()->toString(), 'http://www.example.com/index.html/' );
+  }
+
+  public function testHandleFailedConnectionStatus( )
+  {
+    $this->httpClient->nextRequestFails();
+
+    $this->run->run();
+
+    $status = $this->connectionStatusListener->getConnectionStatus();
+    $this->assertEquals( $status->getType(), ConnectionStatus::ERROR );
+    $this->assertEquals( $status->getUri()->toString(), 'http://www.example.com/index.html/' );
+    $this->assertEquals( $status->getMessage(), 'TestException' );
+  }
+
+  public function testHandleResultNotification( )
+  {
+    // @todo implement
   }
 }
