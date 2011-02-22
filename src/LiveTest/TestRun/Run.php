@@ -8,10 +8,10 @@ use LiveTest\TestRun\Result\Result;
 use Annovent\Event\Dispatcher;
 
 use Base\Http\Client\Client;
-use Base\Timer\Timer;
 use Base\Http\ConnectionStatus;
-use Base\Www\Uri;
 use Base\Http\Response\Response;
+use Base\Www\Uri;
+use Base\Timer\Timer;
 
 class Run
 {
@@ -98,11 +98,42 @@ class Run
   }
 
   /**
-   * This function runs all test sets defined in the properties file.
-   *
-   * @todo function is "very long" but don't know where to split.
+   * This function sends a http request and assigns the response to the test cases.
    *
    * @notify LiveTest.Run.HandleConnectionStatus
+   *
+   * @param TestSet $testSet
+   */
+  private function runTestSet(TestSet $testSet)
+  {
+    $connectionStatusValue = ConnectionStatus::SUCCESS;
+    $connectionStatusMessage = '';
+
+    try
+    {
+      $this->httpClient->setUri($testSet->getUri()->toString());
+      $response = $this->httpClient->request();
+    }
+    catch ( \Zend_Http_Client_Exception $e )
+    {
+      $connectionStatusValue = ConnectionStatus::ERROR;
+      $connectionStatusMessage = $e->getMesaage();
+    }
+
+    $connectionStatus = new ConnectionStatus($connectionStatusValue, $testSet->getUri(), $connectionStatusMessage);
+
+    $this->eventDispatcher->notify('LiveTest.Run.HandleConnectionStatus',
+                                   array('connectionStatus' => $connectionStatus));
+
+    if( $connectionStatusValue == ConnectionStatus::SUCCESS )
+    {
+      $this->runTests($testSet, $response);
+    }
+  }
+
+  /**
+   * This function runs all test sets defined in the properties file.
+   *
    * @notify LiveTest.Run.PostRun
    * @notify LiveTest.Run.PreRun
    */
@@ -114,22 +145,7 @@ class Run
 
     foreach ($this->properties->getTestSets() as $testSet)
     {
-      try
-      {
-        $this->httpClient->setUri($testSet->getUri()->toString());
-        $response = $this->httpClient->request();
-      }
-      catch ( \Zend_Http_Client_Exception $e )
-      {
-        $connectionStatus = new ConnectionStatus(ConnectionStatus::ERROR, $testSet->getUri(), $e->getMessage());
-        $this->eventDispatcher->notify('LiveTest.Run.HandleConnectionStatus', array('connectionStatus' => $connectionStatus));
-        continue;
-      }
-
-      $connectionStatus = new ConnectionStatus(ConnectionStatus::SUCCESS, $testSet->getUri());
-      $this->eventDispatcher->notify('LiveTest.Run.HandleConnectionStatus', array('connectionStatus' => $connectionStatus));
-
-      $this->runTests($testSet, $response);
+      $this->runTestSet($testSet);
     }
 
     $information = new Information($timer->stop(), $this->properties->getDefaultDomain());
