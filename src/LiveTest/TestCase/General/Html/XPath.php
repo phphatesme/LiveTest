@@ -5,7 +5,6 @@ namespace LiveTest\TestCase\General\Html;
 use Base\Www\Html\Document;
 
 use LiveTest\TestCase\Exception;
-use LiveTest\TestCase\HtmlTestCase;
 
 /**
  * XPath testcase
@@ -22,17 +21,42 @@ use LiveTest\TestCase\HtmlTestCase;
  */
 class XPath extends TestCase
 {
-  protected $mandatoryParameter = array('XPath','RegEx');
+  /**
+   * The xPath epresseion to select to content.
+   * @var string
+   */
+  private $xPath;
+
+  /**
+   * The regex pattern which must match all xPath results.
+   * @var string
+   */
+  private $regEx;
+
+  /**
+   * Initialize this test case (load configuration settings).
+   *
+   * @param string $xPath The xPath epresseion to select to content
+   * @param string $regEx The regex pattern which must match all xPath results
+   */
+  public function init($xPath, $regEx)
+  {
+    $this->xPath = $xPath;
+    $this->regEx = $regEx;
+  }
+   
   
   /**
-   * XXX call this function multiple times with different xPaths
-   * on the same document
-   * => a more complex testcase configuration is needed for this
+   * Checks whether the regEx matches all results of the xPath 
+   * query on the given DOMDocument.
+   *
+   * @param DOMDocument $doc the DOMDocument
+   * @return bool true if all occurrences match, false otherwise
    */
-  private function matchXPath(\DOMDocument $doc, $xPath, $regEx)
+  private function matchXPath(\DOMDocument $doc)
   {
     $domXPath = new \DOMXPath($doc);
-    $elements = $domXPath->query($xPath);
+    $elements = $domXPath->query($this->xPath);
     if (false === $elements)
     {
       // XXX configuration Exception?!
@@ -62,7 +86,7 @@ class XPath extends TestCase
       }
 
       // if a result doesn't match the given regular expression the test fails
-      if (0 === preg_match($regEx, $value))
+      if (0 === preg_match($this->regEx, $value))
       {
         return false;
       }
@@ -81,11 +105,10 @@ class XPath extends TestCase
       throw new Exception('Can\'t create DOMDocument from HTML');
     }
 
-    $xPath = $this->getParameter('XPath');
-    $regEx = $this->getParameter('RegEx');
-    if (!$this->matchXPath($doc, $xPath, $regEx))
+    if (!$this->matchXPath($doc))
     {
-      throw new Exception('The result of the given XPath "' . $xPath . '" doesn\'t match the RegEx "' . $regEx . '"');
+      throw new Exception('The result of the given XPath "' . $this->xPath .
+           '" doesn\'t match the RegEx "' . $this->regEx . '"');
     }
   }
 }
