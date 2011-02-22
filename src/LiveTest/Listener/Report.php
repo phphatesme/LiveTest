@@ -6,7 +6,6 @@ use LiveTest;
 
 use Base\Http\ConnectionStatus;
 
-use LiveTest\TestRun\Properties;
 use LiveTest\TestRun\Information;
 use Base\Http\Response\Response;
 
