@@ -4,14 +4,6 @@ namespace Unit\LiveTest\Report\Format;
 
 use LiveTest\Report\Format\Csv;
 
-use LiveTest\TestRun\Information;
-
-use Base\Www\Uri;
-
-use LiveTest\TestRun\Test;
-use LiveTest\TestRun\Result\Result;
-use LiveTest\TestRun\Result\ResultSet;
-
 class CsvTest extends FormatTest
 {
   protected function getFormat()
