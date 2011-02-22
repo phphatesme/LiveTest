@@ -28,15 +28,18 @@ class HtmlDocumentLog extends Base
   /**
    * This function initializes the log path and if given the log statuses
    *
+   * @todo use Base\File\? for this
+   *
    * @param string $logPath
    * @param array $logStatuses
    */
   public function init( $logPath, array $logStatuses = null )
   {
     $this->logPath = $logPath . '/' . $this->getRunId() . '/';
+
     if (!file_exists($this->logPath))
     {
-      mkdir($this->logPath);
+      mkdir($this->logPath, 0777, true);
     }
 
     if (!is_null($logStatuses))

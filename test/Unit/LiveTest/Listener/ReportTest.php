@@ -39,11 +39,7 @@ class ReportTest extends \PHPUnit_Framework_TestCase
     $test = new Test('TestName', 'ClassName', new \Zend_Config(array()));
     $response = new Zend(new \Zend_Http_Response(200, array()));
 
-<<<<<<< HEAD
     $result = new Result($test, Result::STATUS_SUCCESS, 'Success', new Uri('http://www.example.com'));
-=======
-    $result = new Result($test, Result::STATUS_SUCCESS, 'Success', 'http://www.example.com');
->>>>>>> 0dedd828b6fbccfed8a07eb12de3ccf8e5bfce07
     $this->listener->handleResult($result, $response);
 
     ob_start();
@@ -68,17 +64,11 @@ class ReportTest extends \PHPUnit_Framework_TestCase
     $test = new Test('TestName', 'ClassName', new \Zend_Config(array()));
     $response = new Zend(new \Zend_Http_Response(200, array()));
 
-<<<<<<< HEAD
     $result = new Result($test, Result::STATUS_SUCCESS, 'Success', new Uri( 'http://www.example.com'));
     $this->listener->handleResult($result, $response);
 
     $result = new Result($test, Result::STATUS_FAILED, 'Failed', new Uri( 'http://www.example.com'));
-=======
-    $result = new Result($test, Result::STATUS_SUCCESS, 'Success', 'http://www.example.com');
-    $this->listener->handleResult($result, $response);
 
-    $result = new Result($test, Result::STATUS_FAILED, 'Failed', 'http://www.example.com');
->>>>>>> 0dedd828b6fbccfed8a07eb12de3ccf8e5bfce07
     $this->listener->handleResult($result, $response);
 
     ob_start();
@@ -90,7 +80,6 @@ class ReportTest extends \PHPUnit_Framework_TestCase
 
     $this->assertEquals($expected, $actual);
   }
-<<<<<<< HEAD
 
   public function testSendOnSuccessFalse( )
   {
@@ -113,6 +102,4 @@ class ReportTest extends \PHPUnit_Framework_TestCase
 
     $this->assertEquals("", $actual);
   }
-=======
->>>>>>> 0dedd828b6fbccfed8a07eb12de3ccf8e5bfce07
 }

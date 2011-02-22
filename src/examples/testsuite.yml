@@ -9,11 +9,6 @@ TestSuite:
    TestCase: LiveTest\TestCase\General\Html\TextPresent
    Parameter:
     Text: "unpresent_text"
-  XPath_meta_robots:
-   TestCase: LiveTest\TestCase\General\Html\XPath
-   Parameter:
-    XPath: /html/head/meta[@name="robots"]/attribute::content
-    RegEx: /^.+$/
    
  Pages:
   - http://www.stern.de
