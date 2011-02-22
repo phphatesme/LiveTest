@@ -4,6 +4,11 @@ namespace LiveTest\Report\Writer;
 
 use LiveTest\Exception;
 
+/**
+ * This writer is used to attach a formatted text to an e-mail and sends it.
+ * 
+ * @author Nils Langner
+ */
 class EmailAttachment implements Writer
 {
   private $emailTemplate = 'templates/email_attachment.tpl';
@@ -13,6 +18,15 @@ class EmailAttachment implements Writer
   private $from;
   private $subject;
   
+  /**
+   * Sets the e-mail parameters
+   * 
+   * @param email $to
+   * @param email $from
+   * @param string $subject
+   * @param string $attachmentName
+   * @param string $emailTemplate
+   */
   public function init($to, $from, $subject, $attachmentName = null, $emailTemplate = null)
   {
     $this->to = $to;
@@ -34,6 +48,11 @@ class EmailAttachment implements Writer
     }
   }
   
+  /**
+   * E-mails the formatted text as attachment.
+   * 
+   * @param string $formatedText
+   */
   public function write($formatedText)
   {
     $mail = new \Zend_Mail();
