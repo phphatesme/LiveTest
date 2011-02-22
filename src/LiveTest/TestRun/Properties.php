@@ -21,15 +21,15 @@ class Properties
   private $config;
   private $pages;
   private $defaultDomain;
-  
+
   private $configPath;
-  
+
   private $testSets = array();
-  
+
   public function __construct(Config $testSuiteConfig, Uri $defaultDomain)
   {
     $this->configPath = dirname($testSuiteConfig->getFilename());
-    
+
     if (is_null($testSuiteConfig->TestSuite))
     {
       throw new Exception('The mandatory "TestSuite" root element is missing.');
@@ -38,7 +38,7 @@ class Properties
     $this->config = $testSuiteConfig->TestSuite;
     $this->extractConfig();
   }
-  
+
   private function extractConfig()
   {
     $this->extractStandardUrls();
@@ -48,14 +48,14 @@ class Properties
       $removedPages = array();
       $testCasePages = array();
       $additionalPages = array();
-      
+
       if (!is_null($testCase->Pages))
       {
         $testCasePages = $this->convertToAbsoluteUris($testCase->Pages);
       }
       elseif ((!is_null($testCase->RemovedPages)) || !is_null($testCase->AdditionalPages))
       {
-        $testCasePages = $pages;        
+        $testCasePages = $pages;
         if (!is_null($testCase->RemovedPages))
         {
           $removedPages = $this->convertToAbsoluteUris($testCase->RemovedPages);
@@ -71,12 +71,12 @@ class Properties
       {
         $testCasePages = $pages;
       }
-      
+
       foreach ($testCasePages as $testCasePage)
       {
         if (!array_key_exists($testCasePage, $this->testSets))
         {
-          $this->testSets[$testCasePage] = new TestSet($testCasePage);
+          $this->testSets[$testCasePage] = new TestSet(new Uri( $testCasePage ));
         }
         if (!is_null($testCase->Parameter))
         {
@@ -90,31 +90,31 @@ class Properties
       }
     }
   }
-  
+
   private function getStandardPages()
   {
     $config = $this->config;
-    
+
     $pageConfig = $config->Pages;
     if ($pageConfig == null)
     {
       $pageConfig = array();
-    }        
+    }
     return $this->convertToAbsoluteUris($pageConfig);
   }
-  
+
   private function convertToAbsoluteUris( $relativeUris )
   {
     $pages = array( );
-    
+
     foreach ($relativeUris as $page)
     {
       $pages[] = $this->defaultDomain->concatUri((string)$page)->toString();
     }
-    
+
     return $pages;
-  } 
-  
+  }
+
   /**
    * @throws Exception
    */
@@ -143,33 +143,33 @@ class Properties
     }
     return $pages;
   }
-  
+
   private function getPageArray()
   {
     $pages = array_merge($this->getStandardPages(), $this->getPageLists());
     return $pages;
   }
-  
+
   private function extractStandardUrls()
   {
     $this->pages = $this->getPageArray();
   }
-  
+
   private function getStandardUrls()
   {
     return $this->pages;
   }
-  
+
   /**
    * This function returns the default domain
-   * 
+   *
    * @return \Base\Www\Uri
    */
   public function getDefaultDomain()
   {
     return $this->defaultDomain;
   }
-  
+
   public function getTestSets()
   {
     return $this->testSets;
