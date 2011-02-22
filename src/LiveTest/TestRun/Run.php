@@ -93,7 +93,7 @@ class Run
 
       $result = new Result($test, $runStatus, $runMessage, $testSet->getUri());
       $this->eventDispatcher->notify('LiveTest.Run.HandleResult',
-                                     array('result' => $result,'response' => $response));
+                                     array('result' => $result, 'response' => $response));
     }
   }
 
@@ -117,7 +117,7 @@ class Run
     catch ( \Zend_Http_Client_Exception $e )
     {
       $connectionStatusValue = ConnectionStatus::ERROR;
-      $connectionStatusMessage = $e->getMesaage();
+      $connectionStatusMessage = $e->getMessage();
     }
 
     $connectionStatus = new ConnectionStatus($connectionStatusValue, $testSet->getUri(), $connectionStatusMessage);
@@ -141,6 +141,7 @@ class Run
   {
     $this->eventDispatcher->notify('LiveTest.Run.PreRun', array('properties' => $this->properties));
 
+    // @todo move timer to runner.php
     $timer = new Timer();
 
     foreach ($this->properties->getTestSets() as $testSet)
