@@ -89,8 +89,8 @@ class Run
       {
         $runStatus = Result::STATUS_ERROR;
         $runMessage = $e->getMessage();
-
       }
+
       $result = new Result($test, $runStatus, $runMessage, $testSet->getUri());
       $this->eventDispatcher->notify('LiveTest.Run.HandleResult',
                                      array('result' => $result,'response' => $response));
@@ -128,6 +128,7 @@ class Run
 
       $connectionStatus = new ConnectionStatus(ConnectionStatus::SUCCESS, $testSet->getUri());
       $this->eventDispatcher->notify('LiveTest.Run.HandleConnectionStatus', array('connectionStatus' => $connectionStatus));
+
       $this->runTests($testSet, $response);
     }
 
