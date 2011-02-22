@@ -102,4 +102,14 @@ class ReportTest extends \PHPUnit_Framework_TestCase
 
     $this->assertEquals("", $actual);
   }
+
+  public function testConfigurableFormatAndWriter( )
+  {
+    $this->listener = new Report('', new Dispatcher());
+
+    $writerConfig = array('class' => 'LiveTest\Report\Writer\File', 'parameter' => array ( 'filename' => 'test.log' ));
+    $formatConfig = array('class' => 'LiveTest\Report\Format\Html', 'parameter' => array ( 'template' => 'test.tpl' ));
+
+    $this->listener->init($formatConfig, $writerConfig);
+  }
 }
