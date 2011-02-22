@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit stopOnFailure="false"
+         syntaxCheck="false"
+         bootstrap="bootstrap.php"
+>
+    <testsuites>
+        <testsuite name="LiveTest Unit Tests">
+            <directory>Unit/</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist>
+            <directory>../src/LiveTest</directory>
+        </whitelist>
+        <blacklist>
+            <directory>../src/lib</directory>
+        </blacklist>
+    </filter>
+</phpunit>
+
