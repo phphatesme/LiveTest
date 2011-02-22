@@ -118,8 +118,6 @@ class Run
       {
         $this->httpClient->setUri($testSet->getUri()->toString());
         $response = $this->httpClient->request();
-        $connectionStatus = new ConnectionStatus(ConnectionStatus::SUCCESS, $testSet->getUri());
-        $this->eventDispatcher->notify('LiveTest.Run.HandleConnectionStatus', array('connectionStatus' => $connectionStatus));
       }
       catch ( \Zend_Http_Client_Exception $e )
       {
@@ -127,11 +125,13 @@ class Run
         $this->eventDispatcher->notify('LiveTest.Run.HandleConnectionStatus', array('connectionStatus' => $connectionStatus));
         continue;
       }
+
+      $connectionStatus = new ConnectionStatus(ConnectionStatus::SUCCESS, $testSet->getUri());
+      $this->eventDispatcher->notify('LiveTest.Run.HandleConnectionStatus', array('connectionStatus' => $connectionStatus));
       $this->runTests($testSet, $response);
     }
 
-    $timer->stop();
-    $information = new Information($timer->getElapsedTime(), $this->properties->getDefaultDomain());
+    $information = new Information($timer->stop(), $this->properties->getDefaultDomain());
 
     $this->eventDispatcher->notify('LiveTest.Run.PostRun', array('information' => $information));
   }
