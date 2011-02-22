@@ -1,5 +1,8 @@
 <?php
 
+use LiveTest\TestRun\Properties;
+use Base\Http\Response\Response;
+use LiveTest\TestRun\Result\Result;
 use Annovent\Event\Dispatcher;
 use LiveTest\Listener\Listener;
 
@@ -16,19 +19,6 @@ class InfoListener implements Listener
   }
 
   /**
-   * @event LiveTest.Run.PreRun
-   */
-  public function preRun()
-  {
-    $this->preRunCalled = true;
-  }
-
-  public function isPreRunCalled()
-  {
-    return $this->preRunCalled;
-  }
-
-  /**
    * @event LiveTest.Run.HandleResult
    */
   public function handleResult()
@@ -41,18 +31,6 @@ class InfoListener implements Listener
     return $this->handleResultCalled;
   }
 
-  /**
-   * @event LiveTest.Run.PostRun
-   */
-  public function postRun()
-  {
-    $this->postRunCalled = true;
-  }
-
-  public function isPostRunCalled()
-  {
-    return $this->postRunCalled;
-  }
 
   /**
    * @event LiveTest.Run.HandleConnectionStatus
