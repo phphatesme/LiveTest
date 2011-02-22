@@ -44,8 +44,8 @@ class XPath extends TestCase
     $this->xPath = $xPath;
     $this->regEx = $regEx;
   }
-   
-  
+
+
   /**
    * Checks whether the regEx matches all results of the xPath 
    * query on the given DOMDocument.
@@ -56,23 +56,23 @@ class XPath extends TestCase
   private function matchXPath(\DOMDocument $doc)
   {
     $domXPath = new \DOMXPath($doc);
-    $elements = $domXPath->query($this->xPath);
+    $elements = @$domXPath->query($this->xPath);
     if (false === $elements)
     {
-      // XXX configuration Exception?!
-      throw new Exception('Invalid XPath "' . $xPath . '" in configuration');
+      // @TODO use configuration Exception?!
+      throw new Exception('Invalid XPath "' . $this->xPath . '" in configuration');
     }
-    
+
     // no matching xPath value found
-    if (empty($elements))
+    if (0 === $elements->length)
     {
       return false;
     }
-    
+
     foreach ($elements as $element)
     {
       $value = '';
-      
+
       // depending on the xPath query we may be provided with different
       // result objects
       switch (get_class($element))
@@ -94,7 +94,14 @@ class XPath extends TestCase
 
     return true;
   }
-  
+
+  /**
+   * Executes the test case
+   *
+   * @param Base\Www\Html\Document $htmlDocument the document to inspect
+   *
+   * @throws LiveTest\TestCase\Exception on failed tests
+   */
   protected function runTest(Document $htmlDocument)
   {
     $htmlCode = $htmlDocument->getHtml();
