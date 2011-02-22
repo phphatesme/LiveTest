@@ -23,7 +23,8 @@ class SimpleListTest extends FormatTest
     $formattedText = $this->getStandardFormattedContent();
 
     $expected = "     Url        :  http://www.example.com\n     Test       :  TestName\n     Test Class :  TestClass\n     Status     :  Success\n\n".
-                "     Url        :  http://www.example.com\n     Test       :  TestName\n     Test Class :  TestClass\n     Status     :  Failed\n     Message    :  Failed Message\n\n";
+                "     Url        :  http://www.example.com\n     Test       :  TestName\n     Test Class :  TestClass\n     Status     :  Failed\n     Message    :  Failed Message\n\n".
+                "     Url        :  http://www.example.com\n     Test       :  TestName\n     Test Class :  TestClass\n     Status     :  Error\n     Message    :  Error Message\n\n";
 
     $this->assertEquals($expected, $formattedText);
   }
