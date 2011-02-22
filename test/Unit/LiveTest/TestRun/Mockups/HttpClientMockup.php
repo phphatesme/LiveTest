@@ -19,7 +19,7 @@ class HttpClientMockup implements Client
 
   public function request($method = null)
   {
-    return new Zend($this->response );
+    return $this->response;
   }
 
   public function setUri($uri)

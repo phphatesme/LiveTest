@@ -1,12 +1,16 @@
 TestSuite:
+
  TestCases:
+ 
   TextPresentHtml_standard: 
    TestCase: LiveTest\TestCase\General\Html\TextPresent
    Parameter: 
     Text: Stern
+    
   CorrectHttpHeader_standard: 
    TestCase: LiveTest\TestCase\General\Http\SuccessfulStatusCode
    Parameter: 
     StatusCode: 400
+    
  Pages:
   - /
