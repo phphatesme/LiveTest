@@ -17,6 +17,9 @@ class ProgressBar extends Base
 {
   /**
    * The width of the progressBar.
+   *
+   * @todo this should also be configured via parameter
+   *
    * @var int
    */
   const LINE_BREAK_AT = 70;
