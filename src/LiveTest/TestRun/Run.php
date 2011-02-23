@@ -62,7 +62,7 @@ class Run
   {
     $testCaseName = $test->getClassName();
     $testCaseObject = new $testCaseName();
-    \LiveTest\initializeObject($testCaseObject, $test->getParameter()->toArray());
+    \LiveTest\initializeObject($testCaseObject, $test->getParameter());
 
     return $testCaseObject;
   }

@@ -39,7 +39,7 @@ class Test
    * @param String $class
    * @param \Zend_Config $parameter
    */
-  public function __construct( $name, $className, \Zend_Config $parameter)
+  public function __construct( $name, $className, array $parameter)
   {    
     if( !is_string( $name ) )
     {
