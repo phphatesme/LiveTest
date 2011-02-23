@@ -26,9 +26,11 @@ abstract class FormatTest extends \PHPUnit_Framework_TestCase
 
     $successResult = new Result($test, Result::STATUS_SUCCESS, 'Success Message', $uri);
     $failureResult = new Result($test, Result::STATUS_FAILED, 'Failed Message', $uri);
+    $errorResult = new Result($test, Result::STATUS_ERROR, 'Error Message', $uri);
 
     $set->addResult($successResult);
     $set->addResult($failureResult);
+    $set->addResult($errorResult);
 
     $information = new Information(1, $uri);
     return $format->formatSet($set, array(), $information);
