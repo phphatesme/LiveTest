@@ -5,8 +5,8 @@ namespace LiveTest\Report;
 use LiveTest\TestRun\Information;
 
 use LiveTest\Report\Writer\Writer;
-use LiveTest\TestRun\Result\ResultSet;
 use LiveTest\Report\Format\Format;
+use LiveTest\TestRun\Result\ResultSet;
 
 class Report
 {
