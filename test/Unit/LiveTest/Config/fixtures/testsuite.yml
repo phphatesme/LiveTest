@@ -1,0 +1,31 @@
+TestSuite:
+
+ TestCases:
+
+  CorrectHttpHeader_add:
+   TestCase: LiveTest\TestCase\General\Http\SuccessfulStatusCode
+   IncludePages:
+    - http://nntp.de
+
+  CorrectHttpHeader_standard:
+   TestCase: LiveTest\TestCase\General\Http\SuccessfulStatusCode
+   Pages:
+    - http://nntp.de
+
+  TextPresent_pageFiles:
+   TestCase: LiveTest\TestCase\General\Html\TextPresent
+   Parameter:
+    text: "unpresent_text"
+   PageFiles:
+    - pagefile.txt 
+
+  TextPresent_exclude:
+   TestCase: LiveTest\TestCase\General\Html\TextPresent
+   Parameter:
+    text: "unpresent_text"
+   ExcludePages:
+    - http://www.stern.de
+    
+ Pages:
+  - http://www.stern.de
+  - http://www.phphatesme.com
