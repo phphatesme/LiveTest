@@ -7,8 +7,20 @@ use LiveTest\TestRun\Information;
 use LiveTest\TestRun\Result\ResultSet;
 use LiveTest\TestRun\Result\Result;
 
+/**
+ * This format converts the test result into a comma separated list. 
+ * 
+ * @author Nils Langner
+ */
 class Csv implements Format
 {
+  /**
+   * Formats ths test result into csv style.
+   * 
+   * @param ResultSet $set
+   * @param array $connectionStatuses
+   * @param Information $information
+   */
   public function formatSet(ResultSet $set, array $connectionStatuses, Information $information)
   {
     $text = '';

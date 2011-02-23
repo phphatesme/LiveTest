@@ -7,20 +7,42 @@ use LiveTest\TestRun\Information;
 use LiveTest\TestRun\Result\ResultSet;
 use LiveTest\TestRun\Result\Result;
 
+/**
+ * This format converts the given results into a html template. 
+ * 
+ * @author Nils Langner
+ */
+
 class Html implements Format
 {
   private $standardTemplate = '/templates/html.php';
 
-  private $content;
+  /**
+   * The html template used for rendering
+   * @var string
+   */
   private $template;
+  
+  /**
+   * An ordered list of all result statuses
+   * @var array
+   */
   private $statuses;
 
+  /**
+   * This constructor sets the standard values for the html template and the result status order.
+   */
   public function __construct()
   {
     $this->statuses = array (Result::STATUS_SUCCESS => 1, Result::STATUS_FAILED => 2, Result::STATUS_ERROR => 3 );
     $this->template = __DIR__ . $this->standardTemplate;
   }
 
+  /**
+   * Sets the template.
+   * 
+   * @param string $template
+   */
   public function init($template = null)
   {
     if (!is_null($template))
@@ -29,6 +51,15 @@ class Html implements Format
     }
   }
 
+  /**
+   * Formats the given results to a html document.
+   * 
+   * @param ResultSet $set
+   * @param array $connectionStatuses
+   * @param Information $information
+   * 
+   * @return string
+   */
   public function formatSet(ResultSet $set, array $connectionStatuses, Information $information)
   {
     $matrix = array ();
@@ -52,9 +83,9 @@ class Html implements Format
 
     ob_start();
     require $this->template;
-    $this->content = ob_get_contents();
+    $content = ob_get_contents();
     ob_clean();
 
-    return $this->content;
+    return $content;
   }
 }

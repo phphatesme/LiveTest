@@ -7,8 +7,23 @@ use LiveTest\TestRun\Information;
 use LiveTest\TestRun\Result\ResultSet;
 use LiveTest\TestRun\Result\Result;
 
+/**
+ * This format converts the results into a simple text list. It is used to print the 
+ * when running on command line.
+ * 
+ * @author Nils Langner
+ */
 class SimpleList implements Format
 {
+  /**
+   * Formats the results into a simple list.
+   * 
+   * @param ResultSet $set
+   * @param array $connectionStatuses
+   * @param Information $information
+   * 
+   * @return string
+   */
   public function formatSet(ResultSet $set, array $connectionStatuses, Information $information)
   {
     $text = '';

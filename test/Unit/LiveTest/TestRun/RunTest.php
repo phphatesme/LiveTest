@@ -114,5 +114,7 @@ class RunTest extends \PHPUnit_Framework_TestCase
   public function testHandleResultNotification( )
   {
     // @todo implement
+    // use test case that always failes
+    // use another that never fails
   }
 }
