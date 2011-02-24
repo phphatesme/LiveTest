@@ -19,12 +19,12 @@ class ParserTest extends \PHPUnit_Framework_TestCase
     $parser = new Parser();
     $parsedConfig = $parser->parse($configYaml->toArray(), $config);
 
-    foreach ($parsedConfig->getTestCases() as $testCase)
-    {
-      \Base\Debug\DebugHelper::doVarDump($testCase['className']);
-      \Base\Debug\DebugHelper::doVarDump($testCase['config']->getPages());
-    }
-
-    \Base\Debug\DebugHelper::doVarDump($parsedConfig->getPages());
+//    foreach ($parsedConfig->getTestCases() as $testCase)
+//    {
+//      \Base\Debug\DebugHelper::doVarDump($testCase['className']);
+//      \Base\Debug\DebugHelper::doVarDump($testCase['config']->getPages());
+//    }
+//
+//    \Base\Debug\DebugHelper::doVarDump($parsedConfig->getPages());
   }
 }
