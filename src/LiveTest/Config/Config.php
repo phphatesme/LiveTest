@@ -66,7 +66,7 @@ class Config
   {
     $config = new self($this);
 
-    $this->testCases[] = array('config' => $config,'className' => $className,'parameters' => $parameters);
+    $this->testCases[] = array('config' => $config,'name' => $name, 'className' => $className,'parameters' => $parameters);
 
     return $config;
   }

@@ -1,30 +1,30 @@
 <?php
 
+/*
+ * This file is part of the LiveTest package.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace LiveTest\Cli;
 
-use Base\Http\Client\Zend;
-
-use Annovent;
-
 use LiveTest;
-
-use Annovent\Event\Event;
-use Annovent\Event\Dispatcher;
-
-use LiveTest\TestRun;
+use LiveTest\Config\Config;
+use LiveTest\Config\Parser;
 use LiveTest\Listener\Listener;
+use LiveTest\TestRun\Properties;
+use LiveTest\TestRun\Run;
 
+use Base\Http\Client\Zend;
 use Base\Www\Uri;
 use Base\Cli\ArgumentRunner;
 use Base\Config\Yaml;
 
-use LiveTest\TestRun\Properties;
-use LiveTest\TestRun\Run;
+use Annovent\Event\Dispatcher;
 
 class Runner extends ArgumentRunner
 {
-//  protected $mandatoryArguments = array ('testsuite' );
-
   private $config;
   private $testSuiteConfig;
 
@@ -51,7 +51,6 @@ class Runner extends ArgumentRunner
     if( !$this->initListener($arguments) )
     {
       $this->initGlobalSettings();
-      $this->initTestSuiteConfig();
       $this->initDefaultDomain();
     }
   }
@@ -101,12 +100,6 @@ class Runner extends ArgumentRunner
     $this->config = $currentConfig;
   }
 
-  private function initTestSuiteConfig()
-  {
-    $testSuiteFileName = $this->getArgument('testsuite');
-    $this->testSuiteConfig = new Yaml($testSuiteFileName);
-  }
-
   private function initGlobalSettings()
   {
     if (!is_null($this->config->Global))
@@ -144,14 +137,14 @@ class Runner extends ArgumentRunner
         }
         if (is_null($extensionConfig->parameter))
         {
-          $parameter = new \Zend_Config(array ());
+          $parameter = array();
         }
         else
         {
-          $parameter = $extensionConfig->parameter;
+          $parameter = $extensionConfig->parameter->toArray();
         }
         $listener = new $className($this->runId, $this->eventDispatcher);
-        $this->registerListener($listener, $parameter->toArray());
+        $this->registerListener($listener, $parameter);
       }
     }
     $result = $this->eventDispatcher->notify('LiveTest.Runner.Init', array( 'arguments' => $arguments ));
@@ -174,7 +167,14 @@ class Runner extends ArgumentRunner
 
   private function initTestRun()
   {
-    $testRunProperties = new Properties($this->testSuiteConfig, new Uri($this->defaultDomain));
+    $testSuiteFileName = $this->getArgument('testsuite');
+    $yamlConfig = new Yaml($testSuiteFileName);
+    
+    $testSuiteConfig = new Config();
+    $parser = new Parser();
+    $testSuiteConfig = $parser->parse($yamlConfig->toArray(), $testSuiteConfig);
+    
+    $testRunProperties = new Properties($testSuiteConfig, new Uri($this->defaultDomain));
     $this->testRun = new Run($testRunProperties, new Zend(), $this->eventDispatcher);
   }
 

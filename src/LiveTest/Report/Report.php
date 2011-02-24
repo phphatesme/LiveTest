@@ -1,12 +1,19 @@
 <?php
 
+/*
+ * This file is part of the LiveTest package.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace LiveTest\Report;
 
 use LiveTest\TestRun\Information;
 
 use LiveTest\Report\Writer\Writer;
-use LiveTest\TestRun\Result\ResultSet;
 use LiveTest\Report\Format\Format;
+use LiveTest\TestRun\Result\ResultSet;
 
 class Report
 {

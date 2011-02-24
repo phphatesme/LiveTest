@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the LiveTest package.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace LiveTest\TestRun;
 
 use Base\Cli\WrongTypeException;
@@ -32,7 +39,7 @@ class Test
    * @param String $class
    * @param \Zend_Config $parameter
    */
-  public function __construct( $name, $className, \Zend_Config $parameter)
+  public function __construct( $name, $className, array $parameter)
   {    
     if( !is_string( $name ) )
     {
