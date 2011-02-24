@@ -167,15 +167,8 @@ class Runner extends ArgumentRunner
 
   private function initTestRun()
   {
-    $testSuiteFileName = $this->getArgument('testsuite');
-    $yamlConfig = new Yaml($testSuiteFileName);
-    
-    $testSuiteConfig = new Config();
-    $parser = new Parser();
-    $testSuiteConfig = $parser->parse($yamlConfig->toArray(), $testSuiteConfig);
-    
-    $testRunProperties = new Properties($testSuiteConfig, new Uri($this->defaultDomain));
-    $this->testRun = new Run($testRunProperties, new Zend(), $this->eventDispatcher);
+    $properties = Properties::createByYamlFile($this->getArgument('testsuite'), $this->defaultDomain);
+    $this->testRun = new Run($properties, new Zend(), $this->eventDispatcher);
   }
 
   public function run()

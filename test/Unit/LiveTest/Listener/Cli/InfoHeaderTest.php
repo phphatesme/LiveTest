@@ -23,8 +23,7 @@ class InfoHeaderTest extends \PHPUnit_Framework_TestCase
 
   public function testPreRun( )
   {
-    $config = new Yaml(__DIR__.$this->yamlTestSuiteConfig);
-    $properties = new Properties($config, new Uri('http://www.example.com'));
+    $properties = Properties::createByYamlFile(__DIR__.$this->yamlTestSuiteConfig, new Uri('http://www.example.com'));
 
     ob_start();
     $this->listener->preRun($properties);

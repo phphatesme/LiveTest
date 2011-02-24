@@ -25,7 +25,7 @@ class ProgressBarTest extends \PHPUnit_Framework_TestCase
 
   public function testHandleResult()
   {
-    $test = new Test('', '', new \Zend_Config(array()));
+    $test = new Test('', '');
     $response = new Zend(new \Zend_Http_Response(200, array()));
 
     ob_start();

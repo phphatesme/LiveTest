@@ -11,11 +11,11 @@ class ResultTest extends \PHPUnit_Framework_TestCase
 
   public function testGetter()
   {
-    $test = new Test('name', 'className', new \Zend_Config(array()));
+    $test = new Test('name', 'className');
     $status = Result::STATUS_SUCCESS;
     $message = 'foo';
     $uri = new Uri('http://www.example.com');
-    
+
     $result = new Result($test, $status, $message, $uri);
 
     $this->assertEquals($test, $result->getTest());

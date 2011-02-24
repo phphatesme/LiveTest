@@ -2,6 +2,10 @@
 
 namespace LiveTest\TestRun;
 
+use LiveTest\Config\Parser;
+
+use Base\Config\Yaml;
+
 use Base\Www\Uri;
 
 use LiveTest\Config\Config;
@@ -10,44 +14,59 @@ class Properties
 {
   private $defaultDomain;
   private $config;
-  
-  private $testSets = array ();
-  
+
+  private $testSets = array();
+
   public function __construct(Config $config, Uri $defaultDomain)
   {
     $this->defaultDomain = $defaultDomain;
     $this->config = $config;
-    
+
     $this->initTestSets();
   }
-  
+
   private function initTestSets()
   {
     $testCases = $this->config->getTestCases();
-    foreach ( $testCases as $testCase )
+    foreach ($testCases as $testCase)
     {
       $config = $testCase['config'];
-      foreach ( $config->getPages() as $page )
+      foreach ($config->getPages() as $page)
       {
         $uri = $this->defaultDomain->concatUri($page);
         if (!array_key_exists($page, $this->testSets))
         {
           $this->testSets[$page] = new TestSet($uri);
         }
-        
+
         $test = new Test($testCase['name'], $testCase['className'], $testCase['parameters']);
         $this->testSets[$page]->addTest($test);
       }
     }
   }
-  
+
   public function getDefaultDomain()
   {
     return $this->defaultDomain;
   }
-  
+
   public function getTestSets()
   {
     return $this->testSets;
+  }
+
+  /**
+   * @todo is this method neccessary? If yes: Where to put it?
+   */
+  public static function createByYamlFile($filename, Uri $defaultUri)
+  {
+    $yamlConfig = new Yaml($filename);
+
+    $testSuiteConfig = new Config();
+    $parser = new Parser();
+    $testSuiteConfig = $parser->parse($yamlConfig->toArray(), $testSuiteConfig);
+
+    return new self($testSuiteConfig, $defaultUri);
+    ;
   }
 }

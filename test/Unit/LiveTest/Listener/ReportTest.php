@@ -36,7 +36,7 @@ class ReportTest extends \PHPUnit_Framework_TestCase
   {
     $this->initReportListener();
 
-    $test = new Test('TestName', 'ClassName', new \Zend_Config(array()));
+    $test = new Test('TestName', 'ClassName');
     $response = new Zend(new \Zend_Http_Response(200, array()));
 
     $result = new Result($test, Result::STATUS_SUCCESS, 'Success', new Uri('http://www.example.com'));
@@ -61,7 +61,7 @@ class ReportTest extends \PHPUnit_Framework_TestCase
 
     $this->listener->init($formatConfig, $writerConfig, array(Result::STATUS_FAILED));
 
-    $test = new Test('TestName', 'ClassName', new \Zend_Config(array()));
+    $test = new Test('TestName', 'ClassName');
     $response = new Zend(new \Zend_Http_Response(200, array()));
 
     $result = new Result($test, Result::STATUS_SUCCESS, 'Success', new Uri( 'http://www.example.com'));
@@ -90,7 +90,7 @@ class ReportTest extends \PHPUnit_Framework_TestCase
 
     $this->listener->init($formatConfig, $writerConfig, null, false);
 
-    $test = new Test('TestName', 'ClassName', new \Zend_Config(array()));
+    $test = new Test('TestName', 'ClassName');
     $response = new Zend(new \Zend_Http_Response(200, array()));
 
     $result = new Result($test, Result::STATUS_SUCCESS, 'Success', new Uri( 'http://www.example.com'));

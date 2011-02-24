@@ -11,7 +11,7 @@ class TestTest extends \PHPUnit_Framework_TestCase
 
   public function setUp()
   {
-    $this->test = new Test('testName', 'ClassMockup', new Yaml(__DIR__.'/Fixtures/testsuite.yml', true));
+    $this->test = new Test('testName', 'ClassMockup', $this->getTestSuiteConfig());
   }
 
   public function testGetClassName()
@@ -28,8 +28,13 @@ class TestTest extends \PHPUnit_Framework_TestCase
 
   public function testGetParameter()
   {
-    $this->assertObjectHasAttribute('filename', $this->test->getParameter());
-    $this->assertObjectHasAttribute('_data', $this->test->getParameter());
+    $this->assertArrayHasKey('TestSuite', $this->test->getParameter());
+  }
+
+  private function getTestSuiteConfig( )
+  {
+    $yaml = new Yaml(__DIR__.'/Fixtures/testsuite.yml', true);
+    return $yaml->toArray();
   }
 
    /**
@@ -37,7 +42,7 @@ class TestTest extends \PHPUnit_Framework_TestCase
      */
   public function testConstructorParameterClassNameException()
   {
-    new Test('testName', 1, new Yaml(__DIR__.'/Fixtures/testsuite.yml', true));
+    new Test('testName', 1, $this->getTestSuiteConfig());
   }
 
  /**
@@ -45,7 +50,7 @@ class TestTest extends \PHPUnit_Framework_TestCase
      */
   public function testConstructorParameterNameException()
   {
-    new Test(1, 'ClassMockup', new Yaml(__DIR__.'/Fixtures/testsuite.yml', true));
+    new Test(1, 'ClassMockup', $this->getTestSuiteConfig());
   }
 
   /**

@@ -42,7 +42,6 @@ class RunTest extends \PHPUnit_Framework_TestCase
    */
   protected function setUp()
   {
-    $yamlConfig = new Yaml(__DIR__ . '/Fixtures/testsuite.yml', true);
     $this->defaultUri = new Uri('http://www.example.com/index.html');
 
     $dispatcher = new Dispatcher();
@@ -59,7 +58,7 @@ class RunTest extends \PHPUnit_Framework_TestCase
     $this->infoListener = new \InfoListener('', $dispatcher);
     $dispatcher->registerListener($this->infoListener);
 
-    $this->properties = new Properties($yamlConfig, $this->defaultUri);
+    $this->properties = Properties::createByYamlFile(__DIR__ . '/Fixtures/testsuite.yml', $this->defaultUri);
     $this->httpClient = new HttpClientMockup(new ResponseMockup());
     $this->run = new Run($this->properties, $this->httpClient, $dispatcher);
   }

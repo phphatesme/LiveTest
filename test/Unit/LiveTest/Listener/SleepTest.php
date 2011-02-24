@@ -29,7 +29,7 @@ class SleepTest extends \PHPUnit_Framework_TestCase
     $this->listener = new Sleep('', new Dispatcher());
     $this->listener->init(1);
 
-    $test = new Test('', '', new \Zend_Config(array()));
+    $test = new Test('', '');
     $response = new Zend(new \Zend_Http_Response(200, array()));
 
     $timer = new Timer();

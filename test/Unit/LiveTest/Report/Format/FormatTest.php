@@ -22,7 +22,7 @@ abstract class FormatTest extends \PHPUnit_Framework_TestCase
     $set = new ResultSet();
 
     $uri = new Uri('http://www.example.com');
-    $test = new Test('TestName', 'TestClass', new \Zend_Config(array('foo' => 'bar')));
+    $test = new Test('TestName', 'TestClass', array('foo' => 'bar'));
 
     $successResult = new Result($test, Result::STATUS_SUCCESS, 'Success Message', $uri);
     $failureResult = new Result($test, Result::STATUS_FAILED, 'Failed Message', $uri);

@@ -11,12 +11,8 @@ class ResultSetTest extends \PHPUnit_Framework_TestCase
 {
   protected function createResult($status)
   {
-    $test = new Test('name', 'className', new \Zend_Config(array()));
-    $status = $status;
-    $message = 'foo';
-    $uri = new Uri('http://www.example.com');
-    
-    return new Result($test, $status, $message, $uri);
+    $test = new Test('name', 'className');
+    return new Result($test, $status, 'foo', new Uri('http://www.example.com'));
   }
 
   public function testGetStatus()
@@ -69,5 +65,5 @@ class ResultSetTest extends \PHPUnit_Framework_TestCase
     $this->assertEquals(array($result1, $result2), $resultSet->getResults());
   }
 
-  
+
 }
