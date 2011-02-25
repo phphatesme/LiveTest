@@ -1,0 +1,11 @@
+TestSuite:
+
+ TestCases:
+
+  CorrectHttpHeader_add:
+   TestCase: LiveTest\TestCase\General\Http\SuccessfulStatusCode
+   IncludePages:
+    - http://nntp.de
+  
+ UnknownTag:
+  - pagelist.yml

@@ -1,10 +1,12 @@
 <?php
 
-namespace LiveTest\Config;
+namespace LiveTest\Config\Parser;
+
+use LiveTest\Config\Config;
 
 class Parser
 {
-  public function parse(array $configArray, Config $config)
+  public function parse(array $configArray, Config  $config)
   {
     foreach ($configArray as $configTag => $value)
     {
@@ -16,7 +18,7 @@ class Parser
       }
       else
       {
-        throw new \Exception('Unknown tag (' . $configTag . ')');
+        throw new Exception('Unknown tag (' . $configTag . ')');
       }
     }
 

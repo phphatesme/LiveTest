@@ -29,3 +29,6 @@ TestSuite:
  Pages:
   - http://www.stern.de
   - http://www.phphatesme.com
+  
+ PageLists:
+  - pagelist.yml

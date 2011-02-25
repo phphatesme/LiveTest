@@ -2,7 +2,7 @@
 
 namespace LiveTest\TestRun;
 
-use LiveTest\Config\Parser;
+use LiveTest\Config\Parser\Parser;
 
 use Base\Config\Yaml;
 

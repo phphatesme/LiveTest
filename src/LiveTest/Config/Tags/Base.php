@@ -2,7 +2,7 @@
 
 namespace LiveTest\Config\Tags;
 
-use LiveTest\Config\Parser;
+use LiveTest\Config\Parser\Parser;
 use LiveTest\Config\Config;
 
 abstract class Base implements Tag
