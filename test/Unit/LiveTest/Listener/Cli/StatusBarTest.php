@@ -22,7 +22,7 @@ class StatusBarTest extends \PHPUnit_Framework_TestCase
     $listener = new StatusBar('', new Dispatcher());
 
     $test = new Test('', '');
-    $response = new Zend(new \Zend_Http_Response(200, array()));
+    $response = new Zend(new \Zend_Http_Response(200, array()), 0);
 
     $result = new Result($test, Result::STATUS_SUCCESS, '', new Uri( 'http://www.example.com'));
     $listener->handleResult($result, $response);

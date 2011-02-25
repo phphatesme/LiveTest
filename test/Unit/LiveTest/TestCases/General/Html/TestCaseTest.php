@@ -16,7 +16,7 @@ class TestCaseTest extends \PHPUnit_Framework_TestCase
          ->will($this->returnValue(TRUE));
 
     $response = $this->getMock('\Base\Http\Response\Response',
-        array('getStatus', 'getBody'));
+        array('getStatus', 'getBody', 'getDuration'));
     $response->expects($this->any())
              ->method('getBody')
              ->will($this->returnValue('<html></html>'));

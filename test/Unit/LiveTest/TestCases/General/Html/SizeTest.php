@@ -21,7 +21,7 @@ class SizeTest extends \PHPUnit_Framework_TestCase
     $testCase = new Size();
     $testCase->init( 10 );
 
-    $response = $this->getMock('\Base\Http\Response\Response', array('getStatus', 'getBody'));
+    $response = $this->getMock('\Base\Http\Response\Response', array('getStatus', 'getBody','getDuration'));
     $response->expects($this->any())
                  ->method('getBody')
                  ->will($this->returnValue('<body>'));
@@ -35,7 +35,7 @@ class SizeTest extends \PHPUnit_Framework_TestCase
     $testCase = new Size();
     $testCase->init( 2 );
 
-    $response = $this->getMock('\Base\Http\Response\Response', array('getStatus', 'getBody'));
+    $response = $this->getMock('\Base\Http\Response\Response', array('getStatus', 'getBody','getDuration'));
     $response->expects($this->any())
                  ->method('getBody')
                  ->will($this->returnValue('<body>'));
@@ -48,7 +48,7 @@ class SizeTest extends \PHPUnit_Framework_TestCase
     $testCase = new Size();
     $testCase->init( null, 2 );
 
-    $response = $this->getMock('\Base\Http\Response\Response', array('getStatus', 'getBody'));
+    $response = $this->getMock('\Base\Http\Response\Response', array('getStatus', 'getBody', 'getDuration'));
     $response->expects($this->any())
                  ->method('getBody')
                  ->will($this->returnValue('<body>'));
@@ -62,7 +62,7 @@ class SizeTest extends \PHPUnit_Framework_TestCase
     $testCase = new Size();
     $testCase->init( null, 10 );
 
-    $response = $this->getMock('\Base\Http\Response\Response', array('getStatus', 'getBody'));
+    $response = $this->getMock('\Base\Http\Response\Response', array('getStatus', 'getBody', 'getDuration'));
     $response->expects($this->any())
                  ->method('getBody')
                  ->will($this->returnValue('<body>'));

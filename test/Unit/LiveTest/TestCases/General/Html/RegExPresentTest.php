@@ -13,7 +13,7 @@ class RegExPresentTest extends \PHPUnit_Framework_TestCase
     $testCase = new RegExPresent();
     $testCase->init( '^a(.*)b^' );
 
-    $response = $this->getMock('\Base\Http\Response\Response', array('getStatus', 'getBody'));
+    $response = $this->getMock('\Base\Http\Response\Response', array('getStatus', 'getBody','getDuration'));
     $response->expects($this->any())
                  ->method('getBody')
                  ->will($this->returnValue('acdefgb'));
@@ -26,7 +26,7 @@ class RegExPresentTest extends \PHPUnit_Framework_TestCase
     $testCase = new RegExPresent();
     $testCase->init( '^a(.*)b^' );
 
-    $response = $this->getMock('\Base\Http\Response\Response', array('getStatus', 'getBody'));
+    $response = $this->getMock('\Base\Http\Response\Response', array('getStatus', 'getBody','getDuration'));
     $response->expects($this->any())
                  ->method('getBody')
                  ->will($this->returnValue('bcdefg'));

@@ -23,4 +23,14 @@ class ResponseMockup implements Response
   {
     return $this->body;
   }
+
+  public function getDuration()
+  {
+    return $this->duration;
+  }
+
+  public function setDuration( $duration )
+  {
+    $this->duration = $duration;
+  }
 }

@@ -12,6 +12,7 @@ class HttpClientMockup implements Client
   private $response;
   private $uri;
   private $nextRequestFails = false;
+  private $timeout;
 
   public function __construct(Response $response)
   {
@@ -36,5 +37,15 @@ class HttpClientMockup implements Client
   public function setUri($uri)
   {
     $this->uri = $uri;
+  }
+
+  public function getTimeout()
+  {
+    return $this->timeout;
+  }
+
+  public function setTimeout( $timeout )
+  {
+    $this->timeout = $timeout;
   }
 }

@@ -30,7 +30,7 @@ class SleepTest extends \PHPUnit_Framework_TestCase
     $this->listener->init(1);
 
     $test = new Test('', '');
-    $response = new Zend(new \Zend_Http_Response(200, array()));
+    $response = new Zend(new \Zend_Http_Response(200, array()), 0);
 
     $timer = new Timer();
     $this->listener->handleConnectionStatus( new ConnectionStatus(ConnectionStatus::SUCCESS, new Uri( 'http://www.example.com')));

@@ -40,7 +40,7 @@ class HtmlDocumentLogTest extends \PHPUnit_Framework_TestCase
     $this->listener->init( $this->fullLogPathInit);
 
     $test = new Test('', '');
-    $response = new Zend(new \Zend_Http_Response(200, array(), '<body></body>'));
+    $response = new Zend(new \Zend_Http_Response(200, array(), '<body></body>'), 0);
 
     $result = new Result($test, Result::STATUS_FAILED, '', new Uri('http://www.example.com'));
 
@@ -54,7 +54,7 @@ class HtmlDocumentLogTest extends \PHPUnit_Framework_TestCase
     $this->listener->init(__DIR__ . DIRECTORY_SEPARATOR . $this->logPath, array( Result::STATUS_SUCCESS) );
 
     $test = new Test('', '');
-    $response = new Zend(new \Zend_Http_Response(200, array(), '<body></body>'));
+    $response = new Zend(new \Zend_Http_Response(200, array(), '<body></body>'), 0);
     $result = new Result($test, Result::STATUS_FAILED, '', new Uri( 'http://www.example.com'));
 
     $this->listener->handleResult($result, $response);

@@ -14,7 +14,7 @@ class ExpectedStatusCodeTest extends \PHPUnit_Framework_TestCase
     $testCase = new ExpectedStatusCode();
     $testCase->init(400);
 
-    $response = $this->getMock('\Base\Http\Response\Response', array('getStatus', 'getBody'));
+    $response = $this->getMock('\Base\Http\Response\Response', array('getStatus', 'getBody', 'getDuration'));
     $response->expects($this->any())
                  ->method('getStatus')
                  ->will($this->returnValue(500));
@@ -28,7 +28,7 @@ class ExpectedStatusCodeTest extends \PHPUnit_Framework_TestCase
     $testCase = new ExpectedStatusCode();
     $testCase->init(400);
 
-    $response = $this->getMock('\Base\Http\Response\Response', array('getStatus', 'getBody'));
+    $response = $this->getMock('\Base\Http\Response\Response', array('getStatus', 'getBody', 'getDuration'));
     $response->expects($this->any())
                  ->method('getStatus')
                  ->will($this->returnValue(400));

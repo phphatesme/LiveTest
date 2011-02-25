@@ -13,7 +13,7 @@ class TextNotPresentTest extends \PHPUnit_Framework_TestCase
     $testCase = new TextNotPresent();
     $testCase->init( 'abc' );
 
-    $response = $this->getMock('\Base\Http\Response\Response', array('getStatus', 'getBody'));
+    $response = $this->getMock('\Base\Http\Response\Response', array('getStatus', 'getBody', 'getDuration'));
     $response->expects($this->any())
                  ->method('getBody')
                  ->will($this->returnValue('abcdefg'));
@@ -27,7 +27,7 @@ class TextNotPresentTest extends \PHPUnit_Framework_TestCase
     $testCase = new TextNotPresent();
     $testCase->init( 'abc' );
 
-    $response = $this->getMock('\Base\Http\Response\Response', array('getStatus', 'getBody'));
+    $response = $this->getMock('\Base\Http\Response\Response', array('getStatus', 'getBody', 'getDuration'));
     $response->expects($this->any())
                  ->method('getBody')
                  ->will($this->returnValue('1234abcdefg'));
@@ -41,7 +41,7 @@ class TextNotPresentTest extends \PHPUnit_Framework_TestCase
     $testCase = new TextNotPresent();
     $testCase->init( 'abc' );
 
-    $response = $this->getMock('\Base\Http\Response\Response', array('getStatus', 'getBody'));
+    $response = $this->getMock('\Base\Http\Response\Response', array('getStatus', 'getBody', 'getDuration'));
     $response->expects($this->any())
                  ->method('getBody')
                  ->will($this->returnValue('bcdefg'));

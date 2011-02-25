@@ -13,7 +13,7 @@ class RegExNotPresentTest extends \PHPUnit_Framework_TestCase
     $testCase = new RegExNotPresent();
     $testCase->init( '^a(.*)b^' );
 
-    $response = $this->getMock('\Base\Http\Response\Response', array('getStatus', 'getBody'));
+    $response = $this->getMock('\Base\Http\Response\Response', array('getStatus', 'getBody','getDuration'));
     $response->expects($this->any())
                  ->method('getBody')
                  ->will($this->returnValue('acdefgb'));
@@ -27,7 +27,7 @@ class RegExNotPresentTest extends \PHPUnit_Framework_TestCase
     $testCase = new RegExNotPresent();
     $testCase->init( '^a(.*)b^' );
 
-    $response = $this->getMock('\Base\Http\Response\Response', array('getStatus', 'getBody'));
+    $response = $this->getMock('\Base\Http\Response\Response', array('getStatus', 'getBody','getDuration'));
     $response->expects($this->any())
                  ->method('getBody')
                  ->will($this->returnValue('bcdefg'));
