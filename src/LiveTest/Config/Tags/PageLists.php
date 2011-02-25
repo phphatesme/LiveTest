@@ -2,6 +2,8 @@
 
 namespace LiveTest\Config\Tags;
 
+use LiveTest\Config\Config;
+
 use Base\Config\Yaml;
 
 class PageLists extends Base
