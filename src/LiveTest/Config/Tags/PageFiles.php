@@ -12,7 +12,7 @@ class PageFiles extends Base
 
     foreach ($parameters as $file)
     {
-      $config->includePages( file( $config->getBaseDir().'/'.$file ) );
+      $config->includePages(file($config->getBaseDir() . '/' . $file));
     }
   }
 }
