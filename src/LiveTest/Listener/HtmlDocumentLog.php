@@ -42,7 +42,7 @@ class HtmlDocumentLog extends Base
    * @param string $logPath
    * @param array $logStatuses
    */
-  public function init( $logPath, array $logStatuses = null )
+  public function init($logPath, array $logStatuses = null)
   {
     $this->logPath = $logPath . '/' . $this->getRunId() . '/';
 
@@ -51,14 +51,7 @@ class HtmlDocumentLog extends Base
       mkdir($this->logPath, 0777, true);
     }
 
-    if (!is_null($logStatuses))
-    {
-      $this->logStatuses = $logStatuses;
-    }
-    else
-    {
-      $this->logStatuses = array(Result::STATUS_ERROR,Result::STATUS_FAILED);
-    }
+    $this->logStatuses = \Base\firstNotNull($logStatuses, array(Result::STATUS_ERROR,Result::STATUS_FAILED));
   }
 
   /**
