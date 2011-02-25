@@ -1,5 +1,7 @@
 <?php
 
+include_once __DIR__ . '/functions.php';
+
 function Base_Autoload($classname)
 {
   if (substr($classname, 0, 4) == 'Base')
@@ -13,4 +15,4 @@ function Base_Autoload($classname)
   }
 }
 
-spl_autoload_register('Base_Autoload'); 
+spl_autoload_register('Base_Autoload');
