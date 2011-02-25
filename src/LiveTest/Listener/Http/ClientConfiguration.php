@@ -14,6 +14,8 @@ use LiveTest\Listener\Base;
 use Base\Http\Client\Client;
 
 /**
+ * This listener is used to manipulate the http client configuration.
+ *
  * @author Nils Langner
  */
 class ClientConfiguration extends Base
@@ -21,6 +23,8 @@ class ClientConfiguration extends Base
   private $timeout;
 
   /**
+   * This function sets the timeout of the http client.
+   *
    * @param int $timeout the http client time out in seconds
    */
   public function init($timeout)
@@ -29,11 +33,13 @@ class ClientConfiguration extends Base
   }
 
   /**
+   * This function sets the timeout for the http client.
+   *
    * @event LiveTest.Runner.InitHttpClient
    *
    * @param ConnectionStatus $status
    */
-  public function handleConnectionStatus(Client $client)
+  public function initHttpClient(Client $client)
   {
     $client->setTimeout($this->timeout);
   }
