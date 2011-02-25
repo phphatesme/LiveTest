@@ -5,4 +5,5 @@ namespace Base\Http\Client;
 interface Client
 {
   public function request($method = null);
+  public function setTimeout($timeInSeconds);
 }
