@@ -13,7 +13,7 @@ class PageLists extends Base
     foreach ($parameters as $file)
     {
       $yaml = new Yaml($config->getBaseDir() . '/' . $file);
-      $config->includePages($yaml->Pages->toArray());
+      $this->getParser()->parse( $yaml->toArray( ), $config );
     }
   }
 }
