@@ -7,15 +7,9 @@ use LiveTest\Config\Config;
 
 class Pages extends Base
 {
-  public function process()
+  protected function doProcess(Config $config, array $parameters)
   {
-    $config = $this->getConfig();
     $config->doNotInherit();
-
-    foreach ($this->getParameters() as $page)
-    {
-      $config->includePage($page);
-    }
-    return $config;
+    $config->includePages($parameters);
   }
 }

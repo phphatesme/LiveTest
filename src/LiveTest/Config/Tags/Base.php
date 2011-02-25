@@ -7,29 +7,26 @@ use LiveTest\Config\Config;
 
 abstract class Base implements Tag
 {
+  private $configParameters;
   private $config;
   private $parser;
-  private $configParameters;
 
   public function __construct(array $configParameters, Config $config, Parser $parser)
   {
+    $this->configParameters = $configParameters;
     $this->config = $config;
     $this->parser = $parser;
-    $this->configParameters = $configParameters;
   }
 
-  public function getConfig( )
-  {
-    return $this->config;
-  }
-
-  protected function getParser( )
+  protected function getParser()
   {
     return $this->parser;
   }
 
-  protected function getParameters( )
+  final public function process()
   {
-    return $this->configParameters;
+    return $this->doProcess($this->config, $this->configParameters);
   }
+
+  abstract protected function doProcess(Config $config, array $parameters);
 }

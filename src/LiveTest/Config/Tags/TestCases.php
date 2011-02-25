@@ -2,26 +2,26 @@
 
 namespace LiveTest\Config\Tags;
 
+use LiveTest\Config\Config;
+
 class TestCases extends Base
 {
-  public function process()
+  protected function doProcess(Config $config, array $parameters)
   {
-    $config = $this->getConfig();
-    foreach ($this->getParameters() as $name => $value)
+    foreach ($parameters as $name => $value)
     {
-      $parameters = array();
+      $testParameters = array();
       if (array_key_exists('Parameter', $value))
       {
-        $parameters = $value['Parameter'];
+        $testParameters = $value['Parameter'];
       }
 
-      $testCaseConfig = $this->getConfig()->createTestCase($name, $value['TestCase'], $parameters);
+      $testCaseConfig = $config->createTestCase($name, $value['TestCase'], $testParameters);
 
       unset($value['Parameter']);
       unset($value['TestCase']);
 
       $this->getParser()->parse($value, $testCaseConfig);
     }
-    return $config;
   }
 }

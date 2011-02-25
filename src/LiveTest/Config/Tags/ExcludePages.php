@@ -2,19 +2,12 @@
 
 namespace LiveTest\Config\Tags;
 
-use LiveTest\Config\Parser;
 use LiveTest\Config\Config;
 
 class ExcludePages extends Base
 {
-  public function process()
+  protected function doProcess(Config $config, array $parameters)
   {
-    $config = $this->getConfig();
-
-    foreach ($this->getParameters() as $page)
-    {
-      $config->excludePage($page);
-    }
-    return $config;
+    $config->excludePages($parameters);
   }
 }

@@ -9,6 +9,8 @@
 
 namespace LiveTest\Listener;
 
+use Base\File\File;
+
 use Base\Http\Response\Response;
 use LiveTest\TestRun\Result\Result;
 
@@ -69,7 +71,9 @@ class HtmlDocumentLog extends Base
     if (in_array($result->getStatus(), $this->logStatuses))
     {
       $filename = $this->logPath . urlencode($result->getUri()->toString());
-      file_put_contents($filename, $response->getBody());
+      $file = new File($filename);
+      $file->setContent($response->getBody());
+      $file->save();
     }
   }
 }

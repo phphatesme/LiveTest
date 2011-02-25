@@ -17,6 +17,7 @@ class Parser
     							  'Pages'       => 'LiveTest\Config\Tags\Pages',
     							  'IncludePages' => 'LiveTest\Config\Tags\IncludePages',
     							  'ExcludePages' => 'LiveTest\Config\Tags\ExcludePages',
+    							  'PageLists' => 'LiveTest\Config\Tags\PageLists',
     							  'PageFiles' => 'LiveTest\Config\Tags\PageFiles' );
   }
 
@@ -28,7 +29,7 @@ class Parser
       {
         $tagClassName = $this->registeredTags[$configTag];
         $tag = new $tagClassName($value, $config, $this);
-        $config = $tag->process();
+        $tag->process();
       }
       else
       {

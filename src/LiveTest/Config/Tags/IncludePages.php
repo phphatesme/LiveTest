@@ -2,16 +2,12 @@
 
 namespace LiveTest\Config\Tags;
 
+use LiveTest\Config\Config;
+
 class IncludePages extends Base
 {
-  public function process()
+  protected function doProcess(Config $config, array $parameters)
   {
-    $config = $this->getConfig();
-
-    foreach ($this->getParameters() as $page)
-    {
-      $config->includePage($page);
-    }
-    return $config;
+    $config->includePages($parameters);
   }
 }

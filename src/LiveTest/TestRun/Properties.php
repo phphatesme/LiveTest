@@ -56,13 +56,14 @@ class Properties
   }
 
   /**
-   * @todo is this method neccessary? If yes: Where to put it?
+   * @todo is this method neccessary? If yes: Where to put it? At the moment it is only used to make testing easier
    */
   public static function createByYamlFile($filename, Uri $defaultUri)
   {
     $yamlConfig = new Yaml($filename);
 
     $testSuiteConfig = new Config();
+    $testSuiteConfig->setBaseDir(dirname($filename));
     $parser = new Parser();
     $testSuiteConfig = $parser->parse($yamlConfig->toArray(), $testSuiteConfig);
 

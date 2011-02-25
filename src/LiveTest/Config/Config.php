@@ -51,6 +51,14 @@ class Config
     $this->excludedPages[$page] = $page;
   }
 
+  public function excludePages($pages)
+  {
+    foreach( $pages as $page )
+    {
+      $this->excludePage($page);
+    }
+  }
+
   public function doNotInherit()
   {
     $this->inherit = false;

@@ -2,22 +2,17 @@
 
 namespace LiveTest\Config\Tags;
 
-use LiveTest\Config\Parser;
 use LiveTest\Config\Config;
 
 class PageFiles extends Base
 {
-  public function process()
+  protected function doProcess(Config $config, array $parameters)
   {
-    $config = $this->getConfig();
     $config->doNotInherit();
 
-    $parameters = $this->getParameters();
-
-    foreach ($this->getParameters() as $file)
+    foreach ($parameters as $file)
     {
       $config->includePages( file( $config->getBaseDir().'/'.$file ) );
     }
-    return $config;
   }
 }

@@ -30,7 +30,7 @@ class Runner extends ArgumentRunner
 
   private $eventDispatcher;
 
-  private $extensions = array ();
+  private $extensions = array();
 
   private $testRun;
   private $runId;
@@ -48,7 +48,7 @@ class Runner extends ArgumentRunner
     $this->initRunId();
     $this->initConfig();
 
-    if( !$this->initListener($arguments) )
+    if (!$this->initListener($arguments))
     {
       $this->initGlobalSettings();
       $this->initDefaultDomain();
@@ -60,7 +60,11 @@ class Runner extends ArgumentRunner
     $domain = $this->config->DefaultDomain;
     if ($domain != '')
     {
-      $this->defaultDomain = (string)$domain;
+      $this->defaultDomain = new Uri($domain);
+    }
+    else
+    {
+      $this->defaultDomain = new Uri($this->defaultDomain);
     }
   }
 
@@ -113,7 +117,7 @@ class Runner extends ArgumentRunner
 
   private function addAdditionalIncludePaths(array $additionalIncludePaths)
   {
-    foreach ( $additionalIncludePaths as $path )
+    foreach ($additionalIncludePaths as $path)
     {
       set_include_path(get_include_path() . PATH_SEPARATOR . $path);
     }
@@ -128,7 +132,7 @@ class Runner extends ArgumentRunner
   {
     if (!is_null($this->config->Listener))
     {
-      foreach ( $this->config->Listener as $name => $extensionConfig )
+      foreach ($this->config->Listener as $name => $extensionConfig)
       {
         $className = (string)$extensionConfig->class;
         if ($className == '')
@@ -147,7 +151,7 @@ class Runner extends ArgumentRunner
         $this->registerListener($listener, $parameter);
       }
     }
-    $result = $this->eventDispatcher->notify('LiveTest.Runner.Init', array( 'arguments' => $arguments ));
+    $result = $this->eventDispatcher->notify('LiveTest.Runner.Init', array('arguments' => $arguments));
     if (!$result)
     {
       $this->runAllowed = false;
@@ -156,7 +160,7 @@ class Runner extends ArgumentRunner
 
   private function registerListener(Listener $listener, array $parameter = null)
   {
-    \LiveTest\initializeObject($listener, $parameter);
+   \LiveTest\initializeObject($listener, $parameter);
     $this->eventDispatcher->registerListener($listener);
   }
 
