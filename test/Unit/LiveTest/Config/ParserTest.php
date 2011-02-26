@@ -16,7 +16,7 @@ class ParserTest extends \PHPUnit_Framework_TestCase
     $config->setBaseDir(__DIR__ . '/fixtures/');
     $configYaml = new Yaml(__DIR__ . '/fixtures/testsuite.yml');
 
-    $parser = new Parser();
+    $parser = new Parser('LiveTest\\Config\\Tags\\TestSuite\\');
     $parsedConfig = $parser->parse($configYaml->toArray(), $config);
 
    //    foreach ($parsedConfig->getTestCases() as $testCase)
@@ -34,7 +34,7 @@ class ParserTest extends \PHPUnit_Framework_TestCase
     $config->setBaseDir(__DIR__ . '/fixtures/');
     $configYaml = new Yaml(__DIR__ . '/fixtures/badtestsuite.yml');
 
-    $parser = new Parser();
+    $parser = new Parser('LiveTest\\Config\\Tags\\TestSuite\\');
     $this->setExpectedException('LiveTest\Config\Parser\Exception');
     $parsedConfig = $parser->parse($configYaml->toArray(), $config);
   }
