@@ -9,9 +9,10 @@ namespace Base\Http\Response;
 class Zend implements Response
 {
   private $duration;
+  private $zendResponse;
 
   /**
-   * @todo readd Type for $response....(after discussion) :)
+   * @todo read Type for $response....(after discussion) :)
    * @param unknown_type $response
    */
   public function __construct(\Zend_Http_Response $response, $duration)
@@ -33,5 +34,15 @@ class Zend implements Response
   public function getDuration( )
   {
     return $this->duration;
+  }
+
+  public function getHeader($header)
+  {
+  	return $this->zendResponse->getHeader($header);
+  }
+
+  public function getHeaders()
+  {
+		return $this->zendResponse->getHeaders();
   }
 }
