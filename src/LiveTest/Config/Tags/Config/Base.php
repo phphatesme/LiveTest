@@ -1,17 +1,17 @@
 <?php
 
-namespace LiveTest\Config\Tags;
+namespace LiveTest\Config\Tags\Config;
 
 use LiveTest\Config\Parser\Parser;
-use LiveTest\Config\Config;
+use LiveTest\Config\ConfigConfig;
 
-abstract class Base implements Tag
+abstract class Base
 {
   private $configParameters;
   private $config;
   private $parser;
 
-  public function __construct(array $configParameters, Config $config, Parser $parser)
+  public function __construct($configParameters, ConfigConfig $config, Parser $parser)
   {
     $this->configParameters = $configParameters;
     $this->config = $config;
@@ -28,5 +28,5 @@ abstract class Base implements Tag
     return $this->doProcess($this->config, $this->configParameters);
   }
 
-  abstract protected function doProcess(Config $config, array $parameters);
+  abstract protected function doProcess(ConfigConfig $config, $parameters);
 }

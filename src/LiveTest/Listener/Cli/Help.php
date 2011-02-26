@@ -10,7 +10,6 @@
 namespace LiveTest\Listener\Cli;
 
 use LiveTest\Listener\Base;
-use LiveTest\TestRun\Properties;
 
 /**
  * This extension is used to print the help content if the --help argument is set

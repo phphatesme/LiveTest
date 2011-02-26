@@ -1,14 +1,14 @@
 <?php
 
-namespace LiveTest\Config\Tags;
+namespace LiveTest\Config\Tags\TestSuite;
 
-use LiveTest\Config\Config;
+use LiveTest\Config\TestSuiteConfig;
 
 use Base\Config\Yaml;
 
 class PageLists extends Base
 {
-  protected function doProcess(Config $config, array $parameters)
+  protected function doProcess(TestSuiteConfig $config, array $parameters)
   {
     foreach ($parameters as $file)
     {

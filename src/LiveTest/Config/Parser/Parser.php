@@ -2,11 +2,18 @@
 
 namespace LiveTest\Config\Parser;
 
-use LiveTest\Config\Config;
+use LiveTest\Config\Configuration;
 
 class Parser
 {
-  public function parse(array $configArray, Config  $config)
+  private $standardNameSpace;
+  
+  public function __construct($standardNameSpace)
+  {
+    $this->standardNameSpace = $standardNameSpace;
+  }
+  
+  public function parse(array $configArray, Configuration $config)
   {
     foreach ($configArray as $configTag => $value)
     {
@@ -27,9 +34,9 @@ class Parser
 
   private function getTagClassName($tag)
   {
-    if (strpos($tag, '\\') === false)
+    if (strpos($tag, '_') === false)
     {
-      $className = 'LiveTest\\Config\\Tags\\' . $tag;
+      $className = $this->standardNameSpace . $tag;
     }
     else
     {

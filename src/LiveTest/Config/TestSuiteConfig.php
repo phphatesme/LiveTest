@@ -2,7 +2,7 @@
 
 namespace LiveTest\Config;
 
-class Config
+class TestSuiteConfig implements Configuration
 {
   private $includedPages = array();
   private $excludedPages = array();
@@ -14,7 +14,7 @@ class Config
 
   private $parentConfig;
 
-  public function __construct(Config $parentConfig = null)
+  public function __construct(TestSuiteConfig $parentConfig = null)
   {
     $this->parentConfig = $parentConfig;
   }

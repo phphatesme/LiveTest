@@ -22,18 +22,4 @@ function LiveTest_Autoload($classname)
   }
 }
 
-function LiveTest_Extend_Autoload($classname)
-{
-  $includePath = explode(PATH_SEPARATOR, get_include_path());
-  foreach ($includePath as $path)
-  {
-    $classPath = $path . DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $classname) . '.php';
-    if (file_exists($classPath))
-    {
-      include_once $classPath;
-    }
-  }
-}
-
 spl_autoload_register('LiveTest_Autoload');
-spl_autoload_register('LiveTest_Extend_Autoload');

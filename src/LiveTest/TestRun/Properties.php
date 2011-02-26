@@ -9,8 +9,10 @@
 
 namespace LiveTest\TestRun;
 
+use LiveTest\Config\TestSuiteConfig;
+
 use LiveTest\Config\Parser\Parser;
-use LiveTest\Config\Config;
+use LiveTest\Config\Configuration;
 
 use Base\Config\Yaml;
 use Base\Www\Uri;
@@ -45,7 +47,7 @@ class Properties
    * @param Config $config
    * @param Uri $defaultDomain
    */
-  public function __construct(Config $config, Uri $defaultDomain)
+  public function __construct(Configuration $config, Uri $defaultDomain)
   {
     $this->defaultDomain = $defaultDomain;
     $this->config = $config;
@@ -109,9 +111,9 @@ class Properties
   {
     $yamlConfig = new Yaml($filename);
 
-    $testSuiteConfig = new Config();
+    $testSuiteConfig = new TestSuiteConfig();
     $testSuiteConfig->setBaseDir(dirname($filename));
-    $parser = new Parser();
+    $parser = new Parser('LiveTest\\Config\\Tags\\TestSuite\\');
     $testSuiteConfig = $parser->parse($yamlConfig->toArray(), $testSuiteConfig);
 
     return new self($testSuiteConfig, $defaultUri);
