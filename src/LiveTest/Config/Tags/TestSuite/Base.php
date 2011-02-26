@@ -18,6 +18,9 @@ abstract class Base implements Tag
     $this->parser = $parser;
   }
 
+  /**
+   * @return Parser
+   */
   protected function getParser()
   {
     return $this->parser;

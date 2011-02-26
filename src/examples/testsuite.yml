@@ -1,9 +1,9 @@
 TestSuite:
 
- TestCases:
+ IncludedTestSuites:
+  - includedTestSuite.yml
 
-  CorrectHttpHeader_standard:
-   TestCase: LiveTest\TestCase\General\Http\SuccessfulStatusCode
+ TestCases:
 
   TextPresent_body:
    TestCase: LiveTest\TestCase\General\Html\TextPresent
@@ -12,4 +12,3 @@ TestSuite:
    
  Pages:
   - http://www.stern.de
-  - http://www.phphatesme.com

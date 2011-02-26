@@ -1,0 +1,9 @@
+TestSuite:
+
+ TestCases:
+
+  CorrectHttpHeader_standard:
+   TestCase: LiveTest\TestCase\General\Http\SuccessfulStatusCode
+
+ Pages:
+  - http://www.phphatesme.com

@@ -10,9 +10,7 @@
 namespace LiveTest\TestRun;
 
 use LiveTest\Config\TestSuiteConfig;
-
 use LiveTest\Config\Parser\Parser;
-use LiveTest\Config\Configuration;
 
 use Base\Config\Yaml;
 use Base\Www\Uri;
@@ -47,7 +45,7 @@ class Properties
    * @param Config $config
    * @param Uri $defaultDomain
    */
-  public function __construct(Configuration $config, Uri $defaultDomain)
+  public function __construct(TestSuiteConfig $config, Uri $defaultDomain)
   {
     $this->defaultDomain = $defaultDomain;
     $this->config = $config;
