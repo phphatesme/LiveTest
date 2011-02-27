@@ -15,7 +15,7 @@ use LiveTest\TestCase\Exception;
 
 /**
  * XPath testcase
- * 
+ *
  * This test case allows to select contents from the HTML document
  * by an XPath expression and match these contents against a given
  * regular expression.
@@ -54,7 +54,7 @@ class XPath extends TestCase
 
 
   /**
-   * Checks whether the regEx matches all results of the xPath 
+   * Checks whether the regEx matches all results of the xPath
    * query on the given DOMDocument.
    *
    * @param DOMDocument $doc the DOMDocument
@@ -66,7 +66,7 @@ class XPath extends TestCase
     $elements = @$domXPath->query($this->xPath);
     if (false === $elements)
     {
-      // @TODO use configuration Exception?!
+      // @todo use configuration Exception?!
       throw new Exception('Invalid XPath "' . $this->xPath . '" in configuration');
     }
 
