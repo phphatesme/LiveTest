@@ -2,66 +2,48 @@
 
 namespace Base\Collection;
 
-class Set implements \Iterator
+class Set implements \Iterator, \Countable
 {
-  private $parameters = array();
-  private $currentElement;
-  
-  public function add($key, $value)
+  private $position = 0;
+  private $elements = array ();
+
+  public function __construct()
   {
-    $this->parameters[$key] = $value;
+    $this->position = 0;
   }
-  
-  public function addSet($key, Set $set)
+
+  protected function addElement( $element )
   {
-    $this->parameters[$key] = $set;
+    $this->elements[] = $element;
   }
-  
-  public function has($key)
+
+  public function count( )
   {
-    return array_key_exists($key, $this->parameters);
+    return count($this->elements);
   }
-  
-  public function hasSet(Set $set)
+
+  public function rewind()
   {
-  
+    $this->position = 0;
   }
-  
-  public function get($key)
-  {
-    if (!$this->has($key))
-    {
-      // @todo use special exception
-      throw new \Exception('parameter not found');
-    }
-    return $this->parameters[$key];
-  }
-  
-  public function size()
-  {
-    return count($this->parameters);
-  }
-  
+
   public function current()
   {
-    return current($this->parameters);
+    return $this->elements[$this->position];
   }
-  
+
   public function key()
   {
-    return key($this->parameters);
+    return $this->position;
   }
-  
+
   public function next()
   {
-    return next($this->parameters);
+    ++$this->position;
   }
-  
-  public function rewind()
-  {  
-  }
-  
+
   public function valid()
   {
+    return isset($this->elements[$this->position]);
   }
 }
