@@ -40,7 +40,7 @@ class File
 
   public function isWritable()
   {
-    // @fixme check if dir most next to filePath is writeable
+    // @fixme check if dir most next to filePath is writeable (create a dir class for that)
     return is_writable($this->filePath);
   }
 
