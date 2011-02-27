@@ -11,32 +11,38 @@ namespace LiveTest\TestRun;
 
 use Base\Cli\WrongTypeException;
 
+/**
+ * This class contains all information needed to create a test case for a special
+ * uri.
+ *
+ * @author Nils Langner
+ */
 class Test
 {
   /**
-   * Dataholder for a class
-   * @var Object
+   * The name of the test class
+   * @var string
    */
   private $className;
 
   /**
-   * Name
+   * The name of this test
    * @var String
    */
   private $name;
 
   /**
-   *
    * Properties of a test
-   * @var \ArrayIterator
+   * @var array
    */
   private $parameter;
 
   /**
-   *
    * Constructor for Test
+   *
    * @param String $name
-   * @param String $class
+   * @param String $className
+   * @param array $parameter
    */
   public function __construct( $name, $className, array $parameter = array())
   {
@@ -55,16 +61,31 @@ class Test
     $this->parameter = $parameter;
   }
 
+  /**
+   * Returns the class name of the test case
+   *
+   * @return string
+   */
   public function getClassName()
   {
     return $this->className;
   }
 
+  /**
+   * Returns the name of the test
+   *
+   * @return string
+   */
   public function getName()
   {
     return $this->name;
   }
 
+  /**
+   * Returns the parameters for the test
+   *
+   * @return array
+   */
   public function getParameter()
   {
     return $this->parameter;
