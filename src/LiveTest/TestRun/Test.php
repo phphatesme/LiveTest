@@ -48,11 +48,13 @@ class Test
   {
     if( !is_string( $name ) )
     {
+      // @fixme this is a CLI exception
       throw new WrongTypeException('Parameter name has to be a string');
     }
 
    if( !is_string( $className ) )
     {
+      // @fixme this is a CLI exception
       throw new WrongTypeException('Parameter className has to be a string');
     }
 
