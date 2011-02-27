@@ -6,29 +6,30 @@ class ArgumentConverter
 {
   private $arguments = array();
   private $commandLineArguments = array();
-  
+  private $argumentToken;
+
   public function __construct($commandLineArray, $argumentToken = '--')
   {
+    $this->argumentToken = $argumentToken;
     $this->commandLineArguments = $commandLineArray;
     $this->extractArguments();
   }
-  
+
   public function hasArgument( $argumentName )
   {
     return array_key_exists($argumentName, $this->arguments);
   }
-  
+
   public function getArguments()
   {
     return $this->arguments;
   }
-  
+
   private function extractArguments()
   {
     for($i = 0; $i < count($this->commandLineArguments); $i++)
     {
-      // @FIXME -- hardcoded
-      if (substr($this->commandLineArguments[$i], 0, 2) == '--')
+      if (substr($this->commandLineArguments[$i], 0, 2) == $this->argumentToken)
       {
         if (substr($this->commandLineArguments[$i], 2) != '')
         {
@@ -36,7 +37,7 @@ class ArgumentConverter
           {
             $value = '';
           }
-          else if (substr($this->commandLineArguments[$i + 1], 0, 2) == '--')
+          else if (substr($this->commandLineArguments[$i + 1], 0, 2) == $this->argumentToken)
           {
             $value = '';
           }

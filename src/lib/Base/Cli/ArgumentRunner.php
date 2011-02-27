@@ -2,21 +2,19 @@
 
 namespace Base\Cli;
 
-// @todo Mandatory-Check von Runner und TestCase irgendwie vereinheitlichen
-
 abstract class ArgumentRunner implements Runner
 {
   private $commandLineArguments = array();
   private $arguments = array();
-  
+
   protected $mandatoryArguments = array();
-  
+
   public function __construct(array $arguments)
   {
     $this->arguments = $arguments;
     $this->checkMandatoryArguments();
   }
-  
+
   protected function checkMandatoryArguments()
   {
     foreach ($this->mandatoryArguments as $mandatoryArgument)
@@ -27,12 +25,12 @@ abstract class ArgumentRunner implements Runner
       }
     }
   }
-  
+
   protected function hasArgument($argumentName)
   {
     return array_key_exists($argumentName, $this->arguments);
   }
-  
+
   protected function getArgument($argumentName)
   {
     if (!$this->hasArgument($argumentName))
@@ -41,7 +39,7 @@ abstract class ArgumentRunner implements Runner
     }
     return $this->arguments[$argumentName];
   }
-  
+
   protected function getArguments()
   {
     return $this->arguments;
