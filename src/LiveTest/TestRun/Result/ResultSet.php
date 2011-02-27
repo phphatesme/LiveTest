@@ -12,18 +12,12 @@ namespace LiveTest\TestRun\Result;
 /**
  * This class is a collection of test results.
  *
- * @todo this class should implement the iterator interface.
- *
  * @author Nils Langner
  */
-class ResultSet
-{
-  /**
-   * Array containing all results
-   * @var Result[]
-   */
-  private $results = array();
+use Base\Collection\Set;
 
+class ResultSet extends Set
+{
   /**
    * The status of the set. The status is the most severe status of the
    * containing results.
@@ -53,7 +47,7 @@ class ResultSet
   public function addResult(Result $result)
   {
     $this->status = max($this->statusWeight[$result->getStatus()], $this->status);
-    $this->results[] = $result;
+    $this->addElement($result);
   }
 
   /**
@@ -69,25 +63,5 @@ class ResultSet
         return $key;
       }
     }
-  }
-
-  /**
-   * Returns the number of added results.
-   *
-   * @return int
-   */
-  public function getResultCount()
-  {
-    return count($this->results);
-  }
-
-  /**
-   * Returns an array with all addecresults.
-   *
-   * @return Result[]
-   */
-  public function getResults()
-  {
-    return $this->results;
   }
 }
