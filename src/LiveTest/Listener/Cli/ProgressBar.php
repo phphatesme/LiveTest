@@ -25,11 +25,9 @@ class ProgressBar extends Base
   /**
    * The width of the progressBar.
    *
-   * @todo this should also be configured via parameter
-   *
    * @var int
    */
-  const LINE_BREAK_AT = 70;
+  private $lineBreakAt = 70;
 
   /**
    * The internal echo counter. Used to create new lines at the right position.
@@ -62,6 +60,16 @@ class ProgressBar extends Base
   }
 
   /**
+   * Sets the progress bar width
+   *
+   * @param int $lineBreakAt
+   */
+  public function init($lineBreakAt = 70)
+  {
+    $this->lineBreakAt = $lineBreakAt;
+  }
+
+  /**
    * This function echoes a E if the connection failed.
    *
    * @event LiveTest.Run.HandleConnectionStatus
@@ -88,7 +96,7 @@ class ProgressBar extends Base
       echo '  Running: ';
     }
 
-    if ($this->counter % self::LINE_BREAK_AT == 0 && $this->counter != 0)
+    if ($this->counter % $this->lineBreakAt == 0 && $this->counter != 0)
     {
       echo "\n           ";
     }
