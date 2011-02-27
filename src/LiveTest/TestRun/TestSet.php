@@ -15,6 +15,8 @@ use Base\Www\Uri;
 /**
  * A test set contains a number of tests that will be run on a spefific uri.
  *
+ * @todo this class should implement the iterator interface. (create Base\Collection\Set)
+ *
  * @author Nils Langner
  */
 class TestSet
