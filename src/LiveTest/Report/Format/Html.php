@@ -15,8 +15,8 @@ use LiveTest\TestRun\Result\ResultSet;
 use LiveTest\TestRun\Result\Result;
 
 /**
- * This format converts the given results into a html template. 
- * 
+ * This format converts the given results into a html template.
+ *
  * @author Nils Langner
  */
 
@@ -29,7 +29,7 @@ class Html implements Format
    * @var string
    */
   private $template;
-  
+
   /**
    * An ordered list of all result statuses
    * @var array
@@ -47,7 +47,7 @@ class Html implements Format
 
   /**
    * Sets the template.
-   * 
+   *
    * @param string $template
    */
   public function init($template = null)
@@ -60,11 +60,11 @@ class Html implements Format
 
   /**
    * Formats the given results to a html document.
-   * 
+   *
    * @param ResultSet $set
    * @param array $connectionStatuses
    * @param Information $information
-   * 
+   *
    * @return string
    */
   public function formatSet(ResultSet $set, array $connectionStatuses, Information $information)
@@ -73,7 +73,7 @@ class Html implements Format
     $tests = array ();
     $testCount = 0;
 
-    foreach ( $set->getResults() as $result )
+    foreach ( $set as $result )
     {
       $testCount++;
       $matrix [$result->getUri()->toString()] ['tests'] [$result->getTest()->getName()] = $result;

@@ -47,9 +47,7 @@ class JUnit implements Format
     $num_failed = 0;
     $num_errors = 0;
 
-    $results = $set->getResults();
-
-    foreach ( $results as $result )
+    foreach ( $set as $result )
     {
       $xml_testcase = $dom->createElement('testcase');
 
@@ -80,7 +78,7 @@ class JUnit implements Format
     $xml_testsuite->setAttribute('name', 'LiveTest');
     $xml_testsuite->setAttribute('errors', $num_errors);
     $xml_testsuite->setAttribute('failures', $num_failed);
-    $xml_testsuite->setAttribute('tests', count($results));
+    $xml_testsuite->setAttribute('tests', count($set));
     $xml_testsuite->setAttribute('timestamp', strftime("%Y-%m-%dT%H:%M:%S"));
     $xml_testsuites->appendChild($xml_testsuite);
 

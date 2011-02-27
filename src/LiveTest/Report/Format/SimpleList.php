@@ -51,11 +51,11 @@ class SimpleList implements Format
       }
     }
 
-    if ($set->getResultCount() > 0)
+    if (count($set) > 0)
     {
       $text .= "     Result Statuses:\n\n";
 
-      foreach ($set->getResults() as $result)
+      foreach ($set as $result)
       {
         $test = $result->getTest();
         /* @var $test Test*/

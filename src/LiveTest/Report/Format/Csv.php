@@ -15,15 +15,15 @@ use LiveTest\TestRun\Result\ResultSet;
 use LiveTest\TestRun\Result\Result;
 
 /**
- * This format converts the test result into a comma separated list. 
- * 
+ * This format converts the test result into a comma separated list.
+ *
  * @author Nils Langner
  */
 class Csv implements Format
 {
   /**
    * Formats ths test result into csv style.
-   * 
+   *
    * @param ResultSet $set
    * @param array $connectionStatuses
    * @param Information $information
@@ -31,7 +31,7 @@ class Csv implements Format
   public function formatSet(ResultSet $set, array $connectionStatuses, Information $information)
   {
     $text = '';
-    foreach ( $set->getResults() as $result )
+    foreach ( $set as $result )
     {
       $test = $result->getTest();
 
