@@ -1,8 +1,8 @@
 <?php
 
-/* -----------------------------------------------------------------------
- * Include 3rd party dependecies
- * ----------------------------------------------------------------------- */
+// -----------------------------------------------------------------------
+//  Include 3rd party dependecies
+// -----------------------------------------------------------------------
 
 // include the sfYaml parser of the symfony components
 include_once 'lib/SymfonyComponents/Yaml/sfYaml.php';
@@ -18,9 +18,9 @@ set_include_path(__DIR__ . '/lib' . PATH_SEPARATOR . get_include_path());
 require_once 'Zend/Loader/Autoloader.php';
 Zend_Loader_Autoloader::getInstance();
 
-/* -----------------------------------------------------------------------
- * Include LiveTest classes and functions
- * ----------------------------------------------------------------------- */
+// -----------------------------------------------------------------------
+//  Include LiveTest classes and functions
+// -----------------------------------------------------------------------
 
 // include the live test functions
 include_once 'LiveTest/functions.php';
