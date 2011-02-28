@@ -2,13 +2,11 @@
 
 namespace Test\Unit\LiveTest\Listener\Cli;
 
-use Base\Http\Response\Zend;
+use Unit\Base\Http\Response\MockUp;
 
 use Base\Www\Uri;
 
 use Annovent\Event\Dispatcher;
-
-use Base\Http\Response\Response;
 
 use LiveTest\Listener\Cli\StatusBar;
 use LiveTest\TestRun\Information;
@@ -22,15 +20,17 @@ class StatusBarTest extends \PHPUnit_Framework_TestCase
     $listener = new StatusBar('', new Dispatcher());
 
     $test = new Test('', '');
-    $response = new Zend(new \Zend_Http_Response(200, array()), 0);
 
-    $result = new Result($test, Result::STATUS_SUCCESS, '', new Uri( 'http://www.example.com'));
+    $response = new MockUp();
+    $response->setStatus(200);
+
+    $result = new Result($test, Result::STATUS_SUCCESS, '', new Uri('http://www.example.com'));
     $listener->handleResult($result, $response);
 
-    $result = new Result($test, Result::STATUS_FAILED, '', new Uri( 'http://www.example.com'));
+    $result = new Result($test, Result::STATUS_FAILED, '', new Uri('http://www.example.com'));
     $listener->handleResult($result, $response);
 
-    $result = new Result($test, Result::STATUS_ERROR, '', new Uri( 'http://www.example.com'));
+    $result = new Result($test, Result::STATUS_ERROR, '', new Uri('http://www.example.com'));
     $listener->handleResult($result, $response);
 
     ob_start();

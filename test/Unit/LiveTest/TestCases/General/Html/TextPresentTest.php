@@ -2,6 +2,8 @@
 
 namespace Test\Unit\LiveTest\TestCases\General\Html;
 
+use Unit\Base\Http\Response\MockUp;
+
 use LiveTest\TestCase\General\Html\TextPresent;
 
 use Base\Www\Uri;
@@ -13,10 +15,8 @@ class TextPresentTest extends \PHPUnit_Framework_TestCase
     $testCase = new TextPresent();
     $testCase->init( 'abc' );
 
-    $response = $this->getMock('\Base\Http\Response\Response', array('getStatus', 'getBody', 'getDuration'));
-    $response->expects($this->any())
-                 ->method('getBody')
-                 ->will($this->returnValue('abcdefg'));
+    $response = new MockUp();
+    $response->setBody('abcdefg');
 
     $testCase->test( $response, new Uri( 'http://www.example.com' ) );
   }
@@ -26,10 +26,8 @@ class TextPresentTest extends \PHPUnit_Framework_TestCase
     $testCase = new TextPresent();
     $testCase->init( 'abc' );
 
-    $response = $this->getMock('\Base\Http\Response\Response', array('getStatus', 'getBody', 'getDuration'));
-    $response->expects($this->any())
-                 ->method('getBody')
-                 ->will($this->returnValue('1234abcdefg'));
+    $response = new MockUp();
+    $response->setBody('1234abcdefg');
 
     $testCase->test( $response, new Uri( 'http://www.example.com' ) );
   }
@@ -39,10 +37,8 @@ class TextPresentTest extends \PHPUnit_Framework_TestCase
     $testCase = new TextPresent();
     $testCase->init( 'abc' );
 
-    $response = $this->getMock('\Base\Http\Response\Response', array('getStatus', 'getBody', 'getDuration'));
-    $response->expects($this->any())
-                 ->method('getBody')
-                 ->will($this->returnValue('bcdefg'));
+    $response = new MockUp();
+    $response->setBody('bcdefg');
 
     $this->setExpectedException('LiveTest\TestCase\Exception');
     $testCase->test( $response, new Uri( 'http://www.example.com' ) );

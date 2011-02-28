@@ -2,6 +2,8 @@
 
 namespace Test\Unit\LiveTest\TestCases\General\Html;
 
+use Unit\Base\Http\Response\MockUp;
+
 use LiveTest\TestCase\General\Html\RegExNotPresent;
 
 use Base\Www\Uri;
@@ -13,10 +15,8 @@ class RegExNotPresentTest extends \PHPUnit_Framework_TestCase
     $testCase = new RegExNotPresent();
     $testCase->init( '^a(.*)b^' );
 
-    $response = $this->getMock('\Base\Http\Response\Response', array('getStatus', 'getBody','getDuration'));
-    $response->expects($this->any())
-                 ->method('getBody')
-                 ->will($this->returnValue('acdefgb'));
+    $response = new MockUp();
+    $response->setBody('acdefgb');
 
     $this->setExpectedException('LiveTest\TestCase\Exception');
     $testCase->test( $response, new Uri( 'http://www.example.com' ) );
@@ -27,10 +27,8 @@ class RegExNotPresentTest extends \PHPUnit_Framework_TestCase
     $testCase = new RegExNotPresent();
     $testCase->init( '^a(.*)b^' );
 
-    $response = $this->getMock('\Base\Http\Response\Response', array('getStatus', 'getBody','getDuration'));
-    $response->expects($this->any())
-                 ->method('getBody')
-                 ->will($this->returnValue('bcdefg'));
+    $response = new MockUp();
+    $response->setBody('bcdefg');
 
     $testCase->test( $response, new Uri( 'http://www.example.com' ) );
   }

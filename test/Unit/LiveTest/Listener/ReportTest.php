@@ -2,15 +2,12 @@
 
 namespace Test\Unit\LiveTest\Extensions;
 
-use Base\Http\Response\Zend;
+use Unit\Base\Http\Response\MockUp;
 
 use LiveTest\TestRun\Information;
+use LiveTest\Listener\Report;
 
 use Annovent\Event\Dispatcher;
-
-use Base\Http\Response\Response;
-
-use LiveTest\Listener\Report;
 
 use Base\Www\Uri;
 use Base\Http\ConnectionStatus;
@@ -37,7 +34,8 @@ class ReportTest extends \PHPUnit_Framework_TestCase
     $this->initReportListener();
 
     $test = new Test('TestName', 'ClassName');
-    $response = new Zend(new \Zend_Http_Response(200, array()), 0);
+
+    $response = new MockUp();
 
     $result = new Result($test, Result::STATUS_SUCCESS, 'Success', new Uri('http://www.example.com'));
     $this->listener->handleResult($result, $response);
@@ -62,12 +60,13 @@ class ReportTest extends \PHPUnit_Framework_TestCase
     $this->listener->init($formatConfig, $writerConfig, array(Result::STATUS_FAILED));
 
     $test = new Test('TestName', 'ClassName');
-    $response = new Zend(new \Zend_Http_Response(200, array()), 0);
 
-    $result = new Result($test, Result::STATUS_SUCCESS, 'Success', new Uri( 'http://www.example.com'));
+    $response = new MockUp();
+
+    $result = new Result($test, Result::STATUS_SUCCESS, 'Success', new Uri('http://www.example.com'));
     $this->listener->handleResult($result, $response);
 
-    $result = new Result($test, Result::STATUS_FAILED, 'Failed', new Uri( 'http://www.example.com'));
+    $result = new Result($test, Result::STATUS_FAILED, 'Failed', new Uri('http://www.example.com'));
 
     $this->listener->handleResult($result, $response);
 
@@ -81,7 +80,7 @@ class ReportTest extends \PHPUnit_Framework_TestCase
     $this->assertEquals($expected, $actual);
   }
 
-  public function testSendOnSuccessFalse( )
+  public function testSendOnSuccessFalse()
   {
     $this->listener = new Report('', new Dispatcher());
 
@@ -91,9 +90,10 @@ class ReportTest extends \PHPUnit_Framework_TestCase
     $this->listener->init($formatConfig, $writerConfig, null, false);
 
     $test = new Test('TestName', 'ClassName');
-    $response = new Zend(new \Zend_Http_Response(200, array()), 0);
 
-    $result = new Result($test, Result::STATUS_SUCCESS, 'Success', new Uri( 'http://www.example.com'));
+    $response = new MockUp();
+
+    $result = new Result($test, Result::STATUS_SUCCESS, 'Success', new Uri('http://www.example.com'));
     $this->listener->handleResult($result, $response);
     ob_start();
     $this->listener->postRun(new Information('5000', new Uri('http://www.example.com')));
@@ -103,12 +103,12 @@ class ReportTest extends \PHPUnit_Framework_TestCase
     $this->assertEquals("", $actual);
   }
 
-  public function testConfigurableFormatAndWriter( )
+  public function testConfigurableFormatAndWriter()
   {
     $this->listener = new Report('', new Dispatcher());
 
-    $writerConfig = array('class' => 'LiveTest\Report\Writer\File', 'parameter' => array ( 'filename' => 'test.log' ));
-    $formatConfig = array('class' => 'LiveTest\Report\Format\Html', 'parameter' => array ( 'template' => 'test.tpl' ));
+    $writerConfig = array('class' => 'LiveTest\Report\Writer\File','parameter' => array('filename' => 'test.log'));
+    $formatConfig = array('class' => 'LiveTest\Report\Format\Html','parameter' => array('template' => 'test.tpl'));
 
     $this->listener->init($formatConfig, $writerConfig);
   }

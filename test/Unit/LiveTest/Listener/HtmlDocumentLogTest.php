@@ -2,13 +2,11 @@
 
 namespace Test\Unit\LiveTest\Listener;
 
+use Unit\Base\Http\Response\MockUp;
+
 use Base\Www\Uri;
 
-use Base\Http\Response\Zend;
-
 use Annovent\Event\Dispatcher;
-
-use Base\Http\Response\Response;
 
 use Base\Config\Yaml;
 
@@ -40,7 +38,9 @@ class HtmlDocumentLogTest extends \PHPUnit_Framework_TestCase
     $this->listener->init( $this->fullLogPathInit);
 
     $test = new Test('', '');
-    $response = new Zend(new \Zend_Http_Response(200, array(), '<body></body>'), 0);
+
+    $response = new MockUp();
+    $response->setBody('<body></body>');
 
     $result = new Result($test, Result::STATUS_FAILED, '', new Uri('http://www.example.com'));
 
@@ -54,7 +54,11 @@ class HtmlDocumentLogTest extends \PHPUnit_Framework_TestCase
     $this->listener->init(__DIR__ . DIRECTORY_SEPARATOR . $this->logPath, array( Result::STATUS_SUCCESS) );
 
     $test = new Test('', '');
-    $response = new Zend(new \Zend_Http_Response(200, array(), '<body></body>'), 0);
+
+    $response = new MockUp();
+    $response->setStatus(200);
+    $response->setBody('<body></body>');
+
     $result = new Result($test, Result::STATUS_FAILED, '', new Uri( 'http://www.example.com'));
 
     $this->listener->handleResult($result, $response);
