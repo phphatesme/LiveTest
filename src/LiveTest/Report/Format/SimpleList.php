@@ -75,7 +75,6 @@ class SimpleList implements Format
             $text .= '     Status     :  Error' . "\n";
             $text .= '     Message    :  ' . $result->getMessage() . "\n";
             break;
-          default :
         }
         $text .= "\n";
       }
