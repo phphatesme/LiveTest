@@ -4,11 +4,11 @@ namespace LiveTest\Config\Tags\TestSuite;
 
 use Base\Config\Yaml;
 
-use LiveTest\Config\TestSuiteConfig;
+
 
 class IncludedTestSuites extends Base
 {
-  protected function doProcess(TestSuiteConfig $config, array $parameters)
+  protected function doProcess(\LiveTest\Config\TestSuite $config, array $parameters)
   {
     foreach( $parameters as $file )
     {

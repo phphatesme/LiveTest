@@ -10,7 +10,7 @@ class IncludePaths extends Base
 
   protected function doProcess(ConfigConfig $config, $paths)
   {
-    $includedPaths = $paths;
+    $this->includedPaths = $paths;
 
     foreach ( $paths as $path )
     {

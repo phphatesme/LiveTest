@@ -2,17 +2,16 @@
 
 namespace Test\Unit\LiveTest\Parser;
 
-use LiveTest\Config\TestSuiteConfig;
+use LiveTest\Config\TestSuite;
+use LiveTest\Config\Parser\Parser;
 
 use Base\Config\Yaml;
-
-use LiveTest\Config\Parser\Parser;
 
 class ParserTest extends \PHPUnit_Framework_TestCase
 {
   public function testParser()
   {
-    $config = new TestSuiteConfig();
+    $config = new TestSuite();
     $config->setBaseDir(__DIR__ . '/fixtures/');
     $configYaml = new Yaml(__DIR__ . '/fixtures/testsuite.yml');
 
@@ -30,7 +29,7 @@ class ParserTest extends \PHPUnit_Framework_TestCase
 
   public function testUnknownTag()
   {
-    $config = new TestSuiteConfig();
+    $config = new TestSuite();
     $config->setBaseDir(__DIR__ . '/fixtures/');
     $configYaml = new Yaml(__DIR__ . '/fixtures/badtestsuite.yml');
 
