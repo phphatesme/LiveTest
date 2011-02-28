@@ -2,10 +2,11 @@
 
 namespace Test\Unit\LiveTest\Listener;
 
+use Unit\Base\Http\Response\MockUp;
+
 use Annovent\Event\Dispatcher;
 
-use Base\Http\Response\Response;
-use Base\Http\Response\Zend;
+use Unit\Base\Http\Response;
 
 use Base\Www\Uri;
 use Base\Http\ConnectionStatus;
@@ -26,7 +27,9 @@ class ProgressBarTest extends \PHPUnit_Framework_TestCase
   public function testHandleResult()
   {
     $test = new Test('', '');
-    $response = new Zend(new \Zend_Http_Response(200, array()), 0);
+
+    $response = new MockUp();
+    $response->setStatus(200);
 
     ob_start();
     $result = new Result($test, Result::STATUS_SUCCESS, '', new Uri( 'http://www.example.com'));

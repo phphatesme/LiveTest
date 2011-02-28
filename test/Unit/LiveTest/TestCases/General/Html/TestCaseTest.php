@@ -2,6 +2,8 @@
 
 namespace Test\Unit\LiveTest\TestCases\General\Html;
 
+use Unit\Base\Http\Response\MockUp;
+
 use Base\Www\Uri;
 
 use LiveTest\TestCase\General\Html\TestCase;
@@ -15,11 +17,8 @@ class TestCaseTest extends \PHPUnit_Framework_TestCase
          ->method('runTest')
          ->will($this->returnValue(TRUE));
 
-    $response = $this->getMock('\Base\Http\Response\Response',
-        array('getStatus', 'getBody', 'getDuration'));
-    $response->expects($this->any())
-             ->method('getBody')
-             ->will($this->returnValue('<html></html>'));
+    $response = new MockUp();
+    $response->setBody('<html></html>');
 
     $uri = new Uri('http://www.example.com/');
 

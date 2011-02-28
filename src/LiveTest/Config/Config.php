@@ -2,7 +2,7 @@
 
 namespace LiveTest\Config;
 
-interface Configuration
+interface Config
 {
-  
+
 }

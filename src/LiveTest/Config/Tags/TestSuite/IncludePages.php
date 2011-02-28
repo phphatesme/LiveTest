@@ -2,7 +2,7 @@
 
 namespace LiveTest\Config\Tags\TestSuite;
 
-use LiveTest\Config\TestSuiteConfig;
+use LiveTest\Config\TestSuite as TestSuiteConfig;
 
 class IncludePages extends Base
 {

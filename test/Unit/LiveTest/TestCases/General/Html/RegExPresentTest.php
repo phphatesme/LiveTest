@@ -2,6 +2,8 @@
 
 namespace Test\Unit\LiveTest\TestCases\General\Html;
 
+use Unit\Base\Http\Response\MockUp;
+
 use Base\Www\Uri;
 
 use LiveTest\TestCase\General\Html\RegExPresent;
@@ -13,10 +15,8 @@ class RegExPresentTest extends \PHPUnit_Framework_TestCase
     $testCase = new RegExPresent();
     $testCase->init( '^a(.*)b^' );
 
-    $response = $this->getMock('\Base\Http\Response\Response', array('getStatus', 'getBody','getDuration'));
-    $response->expects($this->any())
-                 ->method('getBody')
-                 ->will($this->returnValue('acdefgb'));
+	$response = new MockUp();
+    $response->setBody('acdefgb');
 
     $testCase->test( $response, new Uri( 'http://www.example.com' ) );
   }
@@ -26,10 +26,8 @@ class RegExPresentTest extends \PHPUnit_Framework_TestCase
     $testCase = new RegExPresent();
     $testCase->init( '^a(.*)b^' );
 
-    $response = $this->getMock('\Base\Http\Response\Response', array('getStatus', 'getBody','getDuration'));
-    $response->expects($this->any())
-                 ->method('getBody')
-                 ->will($this->returnValue('bcdefg'));
+    $response = new MockUp();
+    $response->setBody('bcdefg');
 
     $this->setExpectedException('LiveTest\TestCase\Exception');
     $testCase->test( $response, new Uri( 'http://www.example.com' ) );

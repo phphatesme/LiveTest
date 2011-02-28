@@ -40,28 +40,14 @@ class ResultSetTest extends \PHPUnit_Framework_TestCase
   public function testGetResultCount()
   {
     $resultSet = new ResultSet();
-    $this->assertEquals(0, $resultSet->getResultCount());
+    $this->assertEquals(0, count( $resultSet));
 
     $result1 = $this->createNewResult(Result::STATUS_SUCCESS);
     $resultSet->addResult($result1);
-    $this->assertEquals(1, $resultSet->getResultCount());
+    $this->assertEquals(1,count($resultSet));
 
     $result2 = $this->createNewResult(Result::STATUS_SUCCESS);
     $resultSet->addResult($result2);
-    $this->assertEquals(2, $resultSet->getResultCount());
-  }
-
-  public function testGetResults()
-  {
-    $resultSet = new ResultSet();
-    $this->assertEquals(array(), $resultSet->getResults());
-
-    $result1 = $this->createNewResult(Result::STATUS_SUCCESS);
-    $resultSet->addResult($result1);
-    $this->assertEquals(array($result1), $resultSet->getResults());
-
-    $result2 = $this->createNewResult(Result::STATUS_SUCCESS);
-    $resultSet->addResult($result2);
-    $this->assertEquals(array($result1, $result2), $resultSet->getResults());
+    $this->assertEquals(2, count($resultSet));
   }
 }

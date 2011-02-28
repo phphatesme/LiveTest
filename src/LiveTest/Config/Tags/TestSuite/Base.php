@@ -3,7 +3,6 @@
 namespace LiveTest\Config\Tags\TestSuite;
 
 use LiveTest\Config\Parser\Parser;
-use LiveTest\Config\TestSuiteConfig;
 
 abstract class Base implements Tag
 {
@@ -11,7 +10,7 @@ abstract class Base implements Tag
   private $config;
   private $parser;
 
-  public function __construct(array $configParameters, TestSuiteConfig $config, Parser $parser)
+  public function __construct(array $configParameters, \LiveTest\Config\TestSuite $config, Parser $parser)
   {
     $this->configParameters = $configParameters;
     $this->config = $config;
@@ -31,5 +30,5 @@ abstract class Base implements Tag
     return $this->doProcess($this->config, $this->configParameters);
   }
 
-  abstract protected function doProcess(TestSuiteConfig $config, array $parameters);
+  abstract protected function doProcess(\LiveTest\Config\TestSuite $config, array $parameters);
 }

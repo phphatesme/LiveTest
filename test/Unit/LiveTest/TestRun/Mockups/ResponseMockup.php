@@ -14,12 +14,12 @@ class ResponseMockup implements Response
     $this->body = $body;
   }
 
-  public function getStatus( )
+  public function getStatus()
   {
     return $this->status;
   }
 
-  public function getBody( )
+  public function getBody()
   {
     return $this->body;
   }
@@ -29,8 +29,16 @@ class ResponseMockup implements Response
     return $this->duration;
   }
 
-  public function setDuration( $duration )
+  public function setDuration($duration)
   {
     $this->duration = $duration;
+  }
+
+  public function getHeaders()
+  {
+  }
+
+  public function getHeader($header)
+  {
   }
 }

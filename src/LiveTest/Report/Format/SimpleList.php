@@ -39,14 +39,14 @@ class SimpleList implements Format
 
     if (count($connectionStatuses) > 0)
     {
-      $text .= "     Connection Statuses: \n\n";
+      $text .= "     Connection Statuses:\n\n";
 
       foreach ($connectionStatuses as $connectionStatus)
       {
         if ($connectionStatus->getType() == ConnectionStatus::ERROR)
         {
-          echo "       Url     : " . $connectionStatus->getUri()->toString() . "\n";
-          echo "       Message : " . $connectionStatus->getMessage() . "\n\n";
+          $text .= "       Url     : " . $connectionStatus->getUri()->toString() . "\n";
+          $text .= "       Message : " . $connectionStatus->getMessage() . "\n\n";
         }
       }
     }
@@ -75,7 +75,6 @@ class SimpleList implements Format
             $text .= '     Status     :  Error' . "\n";
             $text .= '     Message    :  ' . $result->getMessage() . "\n";
             break;
-          default :
         }
         $text .= "\n";
       }
