@@ -1,3 +1,5 @@
+DefaultDomain: http://www.example.com
+
 Listener:
 
  ProgressBar:

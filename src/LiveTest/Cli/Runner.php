@@ -26,8 +26,6 @@ use Base\Config\Yaml;
 class Runner extends ArgumentRunner
 {
   private $config;
-  private $testSuiteConfig;
-
   private $eventDispatcher;
 
   private $testRun;
@@ -35,8 +33,9 @@ class Runner extends ArgumentRunner
 
   private $runAllowed = true;
 
-  private $defaultDomain = 'http://www.example.com';
-
+  /**
+   * @notify LiveTest.Runner.Init
+   */
   public function __construct($arguments, Dispatcher $dispatcher)
   {
     parent::__construct($arguments);
@@ -46,6 +45,10 @@ class Runner extends ArgumentRunner
     $this->initRunId();
     $this->initConfig();
     $this->initListeners($arguments);
+
+    // @todo should there be a naming convention for events? Something like checkSomething if the return
+    //       value will change the workflow.
+    $this->runAllowed = $this->eventDispatcher->notify('LiveTest.Runner.Init', array ('arguments' => $arguments ));
   }
 
   private function initRunId()
@@ -56,57 +59,29 @@ class Runner extends ArgumentRunner
   private function parseConfig($configArray)
   {
     $config = new ConfigConfig();
-    $config->setDefaultDomain(new Uri($this->defaultDomain));
 
     $parser = new Parser('\\LiveTest\Config\\Tags\\Config\\');
-    $parser->parse($configArray, $config);
+    $config = $parser->parse($configArray, $config);
 
     return $config;
   }
 
   private function initConfig()
   {
+    $config = new Yaml(__DIR__ . '/../../default/config.yml', true);
+
     if ($this->hasArgument('config'))
     {
-      $configFileName = $this->getArgument('config');
-    }
-    else
-    {
-      $configFileName = __DIR__ . '/../../default/config.yml';
+      $currentConfig = new Yaml($this->getArgument('config'), true);
+      $config = $config->merge($currentConfig);
     }
 
-    if (!file_exists($configFileName))
-    {
-      throw new \LiveTest\Exception('The config file (' . $configFileName . ') was not found.');
-    }
-
-    $defaultConfig = new Yaml(__DIR__ . '/../../default/config.yml', true);
-    $currentConfig = new Yaml($configFileName, true);
-
-    if (!is_null($currentConfig->Listener))
-    {
-      $currentConfig->Listener = $defaultConfig->Listener->merge($currentConfig->Listener);
-    }
-    else
-    {
-      $currentConfig->Listener = $defaultConfig->Listener;
-    }
-
-    $this->config = $this->parseConfig($currentConfig->toArray());
+    $this->config = $this->parseConfig($config->toArray());
   }
 
-  /**
-   * @notify LiveTest.Runner.Init
-   *
-   * @param array $arguments
-   */
-  private function initListeners($arguments)
+  private function initListeners()
   {
     $this->eventDispatcher->registerListenersByConfig($this->config, $this->runId);
-
-    // @todo should there be a naming convention for events? Something like checkSomething if the return
-    //       value will change the workflow.
-    $this->runAllowed = $this->eventDispatcher->notify('LiveTest.Runner.Init', array ('arguments' => $arguments ));
   }
 
   public function isRunAllowed()
