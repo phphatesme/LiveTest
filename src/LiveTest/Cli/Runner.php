@@ -9,8 +9,6 @@
 
 namespace LiveTest\Cli;
 
-use Base\Http\Client\Zend;
-
 use LiveTest\Config\Parser\Parser;
 use LiveTest\Config\ConfigConfig;
 use LiveTest\Event\Dispatcher;
@@ -22,19 +20,55 @@ use Base;
 use Base\Www\Uri;
 use Base\Cli\ArgumentRunner;
 use Base\Config\Yaml;
+use Base\Http\Client\Zend;
 
+/**
+ * This runner is used to prepare the test run. It converts the yaml files to
+ * config objects, sets mandatory parameters and registers all the listener.
+ *
+ * @author Nils Langner
+ */
 class Runner extends ArgumentRunner
 {
+  /**
+   * The global config file
+   * @var ConfigConfig
+   */
   private $config;
+
+  /**
+   * The event dispatcher
+   * @var Dispatcher
+   */
   private $eventDispatcher;
 
+  /**
+   * The test run instance
+   * @var TestRun
+   */
   private $testRun;
+
+  /**
+   * The unique run id
+   * @var string
+   */
   private $runId;
 
+  /**
+   * Can the run method be called
+   * @var boolean
+   */
   private $runAllowed = true;
 
   /**
+   * This function intializes the runner. It sets the runId, inits the configuration
+   * and registers the assigned listeners. Afterwards all listeners are notified. If
+   * a listener returns false on notification the runner is noit able to run.
+   *
    * @notify LiveTest.Runner.Init
+   *
+   * @param array $arguments
+   * @param Dispatcher $dispatcher
    */
   public function __construct($arguments, Dispatcher $dispatcher)
   {
@@ -51,11 +85,21 @@ class Runner extends ArgumentRunner
     $this->runAllowed = $this->eventDispatcher->notify('LiveTest.Runner.Init', array ('arguments' => $arguments ));
   }
 
+  /**
+   * Initializes the unique run id
+   */
   private function initRunId()
   {
     $this->runId = (string)time();
   }
 
+  /**
+   * This function parses the config array and returns a config object. This config
+   * object can be handled by the event dispatcher.
+
+   * @param array $configArray
+   * @return ConfigConfig
+   */
   private function parseConfig($configArray)
   {
     $config = new ConfigConfig();
@@ -66,6 +110,11 @@ class Runner extends ArgumentRunner
     return $config;
   }
 
+  /**
+   * Initializes the global configuration. If the config argument is set, the default
+   * configuration and the given config file are merged. Otherwise the default config
+   * is taken.
+   */
   private function initConfig()
   {
     $config = new Yaml(__DIR__ . '/../../default/config.yml', true);
@@ -79,16 +128,26 @@ class Runner extends ArgumentRunner
     $this->config = $this->parseConfig($config->toArray());
   }
 
+  /**
+   * This function initializes and registrates all the listeners.
+   */
   private function initListeners()
   {
     $this->eventDispatcher->registerListenersByConfig($this->config, $this->runId);
   }
 
+  /**
+   * Returns true if the runner can be run. It will return false if a listener stops
+   * the run workflow.
+   */
   public function isRunAllowed()
   {
     return $this->runAllowed;
   }
 
+  /**
+   * Initializes the test run.
+   */
   private function initTestRun()
   {
     $properties = Properties::createByYamlFile($this->getArgument('testsuite'), $this->config->getDefaultDomain());
@@ -99,6 +158,11 @@ class Runner extends ArgumentRunner
     $this->testRun = new Run($properties, $client, $this->eventDispatcher);
   }
 
+  /**
+   * Runs the runner. Before running you should check if run is allowed (isRunAllowed())
+   *
+   * @see Base\Cli.Runner::run()
+   */
   public function run()
   {
     if ($this->isRunAllowed())
