@@ -1,6 +1,6 @@
 <?php
 
-use Annovent\Event\Dispatcher;
+use LiveTest\Event\Dispatcher;
 use LiveTest\Cli\Runner;
 use Base\Cli\ArgumentConverter;
 

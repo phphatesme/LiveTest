@@ -9,20 +9,19 @@
 
 namespace LiveTest\Cli;
 
-use LiveTest;
+use Base\Http\Client\Zend;
+
 use LiveTest\Config\Parser\Parser;
 use LiveTest\Config\ConfigConfig;
+use LiveTest\Event\Dispatcher;
 use LiveTest\Listener\Listener;
 use LiveTest\TestRun\Properties;
 use LiveTest\TestRun\Run;
 
 use Base;
-use Base\Http\Client\Zend;
 use Base\Www\Uri;
 use Base\Cli\ArgumentRunner;
 use Base\Config\Yaml;
-
-use Annovent\Event\Dispatcher;
 
 class Runner extends ArgumentRunner
 {
@@ -30,8 +29,6 @@ class Runner extends ArgumentRunner
   private $testSuiteConfig;
 
   private $eventDispatcher;
-
-  private $extensions = array ();
 
   private $testRun;
   private $runId;
@@ -48,13 +45,7 @@ class Runner extends ArgumentRunner
 
     $this->initRunId();
     $this->initConfig();
-    $this->initDefaultDomain();
-    $this->initListener($arguments);
-  }
-
-  private function initDefaultDomain()
-  {
-    $this->defaultDomain = $this->config->getDefaultDomain();
+    $this->initListeners($arguments);
   }
 
   private function initRunId()
@@ -107,27 +98,15 @@ class Runner extends ArgumentRunner
   /**
    * @notify LiveTest.Runner.Init
    *
-   * @param array()own_type $arguments
+   * @param array $arguments
    */
-  private function initListener($arguments)
+  private function initListeners($arguments)
   {
-    $listeners = $this->config->getListeners();
-    foreach ( $listeners as $name => $listener )
-    {
-      $className = $listener['className'];
-      $listenerObject = new $className($this->runId, $this->eventDispatcher);
-      $this->registerListener($listenerObject, $listener['parameters']);
-    }
+    $this->eventDispatcher->registerListenersByConfig($this->config, $this->runId);
 
     // @todo should there be a naming convention for events? Something like checkSomething if the return
     //       value will change the workflow.
     $this->runAllowed = $this->eventDispatcher->notify('LiveTest.Runner.Init', array ('arguments' => $arguments ));
-  }
-
-  private function registerListener(Listener $listener, array $parameter = null)
-  {
-    \LiveTest\initializeObject($listener, $parameter);
-    $this->eventDispatcher->registerListener($listener);
   }
 
   public function isRunAllowed()
@@ -137,7 +116,7 @@ class Runner extends ArgumentRunner
 
   private function initTestRun()
   {
-    $properties = Properties::createByYamlFile($this->getArgument('testsuite'), $this->defaultDomain);
+    $properties = Properties::createByYamlFile($this->getArgument('testsuite'), $this->config->getDefaultDomain());
 
     $client = new Zend();
     $this->eventDispatcher->notify('LiveTest.Runner.InitHttpClient', array ('client' => $client ));
