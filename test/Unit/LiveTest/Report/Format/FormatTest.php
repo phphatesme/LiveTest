@@ -2,6 +2,8 @@
 
 namespace Unit\LiveTest\Report\Format;
 
+use Base\Http\ConnectionStatus;
+
 use LiveTest\TestRun\Information;
 
 use Base\Www\Uri;
@@ -14,6 +16,15 @@ use LiveTest\Report\Format\SimpleList;
 abstract class FormatTest extends \PHPUnit_Framework_TestCase
 {
   abstract protected function getFormat();
+
+  private function getConnectionStatuses( )
+  {
+    $statuses = array();
+    $statuses[] = new ConnectionStatus(ConnectionStatus::SUCCESS, new Uri('http://www.connection-success.com'));
+    $statuses[] = new ConnectionStatus(ConnectionStatus::ERROR, new Uri('http://www.connection-error.com'), 'error message');
+
+    return $statuses;
+  }
 
   protected function getStandardFormattedContent()
   {
@@ -33,6 +44,6 @@ abstract class FormatTest extends \PHPUnit_Framework_TestCase
     $set->addResult($errorResult);
 
     $information = new Information(1, $uri);
-    return $format->formatSet($set, array(), $information);
+    return $format->formatSet($set, $this->getConnectionStatuses(), $information);
   }
 }

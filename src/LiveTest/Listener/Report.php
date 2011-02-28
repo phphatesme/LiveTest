@@ -46,14 +46,8 @@ class Report extends Base
   public function init(array $format, array $writer, array $logStatuses = null, $reportOnSuccess = true)
   {
     $this->resultSet = new ResultSet();
-    if (!is_null($logStatuses))
-    {
-      $this->logStatuses = $logStatuses;
-    }
-    else
-    {
-      $this->logStatuses = array (Result::STATUS_ERROR, Result::STATUS_FAILED, Result::STATUS_SUCCESS );
-    }
+
+    $this->logStatuses = \Base\firstNotNull($logStatuses, array (Result::STATUS_ERROR, Result::STATUS_FAILED, Result::STATUS_SUCCESS ));
     $this->reportOnSuccess = $reportOnSuccess;
 
     $this->initWriter( $writer );
