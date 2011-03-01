@@ -1,6 +1,6 @@
 <?php
 
-namespace Test\Unit\LiveTest\Parser;
+namespace Test\Unit\LiveTest\Config\Parser;
 
 use LiveTest\Config\TestSuite;
 use LiveTest\Config\Parser\Parser;
