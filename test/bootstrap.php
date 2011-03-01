@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Europe/Berlin');
 
 include_once __DIR__.'/../src/bootstrap.php';
 require_once 'Zend/Loader/Autoloader.php';
