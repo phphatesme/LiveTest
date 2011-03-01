@@ -26,8 +26,9 @@ class IncludedTestSuites extends Base
   {
     foreach ($parameters as $file)
     {
-      // @todo base dir must be set
-      $yamlFile = new Yaml($config->getBaseDir() . DIRECTORY_SEPARATOR . $file);
+      // @todo base dir must be set. Would be a conflict if the standard config is overwritten.
+      $filename = $config->getBaseDir() . DIRECTORY_SEPARATOR . $file;
+      $yamlFile = new Yaml($filename);
       $this->getParser()->parse($yamlFile->toArray(), $config);
     }
   }
