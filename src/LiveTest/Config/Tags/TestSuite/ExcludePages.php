@@ -19,7 +19,6 @@ namespace LiveTest\Config\Tags\TestSuite;
  *
  * @author Nils Langner
  */
-
 class ExcludePages extends Base
 {
   /**

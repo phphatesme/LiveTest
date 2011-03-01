@@ -10,12 +10,10 @@
 namespace LiveTest\Config;
 
 /**
- * This class contains all information about the listeners and the default domain. It is used to
- * represent the config yaml and is filled by the tag system and the parse.
+ * This class contains all information about the tests and the depending pages.
  *
  * @author Nils Langner
  */
-
 class TestSuite implements Config
 {
   /**
