@@ -6,54 +6,67 @@ use LiveTest\Config\TestSuite;
 
 class TestSuiteTest extends \PHPUnit_Framework_TestCase
 {
-  public function testIncludePage( )
+  public function testIncludePage()
   {
     $config = new TestSuite();
     $config->includePage('http://www.example.com');
     $config->includePage('http://www.phphatesme.com');
 
-    $pages = $config->getPages( );
-    $this->assertEquals( 2, count($pages));
+    $pages = $config->getPages();
+    $this->assertEquals(2, count($pages));
 
     $this->assertEquals('http://www.example.com', $pages['http://www.example.com']);
     $this->assertEquals('http://www.phphatesme.com', $pages['http://www.phphatesme.com']);
   }
 
-  public function testIncludePages( )
+  public function testIncludePages()
   {
-    $includedPages = array( 'http://www.example.com', 'http://www.phphatesme.com');
+    $includedPages = array('http://www.example.com','http://www.phphatesme.com');
 
     $config = new TestSuite();
     $config->includePages($includedPages);
 
-    $pages = $config->getPages( );
-    $this->assertEquals( count($includedPages), count($pages));
+    $pages = $config->getPages();
+    $this->assertEquals(count($includedPages), count($pages));
   }
 
-  public function testExcludePage( )
+  public function testExcludePage()
   {
-    $includedPages = array( 'http://www.example.com', 'http://www.phphatesme.com');
+    $includedPages = array('http://www.example.com','http://www.phphatesme.com');
 
     $config = new TestSuite();
     $config->includePages($includedPages);
 
     $config->excludePage('http://www.example.com');
 
-    $pages = $config->getPages( );
-    $this->assertEquals( 1, count($pages));
+    $pages = $config->getPages();
+    $this->assertEquals(1, count($pages));
 
     $this->assertEquals('http://www.phphatesme.com', $pages['http://www.phphatesme.com']);
   }
 
-  public function testExcludePages( )
+  public function testExcludePages()
   {
-    $includedPages = array( 'http://www.example.com', 'http://www.phphatesme.com');
+    $includedPages = array('http://www.example.com','http://www.phphatesme.com');
 
     $config = new TestSuite();
     $config->includePages($includedPages);
     $config->excludePages($includedPages);
 
-    $pages = $config->getPages( );
-    $this->assertEquals( 0, count($pages));
+    $pages = $config->getPages();
+    $this->assertEquals(0, count($pages));
+  }
+
+  public function testCreateTestCase()
+  {
+    $config = new TestSuite();
+    $newConfig = $config->createTestCase('MyTestCase', 'MyClassName', array('foo' => 'bar'));
+    $newConfig = $config->createTestCase('MyTestCase2', 'MyClassName2', array('foo' => 'bar'));
+
+    $testCases = $config->getTestCases();
+
+    $this->assertEquals(2, count($testCases));
+    $this->assertEquals('MyClassName', $testCases[0]['className']);
+    $this->assertNotEquals($newConfig, $config);
   }
 }
