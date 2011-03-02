@@ -54,6 +54,7 @@ class Size extends TestCase
   {
     $size = strlen($htmlDocument->getHtml());
 
+    // @todo use two functions for validating (ccn)
     if (!is_null($this->minSize))
     {
       if ($this->minSize >= $size)
