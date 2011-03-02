@@ -37,6 +37,8 @@ class Debug extends Base
   }
 
   /**
+   * @todo add exception pretty print
+   *
    * @event LiveTest.Runner.Error
    *
    * @param \Exception $e
