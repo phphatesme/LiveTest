@@ -24,7 +24,7 @@ class Dispatcher
         $method = $listenerInfo['method'];
 
         $callResult = \Annovent\call_user_func_assoc_array(array($listener,$method), $event->getParameters());
-        $result = $result && !($callResult == false);
+        $result = $result && !($callResult === false);
       }
     }
     return $result;

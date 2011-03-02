@@ -41,3 +41,6 @@ Listener:
      
  StatusBar:
   class: LiveTest\Listener\Cli\StatusBar
+  
+ Debug:
+  class: LiveTest\Listener\Cli\Debug 
