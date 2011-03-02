@@ -20,6 +20,7 @@ try
     $runner->run();
   }
 }
+// @todo this should be done within another class
 catch ( Exception $e )
 {
   if( $eventDispatcher->notify('LiveTest.Runner.Error', array( 'exception' => $e )))
