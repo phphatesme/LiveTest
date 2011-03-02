@@ -48,7 +48,7 @@ class MockUp implements Response
 
   public function getHeaders()
   {
-    return $this->headers();
+    return $this->headers;
   }
 
   public function getStatus()

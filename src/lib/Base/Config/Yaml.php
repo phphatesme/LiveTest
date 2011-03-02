@@ -17,9 +17,9 @@ class Yaml extends \Zend_Config implements Config
     $this->filename = $filename;
 
     $this->checkIfFilenameIsFile();
-    
+
     $content = \sfYaml::load($this->filename);
-    
+
     if( is_null( $content ) ) {
       $content = array();
     }
@@ -29,14 +29,14 @@ class Yaml extends \Zend_Config implements Config
 
   /**
    * This function returns the filename of the information providing file
-   * 
+   *
    * @see Base\Config\Config::getFilename()
    */
   public function getFilename( )
   {
     return $this->filename;
   }
-  
+
   /**
    * This function will throws an exception if $this->filename does not point to
    * an existing file.

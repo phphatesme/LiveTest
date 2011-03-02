@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<testsuites>
+  <testsuite name="LiveTest" errors="1" failures="1" tests="3" timestamp="2011-02-28T13:18:42">
+    <properties/>
+    <testcase name="TestName" file="http://www.example.com"/>
+    <testcase name="TestName" file="http://www.example.com">
+      <failure type="failure" message="Failed Message"/>
+    </testcase>
+    <testcase name="TestName" file="http://www.example.com">
+      <error type="error" message="Error Message"/>
+    </testcase>
+  </testsuite>
+</testsuites>

@@ -7,9 +7,15 @@
  * file that was distributed with this source code.
  */
 
-namespace LiveTest\Config\Parser;
+namespace LiveTest\Config;
 
-class Exception extends \Exception
+/**
+ * This interface has to implemeted if a configuration should be created/filled by
+ * the config parser.
+ *
+ * @author Nils Langner
+ */
+interface Config
 {
 
 }
