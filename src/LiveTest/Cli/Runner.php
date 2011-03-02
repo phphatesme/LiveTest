@@ -26,6 +26,8 @@ use Base\Http\Client\Zend;
  * This runner is used to prepare the test run. It converts the yaml files to
  * config objects, sets mandatory parameters and registers all the listener.
  *
+ * @todo too much non cli spercific stuff is done here
+ *
  * @author Nils Langner
  */
 class Runner extends ArgumentRunner
