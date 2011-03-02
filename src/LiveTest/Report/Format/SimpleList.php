@@ -37,6 +37,7 @@ class SimpleList implements Format
   {
     $text = '';
 
+    // @todo create two new functions formatConnectionStatuses & formatResults
     if (count($connectionStatuses) > 0)
     {
       $text .= "     Connection Statuses:\n\n";
