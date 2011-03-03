@@ -4,7 +4,7 @@ namespace Unit\LiveTest\TestRun;
 use Base\Http\ConnectionStatus;
 
 use Annovent\Event\Dispatcher;
-
+use LiveTest\TestRun\Result;
 use Unit\LiveTest\TestRun\Mockups\TestExtension;
 use Unit\LiveTest\TestRun\Mockups\TestHandleConnectionStatusExtension;
 use Unit\LiveTest\TestRun\Mockups\ResponseMockup;
@@ -15,10 +15,12 @@ use Base\Config\Yaml;
 
 use Base\Www\Uri;
 
-include_once 'helper/InfoListener.php';
-include_once 'helper/PreRunListener.php';
-include_once 'helper/PostRunListener.php';
-include_once 'helper/ConnectionStatusListener.php';
+use Unit\LiveTest\TestRun\Helper\ConnectionStatusListener;
+use Unit\LiveTest\TestRun\Helper\HandleResultListener;
+use Unit\LiveTest\TestRun\Helper\InfoListener;
+use Unit\LiveTest\TestRun\Helper\PostRunListener;
+use Unit\LiveTest\TestRun\Helper\PreRunListener;
+
 
 /**
  * Test class for Run.
@@ -32,6 +34,7 @@ class RunTest extends \PHPUnit_Framework_TestCase
   private $postRunListener;
   private $connectionStatusListener;
 
+  private $dispatcher;
   private $properties;
   private $defaultUri;
   private $httpClient;
@@ -44,23 +47,27 @@ class RunTest extends \PHPUnit_Framework_TestCase
   {
     $this->defaultUri = new Uri('http://www.example.com/index.html');
 
-    $dispatcher = new Dispatcher();
+    $this->dispatcher = new Dispatcher();
 
-    $this->preRunListener = new \PreRunListener('', $dispatcher);
-    $dispatcher->registerListener($this->preRunListener);
+    $this->preRunListener = new PreRunListener('', $this->dispatcher);
+    $this->dispatcher->registerListener($this->preRunListener);
 
-    $this->postRunListener = new \postRunListener('', $dispatcher);
-    $dispatcher->registerListener($this->postRunListener);
+    $this->postRunListener = new PostRunListener('', $this->dispatcher);
+    $this->dispatcher->registerListener($this->postRunListener);
 
-    $this->connectionStatusListener = new \ConnectionStatusListener('', $dispatcher);
-    $dispatcher->registerListener($this->connectionStatusListener);
+    $this->connectionStatusListener = new ConnectionStatusListener('', $this->dispatcher);
+    $this->dispatcher->registerListener($this->connectionStatusListener);
 
-    $this->infoListener = new \InfoListener('', $dispatcher);
-    $dispatcher->registerListener($this->infoListener);
+    $this->infoListener = new InfoListener('', $this->dispatcher);
+    $this->dispatcher->registerListener($this->infoListener);
 
+    $this->handleResultListener = new HandleResultListener('', $this->dispatcher);
+    $this->dispatcher->registerListener($this->handleResultListener);
+    
     $this->properties = Properties::createByYamlFile(__DIR__ . '/Fixtures/testsuite.yml', $this->defaultUri);
     $this->httpClient = new HttpClientMockup(new ResponseMockup());
-    $this->run = new Run($this->properties, $this->httpClient, $dispatcher);
+    $this->run = new Run($this->properties, $this->httpClient, $this->dispatcher);
+   
   }
 
   public function testNotifications()
@@ -70,7 +77,7 @@ class RunTest extends \PHPUnit_Framework_TestCase
     $this->assertTrue($this->preRunListener->isPreRunCalled());
     $this->assertTrue($this->postRunListener->isPostRunCalled());
     $this->assertTrue($this->connectionStatusListener->isHandleConnectionStatusCalled());
-    $this->assertTrue($this->infoListener->isHandleResultCalled());
+    $this->assertTrue($this->handleResultListener->isHandleResultCalled());
   }
 
   public function testPreRunNotification( )
@@ -112,8 +119,22 @@ class RunTest extends \PHPUnit_Framework_TestCase
 
   public function testHandleResultNotification( )
   {
-    // @todo implement
-    // use test case that always failes
-    // use another that never fails
+  	$this->run->run();
+  	$result = $this->handleResultListener->getResult();
+  	$response = $this->handleResultListener->getResponse();
+  	$this->assertEquals( $result->getStatus(), $result::STATUS_SUCCESS );
+  	$this->assertEquals( $response->getBody(), 'body');
+  	
+  	
+  	
+  	$httpClient = new HttpClientMockup(new ResponseMockup(404,'Not Found'));
+  	$run = new Run($this->properties, $httpClient, $this->dispatcher);
+  	$run->run();
+  	
+  	$result = $this->handleResultListener->getResult();
+  	$response = $this->handleResultListener->getResponse();
+  	$this->assertEquals( $result->getStatus(), $result::STATUS_FAILED );
+  	$this->assertEquals( $response->getBody(), 'Not Found');
+  	
   }
 }

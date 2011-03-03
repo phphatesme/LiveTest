@@ -9,8 +9,6 @@ TestSuite:
     
   CorrectHttpHeader_standard: 
    TestCase: LiveTest\TestCase\General\Http\SuccessfulStatusCode
-   Parameter: 
-    StatusCode: 400
     
  Pages:
   - /

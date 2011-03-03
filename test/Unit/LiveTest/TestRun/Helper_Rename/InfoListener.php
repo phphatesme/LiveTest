@@ -1,17 +1,18 @@
 <?php
+namespace Unit\LiveTest\TestRun\Helper;
 
-use Base\Http\ConnectionStatus;
-use LiveTest\TestRun\Information;
 use LiveTest\TestRun\Properties;
+use Base\Http\Response\Response;
 use LiveTest\TestRun\Result\Result;
 use Annovent\Event\Dispatcher;
 use LiveTest\Listener\Listener;
 
-class ConnectionStatusListener implements Listener
+class InfoListener implements Listener
 {
+  private $preRunCalled = false;
+  private $postRunCalled = false;
   private $handleConnectionStatusCalled = false;
-  private $connectionStatus;
-
+ 
   public function __construct($runId, Dispatcher $eventDispatcher)
   {
 
@@ -20,19 +21,13 @@ class ConnectionStatusListener implements Listener
   /**
    * @event LiveTest.Run.HandleConnectionStatus
    */
-  public function handleConnectionStatus(ConnectionStatus $connectionStatus)
+  public function handleConnectionStatus()
   {
     $this->handleConnectionStatusCalled = true;
-    $this->connectionStatus = $connectionStatus;
   }
 
   public function isHandleConnectionStatusCalled()
   {
     return $this->handleConnectionStatusCalled;
-  }
-
-  public function getConnectionStatus( )
-  {
-    return $this->connectionStatus;
   }
 }
