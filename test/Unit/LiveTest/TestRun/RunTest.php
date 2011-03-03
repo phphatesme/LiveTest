@@ -120,10 +120,24 @@ class RunTest extends \PHPUnit_Framework_TestCase
   public function testHandleResultNotification( )
   {
   	$this->run->run();
-  	$result = $this->handleResultListener->getResult();
-  	$response = $this->handleResultListener->getResponse();
-  	$this->assertEquals( $result->getStatus(), $result::STATUS_SUCCESS );
-  	$this->assertEquals( $response->getBody(), 'body');
+  	$results = $this->handleResultListener->getResults();
+  	$responses = $this->handleResultListener->getResponses();
+  	
+  	$tmpResponse = 0;
+  	$tmpStatus = 0;
+  	
+  	foreach( $results as $key => $aResult)
+  	{
+  		if($aResult->getStatus() == $aResult::STATUS_SUCCESS)
+  		{
+  			$tmpStatus = $aResult->getStatus();
+  			$tmpResponse = $responses[$key];
+  			break;
+  		}	
+  	}
+  	
+  	$this->assertEquals( $tmpStatus, $aResult::STATUS_SUCCESS );
+  	$this->assertEquals( $tmpResponse->getBody(), 'body');
   	
   	
   	
@@ -131,10 +145,20 @@ class RunTest extends \PHPUnit_Framework_TestCase
   	$run = new Run($this->properties, $httpClient, $this->dispatcher);
   	$run->run();
   	
-  	$result = $this->handleResultListener->getResult();
-  	$response = $this->handleResultListener->getResponse();
-  	$this->assertEquals( $result->getStatus(), $result::STATUS_FAILED );
-  	$this->assertEquals( $response->getBody(), 'Not Found');
+  	$results = $this->handleResultListener->getResults();
+  	$responses = $this->handleResultListener->getResponses();
+  	foreach( $results as $key => $aResult)
+  	{
+  		if($aResult->getStatus() == $aResult::STATUS_FAILED)
+  		{
+  			$tmpStatus = $aResult->getStatus();
+  			$tmpResponse = $responses[$key];
+  			break;
+  		}	
+  	}
+  	
+  	$this->assertEquals( $aResult::STATUS_FAILED, $tmpStatus );
+  	$this->assertEquals( $tmpResponse->getBody(), 'Not Found');
   	
   }
 }

@@ -12,8 +12,8 @@ class HandleResultListener implements Listener
 {
   private $handleResultCalled = false;
   private $handleConnectionStatusCalled = false;
-  private $result;
-  private $response;
+  private $results = array();
+  private $responses = array();
 
   public function __construct($runId, Dispatcher $eventDispatcher)
   {
@@ -26,19 +26,19 @@ class HandleResultListener implements Listener
   public function handleResult($result, $response)
   {
     $this->handleResultCalled = true;
-    $this->result = $result;
-    $this->response = $response;
+    $this->results[] = $result;
+    $this->responses[] = $response;
     
   }
   
-  public function getResult()
+  public function getResults()
   {
-  	return $this->result;
+  	return $this->results;
   }
   
-  public function getResponse()
+  public function getResponses()
   {
-  	return $this->response;
+  	return $this->responses;
   }
 
   public function isHandleResultCalled()
