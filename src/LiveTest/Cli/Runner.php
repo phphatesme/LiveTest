@@ -76,9 +76,11 @@ class Runner extends ArgumentRunner
 
     $this->eventDispatcher = $dispatcher;
 
+    $this->initTimeZone();
     $this->initRunId();
     $this->initConfig();
-    $this->initListeners($arguments);
+    $this->initListeners();
+    
 
     // @todo should there be a naming convention for events? Something like checkSomething if the return
     //       value will change the workflow.
@@ -92,7 +94,35 @@ class Runner extends ArgumentRunner
   {
     $this->runId = (string)time();
   }
-
+  
+  /**
+   * 
+   * If timezone is an argument, the date.timezone is set
+   */
+  private function initTimeZone()
+  {
+  	if ($this->hasArgument('timezone'))
+    {
+      $this->setTimeZone($this->getArgument('timezone'));
+    }
+  }
+  
+  
+  /**
+   * 
+   * Sets or overrides the date.timezone value.
+   * @param String $timezone
+   * @throws Exception
+   */
+  private function setTimeZone( $timezone )
+  {
+     if(false === @date_default_timezone_set( $timezone ))
+     {
+       $lastError = error_get_last();
+       throw new Exception('Cannot set the timezone: ' . $lastError ); 
+     }
+  }
+  
   /**
    * This function parses the config array and returns a config object. This config
    * object can be handled by the event dispatcher.
