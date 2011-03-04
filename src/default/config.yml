@@ -1,4 +1,5 @@
 DefaultDomain: http://www.example.com
+DateDefaultTimeZone: Europe/Berlin
 
 Listener:
 

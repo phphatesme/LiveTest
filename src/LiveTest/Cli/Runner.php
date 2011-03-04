@@ -75,8 +75,6 @@ class Runner extends ArgumentRunner
     parent::__construct($arguments);
 
     $this->eventDispatcher = $dispatcher;
-
-    $this->initTimeZone();
     $this->initRunId();
     $this->initConfig();
     $this->initListeners();
@@ -95,33 +93,7 @@ class Runner extends ArgumentRunner
     $this->runId = (string)time();
   }
   
-  /**
-   * 
-   * If timezone is an argument, the date.timezone is set
-   */
-  private function initTimeZone()
-  {
-  	if ($this->hasArgument('timezone'))
-    {
-      $this->setTimeZone($this->getArgument('timezone'));
-    }
-  }
   
-  
-  /**
-   * 
-   * Sets or overrides the date.timezone value.
-   * @param String $timezone
-   * @throws Exception
-   */
-  private function setTimeZone( $timezone )
-  {
-     if(false === @date_default_timezone_set( $timezone ))
-     {
-       $lastError = error_get_last();
-       throw new Exception('Cannot set the timezone: ' . $lastError ); 
-     }
-  }
   
   /**
    * This function parses the config array and returns a config object. This config

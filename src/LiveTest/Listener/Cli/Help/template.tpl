@@ -7,8 +7,6 @@
     --config <file>     Defines the config file.
   
     --debug             Show all uncaught exceptions.
-  
-    --timezone          Overrides php.inis timezone. For example Europe/Berlin
     
     --verbose           Be verbose
   
