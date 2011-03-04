@@ -1,6 +1,6 @@
 <?php
 
-namespace Test\Unit\LiveTest\Config;
+namespace Unit\LiveTest\Config\Tags;
 
 use LiveTest\Config\Tags\Config\DateDefaultTimezone;
 
