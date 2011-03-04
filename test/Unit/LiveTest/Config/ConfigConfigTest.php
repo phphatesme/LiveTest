@@ -2,10 +2,11 @@
 
 namespace Test\Unit\LiveTest\Config;
 
+use LiveTest\Config\Tags\Config\DateDefaultTimezone;
+
 use LiveTest\Config\Parser\Parser;
 
 use LiveTest\Config\ConfigConfig;
-use LiveTest\Config\Tags\Config\DateDefaultTimeZone;
 use Base\Www\Uri;
 
 class ConfigConfigTest extends \PHPUnit_Framework_TestCase
@@ -35,21 +36,21 @@ class ConfigConfigTest extends \PHPUnit_Framework_TestCase
     $this->assertArrayHasKey('foo', $listener['parameters']);
   }
   
-  public function testSetDateDefaultTimeZone()
+  public function testSetDateDefaultTimezone()
   {
-    $timeZone = 'Europe/Paris';
-	$dateDefault = new DateDefaultTimeZone($timeZone, new ConfigConfig(), new Parser('/'));
+    $timezone = 'Europe/Paris';
+	$dateDefault = new DateDefaultTimezone($timezone, new ConfigConfig(), new Parser('/'));
 	$dateDefault->process();
-	$this->assertEquals($timeZone, @date_default_timezone_get());
+	$this->assertEquals($timezone, @date_default_timezone_get());
   }
   
   /**
      * @expectedException \InvalidArgumentException
   */
-  public function testSetDateDefaultTimeZoneException()
+  public function testSetDateDefaultTimezoneException()
   {
-    $timeZone = '';
-	$dateDefault = new DateDefaultTimeZone($timeZone, new ConfigConfig(), new Parser('/'));
+    $timezone = '';
+	$dateDefault = new DateDefaultTimezone($timezone, new ConfigConfig(), new Parser('/'));
 	$dateDefault->process();
   }
 }
