@@ -14,25 +14,27 @@ namespace LiveTest\Config;
  *
  * @author Nils Langner
  */
+use LiveTest\Config\PageManipulator\PageManipulator;
+
 class TestSuite implements Config
 {
   /**
    * Pages that are included
    * @var string[]
    */
-  private $includedPages = array();
+  private $includedPages = array ();
 
   /**
    * Pages that are excluded
    * @var string[]
    */
-  private $excludedPages = array();
+  private $excludedPages = array ();
 
   /**
    * The created tests.
    * @var array
    */
-  private $testCases = array();
+  private $testCases = array ();
 
   /**
    * This flag indicates if this config file should inherit the pages from its
@@ -54,6 +56,8 @@ class TestSuite implements Config
    */
   private $parentConfig;
 
+  private $pageManipulators = array ();
+
   /**
    * Set the parent config if needed.
    *
@@ -62,6 +66,17 @@ class TestSuite implements Config
   public function __construct(TestSuite $parentConfig = null)
   {
     $this->parentConfig = $parentConfig;
+  }
+
+  /**
+   * Used to add a page manipulator. These manipulators are used to manipulate the
+   * pages (url strings) registered in this config file.
+
+   * @param PageManipulator $pageManipulator
+   */
+  public function addPageManipulator(PageManipulator $pageManipulator)
+  {
+    $this->pageManipulators[] = $pageManipulator;
   }
 
   /**
@@ -106,7 +121,7 @@ class TestSuite implements Config
    */
   public function includePages($pages)
   {
-    foreach( $pages as $page )
+    foreach ( $pages as $page )
     {
       $this->includePage(trim($page));
     }
@@ -129,7 +144,7 @@ class TestSuite implements Config
    */
   public function excludePages($pages)
   {
-    foreach( $pages as $page )
+    foreach ( $pages as $page )
     {
       $this->excludePage($page);
     }
@@ -157,7 +172,7 @@ class TestSuite implements Config
   {
     $config = new self($this);
 
-    $this->testCases[] = array('config' => $config,'name' => $name, 'className' => $className,'parameters' => $parameters);
+    $this->testCases[] = array ('config' => $config, 'name' => $name, 'className' => $className, 'parameters' => $parameters );
 
     return $config;
   }
@@ -178,7 +193,17 @@ class TestSuite implements Config
       $result = $this->includedPages;
     }
 
-    return array_diff($result, $this->excludedPages);
+    $pages = array_diff($result, $this->excludedPages);
+
+    foreach( $this->pageManipulators as $manipulator )
+    {
+      foreach( $pages as &$page )
+      {
+        $page = $manipulator->manipulate($page);
+      }
+    }
+
+    return $pages;
   }
 
   /**
