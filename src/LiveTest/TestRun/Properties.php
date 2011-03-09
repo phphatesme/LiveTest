@@ -39,7 +39,7 @@ class Properties
    * Array of test sets
    * @var TestSet[]
    */
-  private $testSets = array();
+  private $testSets = array ();
 
   /**
    * @param Config $config
@@ -60,10 +60,10 @@ class Properties
   private function initTestSets()
   {
     $testCases = $this->config->getTestCases();
-    foreach ($testCases as $testCase)
+    foreach ( $testCases as $testCase )
     {
       $config = $testCase['config'];
-      foreach ($config->getPages() as $page)
+      foreach ( $config->getPages() as $page )
       {
         $uri = $this->defaultDomain->concatUri($page);
         if (!array_key_exists($page, $this->testSets))
@@ -97,6 +97,11 @@ class Properties
     return $this->testSets;
   }
 
+  public function __toString()
+  {
+    return 'Properties';
+  }
+
   /**
    * Creates a properties object that was created using a yaml file.
    *
@@ -107,8 +112,14 @@ class Properties
    */
   public static function createByYamlFile($filename, Uri $defaultUri)
   {
-    $yamlConfig = new Yaml($filename);
-
+    try
+    {
+      $yamlConfig = new Yaml($filename);
+    }
+    catch ( \Zend_Config_Exception $e )
+    {
+      throw new \LiveTest\ConfigurationException('Unable to load test suite yaml file (filename: '.$filename.')');
+    }
     $testSuiteConfig = new TestSuite();
     $testSuiteConfig->setBaseDir(dirname($filename));
     $parser = new Parser('LiveTest\\Config\\Tags\\TestSuite\\');
