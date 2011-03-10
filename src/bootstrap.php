@@ -21,10 +21,9 @@ Zend_Loader_Autoloader::getInstance();
 //  Include LiveTest classes and functions
 // -----------------------------------------------------------------------
 
-// include the live test functions
+// include the LiveTest functions
 include_once 'LiveTest/functions.php';
 
-// register livetest autoloader
 function LiveTest_Autoload($classname)
 {
   $currentDir = __DIR__;
@@ -35,4 +34,5 @@ function LiveTest_Autoload($classname)
   }
 }
 
+// register LiveTest autoloader
 spl_autoload_register('LiveTest_Autoload');
