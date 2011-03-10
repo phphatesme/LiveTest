@@ -29,11 +29,15 @@ class Dispatcher extends AnnoventDispatcher
    */
   public function registerListenersByConfig(ConfigConfig $config, $runId)
   {
-    foreach ( $config->getListeners() as $listener )
+    foreach ($config->getListeners() as $listener)
     {
       $className = $listener['className'];
+      if (!class_exists($className))
+      {
+        throw new \LiveTest\ConfigurationException('Listener not found (' . $className . ').');
+      }
       $listenerObject = new $className($runId, $this);
-      \LiveTest\initializeObject($listenerObject, $listener['parameters']);
+     \LiveTest\initializeObject($listenerObject, $listener['parameters']);
       $this->registerListener($listenerObject);
     }
   }
