@@ -1,0 +1,12 @@
+DefaultDomain: http://www.phphatesme.com
+
+IncludePaths:
+ - /app1/ela/var/www/app/LiveTest_Incubation
+
+Listener:
+
+ Feedback:
+  class: Feedback\Listener\Send
+   
+ Feedback_Exception:
+  class: Feedback\Listener\Exception

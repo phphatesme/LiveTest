@@ -7,8 +7,7 @@ Listener:
   
  Help:
   class: LiveTest\Listener\Cli\Help
-  
-  
+    
  RunInfoHeader:
   class: LiveTest\Listener\Cli\InfoHeader
 
@@ -44,3 +43,6 @@ Listener:
   
  Debug:
   class: LiveTest\Listener\Cli\Debug 
+  
+ Feedback:
+  class: LiveTest\Packages\Feedback\Listener\Send 
