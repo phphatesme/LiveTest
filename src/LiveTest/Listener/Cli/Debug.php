@@ -47,8 +47,12 @@ class Debug extends Base
   {
     if ($this->debug)
     {
-      echo get_class( $exception );
+      throw $exception;
       return false;
+    }
+    else
+    {
+      echo "  An error occured: " . $exception->getMessage() . " (" . get_class($exception) . ")";
     }
   }
 }
