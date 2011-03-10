@@ -24,12 +24,11 @@ class Debug extends Base
   private $debug = false;
 
   /**
-   * @event LiveTest.Runner.Init
    * @event LiveTest.Runner.InitCore
    *
    * @param array $arguments
    */
-  public function runnerInit(array $arguments)
+  public function runnerInitCore(array $arguments)
   {
     if (array_key_exists('debug', $arguments))
     {
