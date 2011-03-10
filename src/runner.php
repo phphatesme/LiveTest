@@ -5,8 +5,6 @@ use LiveTest\Event\Dispatcher;
 use LiveTest\Cli\Runner;
 use Base\Cli\ArgumentConverter;
 
-error_reporting(E_ALL);
-
 // @todo this must be defined somewhere else
 define('LIVETEST_VERSION', '0.8.4');
 
