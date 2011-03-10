@@ -8,7 +8,8 @@ error_reporting(E_ALL);
 
 include 'bootstrap.php';
 
-echo "\nLiveTest 0.1.0 by Nils Langner & Mike Lohmann\n\n"; // (visit http://livetest.phphatesme.com)\n\n";
+echo "\nLiveTest 0.8.4 by Nils Langner & Mike Lohmann\n\n"; // (visit http://livetest.phphatesme.com)\n\n";
+
 
 try
 {
@@ -30,7 +31,7 @@ try
 }
 catch ( Exception $e )
 {
-  $dispatcher->notify('LiveTest.Runner.Error', array ('exception' => $e ));
+  $dispatcher->notify('LiveTest.Runner.Error', array('exception' => $e));
   if ($converter->hasArgument('debug'))
   {
     throw $e;
