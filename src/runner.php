@@ -10,16 +10,23 @@ include 'bootstrap.php';
 
 echo "\nLiveTest 0.8.4 by Nils Langner & Mike Lohmann\n\n"; // (visit http://livetest.phphatesme.com)\n\n";
 
-
 try
 {
   $converter = new ArgumentConverter($_SERVER['argv'], '--');
 
+  // @todo this should be done in another class/function
   if ($converter->hasArgument('bootstrap'))
   {
-    // @todo this should be done somewhere else
-    // @todo this must be more defensive
-    include_once $converter->getArgument('bootstrap');
+    $bootstrapFile = $converter->getArgument('bootstrap');
+
+    if (file_exists(getcwd() . DIRECTORY_SEPARATOR . $bootstrapFile) && $bootstrapFile != '')
+    {
+      include_once $converter->getArgument('bootstrap');
+    }
+    else
+    {
+      echo '  Bootstrap file (' . $converter->getArgument('bootstrap') . ') not found.'."\n\n";
+    }
   }
 
   $dispatcher = new Dispatcher();
@@ -32,13 +39,5 @@ try
 catch ( Exception $e )
 {
   $dispatcher->notify('LiveTest.Runner.Error', array('exception' => $e));
-  if ($converter->hasArgument('debug'))
-  {
-    throw $e;
-  }
-  else
-  {
-    echo "  An error occured: " . $e->getMessage() . " (" . get_class($e) . ")";
-  }
 }
 echo "\n\n";
