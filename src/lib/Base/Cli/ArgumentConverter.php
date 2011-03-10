@@ -25,6 +25,12 @@ class ArgumentConverter
     return $this->arguments;
   }
 
+  public function getArgument( $argumentName )
+  {
+    // @todo use has argument before
+    return $this->arguments[$argumentName];
+  }
+
   private function extractArguments()
   {
     for($i = 0; $i < count($this->commandLineArguments); $i++)

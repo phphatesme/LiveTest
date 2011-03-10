@@ -12,18 +12,30 @@ echo "\nLiveTest 0.1.0 by Nils Langner & Mike Lohmann\n\n"; // (visit http://liv
 
 try
 {
-  $eventDispatcher = new Dispatcher();
   $converter = new ArgumentConverter($_SERVER['argv'], '--');
-  $runner = new Runner($converter->getArguments(), $eventDispatcher);
+
+  if ($converter->hasArgument('bootstrap'))
+  {
+    // @todo this should be done somewhere else
+    // @todo this must be more defensive
+    include_once $converter->getArgument('bootstrap');
+  }
+
+  $dispatcher = new Dispatcher();
+  $runner = new Runner($converter->getArguments(), $dispatcher);
   if ($runner->isRunAllowed())
   {
     $runner->run();
   }
 }
-// @todo this should be done within another class
 catch ( Exception $e )
 {
-  if( $eventDispatcher->notify('LiveTest.Runner.Error', array( 'exception' => $e )))
+  $dispatcher->notify('LiveTest.Runner.Error', array ('exception' => $e ));
+  if ($converter->hasArgument('debug'))
+  {
+    throw $e;
+  }
+  else
   {
     echo "  An error occured: " . $e->getMessage() . " (" . get_class($e) . ")";
   }

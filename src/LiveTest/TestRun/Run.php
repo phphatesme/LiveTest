@@ -9,7 +9,8 @@
 
 namespace LiveTest\TestRun;
 
-use LiveTest\TestCase\Exception;
+use Annovent\Exception;
+
 use LiveTest\TestRun\Result\Result;
 
 use Annovent\Event\Dispatcher;
@@ -61,7 +62,16 @@ class Run
   private function getInitializedTestCase(Test $test)
   {
     $testCaseName = $test->getClassName();
-    $testCaseObject = new $testCaseName();
+
+    if (class_exists($testCaseName))
+    {
+      $testCaseObject = new $testCaseName();
+    }
+    else
+    {
+      // @todo use a specialized exception
+      throw new \Exception('Class not found (' . $testCaseName . '). ');
+    }
     \LiveTest\initializeObject($testCaseObject, $test->getParameter());
 
     return $testCaseObject;
@@ -77,7 +87,7 @@ class Run
    */
   private function runTests(TestSet $testSet, Response $response)
   {
-    foreach ($testSet->getTests() as $test)
+    foreach ( $testSet->getTests() as $test )
     {
       $runStatus = Result::STATUS_SUCCESS;
       $runMessage = '';
@@ -87,20 +97,18 @@ class Run
         $testCase = $this->getInitializedTestCase($test);
         $testCase->test($response, $testSet->getUri());
       }
-      catch ( \LiveTest\TestCase\Exception $e )
+      catch (\LiveTest\TestCase\Exception $e )
       {
         $runStatus = Result::STATUS_FAILED;
         $runMessage = $e->getMessage();
       }
-      catch ( \Exception $e )
+      catch (\Exception $e )
       {
         $runStatus = Result::STATUS_ERROR;
         $runMessage = $e->getMessage();
       }
-
       $result = new Result($test, $runStatus, $runMessage, $testSet->getUri());
-      $this->eventDispatcher->notify('LiveTest.Run.HandleResult',
-                                     array('result' => $result, 'response' => $response));
+      $this->eventDispatcher->notify('LiveTest.Run.HandleResult', array ('result' => $result, 'response' => $response ));
     }
   }
 
@@ -129,10 +137,9 @@ class Run
 
     $connectionStatus = new ConnectionStatus($connectionStatusValue, $testSet->getUri(), $connectionStatusMessage);
 
-    $this->eventDispatcher->notify('LiveTest.Run.HandleConnectionStatus',
-                                   array('connectionStatus' => $connectionStatus));
+    $this->eventDispatcher->notify('LiveTest.Run.HandleConnectionStatus', array ('connectionStatus' => $connectionStatus ));
 
-    if( $connectionStatusValue == ConnectionStatus::SUCCESS )
+    if ($connectionStatusValue === ConnectionStatus::SUCCESS)
     {
       $this->runTests($testSet, $response);
     }
@@ -146,18 +153,18 @@ class Run
    */
   public function run()
   {
-    $this->eventDispatcher->notify('LiveTest.Run.PreRun', array('properties' => $this->properties));
+    $this->eventDispatcher->notify('LiveTest.Run.PreRun', array ('properties' => $this->properties ));
 
     // @todo move timer to runner.php
     $timer = new Timer();
 
-    foreach ($this->properties->getTestSets() as $testSet)
+    foreach ( $this->properties->getTestSets() as $testSet )
     {
       $this->runTestSet($testSet);
     }
 
     $information = new Information($timer->stop(), $this->properties->getDefaultDomain());
 
-    $this->eventDispatcher->notify('LiveTest.Run.PostRun', array('information' => $information));
+    $this->eventDispatcher->notify('LiveTest.Run.PostRun', array ('information' => $information ));
   }
 }

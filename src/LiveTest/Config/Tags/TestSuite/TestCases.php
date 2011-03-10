@@ -14,11 +14,11 @@ namespace LiveTest\Config\Tags\TestSuite;
  * handed to parser.
  *
  * @example
- *  TestCases:
- *   TextPresent_body:
- *    TestCase: LiveTest\TestCase\General\Html\TextPresent
- *    Parameter:
- *     text: "unpresent_text"
+ * TestCases:
+  * TextPresent_body:
+ *   TestCase: LiveTest\TestCase\General\Html\TextPresent
+ *   Parameter:
+ *    text: "unpresent_text"
  *
  * @author Nils Langner
  */
@@ -29,17 +29,19 @@ class TestCases extends Base
    */
   protected function doProcess(\LiveTest\Config\TestSuite $config, array $parameters)
   {
-    foreach ($parameters as $name => $value)
+    foreach ( $parameters as $name => $value )
     {
-      $testParameters = array();
       if (array_key_exists('Parameter', $value))
       {
         $testParameters = $value['Parameter'];
+        unset($value['Parameter']);
+      }
+      else
+      {
+        $testParameters = array ();
       }
 
       $testCaseConfig = $config->createTestCase($name, $value['TestCase'], $testParameters);
-
-      unset($value['Parameter']);
       unset($value['TestCase']);
 
       $this->getParser()->parse($value, $testCaseConfig);
