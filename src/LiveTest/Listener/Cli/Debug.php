@@ -23,6 +23,15 @@ class Debug extends Base
 {
   private $debug = false;
 
+  public function init($errorLevel = E_ALL)
+  {
+    if (!is_null($errorLevel))
+    {
+      ini_set( 'display_errors', 1 );
+      error_reporting($errorLevel);
+    }
+  }
+
   /**
    * @event LiveTest.Runner.InitCore
    *
@@ -47,12 +56,12 @@ class Debug extends Base
     if ($this->debug)
     {
       echo "  An error occured (debug modus):\n\n";
-      echo "  Message: ".$exception->getMessage()."\n";
-      echo "  File   : ".$exception->getFile()."\n";
-      echo "  Line   : ".$exception->getLine()."\n\n";
+      echo "  Message: " . $exception->getMessage() . "\n";
+      echo "  File   : " . $exception->getFile() . "\n";
+      echo "  Line   : " . $exception->getLine() . "\n\n";
       $trace = str_replace('#', '           #', $exception->getTraceAsString());
       $trace = str_replace('           #0', '#0', $trace);
-      echo "  Trace  : ".$trace;
+      echo "  Trace  : " . $trace;
       return false;
     }
     else
