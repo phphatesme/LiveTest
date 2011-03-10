@@ -47,7 +47,7 @@ catch ( Exception $e )
   $dispatcher->notifyEvent($event);
   if (!$event->isProcessed())
   {
-    echo $e->getMessage() . '('.get_class($e).')';
+    echo 'An error occured: '.$e->getMessage() . '('.get_class($e).')';
   }
 }
 echo "\n\n";
