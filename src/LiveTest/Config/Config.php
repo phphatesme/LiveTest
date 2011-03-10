@@ -10,7 +10,7 @@
 namespace LiveTest\Config;
 
 /**
- * This interface has to implemeted if a configuration should be created/filled by
+ * This interface has to implemented if a configuration should be created/filled by
  * the config parser.
  *
  * @author Nils Langner

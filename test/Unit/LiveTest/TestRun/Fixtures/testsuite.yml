@@ -2,6 +2,9 @@ TestSuite:
 
  TestCases:
  
+  UseResponseObject: 
+   TestCase: Unit\LiveTest\TestCases\Mockups\Html\ResponseObjectTest
+ 
   TextPresentHtml_standard: 
    TestCase: LiveTest\TestCase\General\Html\TextPresent
    Parameter: 
@@ -9,8 +12,7 @@ TestSuite:
     
   CorrectHttpHeader_standard: 
    TestCase: LiveTest\TestCase\General\Http\SuccessfulStatusCode
-   Parameter: 
-    StatusCode: 400
+   
     
  Pages:
   - /

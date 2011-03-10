@@ -1,4 +1,6 @@
 <?php
+namespace Unit\LiveTest\TestRun\Helper;
+
 
 use LiveTest\TestRun\Information;
 use LiveTest\TestRun\Properties;

@@ -10,7 +10,7 @@ use LiveTest\TestCase\General\Html\TestCase;
 
 class TestCaseTest extends \PHPUnit_Framework_TestCase
 {
-  public function testTest()
+  public function testCaseTest()
   {
     $stub = $this->getMockForAbstractClass('\LiveTest\TestCase\General\Html\TestCase');
     $stub->expects($this->any())
@@ -19,7 +19,7 @@ class TestCaseTest extends \PHPUnit_Framework_TestCase
 
     $response = new MockUp();
     $response->setBody('<html></html>');
-
+    
     $uri = new Uri('http://www.example.com/');
 
     $stub->test($response, $uri);
