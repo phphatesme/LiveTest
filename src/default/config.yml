@@ -40,9 +40,3 @@ Listener:
      
  StatusBar:
   class: LiveTest\Listener\Cli\StatusBar
-  
- Debug:
-  class: LiveTest\Listener\Cli\Debug 
-  
- Feedback:
-  class: LiveTest\Packages\Feedback\Listener\Send 
