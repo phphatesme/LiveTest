@@ -1,5 +1,6 @@
 <?php
 
+use Annovent\Event\Event;
 use LiveTest\Event\Dispatcher;
 use LiveTest\Cli\Runner;
 use Base\Cli\ArgumentConverter;
@@ -7,11 +8,12 @@ use Base\Cli\ArgumentConverter;
 error_reporting(E_ALL);
 
 // @todo this must be defined somewhere else
-define( 'LIVETEST_VERSION', '0.8.4');
+define('LIVETEST_VERSION', '0.8.4');
 
 include 'bootstrap.php';
 
-echo "\nLiveTest ".LIVETEST_VERSION." by Nils Langner & Mike Lohmann\n\n"; // (visit http://livetest.phphatesme.com)\n\n";
+echo "\nLiveTest " . LIVETEST_VERSION . " by Nils Langner & Mike Lohmann\n\n"; // (visit http://livetest.phphatesme.com)\n\n";
+
 
 try
 {
@@ -28,7 +30,7 @@ try
     }
     else
     {
-      echo '  Bootstrap file (' . $converter->getArgument('bootstrap') . ') not found.'."\n\n";
+      echo '  Bootstrap file (' . $converter->getArgument('bootstrap') . ') not found.' . "\n\n";
     }
   }
 
@@ -41,6 +43,11 @@ try
 }
 catch ( Exception $e )
 {
-  $dispatcher->notify('LiveTest.Runner.Error', array('exception' => $e));
+  $event = new Event('LiveTest.Runner.Error', array('exception' => $e));
+  $dispatcher->notifyEvent($event);
+  if (!$event->isProcessed())
+  {
+    echo $e->getMessage() . '('.get_class($e).')';
+  }
 }
 echo "\n\n";
