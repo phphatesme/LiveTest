@@ -7,8 +7,7 @@ use Base\Cli\ArgumentConverter;
 error_reporting(E_ALL);
 
 include 'bootstrap.php';
-
-echo "\nLiveTest 0.1.0 by Nils Langner & Mike Lohmann\n\n"; // (visit http://livetest.phphatesme.com)\n\n";
+echo "\nLiveTest 0.8.3 by Nils Langner & Mike Lohmann\n\n"; // (visit http://livetest.phphatesme.com)\n\n";
 
 try
 {

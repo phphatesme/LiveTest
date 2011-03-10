@@ -7,5 +7,7 @@
     --config <file>     Defines the config file.
   
     --debug             Show all uncaught exceptions.
+    
+    --verbose           Be verbose
   
   

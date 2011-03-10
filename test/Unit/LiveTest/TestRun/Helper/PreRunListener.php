@@ -1,4 +1,5 @@
 <?php
+namespace Unit\LiveTest\TestRun\Helper;
 
 use LiveTest\TestRun\Properties;
 use Base\Http\Response\Response;

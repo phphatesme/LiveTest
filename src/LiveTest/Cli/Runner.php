@@ -77,10 +77,10 @@ class Runner extends ArgumentRunner
     parent::__construct($arguments);
 
     $this->eventDispatcher = $dispatcher;
-
     $this->initRunId();
     $this->initConfig();
-    $this->initListeners($arguments);
+    $this->initListeners();
+    
 
     // @todo should there be a naming convention for events? Something like checkSomething if the return
     //       value will change the workflow.
@@ -94,7 +94,9 @@ class Runner extends ArgumentRunner
   {
     $this->runId = (string)time();
   }
-
+  
+  
+  
   /**
    * This function parses the config array and returns a config object. This config
    * object can be handled by the event dispatcher.

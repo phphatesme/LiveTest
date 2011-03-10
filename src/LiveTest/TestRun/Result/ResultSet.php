@@ -23,7 +23,7 @@ class ResultSet extends Set
    * containing results.
    */
   private $status;
-
+  
   /**
    * The weight of the statuses. Used to calculate the set status.
    * @var array
@@ -46,7 +46,7 @@ class ResultSet extends Set
    */
   public function addResult(Result $result)
   {
-    $this->status = max($this->statusWeight[$result->getStatus()], $this->status);
+  	$this->status = max($this->statusWeight[$result->getStatus()], $this->status);
     $this->addElement($result);
   }
 
@@ -57,11 +57,7 @@ class ResultSet extends Set
    */
   public function getStatus()
   {
-    foreach($this->statusWeight as $key => $value )
-    {
-      if ($value == $this->status) {
-        return $key;
-      }
-    }
+  	$flippedWeight = array_flip($this->statusWeight);
+    return $flippedWeight[$this->status];
   }
 }
