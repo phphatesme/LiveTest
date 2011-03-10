@@ -107,7 +107,7 @@ class StatusBar extends Base
    *
    * @param Information $information
    */
-  public function postRun(Information  $information)
+  public function postRun(Information $information)
   {
     echo "  Tests: " . $this->testCount . ' (failed: '.$this->failureCount.', error: '.$this->errorCount.') - Duration: ' . $this->getFormattedDuration($information->getDuration());
   }
