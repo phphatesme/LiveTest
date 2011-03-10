@@ -32,7 +32,7 @@ class Listener extends Base
   {
     foreach ( $parameters as $name => $listener )
     {
-      if ($listener['class'] == '')
+      if (!array_key_exists('class', $listener) || $listener['class'] == '')
       {
         throw new \Exception('The class name for the "' . $name . '" listener is missing. Please check your configuration.');
       }
