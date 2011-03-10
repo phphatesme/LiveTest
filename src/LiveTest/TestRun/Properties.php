@@ -39,7 +39,7 @@ class Properties
    * Array of test sets
    * @var TestSet[]
    */
-  private $testSets = array ();
+  private $testSets = array();
 
   /**
    * @param Config $config
@@ -60,10 +60,10 @@ class Properties
   private function initTestSets()
   {
     $testCases = $this->config->getTestCases();
-    foreach ( $testCases as $testCase )
+    foreach ($testCases as $testCase)
     {
       $config = $testCase['config'];
-      foreach ( $config->getPages() as $page )
+      foreach ($config->getPages() as $page)
       {
         $uri = $this->defaultDomain->concatUri($page);
         if (!array_key_exists($page, $this->testSets))
@@ -99,7 +99,20 @@ class Properties
 
   public function __toString()
   {
-    return 'Properties';
+    $testSets = $this->getTestSets();
+    $propertiesString = '';
+    foreach ($testSets as $testSet)
+    {
+      $propertiesString .= 'Uri: '.$testSet->getUri()."\n";
+      $tests = $testSet->getTests();
+      foreach($tests as $test)
+      {
+        $propertiesString .= "  Test:\n";
+        $propertiesString .= '    Testname : '.$test->getName()."\n";
+        $propertiesString .= '    Classname: '.$test->getClassName()."\n\n";
+      }
+    }
+    return $propertiesString;
   }
 
   /**
@@ -116,9 +129,9 @@ class Properties
     {
       $yamlConfig = new Yaml($filename);
     }
-    catch ( \Zend_Config_Exception $e )
+    catch (\Zend_Config_Exception $e )
     {
-      throw new \LiveTest\ConfigurationException('Unable to load test suite yaml file (filename: '.$filename.')');
+      throw new \LiveTest\ConfigurationException('Unable to load test suite yaml file (filename: ' . $filename . ')');
     }
     $testSuiteConfig = new TestSuite();
     $testSuiteConfig->setBaseDir(dirname($filename));

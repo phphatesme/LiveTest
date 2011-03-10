@@ -72,4 +72,9 @@ class ConfigConfig implements Config
   {
     return $this->listeners;
   }
+
+  public function __toString()
+  {
+    return 'config';
+  }
 }

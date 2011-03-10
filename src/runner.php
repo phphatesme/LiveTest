@@ -6,9 +6,12 @@ use Base\Cli\ArgumentConverter;
 
 error_reporting(E_ALL);
 
+// @todo this must be defined somewhere else
+define( 'LIVETEST_VERSION', '0.8.4');
+
 include 'bootstrap.php';
 
-echo "\nLiveTest 0.8.4 by Nils Langner & Mike Lohmann\n\n"; // (visit http://livetest.phphatesme.com)\n\n";
+echo "\nLiveTest ".LIVETEST_VERSION." by Nils Langner & Mike Lohmann\n\n"; // (visit http://livetest.phphatesme.com)\n\n";
 
 try
 {

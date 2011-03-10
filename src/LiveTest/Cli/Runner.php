@@ -67,6 +67,7 @@ class Runner extends ArgumentRunner
    * and registers the assigned listeners. Afterwards all listeners are notified. If
    * a listener returns false on notification the runner is noit able to run.
    *
+   * @notify LiveTest.Runner.InitConfig
    * @notify LiveTest.Runner.Init
    *
    * @param array $arguments
@@ -80,11 +81,11 @@ class Runner extends ArgumentRunner
     $this->initRunId();
     $this->initConfig();
     $this->initListeners();
-    
 
+    $this->eventDispatcher->notify('LiveTest.Runner.InitConfig', array('config' => $this->config));
     // @todo should there be a naming convention for events? Something like checkSomething if the return
     //       value will change the workflow.
-    $this->runAllowed = $this->eventDispatcher->notify('LiveTest.Runner.Init', array ('arguments' => $arguments ));
+    $this->runAllowed = $this->eventDispatcher->notify('LiveTest.Runner.Init', array('arguments' => $arguments));
   }
 
   /**
@@ -94,9 +95,7 @@ class Runner extends ArgumentRunner
   {
     $this->runId = (string)time();
   }
-  
-  
-  
+
   /**
    * This function parses the config array and returns a config object. This config
    * object can be handled by the event dispatcher.
@@ -128,7 +127,6 @@ class Runner extends ArgumentRunner
       $currentConfig = new Yaml($this->getArgument('config'), true);
       $config = $config->merge($currentConfig);
     }
-
     $this->config = $this->parseConfig($config->toArray());
   }
 
@@ -157,7 +155,7 @@ class Runner extends ArgumentRunner
     $properties = Properties::createByYamlFile($this->getArgument('testsuite'), $this->config->getDefaultDomain());
 
     $client = new Zend();
-    $this->eventDispatcher->notify('LiveTest.Runner.InitHttpClient', array ('client' => $client ));
+    $this->eventDispatcher->notify('LiveTest.Runner.InitHttpClient', array('client' => $client));
 
     $this->testRun = new Run($properties, $client, $this->eventDispatcher);
   }
