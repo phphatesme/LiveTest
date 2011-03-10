@@ -25,6 +25,7 @@ class Debug extends Base
 
   /**
    * @event LiveTest.Runner.Init
+   * @event LiveTest.Runner.InitCore
    *
    * @param array $arguments
    */

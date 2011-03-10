@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @todo add documentation & license boilerplate
+ */
 namespace LiveTest\Packages\Feedback\Listener;
 
 use LiveTest\Config\ConfigConfig;
@@ -28,6 +31,7 @@ class Send extends Base
 
   /**
    * @event LiveTest.Runner.Init
+   * @event LiveTest.Runner.InitCore
    *
    * @param array $arguments
    */
