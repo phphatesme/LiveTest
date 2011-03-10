@@ -15,22 +15,11 @@ use LiveTest\Listener\Base;
  * This extension is used to let the application sleep after a test ran. This is used
  * to not DOS attack a server.
  *
- * @todo it must be possible to set error level using this listener
- *
  * @author Nils Langner
  */
 class Debug extends Base
 {
   private $debug = false;
-
-  public function init($errorLevel = E_ALL)
-  {
-    if (!is_null($errorLevel))
-    {
-      ini_set( 'display_errors', 1 );
-      error_reporting($errorLevel);
-    }
-  }
 
   /**
    * @event LiveTest.Runner.InitCore
@@ -41,6 +30,8 @@ class Debug extends Base
   {
     if (array_key_exists('debug', $arguments))
     {
+      ini_set('display_errors', 1);
+      error_reporting(E_ALL);
       $this->debug = true;
     }
     return true;
