@@ -7,7 +7,7 @@ class Dispatcher
   private $eventListenerMatrix = array();
   private $listeners = array();
 
-  public function notify( $name, array $namedParameters = null )
+  public function notify($name, array $namedParameters = null)
   {
     $event = new Event($name, $namedParameters);
     return $this->notifyEvent($event);
@@ -24,7 +24,7 @@ class Dispatcher
         $listener = $listenerInfo['listener'];
         $method = $listenerInfo['method'];
 
-        $callResult = \Annovent\call_user_func_assoc_array(array($listener,$method), $event->getParameters());
+        $callResult =\Annovent\call_user_func_assoc_array(array($listener,$method), $event->getParameters());
         $result = $result && !($callResult === false);
       }
     }
@@ -64,16 +64,19 @@ class Dispatcher
       if ($reflectedMethod->isPublic())
       {
         $docComment = $reflectedMethod->getDocComment();
-        $annotationFound = (bool)preg_match('^@event(.*)^', $docComment, $matches);
+        $annotationFound = preg_match_all('^@event(.*)^', $docComment, $matches) > 0;
 
         if ($annotationFound)
         {
-          $eventName = str_replace(chr(13), '', $matches[1]);
-          $eventName = str_replace(' ', '', $eventName);
+          foreach ($matches[1] as $match)
+          {
+            $eventName = str_replace(chr(13), '', $match);
+            $eventName = str_replace(' ', '', $eventName);
 
-          $listenerInfo = array('listener' => $listener,'method' => $reflectedMethod->getName());
+            $listenerInfo = array('listener' => $listener,'method' => $reflectedMethod->getName());
 
-          $this->eventListenerMatrix[$eventName][] = $listenerInfo;
+            $this->eventListenerMatrix[$eventName][] = $listenerInfo;
+          }
         }
       }
     }
@@ -84,7 +87,7 @@ class Dispatcher
    *
    * @return Listener[]
    */
-  public function getListeners( )
+  public function getListeners()
   {
     return $this->listeners;
   }
