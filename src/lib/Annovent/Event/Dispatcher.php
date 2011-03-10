@@ -13,11 +13,12 @@ class Dispatcher
     return $this->notifyEvent($event);
   }
 
-  public function notifyEvent(Event $event)
+  public function notifyEvent(Event &$event)
   {
     $result = true;
     if (array_key_exists($event->getName(), $this->eventListenerMatrix))
     {
+      $event->setProcessed();
       foreach ($this->eventListenerMatrix[$event->getName()] as $listenerInfo)
       {
         $listener = $listenerInfo['listener'];
@@ -30,10 +31,14 @@ class Dispatcher
     return $result;
   }
 
-  public function notityUntil(Event $event)
+  /**
+   * @todo remove copy and paste (see notifyEvent)
+   */
+  public function notityUntil(Event &$event)
   {
     if (array_key_exists($event->getName(), $this->eventListenerMatrix))
     {
+      $event->setProcessed();
       foreach ($this->eventListenerMatrix[$event->getName()] as $listenerInfo)
       {
         $listener = $listenerInfo['listener'];
