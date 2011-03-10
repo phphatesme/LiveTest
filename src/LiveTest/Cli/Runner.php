@@ -75,17 +75,26 @@ class Runner extends ArgumentRunner
    */
   public function __construct($arguments, Dispatcher $dispatcher)
   {
-    parent::__construct($arguments);
-
     $this->eventDispatcher = $dispatcher;
     $this->initRunId();
+    $this->initCoreListener($arguments);
+
+    parent::__construct($arguments);
+
     $this->initConfig();
     $this->initListeners();
 
     $this->eventDispatcher->notify('LiveTest.Runner.InitConfig', array('config' => $this->config));
     // @todo should there be a naming convention for events? Something like checkSomething if the return
-    //       value will change the workflow.
+    //       value will change the workflow. see symfony ::filter (e.g. manipulate)
     $this->runAllowed = $this->eventDispatcher->notify('LiveTest.Runner.Init', array('arguments' => $arguments));
+  }
+
+  public function initCoreListener($arguments)
+  {
+    $this->eventDispatcher->registerListener(new \LiveTest\Listener\Cli\Debug($this->runId, $this->eventDispatcher));
+    $this->eventDispatcher->registerListener(new \LiveTest\Packages\Feedback\Listener\Send($this->runId, $this->eventDispatcher));
+    $this->eventDispatcher->notify('LiveTest.Runner.InitCore', array('arguments' => $arguments));
   }
 
   /**
