@@ -14,7 +14,6 @@ include 'bootstrap.php';
 
 echo "\nLiveTest " . LIVETEST_VERSION . " by Nils Langner & Mike Lohmann\n\n"; // (visit http://livetest.phphatesme.com)\n\n";
 
-
 try
 {
   $converter = new ArgumentConverter($_SERVER['argv'], '--');
