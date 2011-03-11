@@ -15,32 +15,31 @@
  * @category   Zend
  * @package    Zend_Tool
  * @subpackage Framework
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Manifest.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
- * @see Zend_Tool_Framework_Registry_EnabledInterface
+ * @namespace
  */
-require_once 'Zend/Tool/Framework/Registry/EnabledInterface.php';
+namespace Zend\Tool\Framework\System\Provider;
+
+use Zend\Tool\Framework\Provider,
+    Zend\Tool\Framework\Registry,
+    Zend\Tool\Framework\RegistryEnabled;
 
 /**
- * @see Zend_Tool_Framework_Provider_Interface
- */
-require_once 'Zend/Tool/Framework/Provider/Interface.php';
-
-/**
+ * @uses       \Zend\Tool\Framework\Provider
+ * @uses       \Zend\Tool\Framework\RegistryEnabled
  * @category   Zend
  * @package    Zend_Tool
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Tool_Framework_System_Provider_Manifest
-    implements Zend_Tool_Framework_Provider_Interface, Zend_Tool_Framework_Registry_EnabledInterface
+class Manifest implements Provider, RegistryEnabled
 {
 
-    public function setRegistry(Zend_Tool_Framework_Registry_Interface $registry)
+    public function setRegistry(Registry $registry)
     {
         $this->_registry = $registry;
     }

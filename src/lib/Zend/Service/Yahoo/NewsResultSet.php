@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -16,29 +15,17 @@
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Yahoo
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: NewsResultSet.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
-
 /**
- * @see Zend_Service_Yahoo_ResultSet
- */
-require_once 'Zend/Service/Yahoo/ResultSet.php';
-
-
-/**
- * @see Zend_Service_Yahoo_NewsResult
- */
-require_once 'Zend/Service/Yahoo/NewsResult.php';
-
-
-/**
+ * @uses       Zend_Service_Yahoo_NewsResult
+ * @uses       Zend_Service_Yahoo_ResultSet
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Yahoo
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Service_Yahoo_NewsResultSet extends Zend_Service_Yahoo_ResultSet

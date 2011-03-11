@@ -15,20 +15,26 @@
  * @category   Zend
  * @package    Zend_Tag
  * @subpackage Cloud
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Tag.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
+
+/**
+ * @namespace
+ */
+namespace Zend\Tag\Cloud\Decorator;
+
+use Zend\Tag\Cloud\Decorator;
 
 /**
  * Abstract class for tag decorators
  *
  * @category  Zend
  * @package   Zend_Tag
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
  */
-abstract class Zend_Tag_Cloud_Decorator_Tag
+abstract class Tag implements Decorator
 {
     /**
      * Option keys to skip when calling setOptions()
@@ -47,7 +53,7 @@ abstract class Zend_Tag_Cloud_Decorator_Tag
      */
     public function __construct($options = null)
     {
-        if ($options instanceof Zend_Config) {
+        if ($options instanceof \Zend\Config\Config) {
             $options = $options->toArray();
         }
 
@@ -60,7 +66,7 @@ abstract class Zend_Tag_Cloud_Decorator_Tag
      * Set options from array
      *
      * @param  array $options Configuration for the decorator
-     * @return Zend_Tag_Cloud
+     * @return \Zend\Tag\Cloud
      */
     public function setOptions(array $options)
     {
@@ -77,12 +83,4 @@ abstract class Zend_Tag_Cloud_Decorator_Tag
 
         return $this;
     }
-
-    /**
-     * Render a list of tags
-     *
-     * @param  Zend_Tag_ItemList $tags
-     * @return array
-     */
-    abstract public function render(Zend_Tag_ItemList $tags);
 }

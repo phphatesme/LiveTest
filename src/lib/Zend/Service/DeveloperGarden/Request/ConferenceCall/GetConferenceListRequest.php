@@ -15,26 +15,22 @@
  * @category   Zend
  * @package    Zend_Service
  * @subpackage DeveloperGarden
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: GetConferenceListRequest.php 20166 2010-01-09 19:00:17Z bkarwin $
  */
 
 /**
- * @see Zend_Service_DeveloperGarden_Request_RequestAbstract
- */
-require_once 'Zend/Service/DeveloperGarden/Request/RequestAbstract.php';
-
-/**
+ * @uses       Zend_Service_DeveloperGarden_Request_AbstractRequest
+ * @uses       Zend_Service_DeveloperGarden_Request_Exception
  * @category   Zend
  * @package    Zend_Service
  * @subpackage DeveloperGarden
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @author     Marco Kaiser
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Service_DeveloperGarden_Request_ConferenceCall_GetConferenceListRequest
-    extends Zend_Service_DeveloperGarden_Request_RequestAbstract
+    extends Zend_Service_DeveloperGarden_Request_AbstractRequest
 {
     /**
      * @var integer
@@ -83,7 +79,6 @@ class Zend_Service_DeveloperGarden_Request_ConferenceCall_GetConferenceListReque
     public function setWhat($what)
     {
         if (!array_key_exists($what, $this->_whatValues)) {
-            require_once 'Zend/Service/DeveloperGarden/Request/Exception.php';
             throw new Zend_Service_DeveloperGarden_Request_Exception('What value not allowed.');
         }
         $this->what = $what;

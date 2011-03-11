@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -16,22 +15,29 @@
  * @category   Zend
  * @package    Zend_Http
  * @subpackage Response
- * @version    $Id: Stream.php 20785 2010-01-31 09:43:03Z mikaelkael $
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
+
+/**
+ * @namespace
+ */
+namespace Zend\Http\Response;
+
+use Zend\Http\Response;
 
 /**
  * Zend_Http_Response represents an HTTP 1.0 / 1.1 response message. It
  * includes easy access to all the response's different elemts, as well as some
  * convenience methods for parsing and validating HTTP responses.
  *
+ * @uses       \Zend\Http\Response
  * @package    Zend_Http
  * @subpackage Response
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Http_Response_Stream extends Zend_Http_Response
+class Stream extends Response
 {
     /**
      * Response as stream
@@ -70,7 +76,7 @@ class Zend_Http_Response_Stream extends Zend_Http_Response
      * Set the response stream
      *
      * @param resourse $stream
-     * @return Zend_Http_Response_Stream
+     * @return \Zend\Http\Response\Stream
      */
     public function setStream($stream)
     {
@@ -109,7 +115,7 @@ class Zend_Http_Response_Stream extends Zend_Http_Response
      * Set file name associated with the stream
      *
      * @param string $stream_name Name to set
-     * @return Zend_Http_Response_Stream
+     * @return \Zend\Http\Response\Stream
      */
     public function setStreamName($stream_name) {
         $this->stream_name = $stream_name;
@@ -134,7 +140,7 @@ class Zend_Http_Response_Stream extends Zend_Http_Response
      * @param string $body Response body
      * @param string $version HTTP version
      * @param string $message Response code as text
-     * @throws Zend_Http_Exception
+     * @throws \Zend\Http\Exception
      */
     public function __construct($code, $headers, $body = null, $version = '1.1', $message = null)
     {
@@ -151,7 +157,7 @@ class Zend_Http_Response_Stream extends Zend_Http_Response
      *
      * @param string $response_str
      * @param resource $stream
-     * @return Zend_Http_Response_Stream
+     * @return \Zend\Http\Response\Stream
      */
     public static function fromStream($response_str, $stream)
     {

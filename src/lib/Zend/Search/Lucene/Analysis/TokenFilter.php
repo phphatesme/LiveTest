@@ -15,33 +15,32 @@
  * @category   Zend
  * @package    Zend_Search_Lucene
  * @subpackage Analysis
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: TokenFilter.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
-
-/** Zend_Search_Lucene_Analysis_Token */
-require_once 'Zend/Search/Lucene/Analysis/Token.php';
-
+/**
+ * @namespace
+ */
+namespace Zend\Search\Lucene\Analysis;
 
 /**
  * Token filter converts (normalizes) Token ore removes it from a token stream.
  *
+ * @uses       \Zend\Search\Lucene\Analysis\Token
  * @category   Zend
  * @package    Zend_Search_Lucene
  * @subpackage Analysis
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-abstract class Zend_Search_Lucene_Analysis_TokenFilter
+interface TokenFilter
 {
     /**
      * Normalize Token or remove it (if null is returned)
      *
-     * @param Zend_Search_Lucene_Analysis_Token $srcToken
-     * @return Zend_Search_Lucene_Analysis_Token
+     * @param \Zend\Search\Lucene\Analysis\Token $srcToken
+     * @return \Zend\Search\Lucene\Analysis\Token
      */
-    abstract public function normalize(Zend_Search_Lucene_Analysis_Token $srcToken);
+    public function normalize(Token $srcToken);
 }
-

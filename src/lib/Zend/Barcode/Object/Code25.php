@@ -15,30 +15,25 @@
  * @category   Zend
  * @package    Zend_Barcode
  * @subpackage Object
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Code25.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
- * @see Zend_Barcode_Object_ObjectAbstract
+ * @namespace
  */
-require_once 'Zend/Barcode/Object/ObjectAbstract.php';
-
-/**
- * @see Zend_Validate_Barcode
- */
-require_once 'Zend/Validate/Barcode.php';
+namespace Zend\Barcode\Object;
 
 /**
  * Class for generate Interleaved 2 of 5 barcode
  *
+ * @uses       \Zend\Barcode\Object\AbstractObject
  * @category   Zend
  * @package    Zend_Barcode
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Barcode_Object_Code25 extends Zend_Barcode_Object_ObjectAbstract
+class Code25 extends AbstractObject
 {
     /**
      * Coding map

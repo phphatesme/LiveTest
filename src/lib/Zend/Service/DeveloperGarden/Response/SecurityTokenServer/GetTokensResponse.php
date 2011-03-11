@@ -15,31 +15,23 @@
  * @category   Zend
  * @package    Zend_Service
  * @subpackage DeveloperGarden
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: GetTokensResponse.php 20166 2010-01-09 19:00:17Z bkarwin $
  */
 
 /**
- * @see Zend_Service_DeveloperGarden_Response_ResponseAbstract
- */
-require_once 'Zend/Service/DeveloperGarden/Response/ResponseAbstract.php';
-
-/**
- * @see Zend_Service_DeveloperGarden_Response_SecurityTokenServer_Interface
- */
-require_once 'Zend/Service/DeveloperGarden/Response/SecurityTokenServer/Interface.php';
-
-/**
+ * @uses       Zend_Service_DeveloperGarden_Response_AbstractResponse
+ * @uses       Zend_Service_DeveloperGarden_Response_SecurityTokenServer_Exception
+ * @uses       Zend_Service_DeveloperGarden_Response_SecurityTokenServer_Interface
  * @category   Zend
  * @package    Zend_Service
  * @subpackage DeveloperGarden
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @author     Marco Kaiser
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Service_DeveloperGarden_Response_SecurityTokenServer_GetTokensResponse
-    extends Zend_Service_DeveloperGarden_Response_ResponseAbstract
+    extends Zend_Service_DeveloperGarden_Response_AbstractResponse
     implements Zend_Service_DeveloperGarden_Response_SecurityTokenServer_Interface
 {
     /**
@@ -66,7 +58,6 @@ class Zend_Service_DeveloperGarden_Response_SecurityTokenServer_GetTokensRespons
     public function getSecurityToken()
     {
         if (!$this->securityToken instanceof Zend_Service_DeveloperGarden_Response_SecurityTokenServer_SecurityTokenResponse) {
-            require_once 'Zend/Service/DeveloperGarden/Response/SecurityTokenServer/Exception.php';
             throw new Zend_Service_DeveloperGarden_Response_SecurityTokenServer_Exception(
                 'No valid securityToken found.'
             );

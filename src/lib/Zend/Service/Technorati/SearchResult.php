@@ -15,27 +15,21 @@
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Technorati
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: SearchResult.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
-
-
-/**
- * @see Zend_Service_Technorati_Result
- */
-require_once 'Zend/Service/Technorati/Result.php';
-
 
 /**
  * Represents a single Technorati Search query result object.
  * It is never returned as a standalone object,
  * but it always belongs to a valid Zend_Service_Technorati_SearchResultSet object.
  *
+ * @uses       Zend_Service_Technorati_Result
+ * @uses       Zend_Service_Technorati_Utils
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Technorati
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Service_Technorati_SearchResult extends Zend_Service_Technorati_Result
@@ -99,7 +93,7 @@ class Zend_Service_Technorati_SearchResult extends Zend_Service_Technorati_Resul
 
         // filter fields
         $this->_permalink = Zend_Service_Technorati_Utils::normalizeUriHttp($this->_permalink);
-        $this->_created = Zend_Service_Technorati_Utils::normalizeDate($this->_created);
+        $this->_created   = Zend_Service_Technorati_Utils::normalizeDate($this->_created);
     }
 
     /**

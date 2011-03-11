@@ -15,20 +15,25 @@
  * @category   Zend
  * @package    Zend_View
  * @subpackage Helper
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id: Cycle.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
 /**
+ * @namespace
+ */
+namespace Zend\View\Helper;
+
+/**
  * Helper for alternating between set of values
  *
+ * @uses       Iterator
  * @package    Zend_View
  * @subpackage Helper
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_View_Helper_Cycle implements Iterator
+class Cycle extends AbstractHelper implements \Iterator
 {
 
     /**
@@ -63,9 +68,9 @@ class Zend_View_Helper_Cycle implements Iterator
      *
      * @param array $data
      * @param string $name
-     * @return Zend_View_Helper_Cycle
+     * @return \Zend\View\Helper\Cycle
      */
-    public function cycle(array $data = array(), $name = self::DEFAULT_NAME)
+    public function direct(array $data = array(), $name = self::DEFAULT_NAME)
     {
         if(!empty($data))
            $this->_data[$name] = $data;
@@ -79,7 +84,7 @@ class Zend_View_Helper_Cycle implements Iterator
      *
      * @param array $data
      * @param string $name
-     * @return Zend_View_Helper_Cycle
+     * @return \Zend\View\Helper\Cycle
      */
     public function assign(Array $data , $name = self::DEFAULT_NAME)
     {
@@ -93,7 +98,7 @@ class Zend_View_Helper_Cycle implements Iterator
      * Sets actual name of cycle
      *
      * @param $name
-     * @return Zend_View_Helper_Cycle
+     * @return \Zend\View\Helper\Cycle
      */
     public function setName($name = self::DEFAULT_NAME)
     {
@@ -153,7 +158,7 @@ class Zend_View_Helper_Cycle implements Iterator
     /**
      * Move to next value
      *
-     * @return Zend_View_Helper_Cycle
+     * @return \Zend\View\Helper\Cycle
      */
     public function next()
     {
@@ -168,7 +173,7 @@ class Zend_View_Helper_Cycle implements Iterator
     /**
      * Move to previous value
      *
-     * @return Zend_View_Helper_Cycle
+     * @return \Zend\View\Helper\Cycle
      */
     public function prev()
     {
@@ -196,7 +201,7 @@ class Zend_View_Helper_Cycle implements Iterator
     /**
      * Rewind pointer
      *
-     * @return Zend_View_Helper_Cycle
+     * @return \Zend\View\Helper\Cycle
      */
     public function rewind()
     {

@@ -15,22 +15,24 @@
  * @category   Zend
  * @package    Zend_Service
  * @subpackage ReCaptcha
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** @see Zend_Service_Exception */
-require_once 'Zend/Service/Exception.php';
+/**
+ * @namespace
+ */
+namespace Zend\Service\ReCaptcha;
 
 /**
  * Zend_Service_ReCaptcha_Exception
  *
+ * @uses       \Zend\Service\Exception
  * @category   Zend
  * @package    Zend_Service
  * @subpackage ReCaptcha
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Exception.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
-class Zend_Service_ReCaptcha_Exception extends Zend_Service_Exception
+class Exception extends \Zend\Service\Exception
 {}

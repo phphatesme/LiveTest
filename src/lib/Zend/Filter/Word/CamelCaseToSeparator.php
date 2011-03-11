@@ -14,25 +14,30 @@
  *
  * @category   Zend
  * @package    Zend_Filter
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: CamelCaseToSeparator.php 21088 2010-02-19 06:47:48Z thomas $
  */
 
 /**
- * @see Zend_Filter_PregReplace
+ * @namespace
  */
-require_once 'Zend/Filter/Word/Separator/Abstract.php';
+namespace Zend\Filter\Word;
 
 /**
+ * @uses       \Zend\Filter\Word\Separator\AbstractSeparator
  * @category   Zend
  * @package    Zend_Filter
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Filter_Word_CamelCaseToSeparator extends Zend_Filter_Word_Separator_Abstract
+class CamelCaseToSeparator extends AbstractSeparator
 {
-
+    /**
+     * Defined by Zend\Filter\Filter
+     * 
+     * @param  string $value 
+     * @return string
+     */
     public function filter($value)
     {
         if (self::isUnicodeSupportEnabled()) {
@@ -45,5 +50,4 @@ class Zend_Filter_Word_CamelCaseToSeparator extends Zend_Filter_Word_Separator_A
 
         return parent::filter($value);
     }
-
 }

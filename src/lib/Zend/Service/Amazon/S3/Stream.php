@@ -15,26 +15,29 @@
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Amazon_S3
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Stream.php 23484 2010-12-10 03:57:59Z mjh_ca $
  */
 
 /**
- * @see Zend_Service_Amazon_S3
+ * @namespace
  */
-require_once 'Zend/Service/Amazon/S3.php';
+namespace Zend\Service\Amazon\S3;
+use Zend\Service\Amazon,
+    Zend\Service\Amazon\S3\Exception;
 
 /**
  * Amazon S3 PHP stream wrapper
  *
+ * @uses       Zend_Service_Amazon_S3
+ * @uses       Zend\Service\Amazon\S3\Exception
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Amazon_S3
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Service_Amazon_S3_Stream
+class Stream
 {
     /**
      * @var boolean Write the buffer on fflush()?
@@ -83,20 +86,12 @@ class Zend_Service_Amazon_S3_Stream
             $url = explode(':', $path);
 
             if (!$url) {
-                /**
-                 * @see Zend_Service_Amazon_S3_Exception
-                 */
-                require_once 'Zend/Service/Amazon/S3/Exception.php';
-                throw new Zend_Service_Amazon_S3_Exception("Unable to parse URL $path");
+                throw new Exception\InvalidArgumentException("Unable to parse URL $path");
             }
 
-            $this->_s3 = Zend_Service_Amazon_S3::getWrapperClient($url[0]);
+            $this->_s3 = S3::getWrapperClient($url[0]);
             if (!$this->_s3) {
-                /**
-                 * @see Zend_Service_Amazon_S3_Exception
-                 */
-                require_once 'Zend/Service/Amazon/S3/Exception.php';
-                throw new Zend_Service_Amazon_S3_Exception("Unknown client for wrapper {$url[0]}");
+                throw new Exception\RuntimeException("Unknown client for wrapper {$url[0]}");
             }
         }
 
@@ -175,9 +170,9 @@ class Zend_Service_Amazon_S3_Stream
     /**
      * Read from the stream
      *
-     * http://bugs.php.net/21641 - stream_read() is always passed PHP's
-     * internal read buffer size (8192) no matter what is passed as $count
-     * parameter to fread().
+     * http://bugs.php.net/21641 - stream_read() is always passed PHP's 
+     * internal read buffer size (8192) no matter what is passed as $count 
+     * parameter to fread(). 
      *
      * @param  integer $count
      * @return string

@@ -14,35 +14,35 @@
  *
  * @category   Zend
  * @package    Zend_Filter
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Decompress.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
- * @see Zend_Filter_Compress
+ * @namespace
  */
-require_once 'Zend/Filter/Compress.php';
+namespace Zend\Filter;
 
 /**
  * Decompresses a given string
  *
+ * @uses       \Zend\Filter\Compress\Compress
  * @category   Zend
  * @package    Zend_Filter
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Filter_Decompress extends Zend_Filter_Compress
+class Decompress extends Compress
 {
     /**
-     * Defined by Zend_Filter_Interface
+     * Defined by Zend_Filter_Filter
      *
      * Decompresses the content $value with the defined settings
      *
      * @param  string $value Content to decompress
      * @return string The decompressed content
      */
-    public function filter($value)
+    public function __invoke($value)
     {
         return $this->getAdapter()->decompress($value);
     }

@@ -15,25 +15,19 @@
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Technorati
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Author.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
-
-
-/**
- * @see Zend_Service_Technorati_Utils
- */
-require_once 'Zend/Service/Technorati/Utils.php';
-
 
 /**
  * Represents a weblog Author object. It usually belongs to a Technorati account.
  *
+ * @uses       DOMXPath
+ * @uses       Zend_Service_Technorati_Utils
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Technorati
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Service_Technorati_Author

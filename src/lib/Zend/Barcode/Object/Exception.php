@@ -14,22 +14,24 @@
  *
  * @category   Zend
  * @package    Zend_Barcode
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Exception.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
-
-/** @see Zend_Barcode_Exception */
-require_once 'Zend/Barcode/Exception.php';
 
 /**
- * Zend_Barcode_Renderer_Exception
+ * @namespace
+ */
+namespace Zend\Barcode\Object;
+
+/**
+ * \Zend\Barcode\Object\Exception
  *
+ * @uses       \Zend\Barcode\Exception
  * @category   Zend
  * @package    Zend_Barcode
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Barcode_Object_Exception extends Zend_Barcode_Exception
+interface Exception extends \Zend\Barcode\Exception
 {
 }

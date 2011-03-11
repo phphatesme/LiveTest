@@ -15,13 +15,14 @@
  * @category   Zend
  * @package    Zend_Amf
  * @subpackage Value
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AcknowledgeMessage.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
-/** Zend_Amf_Value_Messaging_AsyncMessage */
-require_once 'Zend/Amf/Value/Messaging/AsyncMessage.php';
+/**
+ * @namespace
+ */
+namespace Zend\Amf\Value\Messaging;
 
 /**
  * This is the type of message returned by the MessageBroker
@@ -30,12 +31,13 @@ require_once 'Zend/Amf/Value/Messaging/AsyncMessage.php';
  *
  * flex.messaging.messages.AcknowledgeMessage
  *
+ * @uses       \Zend\Amf\Value\Messaging\AsyncMessage
  * @package    Zend_Amf
  * @subpackage Value
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Amf_Value_Messaging_AcknowledgeMessage extends Zend_Amf_Value_Messaging_AsyncMessage
+class AcknowledgeMessage extends AsyncMessage
 {
     /**
      * Create a new Acknowledge Message
@@ -49,7 +51,7 @@ class Zend_Amf_Value_Messaging_AcknowledgeMessage extends Zend_Amf_Value_Messagi
         $this->messageId   = $this->generateId();
         $this->timestamp   = time().'00';
         $this->timeToLive  = 0;
-        $this->headers     = new STDClass();
+        $this->headers     = new \STDClass();
         $this->body        = null;
 
         // correleate the two messages

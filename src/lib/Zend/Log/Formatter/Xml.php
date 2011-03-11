@@ -15,31 +15,36 @@
  * @category   Zend
  * @package    Zend_Log
  * @subpackage Formatter
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Xml.php 23576 2010-12-23 23:25:44Z ramon $
  */
 
-/** Zend_Log_Formatter_Interface */
-require_once 'Zend/Log/Formatter/Interface.php';
+/**
+ * @namespace
+ */
+namespace Zend\Log\Formatter;
+
+use \Zend\Log\Formatter;
 
 /**
+ * @uses       DOMDocument
+ * @uses       DOMElement
+ * @uses       \Zend\Log\Formatter\FormatterInterface
  * @category   Zend
  * @package    Zend_Log
  * @subpackage Formatter
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Xml.php 23576 2010-12-23 23:25:44Z ramon $
  */
-class Zend_Log_Formatter_Xml implements Zend_Log_Formatter_Interface
+class Xml implements Formatter
 {
     /**
-     * @var string Name of root element
+     * @var Relates XML elements to log data field keys.
      */
     protected $_rootElement;
 
     /**
-     * @var array Relates XML elements to log data field keys.
+     * @var Relates XML elements to log data field keys.
      */
     protected $_elementMap;
 
@@ -52,9 +57,8 @@ class Zend_Log_Formatter_Xml implements Zend_Log_Formatter_Interface
      * Class constructor
      *
      * @param string $rootElement Name of root element
-     * @param array $elementMap Relates XML elements to log data field keys
+     * @param array $elementMap
      * @param string $encoding Encoding to use (defaults to UTF-8)
-     * @return void
      */
     public function __construct($rootElement = 'logEntry', $elementMap = null, $encoding = 'UTF-8')
     {
@@ -77,7 +81,7 @@ class Zend_Log_Formatter_Xml implements Zend_Log_Formatter_Interface
      * Set encoding
      *
      * @param  string $value
-     * @return Zend_Log_Formatter_Xml
+     * @return \Zend\Log\Formatter\Xml
      */
     public function setEncoding($value)
     {
@@ -103,14 +107,14 @@ class Zend_Log_Formatter_Xml implements Zend_Log_Formatter_Interface
         }
 
         $enc = $this->getEncoding();
-        $dom = new DOMDocument('1.0', $enc);
-        $elt = $dom->appendChild(new DOMElement($this->_rootElement));
+        $dom = new \DOMDocument('1.0', $enc);
+        $elt = $dom->appendChild(new \DOMElement($this->_rootElement));
 
         foreach ($dataToInsert as $key => $value) {
             if($key == "message") {
                 $value = htmlspecialchars($value, ENT_COMPAT, $enc);
             }
-            $elt->appendChild(new DOMElement($key, $value));
+            $elt->appendChild(new \DOMElement($key, $value));
         }
 
         $xml = $dom->saveXML();
@@ -118,5 +122,4 @@ class Zend_Log_Formatter_Xml implements Zend_Log_Formatter_Interface
 
         return $xml . PHP_EOL;
     }
-
 }

@@ -15,25 +15,29 @@
  * @category   Zend
  * @package    Zend_Search_Lucene
  * @subpackage Analysis
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Utf8.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
+/**
+ * @namespace
+ */
+namespace Zend\Search\Lucene\Analysis\Analyzer\Common;
 
-/** Zend_Search_Lucene_Analysis_Analyzer_Common */
-require_once 'Zend/Search/Lucene/Analysis/Analyzer/Common.php';
-
+use Zend\Search\Lucene\Analysis,
+	Zend\Search\Lucene,
+	Zend\Search\Lucene\Exception\RuntimeException;
 
 /**
+ * @uses       \Zend\Search\Lucene\Analysis\Token
+ * @uses       \Zend\Search\Lucene\Exception\RuntimeException
  * @category   Zend
  * @package    Zend_Search_Lucene
  * @subpackage Analysis
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-
-class Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8 extends Zend_Search_Lucene_Analysis_Analyzer_Common
+class Utf8 extends AbstractCommon
 {
     /**
      * Current char position in an UTF-8 stream
@@ -52,14 +56,13 @@ class Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8 extends Zend_Search_Lucen
     /**
      * Object constructor
      *
-     * @throws Zend_Search_Lucene_Exception
+     * @throws \Zend\Search\Lucene\Exception\RuntimeException
      */
     public function __construct()
     {
         if (@preg_match('/\pL/u', 'a') != 1) {
             // PCRE unicode support is turned off
-            require_once 'Zend/Search/Lucene/Exception.php';
-            throw new Zend_Search_Lucene_Exception('Utf8 analyzer needs PCRE unicode support to be enabled.');
+            throw new RuntimeException('Utf8 analyzer needs PCRE unicode support to be enabled.');
         }
     }
 
@@ -84,7 +87,7 @@ class Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8 extends Zend_Search_Lucen
      * Get next token
      * Returns null at the end of stream
      *
-     * @return Zend_Search_Lucene_Analysis_Token|null
+     * @return \Zend\Search\Lucene\Analysis\Token|null
      */
     public function nextToken()
     {
@@ -117,7 +120,7 @@ class Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8 extends Zend_Search_Lucen
             $this->_bytePosition = $binStartPos + strlen($matchedWord);
             $this->_position     = $endPos;
 
-            $token = $this->normalize(new Zend_Search_Lucene_Analysis_Token($matchedWord, $startPos, $endPos));
+            $token = $this->normalize(new Analysis\Token($matchedWord, $startPos, $endPos));
         } while ($token === null); // try again if token is skipped
 
         return $token;

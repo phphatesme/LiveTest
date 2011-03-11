@@ -15,26 +15,15 @@
  * @category   Zend
  * @package    Zend_Test
  * @subpackage PHPUnit
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Exception.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
- * @see Zend_Exception
+ * @namespace
  */
-require_once "Zend/Exception.php";
+namespace Zend\Test\PHPUnit\Db;
 
-/**
- * Exception for Zend_Test_PHPUnit_Database package
- *
- * @uses       Zend_Exception
- * @category   Zend
- * @package    Zend_Test
- * @subpackage PHPUnit
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- */
-class Zend_Test_PHPUnit_Db_Exception extends Zend_Exception
+interface Exception extends \Zend\Test\PHPUnit\Exception
 {
 }

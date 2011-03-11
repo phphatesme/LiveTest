@@ -14,25 +14,24 @@
  *
  * @category   Zend
  * @package    Zend_Markup
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Exception.php 23484 2010-12-10 03:57:59Z mjh_ca $
  */
 
 /**
- * @see Zend_Exception
+ * @namespace
  */
-require_once 'Zend/Exception.php';
+namespace Zend\Markup;
 
 /**
  * Exception class for Zend_Markup
  *
- * @category   Zend
- * @uses       Zend_Exception
+ * @uses       \Zend\Exception
+ * @category   Zend 
  * @package    Zend_Markup
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Markup_Exception extends Zend_Exception
+interface Exception
 {
 }

@@ -15,11 +15,14 @@
  * @category   Zend
  * @package    Zend_Search_Lucene
  * @subpackage Index
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: DocsFilter.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
+/**
+ * @namespace
+ */
+namespace Zend\Search\Lucene\Index;
 
 /**
  * A Zend_Search_Lucene_Index_DocsFilter is used to filter documents while searching.
@@ -30,10 +33,10 @@
  * @category   Zend
  * @package    Zend_Search_Lucene
  * @subpackage Index
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Search_Lucene_Index_DocsFilter
+class DocsFilter
 {
     /**
      * Set of segment filters:

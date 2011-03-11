@@ -14,20 +14,24 @@
  *
  * @category  Zend
  * @package   Zend_Text
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
- * @version   $Id: MultiByte.php 23484 2010-12-10 03:57:59Z mjh_ca $
  */
+
+/**
+ * @namespace
+ */
+namespace Zend\Text;
 
 /**
  * Zend_Text_MultiByte contains multibyte safe string methods
  *
  * @category  Zend
  * @package   Zend_Text
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Text_MultiByte
+class MultiByte
 {
     /**
      * Word wrap
@@ -62,7 +66,7 @@ class Zend_Text_MultiByte
                     $cutLength = null;
                 } else {
                     $nextChar = iconv_substr($string, $width, 1, $charset);
-
+                    
                     if ($breakWidth === 1) {
                         $nextBreak = $nextChar;
                     } else {
@@ -123,7 +127,7 @@ class Zend_Text_MultiByte
      * @param  string  $charset
      * @return string
      */
-    public static function strPad($input, $padLength, $padString = ' ', $padType = STR_PAD_RIGHT, $charset = 'UTF-8')
+    public static function strPad($input, $padLength, $padString = ' ', $padType = \STR\PAD\RIGHT, $charset = 'UTF-8')
     {
         $return          = '';
         $lengthOfPadding = $padLength - iconv_strlen($input, $charset);

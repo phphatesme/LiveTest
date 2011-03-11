@@ -15,15 +15,14 @@
  * @category   Zend
  * @package    Zend_Amf
  * @subpackage Value
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: CommandMessage.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
- * @see Zend_Amf_Value_Messaging_AsyncMessage
+ * @namespace
  */
-require_once 'Zend/Amf/Value/Messaging/AsyncMessage.php';
+namespace Zend\Amf\Value\Messaging;
 
 /**
  * A message that represents an infrastructure command passed between
@@ -34,12 +33,13 @@ require_once 'Zend/Amf/Value/Messaging/AsyncMessage.php';
  *
  * Note: THESE VALUES MUST BE THE SAME ON CLIENT AND SERVER
  *
+ * @uses       \Zend\Amf\Value\Messaging\AsyncMessage
  * @package    Zend_Amf
  * @subpackage Value
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Amf_Value_Messaging_CommandMessage extends Zend_Amf_Value_Messaging_AsyncMessage
+class CommandMessage extends AsyncMessage
 {
     /**
      *  This operation is used to subscribe to a remote destination.

@@ -15,11 +15,14 @@
  * @category   Zend
  * @package    Zend_Service
  * @subpackage SlideShare
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: SlideShow.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
+/**
+ * @namespace
+ */
+namespace Zend\Service\SlideShare;
 
 /**
  * The Zend_Service_SlideShare_SlideShow class represents a slide show on the
@@ -28,10 +31,10 @@
  * @category   Zend
  * @package    Zend_Service
  * @subpackage SlideShare
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Service_SlideShare_SlideShow
+class SlideShow
 {
 
     /**

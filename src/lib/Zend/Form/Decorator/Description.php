@@ -15,12 +15,14 @@
  * @category   Zend
  * @package    Zend_Form
  * @subpackage Decorator
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** Zend_Form_Decorator_Abstract */
-require_once 'Zend/Form/Decorator/Abstract.php';
+/**
+ * @namespace
+ */
+namespace Zend\Form\Decorator;
 
 /**
  * Zend_Form_Decorator_Description
@@ -34,14 +36,15 @@ require_once 'Zend/Form/Decorator/Abstract.php';
  *
  * Any other options passed will be used as HTML attributes of the HTML tag used.
  *
+ * @uses       \Zend\Form\Decorator\AbstractDecorator
+ * @uses       \Zend\Form\Decorator\HtmlTag
  * @category   Zend
  * @package    Zend_Form
  * @subpackage Decorator
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Description.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
-class Zend_Form_Decorator_Description extends Zend_Form_Decorator_Abstract
+class Description extends AbstractDecorator
 {
     /**
      * Whether or not to escape the description
@@ -65,7 +68,7 @@ class Zend_Form_Decorator_Description extends Zend_Form_Decorator_Abstract
      * Set HTML tag with which to surround description
      *
      * @param  string $tag
-     * @return Zend_Form_Decorator_Description
+     * @return \Zend\Form\Decorator\Description
      */
     public function setTag($tag)
     {
@@ -117,7 +120,7 @@ class Zend_Form_Decorator_Description extends Zend_Form_Decorator_Abstract
      * Set whether or not to escape description
      *
      * @param  bool $flag
-     * @return Zend_Form_Decorator_Description
+     * @return \Zend\Form\Decorator\Description
      */
     public function setEscape($flag)
     {
@@ -182,10 +185,9 @@ class Zend_Form_Decorator_Description extends Zend_Form_Decorator_Abstract
         }
 
         if (!empty($tag)) {
-            require_once 'Zend/Form/Decorator/HtmlTag.php';
             $options['tag'] = $tag;
-            $decorator = new Zend_Form_Decorator_HtmlTag($options);
-            $description = $decorator->render($description);
+            $decorator      = new HtmlTag($options);
+            $description    = $decorator->render($description);
         }
 
         switch ($placement) {

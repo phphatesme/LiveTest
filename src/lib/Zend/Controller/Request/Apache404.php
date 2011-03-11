@@ -14,16 +14,14 @@
  *
  * @category   Zend
  * @package    Zend_Controller
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Apache404.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
-/** Zend_Controller_Request_Http */
-require_once 'Zend/Controller/Request/Http.php';
-
-/** Zend_Uri */
-require_once 'Zend/Uri.php';
+/**
+ * @namespace
+ */
+namespace Zend\Controller\Request;
 
 /**
  * Zend_Controller_Request_Apache404
@@ -36,11 +34,12 @@ require_once 'Zend/Uri.php';
  * In each case, the URL to check against is found in REDIRECT_URL, not
  * REQUEST_URI.
  *
- * @uses       Zend_Controller_Request_Http
+ * @uses       \Zend\Controller\Request\Http
+ * @uses       \Zend\Uri\Uri
  * @package    Zend_Controller
  * @subpackage Request
  */
-class Zend_Controller_Request_Apache404 extends Zend_Controller_Request_Http
+class Apache404 extends Http
 {
     public function setRequestUri($requestUri = null)
     {

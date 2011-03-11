@@ -14,20 +14,24 @@
  *
  * @category   Zend
  * @package    Zend_Amf
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Constants.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
+
+/**
+ * @namespace
+ */
+namespace Zend\Amf;
 
 /**
  * The following constants are used throughout serialization and
  * deserialization to detect the AMF marker and encoding types.
  *
  * @package    Zend_Amf
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-final class Zend_Amf_Constants
+final class Constants
 {
     const AMF0_NUMBER            = 0x00;
     const AMF0_BOOLEAN           = 0x01;

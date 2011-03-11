@@ -15,16 +15,15 @@
  * @category   Zend
  * @package    Zend_Service
  * @subpackage DeveloperGarden
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: GetAccountBalance.php 20166 2010-01-09 19:00:17Z bkarwin $
  */
 
 /**
  * @category   Zend
  * @package    Zend_Service
  * @subpackage DeveloperGarden
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @author     Marco Kaiser
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */

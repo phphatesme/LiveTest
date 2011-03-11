@@ -14,25 +14,25 @@
  *
  * @category  Zend
  * @package   Zend_ProgressBar
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
- * @version   $Id: Exception.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
- * @see Zend_ProgressBar_Exception
+ * @namespace
  */
-require_once 'Zend/ProgressBar/Exception.php';
+namespace Zend\ProgressBar\Adapter;
 
 /**
  * Exception class for Zend_ProgressBar_Adapter
  *
+ * @uses      \Zend\ProgressBar\Exception
  * @category  Zend
  * @package   Zend_ProgressBar
- * @uses      Zend_ProgressBar_Exception
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @uses      \Zend\ProgressBar\Exception
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_ProgressBar_Adapter_Exception extends Zend_ProgressBar_Exception
+interface Exception extends \Zend\ProgressBar\Exception
 {
 }

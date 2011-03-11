@@ -2,6 +2,8 @@
 
 namespace Base\Http\Response;
 
+use Zend\Http\Response as ZendResponse;
+
 /**
  * @author mikelohmann
  *
@@ -15,7 +17,7 @@ class Zend implements Response
    * @todo read Type for $response....(after discussion) :)
    * @param unknown_type $response
    */
-  public function __construct(\Zend_Http_Response $response, $duration)
+  public function __construct(ZendResponse $response, $duration)
   {
     $this->duration = $duration;
     $this->zendResponse = $response;

@@ -15,23 +15,25 @@
  * @category   Zend
  * @package    Zend_Log
  * @subpackage Filter
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Message.php 23576 2010-12-23 23:25:44Z ramon $
  */
 
-/** Zend_Log_Filter_Abstract */
-require_once 'Zend/Log/Filter/Abstract.php';
+/**
+ * @namespace
+ */
+namespace Zend\Log\Filter;
 
 /**
+ * @uses       \Zend\Log\Exception\InvalidArgumentException
+ * @uses       \Zend\Log\Filter\AbstractFilter
  * @category   Zend
  * @package    Zend_Log
  * @subpackage Filter
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Message.php 23576 2010-12-23 23:25:44Z ramon $
  */
-class Zend_Log_Filter_Message extends Zend_Log_Filter_Abstract
+class Message extends AbstractFilter
 {
     /**
      * @var string
@@ -42,25 +44,23 @@ class Zend_Log_Filter_Message extends Zend_Log_Filter_Abstract
      * Filter out any log messages not matching $regexp.
      *
      * @param  string  $regexp     Regular expression to test the log message
-     * @return void
-     * @throws Zend_Log_Exception
+     * @throws \Zend\Log\Exception\InvalidArgumentException
      */
     public function __construct($regexp)
     {
         if (@preg_match($regexp, '') === false) {
-            require_once 'Zend/Log/Exception.php';
-            throw new Zend_Log_Exception("Invalid regular expression '$regexp'");
+            throw new \Zend\Log\Exception\InvalidArgumentException("Invalid regular expression '$regexp'");
         }
         $this->_regexp = $regexp;
     }
 
     /**
      * Create a new instance of Zend_Log_Filter_Message
-     *
-     * @param  array|Zend_Config $config
-     * @return Zend_Log_Filter_Message
+     * 
+     * @param  array|\Zend\Config\Config $config
+     * @return \Zend\Log\Filter\Message
      */
-    static public function factory($config)
+    static public function factory($config = array()) 
     {
         $config = self::_parseConfig($config);
         $config = array_merge(array(

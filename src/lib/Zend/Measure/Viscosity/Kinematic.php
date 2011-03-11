@@ -14,27 +14,27 @@
  *
  * @category  Zend
  * @package   Zend_Measure
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
- * @version   $Id: Kinematic.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
- * Implement needed classes
+ * @namespace
  */
-require_once 'Zend/Measure/Abstract.php';
-require_once 'Zend/Locale.php';
+namespace Zend\Measure\Viscosity;
+use Zend\Measure;
 
 /**
  * Class for handling acceleration conversions
  *
+ * @uses       Zend\Measure\AbstractMeasure
  * @category   Zend
  * @package    Zend_Measure
- * @subpackage Zend_Measure_Viscosity_Kinematic
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @subpackage Zend_Measure_Viscosity
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Measure_Viscosity_Kinematic extends Zend_Measure_Abstract
+class Kinematic extends Measure\AbstractMeasure
 {
     const STANDARD = 'SQUARE_METER_PER_SECOND';
 

@@ -15,30 +15,25 @@
  * @category   Zend
  * @package    Zend_Barcode
  * @subpackage Object
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Upca.php 21667 2010-03-28 17:45:14Z mikaelkael $
  */
 
 /**
- * @see Zend_Barcode_Object_Ean13
+ * @namespace
  */
-require_once 'Zend/Barcode/Object/Ean13.php';
-
-/**
- * @see Zend_Validate_Barcode
- */
-require_once 'Zend/Validate/Barcode.php';
+namespace Zend\Barcode\Object;
 
 /**
  * Class for generate UpcA barcode
  *
+ * @uses       \Zend\Barcode\Object\Ean13
  * @category   Zend
  * @package    Zend_Barcode
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Barcode_Object_Upca extends Zend_Barcode_Object_Ean13
+class Upca extends Ean13
 {
 
     /**

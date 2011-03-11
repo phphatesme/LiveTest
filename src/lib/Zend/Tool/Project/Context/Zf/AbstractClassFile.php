@@ -15,10 +15,16 @@
  * @category   Zend
  * @package    Zend_Tool
  * @subpackage Framework
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AbstractClassFile.php 23417 2010-11-20 16:24:35Z ramon $
  */
+
+/**
+ * @namespace
+ */
+namespace Zend\Tool\Project\Context\Zf;
+
+use Zend\Tool\Project\Profile\Resource\Resource;
 
 /**
  * This class is the front most class for utilizing Zend_Tool_Project
@@ -26,17 +32,19 @@
  * A profile is a hierarchical set of resources that keep track of
  * items within a specific project.
  *
+ * @uses       \Zend\Tool\Project\Context\Filesystem\File
  * @category   Zend
  * @package    Zend_Tool
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-abstract class Zend_Tool_Project_Context_Zf_AbstractClassFile extends Zend_Tool_Project_Context_Filesystem_File
+abstract class AbstractClassFile 
+    extends \Zend\Tool\Project\Context\Filesystem\File
 {
-
+    
     /**
      * getFullClassName()
-     *
+     * 
      * @param $localClassName
      * @param $classContextName
      */
@@ -51,9 +59,9 @@ abstract class Zend_Tool_Project_Context_Zf_AbstractClassFile extends Zend_Tool_
                 $containingResource = $currentResource;
                 break;
             }
-        } while ($currentResource instanceof Zend_Tool_Project_Profile_Resource
+        } while ($currentResource instanceof Resource
             && $currentResource = $currentResource->getParentResource());
-
+        
         $fullClassName = '';
 
         // go find the proper prefix
@@ -62,13 +70,13 @@ abstract class Zend_Tool_Project_Context_Zf_AbstractClassFile extends Zend_Tool_
                 $prefix = $containingResource->getAttribute('classNamePrefix');
                 $fullClassName = $prefix;
             } elseif ($containingResource->getName() == 'ModuleDirectory') {
-                $prefix = ucfirst($containingResource->getAttribute('moduleName')) . '_';
-                $fullClassName = $prefix;
+                $prefix = $containingResource->getAttribute('moduleName') . '\\';
+                $fullClassName = $prefix;    
             }
         }
 
         if ($classContextName) {
-            $fullClassName .= rtrim($classContextName, '_') . '_';
+            $fullClassName .= rtrim($classContextName, '\\') . '\\';
         }
         $fullClassName .= $localClassName;
 

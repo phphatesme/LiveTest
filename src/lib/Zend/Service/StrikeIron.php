@@ -15,21 +15,22 @@
  * @category   Zend
  * @package    Zend_Service
  * @subpackage StrikeIron
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: StrikeIron.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
-
 
 /**
  * This class allows StrikeIron authentication credentials to be specified
  * in one place and provides a factory for returning instances of different
  * StrikeIron service classes.
  *
+ * @uses       Exception
+ * @uses       Zend_Loader
+ * @uses       Zend_Service_StrikeIron_Exception
  * @category   Zend
  * @package    Zend_Service
  * @subpackage StrikeIron
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Service_StrikeIron
@@ -69,7 +70,6 @@ class Zend_Service_StrikeIron
 
         try {
             if (!class_exists($class)) {
-                require_once 'Zend/Loader.php';
                 @Zend_Loader::loadClass($class);
             }
             if (!class_exists($class, false)) {
@@ -77,10 +77,6 @@ class Zend_Service_StrikeIron
             }
         } catch (Exception $e) {
             $msg = "Service '$class' could not be loaded: " . $e->getMessage();
-            /**
-             * @see Zend_Service_StrikeIron_Exception
-             */
-            require_once 'Zend/Service/StrikeIron/Exception.php';
             throw new Zend_Service_StrikeIron_Exception($msg, $e->getCode(), $e);
         }
 

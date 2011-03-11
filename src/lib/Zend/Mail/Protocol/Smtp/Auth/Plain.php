@@ -15,28 +15,27 @@
  * @category   Zend
  * @package    Zend_Mail
  * @subpackage Protocol
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Plain.php 22653 2010-07-22 18:41:39Z mabe $
  */
-
 
 /**
- * @see Zend_Mail_Protocol_Smtp
+ * @namespace
  */
-require_once 'Zend/Mail/Protocol/Smtp.php';
-
+namespace Zend\Mail\Protocol\Smtp\Auth;
+use Zend\Mail\Protocol\Smtp;
 
 /**
  * Performs PLAIN authentication
  *
+ * @uses       \Zend\Mail\Protocol\Smtp
  * @category   Zend
  * @package    Zend_Mail
  * @subpackage Protocol
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Mail_Protocol_Smtp_Auth_Plain extends Zend_Mail_Protocol_Smtp
+class Plain extends Smtp
 {
     /**
      * PLAIN username

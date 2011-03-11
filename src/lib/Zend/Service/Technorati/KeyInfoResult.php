@@ -15,20 +15,19 @@
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Technorati
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: KeyInfoResult.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
-
 
 /**
  * Represents a single Technorati KeyInfo query result object.
  * It provides information about your Technorati API Key daily usage.
  *
+ * @uses       DOMXPath
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Technorati
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Service_Technorati_KeyInfoResult
@@ -67,8 +66,6 @@ class Zend_Service_Technorati_KeyInfoResult
      */
     public function __construct(DomDocument $dom, $apiKey = null)
     {
-        // $this->_dom   = $dom;
-        // $this->_xpath = new DOMXPath($dom);
         $xpath = new DOMXPath($dom);
 
         $this->_apiQueries   = (int) $xpath->query('/tapi/document/result/apiqueries/text()')->item(0)->data;

@@ -15,17 +15,9 @@
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Technorati
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ResultSet.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
-
-
-/**
- * @see Zend_Service_Technorati_Result
- */
-require_once 'Zend/Service/Technorati/Result.php';
-
 
 /**
  * This is the most essential result set.
@@ -35,10 +27,14 @@ require_once 'Zend/Service/Technorati/Result.php';
  * Each of the specific result sets represents a collection of query-specific
  * Zend_Service_Technorati_Result objects.
  *
+ * @uses       DOMDocument
+ * @uses       DOMXpath
+ * @uses       OutOfBoundsException
+ * @uses       Zend_Service_Technorati_Result
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Technorati
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @abstract
  */
@@ -184,7 +180,7 @@ abstract class Zend_Service_Technorati_ResultSet implements SeekableIterator
      * Implements SeekableIterator::current().
      *
      * @return  void
-     * @throws  Zend_Service_Exception
+     * @throws  Zend\Service\Exception
      * @abstract
      */
     // abstract public function current();

@@ -15,20 +15,25 @@
  * @category   Zend
  * @package    Zend_Tool
  * @subpackage Framework
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: EnabledResourceFilter.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
+
+/**
+ * @namespace
+ */
+namespace Zend\Tool\Project\Profile\Iterator;
 
 /**
  * This class is an iterator that will iterate only over enabled resources
  *
+ * @uses       RecursiveFilterIterator
  * @category   Zend
  * @package    Zend_Tool
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Tool_Project_Profile_Iterator_EnabledResourceFilter extends RecursiveFilterIterator
+class EnabledResourceFilter extends \RecursiveFilterIterator
 {
 
     /**

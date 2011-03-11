@@ -15,19 +15,20 @@
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Technorati
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: GetInfoResult.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
-
 
 /**
  * Represents a single Technorati GetInfo query result object.
  *
+ * @uses       DOMXPath
+ * @uses       Zend_Service_Technorati_Author
+ * @uses       Zend_Service_Technorati_Weblog
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Technorati
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Service_Technorati_GetInfoResult
@@ -58,20 +59,10 @@ class Zend_Service_Technorati_GetInfoResult
     {
         $xpath = new DOMXPath($dom);
 
-        /**
-         * @see Zend_Service_Technorati_Author
-         */
-        require_once 'Zend/Service/Technorati/Author.php';
-
         $result = $xpath->query('//result');
         if ($result->length == 1) {
             $this->_author = new Zend_Service_Technorati_Author($result->item(0));
         }
-
-        /**
-         * @see Zend_Service_Technorati_Weblog
-         */
-        require_once 'Zend/Service/Technorati/Weblog.php';
 
         $result = $xpath->query('//item/weblog');
         if ($result->length >= 1) {

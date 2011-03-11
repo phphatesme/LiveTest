@@ -47,6 +47,7 @@ class Debug extends Base
     if ($this->debug)
     {
       echo "  An error occured (debug modus):\n\n";
+      echo "  Class  : " . get_class($exception) . "\n";
       echo "  Message: " . $exception->getMessage() . "\n";
       echo "  File   : " . $exception->getFile() . "\n";
       echo "  Line   : " . $exception->getLine() . "\n\n";

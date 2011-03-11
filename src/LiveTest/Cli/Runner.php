@@ -9,6 +9,8 @@
 
 namespace LiveTest\Cli;
 
+use Zend\Http\Client\Adapter\Curl;
+
 use LiveTest\Config\Parser\Parser;
 use LiveTest\Config\ConfigConfig;
 use LiveTest\Event\Dispatcher;
@@ -164,6 +166,7 @@ class Runner extends ArgumentRunner
     $properties = Properties::createByYamlFile($this->getArgument('testsuite'), $this->config->getDefaultDomain());
 
     $client = new Zend();
+    $client->setAdapter(new Curl());
     $this->eventDispatcher->notify('LiveTest.Runner.InitHttpClient', array('client' => $client));
 
     $this->testRun = new Run($properties, $client, $this->eventDispatcher);

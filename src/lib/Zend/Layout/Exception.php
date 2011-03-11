@@ -14,22 +14,22 @@
  *
  * @category   Zend
  * @package    Zend_Layout
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Exception.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
-
-
-/** Zend_Exception */
-require_once 'Zend/Exception.php';
-
 
 /**
+ * @namespace
+ */
+namespace Zend\Layout;
+
+/**
+ * @uses       \Zend\Exception
  * @category   Zend
  * @package    Zend_Layout
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Layout_Exception extends Zend_Exception
+class Exception extends \Zend\Exception
 {}
 

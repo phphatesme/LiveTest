@@ -15,28 +15,26 @@
  * @category   Zend
  * @package    Zend_View
  * @subpackage Helper
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: FormNote.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
-
 
 /**
- * Abstract class for extension
+ * @namespace
  */
-require_once 'Zend/View/Helper/FormElement.php';
-
+namespace Zend\View\Helper;
 
 /**
  * Helper to show an HTML note
  *
+ * @uses       \Zend\View\Helper\FormElement
  * @category   Zend
  * @package    Zend_View
  * @subpackage Helper
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_View_Helper_FormNote extends Zend_View_Helper_FormElement
+class FormNote extends FormElement
 {
     /**
     * Helper to show a "note" based on a hidden value.
@@ -52,8 +50,12 @@ class Zend_View_Helper_FormNote extends Zend_View_Helper_FormElement
      *
      * @return string The element XHTML.
      */
-    public function formNote($name, $value = null)
+    public function direct($name = null, $value = null)
     {
+        if ($name == null) {
+            throw new \InvalidArgumentException('FormNote: missing argument. $name is required in formNote($name, $value = null)');
+        }
+        
         $info = $this->_getInfo($name, $value);
         extract($info); // name, value, attribs, options, listsep, disable
         return $value;

@@ -15,21 +15,16 @@
  * @category   Zend
  * @package    Zend_Service_WindowsAzure
  * @subpackage Exception
- * @version    $Id: Exception.php 20785 2010-01-31 09:43:03Z mikaelkael $
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
 /**
- * @see Zend_Service_WindowsAzure_Exception
- */
-require_once 'Zend/Service/WindowsAzure/Exception.php';
-
-/**
+ * @uses       Zend_Service_WindowsAzure_Exception
  * @category   Zend
  * @package    Zend_Service_WindowsAzure
  * @subpackage RetryPolicy
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Service_WindowsAzure_RetryPolicy_Exception extends Zend_Service_WindowsAzure_Exception

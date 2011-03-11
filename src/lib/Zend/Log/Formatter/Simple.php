@@ -15,23 +15,26 @@
  * @category   Zend
  * @package    Zend_Log
  * @subpackage Formatter
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Simple.php 23576 2010-12-23 23:25:44Z ramon $
  */
 
-/** Zend_Log_Formatter_Interface */
-require_once 'Zend/Log/Formatter/Interface.php';
+/**
+ * @namespace
+ */
+namespace Zend\Log\Formatter;
+use \Zend\Log\Formatter;
 
 /**
+ * @uses       \Zend\Log\Exception\InvalidArgumentException
+ * @uses       \Zend\Log\Formatter\FormatterInterface
  * @category   Zend
  * @package    Zend_Log
  * @subpackage Formatter
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Simple.php 23576 2010-12-23 23:25:44Z ramon $
  */
-class Zend_Log_Formatter_Simple implements Zend_Log_Formatter_Interface
+class Simple implements Formatter
 {
     /**
      * @var string
@@ -44,8 +47,7 @@ class Zend_Log_Formatter_Simple implements Zend_Log_Formatter_Interface
      * Class constructor
      *
      * @param  null|string  $format  Format specifier for log messages
-     * @return void
-     * @throws Zend_Log_Exception
+     * @throws \Zend\Log\Exception\InvalidArgumentException
      */
     public function __construct($format = null)
     {
@@ -54,8 +56,7 @@ class Zend_Log_Formatter_Simple implements Zend_Log_Formatter_Interface
         }
 
         if (! is_string($format)) {
-            require_once 'Zend/Log/Exception.php';
-            throw new Zend_Log_Exception('Format must be a string');
+            throw new \Zend\Log\Exception\InvalidArgumentException('Format must be a string');
         }
 
         $this->_format = $format;
@@ -82,5 +83,4 @@ class Zend_Log_Formatter_Simple implements Zend_Log_Formatter_Interface
         }
         return $output;
     }
-
 }

@@ -29,7 +29,7 @@ class HttpClientMockup implements Client
     if ($this->nextRequestFails)
     {
       $this->nextRequestFails = false;
-      throw new \Zend_Http_Client_Exception('TestException');
+      throw new \Zend\Http\Client\Exception\RuntimeException('TestException');
     }
     return $this->response;
   }

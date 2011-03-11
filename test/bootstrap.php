@@ -1,7 +1,6 @@
 <?php
+
 include_once __DIR__.'/../src/bootstrap.php';
-require_once 'Zend/Loader/Autoloader.php';
-Zend_Loader_Autoloader::getInstance();
 
 function LiveTestUnit_Autoload($classname)
 {

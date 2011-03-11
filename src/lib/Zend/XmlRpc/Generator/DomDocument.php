@@ -15,20 +15,26 @@
  * @category   Zend
  * @package    Zend_XmlRpc
  * @subpackage Generator
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: DomDocument.php 20785 2010-01-31 09:43:03Z mikaelkael $
  */
 
 /**
- * @var Zend_XmlRpc_Generator_GeneratorAbstract
+ * @namespace
  */
-require_once 'Zend/XmlRpc/Generator/GeneratorAbstract.php';
+namespace Zend\XmlRpc\Generator;
 
 /**
  * DOMDocument based implementation of a XML/RPC generator
+ *
+ * @uses       DOMDocument
+ * @uses       Zend\XmlRpc\Generator\AbstractGenerator
+ * @category   Zend
+ * @package    Zend_XmlRpc
+ * @subpackage Generator
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  */
-class Zend_XmlRpc_Generator_DomDocument extends Zend_XmlRpc_Generator_GeneratorAbstract
+class DomDocument extends AbstractGenerator
 {
     /**
      * @var DOMDocument
@@ -95,7 +101,7 @@ class Zend_XmlRpc_Generator_DomDocument extends Zend_XmlRpc_Generator_GeneratorA
      */
     protected function _init()
     {
-        $this->_dom = new DOMDocument('1.0', $this->_encoding);
+        $this->_dom = new \DOMDocument('1.0', $this->_encoding);
         $this->_currentElement = $this->_dom;
     }
 }

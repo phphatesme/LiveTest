@@ -15,35 +15,32 @@
  * @category   Zend
  * @package    Zend_Log
  * @subpackage Writer
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Mock.php 23576 2010-12-23 23:25:44Z ramon $
  */
 
-/** Zend_Log_Writer_Abstract */
-require_once 'Zend/Log/Writer/Abstract.php';
+/**
+ * @namespace
+ */
+namespace Zend\Log\Writer;
 
 /**
+ * @uses       \Zend\Log\Writer\AbstractWriter
  * @category   Zend
  * @package    Zend_Log
  * @subpackage Writer
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Mock.php 23576 2010-12-23 23:25:44Z ramon $
  */
-class Zend_Log_Writer_Mock extends Zend_Log_Writer_Abstract
+class Mock extends AbstractWriter
 {
     /**
      * array of log events
-     *
-     * @var array
      */
     public $events = array();
 
     /**
      * shutdown called?
-     *
-     * @var boolean
      */
     public $shutdown = false;
 
@@ -70,11 +67,11 @@ class Zend_Log_Writer_Mock extends Zend_Log_Writer_Abstract
 
     /**
      * Create a new instance of Zend_Log_Writer_Mock
-     *
-     * @param  array|Zend_Config $config
-     * @return Zend_Log_Writer_Mock
+     * 
+     * @param  array|\Zend\Config\Config $config
+     * @return \Zend\Log\Writer\Mock
      */
-    static public function factory($config)
+    static public function factory($config = array()) 
     {
         return new self();
     }

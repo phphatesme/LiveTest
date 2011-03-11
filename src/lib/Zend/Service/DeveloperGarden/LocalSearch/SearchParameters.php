@@ -15,16 +15,19 @@
  * @category   Zend
  * @package    Zend_Service
  * @subpackage DeveloperGarden
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: SearchParameters.php 22662 2010-07-24 17:37:36Z mabe $
  */
 
 /**
+ * @uses       Zend_Service_DeveloperGarden_LocalSearch_Exception
+ * @uses       Zend\Validator\Between
+ * @uses       Zend\Validator\Int
+ * @uses       Zend\Validator\NotEmpty
  * @category   Zend
  * @package    Zend_Service
  * @subpackage DeveloperGarden
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @author     Marco Kaiser
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -175,11 +178,9 @@ class Zend_Service_DeveloperGarden_LocalSearch_SearchParameters
      */
     public function setHits($hits = 10)
     {
-        require_once 'Zend/Validate/Between.php';
-        $validator = new Zend_Validate_Between(0, 1000);
+        $validator = new Zend\Validator\Between(0, 1000);
         if (!$validator->isValid($hits)) {
             $message = $validator->getMessages();
-            require_once 'Zend/Service/DeveloperGarden/LocalSearch/Exception.php';
             throw new Zend_Service_DeveloperGarden_LocalSearch_Exception(current($message));
         }
         $this->_parameters['hits'] = $hits;
@@ -199,7 +200,6 @@ class Zend_Service_DeveloperGarden_LocalSearch_SearchParameters
     public function setCollapse($value)
     {
         if (!in_array($value, $this->_possibleCollapseValues, true)) {
-            require_once 'Zend/Service/DeveloperGarden/LocalSearch/Exception.php';
             throw new Zend_Service_DeveloperGarden_LocalSearch_Exception('Not a valid value provided.');
         }
         $this->_parameters['collapse'] = $value;
@@ -221,12 +221,9 @@ class Zend_Service_DeveloperGarden_LocalSearch_SearchParameters
      */
     public function setWhere($where)
     {
-        require_once 'Zend/Validate/NotEmpty.php';
-
-        $validator = new Zend_Validate_NotEmpty();
+        $validator = new Zend\Validator\NotEmpty();
         if (!$validator->isValid($where)) {
             $message = $validator->getMessages();
-            require_once 'Zend/Service/DeveloperGarden/LocalSearch/Exception.php';
             throw new Zend_Service_DeveloperGarden_LocalSearch_Exception(current($message));
         }
         $this->_parameters['where'] = $where;
@@ -273,12 +270,9 @@ class Zend_Service_DeveloperGarden_LocalSearch_SearchParameters
      */
     public function setRadius($radius)
     {
-        require_once 'Zend/Validate/Int.php';
-
-        $validator = new Zend_Validate_Int();
+        $validator = new Zend\Validator\Int();
         if (!$validator->isValid($radius)) {
             $message = $validator->getMessages();
-            require_once 'Zend/Service/DeveloperGarden/LocalSearch/Exception.php';
             throw new Zend_Service_DeveloperGarden_LocalSearch_Exception(current($message));
         }
         $this->_parameters['radius'] = $radius;
@@ -333,7 +327,6 @@ class Zend_Service_DeveloperGarden_LocalSearch_SearchParameters
     public function setSort($sort)
     {
         if (!in_array($sort, array('relevance', 'distance'))) {
-            require_once 'Zend/Service/DeveloperGarden/LocalSearch/Exception.php';
             throw new Zend_Service_DeveloperGarden_LocalSearch_Exception('Not a valid sort value provided.');
         }
 

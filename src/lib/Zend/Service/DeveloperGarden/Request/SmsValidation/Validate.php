@@ -15,26 +15,21 @@
  * @category   Zend
  * @package    Zend_Service
  * @subpackage DeveloperGarden
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Validate.php 20166 2010-01-09 19:00:17Z bkarwin $
  */
 
 /**
- * @see Zend_Service_DeveloperGarden_Request_RequestAbstract
- */
-require_once 'Zend/Service/DeveloperGarden/Request/RequestAbstract.php';
-
-/**
+ * @uses       Zend_Service_DeveloperGarden_Request_AbstractRequest
  * @category   Zend
  * @package    Zend_Service
  * @subpackage DeveloperGarden
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @author     Marco Kaiser
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Service_DeveloperGarden_Request_SmsValidation_Validate
-    extends Zend_Service_DeveloperGarden_Request_RequestAbstract
+    extends Zend_Service_DeveloperGarden_Request_AbstractRequest
 {
     /**
      * the keyword to be used for validation

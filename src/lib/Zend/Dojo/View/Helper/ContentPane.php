@@ -15,24 +15,25 @@
  * @category   Zend
  * @package    Zend_Dojo
  * @subpackage View
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ContentPane.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
-/** Zend_Dojo_View_Helper_DijitContainer */
-require_once 'Zend/Dojo/View/Helper/DijitContainer.php';
+/**
+ * @namespace
+ */
+namespace Zend\Dojo\View\Helper;
 
 /**
  * Dojo ContentPane dijit
  *
- * @uses       Zend_Dojo_View_Helper_DijitContainer
+ * @uses       \Zend\Dojo\View\Helper\DijitContainer
  * @package    Zend_Dojo
  * @subpackage View
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
-  */
-class Zend_Dojo_View_Helper_ContentPane extends Zend_Dojo_View_Helper_DijitContainer
+ */
+class ContentPane extends DijitContainer
 {
     /**
      * Dijit being used
@@ -55,7 +56,7 @@ class Zend_Dojo_View_Helper_ContentPane extends Zend_Dojo_View_Helper_DijitConta
      * @param  array $attribs HTML attributes
      * @return string
      */
-    public function contentPane($id = null, $content = '', array $params = array(), array $attribs = array())
+    public function direct($id = null, $content = '', array $params = array(), array $attribs = array())
     {
         if (0 === func_num_args()) {
             return $this;

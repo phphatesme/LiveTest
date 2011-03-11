@@ -15,26 +15,26 @@
  * @category   Zend
  * @package    Zend_Markup
  * @subpackage Renderer
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Exception.php 20277 2010-01-14 14:17:12Z kokx $
  */
 
 /**
- * @see Zend_Markup_Exception
+ * @namespace
  */
-require_once 'Zend/Markup/Exception.php';
+namespace Zend\Markup\Renderer;
 
 /**
  * Exception class for Zend_Markup_Renderer
  *
+ * @uses       \Zend\Markup\Exception
  * @category   Zend
- * @uses       Zend_Markup_Exception
+ * @uses       \Zend\Markup\Exception
  * @package    Zend_Markup
  * @subpackage Renderer
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Markup_Renderer_Exception extends Zend_Markup_Exception
+interface Exception extends \Zend\Markup\Exception
 {
 }

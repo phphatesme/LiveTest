@@ -15,25 +15,26 @@
  * @category   Zend
  * @package    Zend_Amf
  * @subpackage Value
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AsyncMessage.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
-
-/** Zend_Amf_Value_Messaging_AbstractMessage */
-require_once 'Zend/Amf/Value/Messaging/AbstractMessage.php';
+/**
+ * @namespace
+ */
+namespace Zend\Amf\Value\Messaging;
 
 /**
  * This type of message contains information necessary to perform
  * point-to-point or publish-subscribe messaging.
  *
+ * @uses       \Zend\Amf\Value\Messaging\AbstractMessage
  * @package    Zend_Amf
  * @subpackage Value
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Amf_Value_Messaging_AsyncMessage extends Zend_Amf_Value_Messaging_AbstractMessage
+class AsyncMessage extends AbstractMessage
 {
     /**
      * The message id to be responded to.

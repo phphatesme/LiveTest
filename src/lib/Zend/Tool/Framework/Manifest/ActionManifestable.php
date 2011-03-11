@@ -15,23 +15,24 @@
  * @category   Zend
  * @package    Zend_Tool
  * @subpackage Framework
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ActionManifestable.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
- * @see Zend_Tool_Framework_Manifest_Interface
+ * @namespace
  */
-require_once 'Zend/Tool/Framework/Manifest/Interface.php';
+namespace Zend\Tool\Framework\Manifest;
+use Zend\Tool\Framework\Manifest;
 
 /**
+ * @uses       \Zend\Tool\Framework\Manifest
  * @category   Zend
  * @package    Zend_Tool
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface Zend_Tool_Framework_Manifest_ActionManifestable extends Zend_Tool_Framework_Manifest_Interface
+interface ActionManifestable extends Manifest
 {
 
     /**
@@ -40,7 +41,7 @@ interface Zend_Tool_Framework_Manifest_ActionManifestable extends Zend_Tool_Fram
      * Should either return a single action, or an array
      * of actions
      *
-     * @return array|Zend_Tool_Framework_Action_Interface
+     * @return array|\Zend\Tool\Framework\Action
      */
     public function getActions();
 

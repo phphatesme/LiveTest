@@ -15,26 +15,28 @@
  * @category   Zend
  * @package    Zend_Form
  * @subpackage Decorator
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** Zend_Form_Decorator_Abstract */
-require_once 'Zend/Form/Decorator/Abstract.php';
+/**
+ * @namespace
+ */
+namespace Zend\Form\Decorator;
 
 /**
  * Zend_Form_Decorator_Fieldset
  *
  * Any options passed will be used as HTML attributes of the fieldset tag.
  *
+ * @uses       \Zend\Form\Decorator\AbstractDecorator
  * @category   Zend
  * @package    Zend_Form
  * @subpackage Decorator
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Fieldset.php 23426 2010-11-22 22:50:25Z bittarman $
  */
-class Zend_Form_Decorator_Fieldset extends Zend_Form_Decorator_Abstract
+class Fieldset extends AbstractDecorator
 {
     /**
      * Attribs that should be removed prior to rendering
@@ -72,7 +74,7 @@ class Zend_Form_Decorator_Fieldset extends Zend_Form_Decorator_Abstract
         $options = parent::getOptions();
         if (null !== ($element = $this->getElement())) {
             $attribs = $element->getAttribs();
-            $options = array_merge($attribs, $options);
+            $options = array_merge($options, $attribs);
             $this->setOptions($options);
         }
         return $options;
@@ -82,7 +84,7 @@ class Zend_Form_Decorator_Fieldset extends Zend_Form_Decorator_Abstract
      * Set legend
      *
      * @param  string $value
-     * @return Zend_Form_Decorator_Fieldset
+     * @return \Zend\Form\Decorator\Fieldset
      */
     public function setLegend($value)
     {
@@ -150,6 +152,6 @@ class Zend_Form_Decorator_Fieldset extends Zend_Form_Decorator_Abstract
             }
         }
 
-        return $view->fieldset($name, $content, $attribs);
+        return $view->broker('fieldset')->direct($name, $content, $attribs);
     }
 }

@@ -15,10 +15,14 @@
  * @category   Zend
  * @package    Zend_Amf
  * @subpackage Value
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: MessageBody.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
+
+/**
+ * @namespace
+ */
+namespace Zend\Amf\Value;
 
 /**
  * An AMF Message contains information about the actual individual
@@ -33,10 +37,10 @@
  *
  * @package    Zend_Amf
  * @subpackage Value
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Amf_Value_MessageBody
+class MessageBody
 {
     /**
      * A string describing which operation, function, or method
@@ -107,7 +111,7 @@ class Zend_Amf_Value_MessageBody
      * Set target Uri
      *
      * @param  string $targetUri
-     * @return Zend_Amf_Value_MessageBody
+     * @return \Zend\Amf\Value\MessageBody
      */
     public function setTargetUri($targetUri)
     {
@@ -132,7 +136,7 @@ class Zend_Amf_Value_MessageBody
      * Set response Uri
      *
      * @param  string $responseUri
-     * @return Zend_Amf_Value_MessageBody
+     * @return \Zend\Amf\Value\MessageBody
      */
     public function setResponseUri($responseUri)
     {
@@ -157,7 +161,7 @@ class Zend_Amf_Value_MessageBody
      * Set response data
      *
      * @param  mixed $data
-     * @return Zend_Amf_Value_MessageBody
+     * @return \Zend\Amf\Value\MessageBody
      */
     public function setData($data)
     {
@@ -169,7 +173,7 @@ class Zend_Amf_Value_MessageBody
      * Set reply method
      *
      * @param  string $methodName
-     * @return Zend_Amf_Value_MessageBody
+     * @return \Zend\Amf\Value\MessageBody
      */
     public function setReplyMethod($methodName)
     {

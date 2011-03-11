@@ -15,26 +15,26 @@
  * @category   Zend
  * @package    Zend_XmlRpc
  * @subpackage Value
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Scalar.php 22024 2010-04-27 18:08:24Z matthew $
  */
 
-
 /**
- * Zend_XmlRpc_Value
+ * @namespace
  */
-require_once 'Zend/XmlRpc/Value.php';
+namespace Zend\XmlRpc\Value;
 
+use Zend\XmlRpc\Value as XmlRpcValue;
 
 /**
+ * @uses       Zend\XmlRpc\Value
  * @category   Zend
  * @package    Zend_XmlRpc
  * @subpackage Value
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-abstract class Zend_XmlRpc_Value_Scalar extends Zend_XmlRpc_Value
+abstract class Scalar extends XmlRpcValue
 {
     /**
      * Generate the XML code that represent a scalar native MXL-RPC value

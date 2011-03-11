@@ -129,7 +129,7 @@ class Run
       $this->httpClient->setUri($testSet->getUri()->toString());
       $response = $this->httpClient->request();
     }
-    catch ( \Zend_Http_Client_Exception $e )
+    catch ( \Zend\Http\Exception $e )
     {
       $connectionStatusValue = ConnectionStatus::ERROR;
       $connectionStatusMessage = $e->getMessage();

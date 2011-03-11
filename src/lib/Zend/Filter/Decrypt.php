@@ -14,35 +14,35 @@
  *
  * @category   Zend
  * @package    Zend_Filter
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Decrypt.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
- * @see Zend_Filter_Encrypt
+ * @namespace
  */
-require_once 'Zend/Filter/Encrypt.php';
+namespace Zend\Filter;
 
 /**
  * Decrypts a given string
  *
+ * @uses       \Zend\Filter\Encrypt
  * @category   Zend
  * @package    Zend_Filter
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Filter_Decrypt extends Zend_Filter_Encrypt
+class Decrypt extends Encrypt
 {
     /**
-     * Defined by Zend_Filter_Interface
+     * Defined by Zend\Filter\Filter
      *
      * Decrypts the content $value with the defined settings
      *
      * @param  string $value Content to decrypt
      * @return string The decrypted content
      */
-    public function filter($value)
+    public function __invoke($value)
     {
         return $this->_adapter->decrypt($value);
     }

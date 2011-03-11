@@ -15,23 +15,20 @@
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Nirvanix
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Imfs.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
-
-/**
- * @see Zend_Service_Nirvanix_Namespace_Base
- */
-require_once 'Zend/Service/Nirvanix/Namespace/Base.php';
 
 /**
  * Namespace proxy with additional convenience methods for the IMFS namespace.
  *
+ * @uses       Zend_Http_Client
+ * @uses       Zend_Service_Nirvanix_Namespace_Base
+ * @uses       Zend_Service_Nirvanix_Response
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Nirvanix
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Service_Nirvanix_Namespace_Imfs extends Zend_Service_Nirvanix_Namespace_Base
@@ -56,7 +53,7 @@ class Zend_Service_Nirvanix_Namespace_Imfs extends Zend_Service_Nirvanix_Namespa
         // download the file
         $this->_httpClient->resetParameters();
         $this->_httpClient->setUri($url);
-        $resp = $this->_httpClient->request(Zend_Http_Client::GET);
+        $resp = $this->_httpClient->request(Zend\Http\Client::GET);
 
         return $resp->getBody();
     }
@@ -84,7 +81,7 @@ class Zend_Service_Nirvanix_Namespace_Imfs extends Zend_Service_Nirvanix_Namespa
         $this->_httpClient->setParameterPost('uploadToken', $uploadToken);
         $this->_httpClient->setParameterPost('destFolderPath', str_replace('\\', '/',dirname($filePath)));
         $this->_httpClient->setFileUpload(basename($filePath), 'uploadFile', $data, $mimeType);
-        $response = $this->_httpClient->request(Zend_Http_Client::POST);
+        $response = $this->_httpClient->request(Zend\Http\Client::POST);
 
         return new Zend_Service_Nirvanix_Response($response->getBody());
     }

@@ -15,46 +15,25 @@
  * @category   Zend
  * @package    Zend_Service
  * @subpackage DeveloperGarden
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: LocalSearch.php 20166 2010-01-09 19:00:17Z bkarwin $
  */
 
 /**
- * @see Zend_Service_DeveloperGarden_Client_ClientAbstract
- */
-require_once 'Zend/Service/DeveloperGarden/Client/ClientAbstract.php';
-
-/**
- * @see Zend_Service_DeveloperGarden_Response_LocalSearch_LocalSearchResponseType
- */
-require_once 'Zend/Service/DeveloperGarden/Response/LocalSearch/LocalSearchResponseType.php';
-
-/**
- * @see Zend_Service_DeveloperGarden_Request_LocalSearch_LocalSearchRequest
- */
-require_once 'Zend/Service/DeveloperGarden/Request/LocalSearch/LocalSearchRequest.php';
-
-/**
- * @see Zend_Service_DeveloperGarden_Response_LocalSearch_LocalSearchResponse
- */
-require_once 'Zend/Service/DeveloperGarden/Response/LocalSearch/LocalSearchResponse.php';
-
-/**
- * @see Zend_Service_DeveloperGarden_LocalSearch_SearchParameters
- */
-require_once 'Zend/Service/DeveloperGarden/LocalSearch/SearchParameters.php';
-
-/**
+ * @uses       Zend_Service_DeveloperGarden_Client_AbstractClient
+ * @uses       Zend_Service_DeveloperGarden_LocalSearch_SearchParameters
+ * @uses       Zend_Service_DeveloperGarden_Request_LocalSearch_LocalSearchRequest
+ * @uses       Zend_Service_DeveloperGarden_Response_LocalSearch_LocalSearchResponse
+ * @uses       Zend_Service_DeveloperGarden_Response_LocalSearch_LocalSearchResponseType
  * @category   Zend
  * @package    Zend_Service
  * @subpackage DeveloperGarden
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @author     Marco Kaiser
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Service_DeveloperGarden_LocalSearch
-    extends Zend_Service_DeveloperGarden_Client_ClientAbstract
+    extends Zend_Service_DeveloperGarden_Client_AbstractClient
 {
     /**
      * wsdl file

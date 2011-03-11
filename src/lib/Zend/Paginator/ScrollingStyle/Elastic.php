@@ -14,37 +14,37 @@
  *
  * @category   Zend
  * @package    Zend_Paginator
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Elastic.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
- * @see Zend_Paginator_ScrollingStyle_Sliding
+ * @namespace
  */
-require_once 'Zend/Paginator/ScrollingStyle/Sliding.php';
+namespace Zend\Paginator\ScrollingStyle;
 
 /**
  * A Google-like scrolling style.  Incrementally expands the range to about
  * twice the given page range, then behaves like a slider.  See the example
  * link.
  *
+ * @uses       \Zend\Paginator\ScrollingStyle\Sliding
  * @link       http://www.google.com/search?q=Zend+Framework
  * @category   Zend
  * @package    Zend_Paginator
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Paginator_ScrollingStyle_Elastic extends Zend_Paginator_ScrollingStyle_Sliding
+class Elastic extends Sliding
 {
     /**
      * Returns an array of "local" pages given a page number and range.
      *
-     * @param  Zend_Paginator $paginator
+     * @param  \Zend\Paginator\Paginator $paginator
      * @param  integer $pageRange Unused
      * @return array
      */
-    public function getPages(Zend_Paginator $paginator, $pageRange = null)
+    public function getPages(\Zend\Paginator\Paginator $paginator, $pageRange = null)
     {
         $pageRange  = $paginator->getPageRange();
         $pageNumber = $paginator->getCurrentPageNumber();

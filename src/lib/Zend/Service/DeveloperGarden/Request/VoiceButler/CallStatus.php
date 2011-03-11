@@ -15,26 +15,21 @@
  * @category   Zend
  * @package    Zend_Service
  * @subpackage DeveloperGarden
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: CallStatus.php 20166 2010-01-09 19:00:17Z bkarwin $
  */
 
 /**
- * @see Zend_Service_DeveloperGarden_VoiceButler_VoiceButlerAbstract
- */
-require_once 'Zend/Service/DeveloperGarden/Request/VoiceButler/VoiceButlerAbstract.php';
-
-/**
+ * @uses       Zend_Service_DeveloperGarden_VoiceButler_AbstractVoiceButler
  * @category   Zend
  * @package    Zend_Service
  * @subpackage DeveloperGarden
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @author     Marco Kaiser
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Service_DeveloperGarden_Request_VoiceButler_CallStatus
-    extends Zend_Service_DeveloperGarden_Request_VoiceButler_VoiceButlerAbstract
+    extends Zend_Service_DeveloperGarden_Request_VoiceButler_AbstractVoiceButler
 {
     /**
      * extend the keep alive for this call
@@ -49,7 +44,7 @@ class Zend_Service_DeveloperGarden_Request_VoiceButler_CallStatus
      * @param integer $environment
      * @param string $sessionId
      * @param integer $keepAlive
-     * @return Zend_Service_DeveloperGarden_Request_RequestAbstract
+     * @return Zend_Service_DeveloperGarden_Request_AbstractRequest
      */
     public function __construct($environment, $sessionId, $keepAlive = null)
     {

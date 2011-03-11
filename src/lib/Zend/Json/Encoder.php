@@ -14,20 +14,30 @@
  *
  * @category   Zend
  * @package    Zend_Json
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Encoder.php 22452 2010-06-18 18:13:23Z ralph $
  */
+
+/**
+ * @namespace
+ */
+namespace Zend\Json;
+
+use Zend\Json\Exception\RecursionException,
+    Zend\Json\Exception\InvalidArgumentException;
 
 /**
  * Encode PHP constructs to JSON
  *
+ * @uses       ReflectionClass
+ * @uses       Zend\Json\Exception\RecursionException
+ * @uses       Zend\Json\Exception\InvalidArgumentException
  * @category   Zend
  * @package    Zend_Json
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Json_Encoder
+class Encoder
 {
     /**
      * Whether or not to check for possible cycling
@@ -110,7 +120,8 @@ class Zend_Json_Encoder
      *
      * @param $value object
      * @return string
-     * @throws Zend_Json_Exception If recursive checks are enabled and the object has been serialized previously
+     * @throws Zend\Json\Exception\RecursionException If recursive checks are enabled
+     *                                                and the object has been serialized previously
      */
     protected function _encodeObject(&$value)
     {
@@ -120,11 +131,10 @@ class Zend_Json_Encoder
                 if (isset($this->_options['silenceCyclicalExceptions'])
                     && $this->_options['silenceCyclicalExceptions']===true) {
 
-                    return '"* RECURSION (' . get_class($value) . ') *"';
+                    return '"* RECURSION (' . str_replace('\\', '\\\\', get_class($value)) . ') *"';
 
                 } else {
-                    require_once 'Zend/Json/Exception.php';
-                    throw new Zend_Json_Exception(
+                    throw new RecursionException(
                         'Cycles not supported in JSON encoding, cycle introduced by '
                         . 'class "' . get_class($value) . '"'
                     );
@@ -136,7 +146,7 @@ class Zend_Json_Encoder
 
         $props = '';
 
-        if ($value instanceof Iterator) {
+        if ($value instanceof \Iterator) {
             $propCollection = $value;
         } else {
             $propCollection = get_object_vars($value);
@@ -145,14 +155,15 @@ class Zend_Json_Encoder
         foreach ($propCollection as $name => $propValue) {
             if (isset($propValue)) {
                 $props .= ','
-                        . $this->_encodeString($name)
+                        . $this->_encodeValue($name)
                         . ':'
                         . $this->_encodeValue($propValue);
             }
         }
 
-        return '{"__className":"' . get_class($value) . '"'
-                . $props . '}';
+        return '{"__className":"' 
+            . str_replace('\\', '\\\\', get_class($value)) . '"'
+            . $props . '}';
     }
 
 
@@ -273,7 +284,7 @@ class Zend_Json_Encoder
      * @param $cls ReflectionClass
      * @return string Encoded constant block in class2 format
      */
-    private static function _encodeConstants(ReflectionClass $cls)
+    private static function _encodeConstants(\ReflectionClass $cls)
     {
         $result    = "constants : {";
         $constants = $cls->getConstants();
@@ -299,7 +310,7 @@ class Zend_Json_Encoder
      * @return string Encoded method fragment
      *
      */
-    private static function _encodeMethods(ReflectionClass $cls)
+    private static function _encodeMethods(\ReflectionClass $cls)
     {
         $methods = $cls->getMethods();
         $result = 'methods:{';
@@ -363,7 +374,7 @@ class Zend_Json_Encoder
      * @return string Encode properties list
      *
      */
-    private static function _encodeVariables(ReflectionClass $cls)
+    private static function _encodeVariables(\ReflectionClass $cls)
     {
         $properties = $cls->getProperties();
         $propValues = get_class_vars($cls->getName());
@@ -396,14 +407,13 @@ class Zend_Json_Encoder
      * @param $package string Optional package name appended to JavaScript
      * proxy class name
      * @return string The class2 (JavaScript) encoding of the class
-     * @throws Zend_Json_Exception
+     * @throws Zend\Json\Exception\InvalidArgumentException
      */
     public static function encodeClass($className, $package = '')
     {
-        $cls = new ReflectionClass($className);
+        $cls = new \ReflectionClass($className);
         if (! $cls->isInstantiable()) {
-            require_once 'Zend/Json/Exception.php';
-            throw new Zend_Json_Exception("$className must be instantiable");
+            throw new InvalidArgumentException("'{$className}' must be instantiable");
         }
 
         return "Class.create('$package$className',{"
@@ -439,7 +449,7 @@ class Zend_Json_Encoder
      * Solar Framework by Paul M. Jones
      *
      * @link   http://solarphp.com/
-     * @link   http://svn.solarphp.com/core/trunk/Solar/Json.php
+     * @link   http://svn.solarphp.com/core/trunk/Solar/JSON.php
      * @param  string $value
      * @return string
      */

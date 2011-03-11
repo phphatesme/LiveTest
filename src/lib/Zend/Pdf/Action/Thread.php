@@ -13,26 +13,27 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_Pdf
- * @subpackage Actions
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @package    Zend_PDF
+ * @subpackage Zend_PDF_Action
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Thread.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
-/** Zend_Pdf_Action */
-require_once 'Zend/Pdf/Action.php';
-
+/**
+ * @namespace
+ */
+namespace Zend\Pdf\Action;
 
 /**
  * PDF 'Begin reading an article thread' action
  *
- * @package    Zend_Pdf
- * @subpackage Actions
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @uses       \Zend\Pdf\Action\AbstractAction
+ * @package    Zend_PDF
+ * @subpackage Zend_PDF_Action
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Pdf_Action_Thread extends Zend_Pdf_Action
+class Thread extends AbstractAction
 {
 }
 

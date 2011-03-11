@@ -15,26 +15,21 @@
  * @category   Zend
  * @package    Zend_Service
  * @subpackage DeveloperGarden
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: GetConferenceTemplateListResponse.php 20166 2010-01-09 19:00:17Z bkarwin $
  */
 
 /**
- * @see Zend_Service_DeveloperGarden_Response_ConferenceCall_ConferenceCallAbstract
- */
-require_once 'Zend/Service/DeveloperGarden/Response/ConferenceCall/ConferenceCallAbstract.php';
-
-/**
+ * @uses       Zend_Service_DeveloperGarden_Response_ConferenceCall_AbstractConferenceCall
  * @category   Zend
  * @package    Zend_Service
  * @subpackage DeveloperGarden
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @author     Marco Kaiser
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Service_DeveloperGarden_Response_ConferenceCall_GetConferenceTemplateListResponse
-    extends Zend_Service_DeveloperGarden_Response_ConferenceCall_ConferenceCallAbstract
+    extends Zend_Service_DeveloperGarden_Response_ConferenceCall_AbstractConferenceCall
 {
     /**
      * response data

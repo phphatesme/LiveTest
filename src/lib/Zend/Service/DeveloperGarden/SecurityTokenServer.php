@@ -15,41 +15,24 @@
  * @category   Zend
  * @package    Zend_Service
  * @subpackage DeveloperGarden
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: SecurityTokenServer.php 20166 2010-01-09 19:00:17Z bkarwin $
  */
 
 /**
- * @see Zend_Service_DeveloperGarden_SecurityTokenServer_Cache
- */
-require_once 'Zend/Service/DeveloperGarden/SecurityTokenServer/Cache.php';
-
-/**
- * @see Zend_Service_DeveloperGarden_Client_ClientAbstract
- */
-require_once 'Zend/Service/DeveloperGarden/Client/ClientAbstract.php';
-
-/**
- * @see Zend_Service_DeveloperGarden_Response_SecurityTokenServer_SecurityTokenResponse
- */
-require_once 'Zend/Service/DeveloperGarden/Response/SecurityTokenServer/SecurityTokenResponse.php';
-
-/**
- * @see Zend_Service_DeveloperGarden_Response_SecurityTokenServer_GetTokensResponse
- */
-require_once 'Zend/Service/DeveloperGarden/Response/SecurityTokenServer/GetTokensResponse.php';
-
-/**
+ * @uses       Zend_Service_DeveloperGarden_Client_AbstractClient
+ * @uses       Zend_Service_DeveloperGarden_Response_SecurityTokenServer_GetTokensResponse
+ * @uses       Zend_Service_DeveloperGarden_Response_SecurityTokenServer_SecurityTokenResponse
+ * @uses       Zend_Service_DeveloperGarden_SecurityTokenServer_Cache
  * @category   Zend
  * @package    Zend_Service
  * @subpackage DeveloperGarden
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @author     Marco Kaiser
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Service_DeveloperGarden_SecurityTokenServer
-    extends Zend_Service_DeveloperGarden_Client_ClientAbstract
+    extends Zend_Service_DeveloperGarden_Client_AbstractClient
 {
     /**
      * wsdl file

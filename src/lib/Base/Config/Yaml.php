@@ -2,9 +2,12 @@
 
 namespace Base\Config;
 
+use Zend\Config\Exception\InvalidArgumentException;
+use Zend\Config\Config as ZendConfig;
+
 use Symfony\Component\Yaml\Yaml as SymfonyYaml;
 
-class Yaml extends \Zend_Config implements Config
+class Yaml extends ZendConfig implements Config
 {
   private $filename;
 
@@ -50,7 +53,7 @@ class Yaml extends \Zend_Config implements Config
   {
     if (!is_file($this->filename))
     {
-      throw new \Zend_Config_Exception('File described by filename: "' . $this->filename . '" is not a file.');
+      throw new InvalidArgumentException('File described by filename: "' . $this->filename . '" is not a file.');
     }
   }
 }

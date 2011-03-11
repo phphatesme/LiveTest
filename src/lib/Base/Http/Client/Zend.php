@@ -3,8 +3,9 @@
 namespace Base\Http\Client;
 
 use Base\Timer\Timer;
+use Zend\Http\Client as ZendClient;
 
-class Zend extends \Zend_Http_Client implements Client
+class Zend extends ZendClient implements Client
 {
   public function request($method = null)
   {

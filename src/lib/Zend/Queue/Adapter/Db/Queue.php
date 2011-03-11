@@ -15,24 +15,24 @@
  * @category   Zend
  * @package    Zend_Queue
  * @subpackage Adapter
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Queue.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
- * @see Zend_Db_Table_Abstract
+ * @namespace
  */
-require_once 'Zend/Db/Table/Abstract.php';
+namespace Zend\Queue\Adapter\Db;
 
 /**
+ * @uses       \Zend\Db\Table\AbstractTable
  * @category   Zend
  * @package    Zend_Queue
  * @subpackage Adapter
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Queue_Adapter_Db_Queue extends Zend_Db_Table_Abstract
+class Queue extends \Zend\Db\Table\AbstractTable
 {
     /**
      * @var string

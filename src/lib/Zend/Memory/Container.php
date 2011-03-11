@@ -14,22 +14,57 @@
  *
  * @category   Zend
  * @package    Zend_Memory
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Container.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
-/** Zend_Memory_Container_Interface */
-require_once 'Zend/Memory/Container/Interface.php';
+/**
+ * @namespace
+ */
+namespace Zend\Memory;
 
 /**
- * Memory value container
+ * Memory value container interface
  *
  * @category   Zend
  * @package    Zend_Memory
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-abstract class Zend_Memory_Container implements Zend_Memory_Container_Interface
+interface Container
 {
+    /**
+     * Get string value reference
+     *
+     * _Must_ be used for value access before PHP v 5.2
+     * or _may_ be used for performance considerations
+     *
+     * @return &string
+     */
+    public function &getRef();
+
+    /**
+     * Signal, that value is updated by external code.
+     *
+     * Should be used together with getRef()
+     */
+    public function touch();
+
+    /**
+     * Lock object in memory.
+     */
+    public function lock();
+
+    /**
+     * Unlock object
+     */
+    public function unlock();
+
+    /**
+     * Return true if object is locked
+     *
+     * @return boolean
+     */
+    public function isLocked();
 }
+
