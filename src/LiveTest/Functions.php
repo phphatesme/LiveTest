@@ -2,6 +2,9 @@
 
 namespace LiveTest;
 
+use Annovent\Functions as AnnoventFunctions;
+use Annovent\Exception as AnnoventException;
+
 class Functions
 {
   public static function initializeObject($object, $parameter)
@@ -12,11 +15,11 @@ class Functions
     {
       try
       {
-        $result =\Annovent\call_user_func_assoc_array(array($object,'init'), $parameter);
+        $result = AnnoventFunctions::call_user_func_assoc_array(array($object,'init'), $parameter);
       }
-      catch (\Annovent\Exception $e )
+      catch ( AnnoventException $e )
       {
-        throw new \LiveTest\ConfigurationException('Unable to initialize object (' . get_class($object) . '). ' . 'Mandatory parameter "' . $e->getMissingParameter() . '" is missing.');
+        throw new ConfigurationException('Unable to initialize object (' . get_class($object) . '). ' . 'Mandatory parameter "' . $e->getMissingParameter() . '" is missing.');
       }
     }
 

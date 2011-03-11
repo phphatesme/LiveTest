@@ -1,6 +1,6 @@
 <?php
 
-include_once 'functions.php';
+include_once 'Functions.php';
 
 function Annovent_Autoload($classname)
 {

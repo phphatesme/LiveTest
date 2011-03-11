@@ -2,9 +2,11 @@
 
 namespace Annovent\Event;
 
-use Doctrine\Common\Annotations\Annotation;
+use Annovent\Functions;
 
+use Doctrine\Common\Annotations\Annotation;
 use Doctrine\Common\Annotations\AnnotationReader;
+
 use ReflectionClass, ReflectionMethod;
 
 class Dispatcher
@@ -37,7 +39,7 @@ class Dispatcher
         $listener = $listenerInfo['listener'];
         $method = $listenerInfo['method'];
 
-        $callResult =\Annovent\call_user_func_assoc_array(array($listener,$method), $event->getParameters());
+        $callResult = Functions::call_user_func_assoc_array(array($listener,$method), $event->getParameters());
         $result = $result && !($callResult === false);
       }
     }
@@ -57,7 +59,7 @@ class Dispatcher
         $listener = $listenerInfo['listener'];
         $method = $listenerInfo['method'];
 
-        if (\Annovent\call_user_func_assoc_array(array($listener,$method), $event->getParameters()))
+        if (Functions::call_user_func_assoc_array(array($listener,$method), $event->getParameters()))
         {
           return false;
         }
@@ -77,10 +79,10 @@ class Dispatcher
     {
       $annotations = $this->annotationReader->getMethodAnnotations($reflectedMethod);
 
-      foreach( $annotations as $annotation )
+      foreach ($annotations as $annotation)
       {
         $eventNames = $annotation->getNames();
-        foreach( $eventNames as $eventName )
+        foreach ($eventNames as $eventName)
         {
           $listenerInfo = array('listener' => $listener,'method' => $reflectedMethod->getName());
           $this->eventListenerMatrix[$eventName][] = $listenerInfo;
