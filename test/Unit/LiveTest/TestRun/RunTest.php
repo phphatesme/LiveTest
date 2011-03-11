@@ -3,7 +3,7 @@ namespace Unit\LiveTest\TestRun;
 
 use Base\Http\ConnectionStatus;
 
-use Annovent\Event\Dispatcher;
+use LiveTest\Event\Dispatcher;
 use LiveTest\TestRun\Result;
 use Unit\LiveTest\TestRun\Mockups\TestExtension;
 use Unit\LiveTest\TestRun\Mockups\TestHandleConnectionStatusExtension;

@@ -4,7 +4,7 @@ namespace Unit\LiveTest\TestRun\Helper;
 use LiveTest\TestRun\Properties;
 use Base\Http\Response\Response;
 use LiveTest\TestRun\Result\Result;
-use Annovent\Event\Dispatcher;
+use LiveTest\Event\Dispatcher;
 use LiveTest\Listener\Listener;
 
 class InfoListener implements Listener

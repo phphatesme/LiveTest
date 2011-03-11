@@ -2,7 +2,7 @@
 
 namespace Test\Unit\LiveTest\Listener\Cli;
 
-use Annovent\Event\Dispatcher;
+use LiveTest\Event\Dispatcher;
 
 use LiveTest\Listener\Cli\Help;
 

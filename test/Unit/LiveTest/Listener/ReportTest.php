@@ -7,7 +7,7 @@ use Unit\Base\Http\Response\MockUp;
 use LiveTest\TestRun\Information;
 use LiveTest\Listener\Report;
 
-use Annovent\Event\Dispatcher;
+use LiveTest\Event\Dispatcher;
 
 use Base\Www\Uri;
 use Base\Http\ConnectionStatus;

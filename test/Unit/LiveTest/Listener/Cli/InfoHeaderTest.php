@@ -2,7 +2,7 @@
 
 namespace Test\Unit\LiveTest\Listener\Cli;
 
-use Annovent\Event\Dispatcher;
+use LiveTest\Event\Dispatcher;
 
 use Base\Config\Yaml;
 use Base\Www\Uri;

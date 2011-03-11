@@ -13,7 +13,7 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
 
     $config = new ConfigConfig();
     $config->addListener('myListener', 'Unit\LiveTest\Listener\MockUp' , array('foo' => 'bar'));
-    $dispatcher->registerListenersByConfig($config, '');
+    $dispatcher->registerByConfig($config, '');
 
     $listeners = $dispatcher->getListeners();
 
