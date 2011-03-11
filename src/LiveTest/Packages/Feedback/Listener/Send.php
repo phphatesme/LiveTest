@@ -67,6 +67,8 @@ class Send extends Base
   }
 
   /**
+   * @todo use POST request instead of mailing (works for dev images)
+   *
    * @event LiveTest.Runner.Error
    *
    * @param \Exception $e
