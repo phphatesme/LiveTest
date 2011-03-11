@@ -2,10 +2,23 @@
 
 namespace Annovent\Event;
 
+use Doctrine\Common\Annotations\Annotation;
+
+use Doctrine\Common\Annotations\AnnotationReader;
+use ReflectionClass, ReflectionMethod;
+
 class Dispatcher
 {
   private $eventListenerMatrix = array();
   private $listeners = array();
+  private $annotationReader;
+
+  public function __construct()
+  {
+    $this->annotationReader = new AnnotationReader();
+    $this->annotationReader->setDefaultAnnotationNamespace('Annovent\Annotation\\');
+    $this->annotationReader->setAutoloadAnnotations(true);
+  }
 
   public function notify($name, array $namedParameters = null)
   {
@@ -57,26 +70,20 @@ class Dispatcher
   {
     $this->listeners[] = $listener;
 
-    $reflectedListener = new \ReflectionClass($listener);
+    $reflectedListener = new ReflectionClass($listener);
+    $publicMethods = $reflectedListener->getMethods(ReflectionMethod::IS_PUBLIC);
 
-    foreach ($reflectedListener->getMethods() as $reflectedMethod)
+    foreach ($publicMethods as $reflectedMethod)
     {
-      if ($reflectedMethod->isPublic())
+      $annotations = $this->annotationReader->getMethodAnnotations($reflectedMethod);
+
+      foreach( $annotations as $annotation )
       {
-        $docComment = $reflectedMethod->getDocComment();
-        $annotationFound = preg_match_all('^@event(.*)^', $docComment, $matches) > 0;
-
-        if ($annotationFound)
+        $eventNames = $annotation->getNames();
+        foreach( $eventNames as $eventName )
         {
-          foreach ($matches[1] as $match)
-          {
-            $eventName = str_replace(chr(13), '', $match);
-            $eventName = str_replace(' ', '', $eventName);
-
-            $listenerInfo = array('listener' => $listener,'method' => $reflectedMethod->getName());
-
-            $this->eventListenerMatrix[$eventName][] = $listenerInfo;
-          }
+          $listenerInfo = array('listener' => $listener,'method' => $reflectedMethod->getName());
+          $this->eventListenerMatrix[$eventName][] = $listenerInfo;
         }
       }
     }

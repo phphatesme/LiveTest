@@ -35,7 +35,7 @@ class Sleep extends Base
   /**
    * Lets the application sleep for a defined time
    *
-   * @event LiveTest.Run.HandleConnectionStatus
+   * @Event("LiveTest.Run.HandleConnectionStatus")
    *
    * @param ConnectionStatus $status
    */

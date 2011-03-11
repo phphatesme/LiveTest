@@ -22,7 +22,7 @@ class Debug extends Base
   private $debug = false;
 
   /**
-   * @event LiveTest.Runner.InitCore
+   * @Event("LiveTest.Runner.InitCore")
    *
    * @param array $arguments
    */
@@ -38,7 +38,7 @@ class Debug extends Base
   }
 
   /**
-   * @event LiveTest.Runner.Error
+   * @Event("LiveTest.Runner.Error")
    *
    * @param \Exception $e
    */

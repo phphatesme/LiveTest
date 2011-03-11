@@ -8,9 +8,9 @@ include_once 'lib/Symfony/Component/ClassLoader/UniversalClassLoader.php';
 
 $classLoader = new \Symfony\Component\ClassLoader\UniversalClassLoader();
 
-$classLoader->registerNamespace('Doctrine', 'lib');
-$classLoader->registerNamespace('Symfony', 'lib');
-$classLoader->registerNamespace('Base', 'lib');
+$classLoader->registerNamespace('Doctrine', __DIR__.'\lib');
+$classLoader->registerNamespace('Symfony' , __DIR__.'\lib');
+$classLoader->registerNamespace('Base'    , __DIR__.'\lib');
 
 // include the Annovent event despatcher
 include_once 'lib/Annovent/bootstrap.php';

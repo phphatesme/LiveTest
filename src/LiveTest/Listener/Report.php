@@ -57,7 +57,7 @@ class Report extends Base
   /**
    * Collect all information about the connection errors.
    *
-   * @event LiveTest.Run.HandleConnectionStatus
+   * @Event("LiveTest.Run.HandleConnectionStatus")
    *
    * @param ConnectionStatus $status
    */
@@ -72,7 +72,7 @@ class Report extends Base
   /**
    * Collect all information about all tests.
    *
-   * @event LiveTest.Run.HandleResult
+   * @Event("LiveTest.Run.HandleResult")
    *
    * @param Result $result
    * @param Response $response
@@ -119,7 +119,7 @@ class Report extends Base
    * Writes the report. If the flag ReportOnSuccess is set to false nothing will be happen
    * if no error occurs.
    *
-   * @event LiveTest.Run.PostRun
+   * @Event("LiveTest.Run.PostRun")
    *
    * @param Information $information
    */

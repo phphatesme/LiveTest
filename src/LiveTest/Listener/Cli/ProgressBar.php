@@ -38,7 +38,7 @@ class ProgressBar extends Base
   /**
    * This function echoes a '*' if a test succeeded, 'e' if an error occured and 'f' if a test failed.
    *
-   * @event LiveTest.Run.HandleResult
+   * @Event("LiveTest.Run.HandleResult")
    *
    * @param Result $result
    * @param Response $response
@@ -72,7 +72,7 @@ class ProgressBar extends Base
   /**
    * This function echoes a E if the connection failed.
    *
-   * @event LiveTest.Run.HandleConnectionStatus
+   * @Event("LiveTest.Run.HandleConnectionStatus")
    *
    * @param ConnectionStatus
    */

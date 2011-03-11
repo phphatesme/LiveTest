@@ -35,7 +35,7 @@ class ClientConfiguration extends Base
   /**
    * This function sets the timeout for the http client.
    *
-   * @event LiveTest.Runner.InitHttpClient
+   * @Event("LiveTest.Runner.InitHttpClient")
    *
    * @param ConnectionStatus $status
    */

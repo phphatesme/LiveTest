@@ -22,7 +22,7 @@ class InfoHeader extends Base
   /**
    * This function echoes the default domian, start time, number of uri and number of tests.
    *
-   * @event LiveTest.Run.PreRun
+   * @Event("LiveTest.Run.PreRun")
    *
    * @param Properties $properties
    */

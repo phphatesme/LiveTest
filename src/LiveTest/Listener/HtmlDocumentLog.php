@@ -64,7 +64,7 @@ class HtmlDocumentLog extends Base
   /**
    * This function writes the html documents to a specified directory
    *
-   * @event LiveTest.Run.HandleResult
+   * @Event("LiveTest.Run.HandleResult")
    */
   public function handleResult(Result $result, Response $response)
   {

@@ -32,7 +32,7 @@ class Verbose extends Base
   /**
    * Checks if the --verbose argument is set.
    *
-   * @event LiveTest.Runner.Init
+   * @Event("LiveTest.Runner.Init")
    *
    * @param array $arguments
    */
@@ -48,7 +48,7 @@ class Verbose extends Base
   /**
    * Echoes the connection status
    *
-   * @event LiveTest.Run.HandleConnectionStatus
+   * @Event("LiveTest.Run.HandleConnectionStatus")
    *
    * @param ConnectionStatus $status
    */
@@ -63,7 +63,7 @@ class Verbose extends Base
   /**
    * Echoes the url that was tested.
    *
-   * @event LiveTest.Run.HandleResult
+   * @Event("LiveTest.Run.HandleResult")
    *
    * @param Result $result
    * @param Response $response

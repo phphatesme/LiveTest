@@ -48,7 +48,7 @@ class StatusBar extends Base
   private $successCount = 0;
 
   /**
-   * @event LiveTest.Run.HandleResult
+   * @Event("LiveTest.Run.HandleResult")
    *
    * @param Result $result
    * @param Response $response
@@ -103,7 +103,7 @@ class StatusBar extends Base
   /**
    * This function echoes the the duration, number of tests (errors and failures).
    *
-   * @event LiveTest.Run.PostRun
+   * @Event("LiveTest.Run.PostRun")
    *
    * @param Information $information
    */

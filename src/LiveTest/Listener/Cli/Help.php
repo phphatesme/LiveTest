@@ -28,7 +28,7 @@ class Help extends Base
   /**
    * This function echoes the global help if the --help command line argument is set
    *
-   * @event LiveTest.Runner.Init
+   * @Event("LiveTest.Runner.Init")
    *
    * @param array $arguments
    */
