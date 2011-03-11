@@ -3,6 +3,13 @@
 //  Include 3rd party dependecies
 // -----------------------------------------------------------------------
 
+include_once 'lib/Symfony/Component/ClassLoader/UniversalClassLoader.php';
+
+$classLoader = new \Symfony\Component\ClassLoader\UniversalClassLoader( );
+$classLoader->registerNamespace('Doctrine', 'lib/Doctrine');
+$classLoader->registerNamespace('Symfony', 'lib/Symfony');
+$classLoader->registerNamespace('Base', 'lib/Base');
+
 // include the sfYaml parser of the symfony components
 include_once 'lib/SymfonyComponents/Yaml/sfYaml.php';
 
@@ -24,15 +31,5 @@ Zend_Loader_Autoloader::getInstance();
 // include the LiveTest functions
 include_once 'LiveTest/functions.php';
 
-function LiveTest_Autoload($classname)
-{
-  $currentDir = __DIR__;
-  $classPath = $currentDir . DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $classname) . '.php';
-  if (file_exists($classPath))
-  {
-    include_once $classPath;
-  }
-}
-
-// register LiveTest autoloader
-spl_autoload_register('LiveTest_Autoload');
+$classLoader->registerNamespace('LiveTest', __DIR__);
+$classLoader->register();
