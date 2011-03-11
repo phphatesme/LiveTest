@@ -63,6 +63,7 @@ class Dispatcher
           $method = $listenerInfo['method'];
 
           // @todo use the NamedParameters class not the function
+          // @todo add try catch block
           $callResult = Functions::call_user_func_assoc_array(array($listener,$method), $event->getParameters());
 
           if ($until && $callResult === false)
