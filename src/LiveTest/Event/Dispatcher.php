@@ -37,7 +37,7 @@ class Dispatcher extends AnnoventDispatcher
         throw new \LiveTest\ConfigurationException('Listener not found (' . $className . ').');
       }
       $listenerObject = new $className($runId, $this);
-     \LiveTest\initializeObject($listenerObject, $listener['parameters']);
+     \LiveTest\Functions::initializeObject($listenerObject, $listener['parameters']);
       $this->registerListener($listenerObject);
     }
   }

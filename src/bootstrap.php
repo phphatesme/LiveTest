@@ -5,13 +5,11 @@
 
 include_once 'lib/Symfony/Component/ClassLoader/UniversalClassLoader.php';
 
-$classLoader = new \Symfony\Component\ClassLoader\UniversalClassLoader( );
-$classLoader->registerNamespace('Doctrine', 'lib/Doctrine');
-$classLoader->registerNamespace('Symfony', 'lib/Symfony');
-$classLoader->registerNamespace('Base', 'lib/Base');
+$classLoader = new \Symfony\Component\ClassLoader\UniversalClassLoader();
 
-// include the base library
-include_once 'lib/Base/bootstrap.php';
+$classLoader->registerNamespace('Doctrine', 'lib');
+$classLoader->registerNamespace('Symfony', 'lib');
+$classLoader->registerNamespace('Base', 'lib');
 
 // include the Annovent event despatcher
 include_once 'lib/Annovent/bootstrap.php';
@@ -24,9 +22,6 @@ Zend_Loader_Autoloader::getInstance();
 // -----------------------------------------------------------------------
 //  Include LiveTest classes and functions
 // -----------------------------------------------------------------------
-
-// include the LiveTest functions
-include_once 'LiveTest/functions.php';
 
 $classLoader->registerNamespace('LiveTest', __DIR__);
 $classLoader->register();

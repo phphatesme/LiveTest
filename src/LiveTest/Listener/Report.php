@@ -47,7 +47,7 @@ class Report extends Base
   {
     $this->resultSet = new ResultSet();
 
-    $this->logStatuses = \Base\firstNotNull($logStatuses, array (Result::STATUS_ERROR, Result::STATUS_FAILED, Result::STATUS_SUCCESS ));
+    $this->logStatuses = \Base\Functions::firstNotNull($logStatuses, array (Result::STATUS_ERROR, Result::STATUS_FAILED, Result::STATUS_SUCCESS ));
     $this->reportOnSuccess = $reportOnSuccess;
 
     $this->initWriter( $writer );
@@ -97,7 +97,7 @@ class Report extends Base
     {
       $parameter = $writerConfig['parameter'];
     }
-    \LiveTest\initializeObject($this->writer, $parameter);
+    \LiveTest\Functions::initializeObject($this->writer, $parameter);
   }
 
   /**
@@ -112,7 +112,7 @@ class Report extends Base
     {
       $parameter = $formatConfig ['parameter'];
     }
-    \LiveTest\initializeObject($this->format, $parameter);
+    \LiveTest\Functions::initializeObject($this->format, $parameter);
   }
 
   /**

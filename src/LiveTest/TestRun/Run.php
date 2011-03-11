@@ -72,7 +72,7 @@ class Run
       // @todo use a specialized exception
       throw new \Exception('Class not found (' . $testCaseName . '). ');
     }
-    \LiveTest\initializeObject($testCaseObject, $test->getParameter());
+    \LiveTest\Functions::initializeObject($testCaseObject, $test->getParameter());
 
     return $testCaseObject;
   }
