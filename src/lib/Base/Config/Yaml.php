@@ -2,6 +2,8 @@
 
 namespace Base\Config;
 
+use Symfony\Component\Yaml\Yaml as SymfonyYaml;
+
 class Yaml extends \Zend_Config implements Config
 {
   private $filename;
@@ -18,9 +20,10 @@ class Yaml extends \Zend_Config implements Config
 
     $this->checkIfFilenameIsFile();
 
-    $content = \sfYaml::load($this->filename);
+    $content = SymfonyYaml::load($this->filename);
 
-    if( is_null( $content ) ) {
+    if (is_null($content))
+    {
       $content = array();
     }
 
@@ -32,7 +35,7 @@ class Yaml extends \Zend_Config implements Config
    *
    * @see Base\Config\Config::getFilename()
    */
-  public function getFilename( )
+  public function getFilename()
   {
     return $this->filename;
   }

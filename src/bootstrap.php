@@ -10,9 +10,6 @@ $classLoader->registerNamespace('Doctrine', 'lib/Doctrine');
 $classLoader->registerNamespace('Symfony', 'lib/Symfony');
 $classLoader->registerNamespace('Base', 'lib/Base');
 
-// include the sfYaml parser of the symfony components
-include_once 'lib/SymfonyComponents/Yaml/sfYaml.php';
-
 // include the base library
 include_once 'lib/Base/bootstrap.php';
 
