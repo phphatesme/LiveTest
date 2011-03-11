@@ -12,14 +12,14 @@ class InfoListener implements Listener
   private $preRunCalled = false;
   private $postRunCalled = false;
   private $handleConnectionStatusCalled = false;
- 
+
   public function __construct($runId, Dispatcher $eventDispatcher)
   {
 
   }
 
   /**
-   * @event LiveTest.Run.HandleConnectionStatus
+   * @Event("LiveTest.Run.HandleConnectionStatus")
    */
   public function handleConnectionStatus()
   {

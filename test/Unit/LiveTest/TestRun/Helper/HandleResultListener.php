@@ -21,21 +21,21 @@ class HandleResultListener implements Listener
   }
 
   /**
-   * @event LiveTest.Run.HandleResult
+   * @Event("LiveTest.Run.HandleResult")
    */
   public function handleResult($result, $response)
   {
     $this->handleResultCalled = true;
     $this->results[] = $result;
     $this->responses[] = $response;
-    
+
   }
-  
+
   public function getResults()
   {
   	return $this->results;
   }
-  
+
   public function getResponses()
   {
   	return $this->responses;

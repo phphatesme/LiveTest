@@ -20,7 +20,7 @@ class PostRunListener implements Listener
   }
 
   /**
-   * @event LiveTest.Run.PostRun
+   * @Event("LiveTest.Run.PostRun")
    */
   public function postRun(Information $information)
   {

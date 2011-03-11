@@ -18,7 +18,7 @@ class PreRunListener implements Listener
   }
 
   /**
-   * @event LiveTest.Run.PreRun
+   * @Event("LiveTest.Run.PreRun")
    */
   public function preRun(Properties $properties)
   {

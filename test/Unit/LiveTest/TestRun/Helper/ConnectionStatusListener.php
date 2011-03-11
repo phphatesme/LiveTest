@@ -20,7 +20,7 @@ class ConnectionStatusListener implements Listener
   }
 
   /**
-   * @event LiveTest.Run.HandleConnectionStatus
+   * @Event("LiveTest.Run.HandleConnectionStatus")
    */
   public function handleConnectionStatus(ConnectionStatus $connectionStatus)
   {
