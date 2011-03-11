@@ -10,6 +10,7 @@ $classLoader->registerNamespace('Symfony' , __DIR__.DIRECTORY_SEPARATOR.'lib');
 $classLoader->registerNamespace('Zend'    , __DIR__.DIRECTORY_SEPARATOR.'lib');
 $classLoader->registerNamespace('Base'    , __DIR__.DIRECTORY_SEPARATOR.'lib');
 $classLoader->registerNamespace('Annovent', __DIR__.DIRECTORY_SEPARATOR.'lib');
+$classLoader->registerNamespace('phmLabs' , __DIR__.DIRECTORY_SEPARATOR.'lib');
 
 $classLoader->registerNamespace('LiveTest', __DIR__);
 
