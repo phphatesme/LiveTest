@@ -5,6 +5,8 @@
  */
 namespace LiveTest\Packages\Feedback\Listener;
 
+use Zend\Mail\Mail;
+
 use LiveTest\Config\ConfigConfig;
 use LiveTest\Listener\Base;
 
@@ -20,7 +22,7 @@ class Send extends Base
   private $config;
 
   /**
-   * @event LiveTest.Runner.InitConfig
+   * @Event("LiveTest.Runner.InitConfig")
    *
    * @param Properties $properties
    */
@@ -30,7 +32,7 @@ class Send extends Base
   }
 
   /**
-   * @event LiveTest.Runner.InitCore
+   * @Event("LiveTest.Runner.InitCore")
    *
    * @param array $arguments
    */
@@ -69,7 +71,7 @@ class Send extends Base
   /**
    * @todo use POST request instead of mailing (works for dev images)
    *
-   * @event LiveTest.Runner.Error
+   * @Event("LiveTest.Runner.Error")
    *
    * @param \Exception $e
    */
@@ -82,8 +84,9 @@ class Send extends Base
       if ($this->sendFeedback)
       {
         $body = $this->createAttachment();
-        $mail = new \Zend_Mail();
+        $mail = new Mail();
 
+        $mail->setFrom('');
         $mail->addTo($this->feedbackAddress);
         $mail->setSubject('LiveTest: Error Report');
 
