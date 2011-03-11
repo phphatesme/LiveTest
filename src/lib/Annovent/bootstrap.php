@@ -1,7 +1,5 @@
 <?php
 
-include_once 'Functions.php';
-
 function Annovent_Autoload($classname)
 {
   $currentDir = __DIR__;
