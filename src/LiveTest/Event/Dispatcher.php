@@ -9,9 +9,11 @@
 
 namespace LiveTest\Event;
 
+use phmLabs\Components\Annovent\Event\Simple;
+
 use LiveTest\Config\ConfigConfig;
 
-use Annovent\Event\Dispatcher as AnnoventDispatcher;
+use phmLabs\Components\Annovent\Dispatcher as AnnoventDispatcher;
 
 /**
  * This dispatcher is a standard Annovent dispatcher with the possibility to register
@@ -27,9 +29,9 @@ class Dispatcher extends AnnoventDispatcher
    * @param ConfigConfig $config
    * @param string $runId
    */
-  public function registerListenersByConfig(ConfigConfig $config, $runId)
+  public function registerByConfig(ConfigConfig $config, $runId)
   {
-    foreach ($config->getListeners() as $listener)
+    foreach ( $config->getListeners() as $listener )
     {
       $className = $listener['className'];
       if (!class_exists($className))
@@ -37,8 +39,14 @@ class Dispatcher extends AnnoventDispatcher
         throw new \LiveTest\ConfigurationException('Listener not found (' . $className . ').');
       }
       $listenerObject = new $className($runId, $this);
-     \LiveTest\Functions::initializeObject($listenerObject, $listener['parameters']);
-      $this->registerListener($listenerObject);
+      \LiveTest\Functions::initializeObject($listenerObject, $listener['parameters']);
+      $this->register($listenerObject);
     }
+  }
+
+  public function simpleNotify($name, array $namedParameters = array())
+  {
+    $event = new Simple($name, $namedParameters);
+    return $this->notify($event, $namedParameters);
   }
 }

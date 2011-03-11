@@ -7,6 +7,7 @@ class Simple implements Event
   private $parameters;
   private $name;
   private $isProcessed = false;
+  private $chainCompleted = true;
 
   public function __construct($name, array $namedParameters = array())
   {
@@ -24,7 +25,17 @@ class Simple implements Event
     return $this->parameters;
   }
 
-  public function setIsProcessed()
+  public function interruptChain( )
+  {
+    $this->chainCompleted = false;
+  }
+
+  public function isChainCompleted( )
+  {
+    return $this->chainCompleted;
+  }
+
+  public function setProcessed()
   {
     $this->isProcessed = true;
   }

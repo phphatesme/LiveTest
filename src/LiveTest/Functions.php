@@ -2,7 +2,7 @@
 
 namespace LiveTest;
 
-use Annovent\Functions as AnnoventFunctions;
+use phmLabs\Components\NamedParameters\NamedParameters;
 use Annovent\Exception as AnnoventException;
 
 class Functions
@@ -15,9 +15,10 @@ class Functions
     {
       try
       {
-        $result = AnnoventFunctions::call_user_func_assoc_array(array($object,'init'), $parameter);
+        $namedParameters = new NamedParameters();
+        $result = $namedParameters->callMethod($object, 'init', $parameter);
       }
-      catch ( AnnoventException $e )
+      catch ( \phmLabs\Components\NamedParameters\Exception $e )
       {
         throw new ConfigurationException('Unable to initialize object (' . get_class($object) . '). ' . 'Mandatory parameter "' . $e->getMissingParameter() . '" is missing.');
       }

@@ -86,17 +86,17 @@ class Runner extends ArgumentRunner
     $this->initConfig();
     $this->initListeners();
 
-    $this->eventDispatcher->notify('LiveTest.Runner.InitConfig', array('config' => $this->config));
+    $this->eventDispatcher->simpleNotify('LiveTest.Runner.InitConfig', array('config' => $this->config));
     // @todo should there be a naming convention for events? Something like checkSomething if the return
     //       value will change the workflow. see symfony ::filter (e.g. manipulate)
-    $this->runAllowed = $this->eventDispatcher->notify('LiveTest.Runner.Init', array('arguments' => $arguments));
+    $this->runAllowed = $this->eventDispatcher->simpleNotify('LiveTest.Runner.Init', array('arguments' => $arguments));
   }
 
   public function initCoreListener($arguments)
   {
-    $this->eventDispatcher->registerListener(new \LiveTest\Listener\Cli\Debug($this->runId, $this->eventDispatcher));
-    $this->eventDispatcher->registerListener(new \LiveTest\Packages\Feedback\Listener\Send($this->runId, $this->eventDispatcher));
-    $this->eventDispatcher->notify('LiveTest.Runner.InitCore', array('arguments' => $arguments));
+    $this->eventDispatcher->register(new \LiveTest\Listener\Cli\Debug($this->runId, $this->eventDispatcher));
+    $this->eventDispatcher->register(new \LiveTest\Packages\Feedback\Listener\Send($this->runId, $this->eventDispatcher));
+    $this->eventDispatcher->simpleNotify('LiveTest.Runner.InitCore', array('arguments' => $arguments));
   }
 
   /**
@@ -146,7 +146,7 @@ class Runner extends ArgumentRunner
    */
   private function initListeners()
   {
-    $this->eventDispatcher->registerListenersByConfig($this->config, $this->runId);
+    $this->eventDispatcher->registerByConfig($this->config, $this->runId);
   }
 
   /**
@@ -167,7 +167,7 @@ class Runner extends ArgumentRunner
 
     $client = new Zend();
     $client->setAdapter(new Curl());
-    $this->eventDispatcher->notify('LiveTest.Runner.InitHttpClient', array('client' => $client));
+    $this->eventDispatcher->simpleNotify('LiveTest.Runner.InitHttpClient', array('client' => $client));
 
     $this->testRun = new Run($properties, $client, $this->eventDispatcher);
   }

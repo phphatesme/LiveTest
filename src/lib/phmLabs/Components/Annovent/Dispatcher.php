@@ -2,7 +2,7 @@
 
 namespace phmLabs\Components\Annovent;
 
-use phmLabs\Components\NamedParameters\Functions;
+use phmLabs\Components\NamedParameters\NamedParameters;
 use phmLabs\Components\Annovent\Event\Event;
 use Doctrine\Common\Annotations\AnnotationReader;
 use ReflectionClass, ReflectionMethod;
@@ -22,17 +22,17 @@ class Dispatcher
 
   public function modify(Event $event, array $namedParameters = array())
   {
-    $this->processEvent($event, $namedParameters);
+    return $this->processEvent($event, $namedParameters);
   }
 
   public function modifyUntil(Event $event, array $namedParameters = array())
   {
-    $this->processEvent($event, $namedParameters, true);
+    return $this->processEvent($event, $namedParameters, true);
   }
 
   public function notify(Event $event, array $namedParameters = array())
   {
-    $this->processEvent($event, $namedParameters);
+    return $this->processEvent($event, $namedParameters);
   }
 
   public function notifyUntil(Event $event, array $namedParameters = array())
@@ -48,11 +48,12 @@ class Dispatcher
    * @param array $namedParameters
    * @param boolean $until If this param is true the event/listener chain will stop if a listener returns false.
    */
-  private function processEvent(Event $event, array $namedParameters = array(), $until = false)
+  private function processEvent(Event &$event, array $namedParameters = array(), $until = false)
   {
+    $result = true;
     if (array_key_exists($event->getName(), $this->eventListenerMatrix))
     {
-      $event->setIsProcessed();
+      $event->isProcessed();
       $priorityOrderedListeners = $this->eventListenerMatrix[$event->getName()];
       ksort($priorityOrderedListeners);
       foreach ($priorityOrderedListeners as $listeners)
@@ -62,18 +63,21 @@ class Dispatcher
           $listener = $listenerInfo['listener'];
           $method = $listenerInfo['method'];
 
-          // @todo use the NamedParameters class not the function
           // @todo add try catch block
-          $callResult = Functions::call_user_func_assoc_array(array($listener,$method), $event->getParameters());
+          $namedParameters = new NamedParameters();
+          $callResult = $namedParameters->callMethod($listener, $method, $event->getParameters());
+
+          $result = $result && !($callResult === false);
 
           if ($until && $callResult === false)
           {
-            return false;
+            $event->interruptChain();
+            return $result;
           }
         }
       }
     }
-    return true;
+    return $result;
   }
 
   /**

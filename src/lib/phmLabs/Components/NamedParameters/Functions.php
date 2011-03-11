@@ -4,46 +4,27 @@ namespace phmLabs\Components\NamedParameters;
 
 class Functions
 {
+  /**
+   * This function is used to call a function/method with named parameters. This means
+   * the parameters are given as an associative array and will be ordered to fit the
+   * function signature.
+   *
+   * @param call_back $function
+   * @param array $param_arr
+   */
   public static function call_user_func_assoc_array($function, array $param_arr = null)
   {
+    $namedParameters = new NamedParameters();
+
     if (is_array($function))
     {
-      $object = $function[0];
-      $method = $function[1];
-
-      $reflectedListener = new \ReflectionClass($object);
-      $reflectedMethod = $reflectedListener->getMethod($method);
-      $parameters = $reflectedMethod->getParameters();
+      $returnValue = $namedParameters->callMethod($function[0], $function[1], $param_arr);
     }
     else
     {
-      $reflectedFunction = new \ReflectionFunction($function);
-      $parameters = $reflectedFunction->getParameters();
+      $returnValue = $namedParameters->callFunction($function, $param_arr);
     }
 
-    $orderedParameters = array();
-
-    foreach ($parameters as $parameter)
-    {
-      $name = $parameter->getName();
-      if (array_key_exists($name, $param_arr))
-      {
-        $orderedParameters[] = $param_arr[$name];
-      }
-      else
-      {
-        if (!$parameter->isOptional())
-        {
-          $e = new \Annovent\Exception('Parameter "' . $name . '" not set.');
-          $e->setMissingParameter($name);
-          throw $e;
-        }
-        else
-        {
-          $orderedParameters[] = $parameter->getDefaultValue();
-        }
-      }
-    }
-    return call_user_func_array($function, $orderedParameters);
+    return $returnValue;
   }
 }

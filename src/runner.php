@@ -1,6 +1,9 @@
 <?php
 
-use Annovent\Event\Event;
+error_reporting(E_ALL);
+ini_set( 'display_errors', 1);
+
+use phmLabs\Components\Annovent\Event\Simple;
 use LiveTest\Event\Dispatcher;
 use LiveTest\Cli\Runner;
 use Base\Cli\ArgumentConverter;
@@ -40,8 +43,8 @@ try
 }
 catch ( Exception $e )
 {
-  $event = new Event('LiveTest.Runner.Error', array('exception' => $e));
-  $dispatcher->notifyEvent($event);
+  $event = new Simple('LiveTest.Runner.Error', array('exception' => $e));
+  $dispatcher->notify($event);
   if (!$event->isProcessed())
   {
     echo 'An error occured: '.$e->getMessage() . '('.get_class($e).')';

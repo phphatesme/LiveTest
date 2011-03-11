@@ -9,21 +9,21 @@
 
 namespace LiveTest\Listener;
 
-use Annovent\Event\Dispatcher;
+use phmLabs\Components\Annovent\Dispatcher;
 
 /**
  * The listener interface. Listeners are called via the internal event system.
  * Annotations are used to register to special events. For more information see
  * https://github.com/phphatesme/Annovent
- * 
+ *
  * @author Nils Langner
  *
  */
-interface Listener extends \Annovent\Event\Listener
+interface Listener extends \phmLabs\Components\Annovent\Listener
 {
   /**
    * The standardized constructor.
-   * 
+   *
    * @param string $runId
    * @param Dispatcher $eventDispatcher
    */

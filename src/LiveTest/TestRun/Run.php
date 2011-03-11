@@ -9,11 +9,9 @@
 
 namespace LiveTest\TestRun;
 
-use Annovent\Exception;
+use LiveTest\Event\Dispatcher;
 
 use LiveTest\TestRun\Result\Result;
-
-use Annovent\Event\Dispatcher;
 
 use Base\Http\Client\Client;
 use Base\Http\ConnectionStatus;
@@ -108,7 +106,7 @@ class Run
         $runMessage = $e->getMessage();
       }
       $result = new Result($test, $runStatus, $runMessage, $testSet->getUri());
-      $this->eventDispatcher->notify('LiveTest.Run.HandleResult', array ('result' => $result, 'response' => $response ));
+      $this->eventDispatcher->simpleNotify('LiveTest.Run.HandleResult', array ('result' => $result, 'response' => $response ));
     }
   }
 
@@ -137,7 +135,7 @@ class Run
 
     $connectionStatus = new ConnectionStatus($connectionStatusValue, $testSet->getUri(), $connectionStatusMessage);
 
-    $this->eventDispatcher->notify('LiveTest.Run.HandleConnectionStatus', array ('connectionStatus' => $connectionStatus ));
+    $this->eventDispatcher->simpleNotify('LiveTest.Run.HandleConnectionStatus', array ('connectionStatus' => $connectionStatus ));
 
     if ($connectionStatusValue === ConnectionStatus::SUCCESS)
     {
@@ -153,7 +151,7 @@ class Run
    */
   public function run()
   {
-    $this->eventDispatcher->notify('LiveTest.Run.PreRun', array ('properties' => $this->properties ));
+    $this->eventDispatcher->simpleNotify('LiveTest.Run.PreRun', array ('properties' => $this->properties ));
 
     // @todo move timer to runner.php
     $timer = new Timer();
@@ -165,6 +163,6 @@ class Run
 
     $information = new Information($timer->stop(), $this->properties->getDefaultDomain());
 
-    $this->eventDispatcher->notify('LiveTest.Run.PostRun', array ('information' => $information ));
+    $this->eventDispatcher->simpleNotify('LiveTest.Run.PostRun', array ('information' => $information ));
   }
 }
