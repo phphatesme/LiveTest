@@ -1,5 +1,6 @@
 <?php
 
+use phmLabs\Components\Annovent\Event\Event;
 error_reporting(E_ALL);
 ini_set( 'display_errors', 1);
 
@@ -43,7 +44,7 @@ try
 }
 catch ( Exception $e )
 {
-  $event = new Simple('LiveTest.Runner.Error', array('exception' => $e));
+  $event = new Event('LiveTest.Runner.Error', array('exception' => $e));
   $dispatcher->notify($event);
   if (!$event->isProcessed())
   {

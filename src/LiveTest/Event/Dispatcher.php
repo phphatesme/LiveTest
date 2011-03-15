@@ -9,7 +9,7 @@
 
 namespace LiveTest\Event;
 
-use phmLabs\Components\Annovent\Event\Simple;
+use phmLabs\Components\Annovent\Event\Event;
 
 use LiveTest\Config\ConfigConfig;
 
@@ -40,13 +40,13 @@ class Dispatcher extends AnnoventDispatcher
       }
       $listenerObject = new $className($runId, $this);
       \LiveTest\Functions::initializeObject($listenerObject, $listener['parameters']);
-      $this->register($listenerObject);
+      $this->connectListener($listenerObject);
     }
   }
 
   public function simpleNotify($name, array $namedParameters = array())
   {
-    $event = new Simple($name, $namedParameters);
+    $event = new Event($name, $namedParameters);
     return $this->notify($event, $namedParameters);
   }
 }

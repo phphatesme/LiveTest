@@ -2,6 +2,9 @@ DefaultDomain: http://www.example.com
 
 Listener:
 
+ Upgrade:
+  class: LiveTest\Packages\Upgrade\Listener\Upgrade
+
  ProgressBar:
   class: LiveTest\Listener\Cli\ProgressBar
   

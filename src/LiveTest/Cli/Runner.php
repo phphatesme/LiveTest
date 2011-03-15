@@ -9,6 +9,8 @@
 
 namespace LiveTest\Cli;
 
+use phmLabs\Components\Annovent\Event\Event;
+
 use Zend\Http\Client\Adapter\Curl;
 
 use LiveTest\Config\Parser\Parser;
@@ -89,13 +91,15 @@ class Runner extends ArgumentRunner
     $this->eventDispatcher->simpleNotify('LiveTest.Runner.InitConfig', array('config' => $this->config));
     // @todo should there be a naming convention for events? Something like checkSomething if the return
     //       value will change the workflow. see symfony ::filter (e.g. manipulate)
-    $this->runAllowed = $this->eventDispatcher->simpleNotify('LiveTest.Runner.Init', array('arguments' => $arguments));
+    $event = new Event('LiveTest.Runner.Init', array('arguments' => $arguments));
+    $this->eventDispatcher->notifyUntil($event);
+    $this->runAllowed = !$event->isProcessed();
   }
 
   public function initCoreListener($arguments)
   {
-    $this->eventDispatcher->register(new \LiveTest\Listener\Cli\Debug($this->runId, $this->eventDispatcher));
-    $this->eventDispatcher->register(new \LiveTest\Packages\Feedback\Listener\Send($this->runId, $this->eventDispatcher));
+    $this->eventDispatcher->connectListener(new \LiveTest\Listener\Cli\Debug($this->runId, $this->eventDispatcher));
+    $this->eventDispatcher->connectListener(new \LiveTest\Packages\Feedback\Listener\Send($this->runId, $this->eventDispatcher));
     $this->eventDispatcher->simpleNotify('LiveTest.Runner.InitCore', array('arguments' => $arguments));
   }
 

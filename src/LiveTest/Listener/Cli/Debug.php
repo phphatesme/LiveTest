@@ -9,6 +9,8 @@
 
 namespace LiveTest\Listener\Cli;
 
+use phmLabs\Components\Annovent\Event\Event;
+
 use LiveTest\Listener\Base;
 
 /**
@@ -42,8 +44,9 @@ class Debug extends Base
    *
    * @param \Exception $e
    */
-  public function handleException(\Exception $exception)
+  public function handleException(\Exception $exception, Event $event)
   {
+    $event->setProcessed();
     if ($this->debug)
     {
       echo "  An error occured (debug modus):\n\n";
@@ -54,7 +57,6 @@ class Debug extends Base
       $trace = str_replace('#', '           #', $exception->getTraceAsString());
       $trace = str_replace('           #0', '#0', $trace);
       echo "  Trace  : " . $trace;
-      return false;
     }
     else
     {

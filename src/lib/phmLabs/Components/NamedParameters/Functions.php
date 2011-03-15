@@ -12,7 +12,7 @@ class Functions
    * @param call_back $function
    * @param array $param_arr
    */
-  public static function call_user_func_assoc_array($function, array $param_arr = null)
+  public static function call_user_func_assoc_array($function, array $param_arr = array())
   {
     $namedParameters = new NamedParameters();
 

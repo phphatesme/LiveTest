@@ -45,11 +45,15 @@ class NamedParameters
     $reflectedMethod = $reflectedListener->getMethod($method);
     $methodParameters = $reflectedMethod->getParameters();
     $orderedParameters = $this->getOrderedParameters($methodParameters, $parameters);
-    return $this->callUserFunc(array ($object, $method ), $orderedParameters);
+
+    $finalParameters = $orderedParameters;
+    $finalParameters[] = $parameters;
+
+    return $this->callUserFunc(array ($object, $method ), $finalParameters);
   }
 
   /**
-   * This function calls the natice call_user_func_array function.
+   * This function calls the native call_user_func_array function.
    *
    * @param callback $function
    * @param parameters $orderedParameters
@@ -67,6 +71,7 @@ class NamedParameters
    */
   private function getOrderedParameters($functionParameters, array $actualParameters = array())
   {
+    $orderedParameters = array();
     foreach ( $functionParameters as $parameter )
     {
       $name = $parameter->getName();

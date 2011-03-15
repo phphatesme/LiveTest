@@ -9,6 +9,8 @@
 
 namespace LiveTest\Listener\Cli;
 
+use phmLabs\Components\Annovent\Event\Event;
+
 use LiveTest\Listener\Base;
 
 /**
@@ -32,12 +34,12 @@ class Help extends Base
    *
    * @param array $arguments
    */
-  public function runnerInit(array $arguments)
+  public function runnerInit(array $arguments, Event $event)
   {
     if (array_key_exists('help', $arguments) || count($arguments) == 0)
     {
       echo file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . $this->template);
-      return false;
+      $event->setProcessed();
     }
     return true;
   }

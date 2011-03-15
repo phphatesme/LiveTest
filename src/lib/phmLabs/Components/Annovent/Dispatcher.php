@@ -2,16 +2,17 @@
 
 namespace phmLabs\Components\Annovent;
 
-use phmLabs\Components\NamedParameters\NamedParameters;
-use phmLabs\Components\Annovent\Event\Event;
+use phmLabs\Components\NamedParameters\Functions;
 use Doctrine\Common\Annotations\AnnotationReader;
+
+use phmLabs\Components\Annovent\Event\EventInterface;
+
 use ReflectionClass, ReflectionMethod;
 
-class Dispatcher
+class Dispatcher implements DispatcherInterface
 {
   private $annotationReader;
   private $listeners = array();
-  private $eventListenerMatrix = array();
 
   public function __construct()
   {
@@ -20,64 +21,124 @@ class Dispatcher
     $this->annotationReader->setAutoloadAnnotations(true);
   }
 
-  public function modify(Event $event, array $namedParameters = array())
+  /**
+   * Notifies all listeners of a given event.
+   *
+   * @param EventInterface $event An EventInterface instance
+   */
+  public function notify(EventInterface $event)
   {
-    return $this->processEvent($event, $namedParameters);
+    $this->processEvent($event);
   }
 
-  public function modifyUntil(Event $event, array $namedParameters = array())
+  /**
+   * Notifies all listeners of a given event until one processes the event.
+   *
+   * @param  EventInterface $event An EventInterface instance
+   *
+   * @return mixed The returned value of the listener that processed the event
+   */
+  public function notifyUntil(EventInterface $event)
   {
-    return $this->processEvent($event, $namedParameters, true);
+    return $this->processEvent($event, true);
   }
 
-  public function notify(Event $event, array $namedParameters = array())
+  /**
+   * Returns all wildcard names of events the listerner should notify
+   *
+   * @param string $eventName
+   */
+  private function getWildcardEventNames($eventName)
   {
-    return $this->processEvent($event, $namedParameters);
-  }
+    $nodes = explode('.', $eventName);
+    $wildcardNames = array('*');
+    $path = '';
 
-  public function notifyUntil(Event $event, array $namedParameters = array())
-  {
-    return $this->processEvent($event, $namedParameters, true);
+    for($i = 0; $i < count($nodes) - 1; $i++)
+    {
+      if ($i == 0)
+      {
+        $path = $path . $nodes[$i];
+        $wildcardNames[] = $path . '.*';
+      }
+      else
+      {
+        $path = $path . '.' . $nodes[$i];
+        $wildcardNames[] = $path . '.*';
+      }
+    }
+    return $wildcardNames;
   }
 
   /**
    * This function is used to call all listeners. It stops processing if the $until parameter is true and the
-   * return value of a listener is false.
+   * event is processed.
    *
    * @param Event $event
    * @param array $namedParameters
-   * @param boolean $until If this param is true the event/listener chain will stop if a listener returns false.
+   * @param boolean $until If this param is true the event/listener chain will stop if the vent is processed.
    */
-  private function processEvent(Event &$event, array $namedParameters = array(), $until = false)
+  private function processEvent(EventInterface &$event, $until = false)
   {
-    $result = true;
-    if (array_key_exists($event->getName(), $this->eventListenerMatrix))
+    $finalParameters = $event->getParameters();
+    $finalParameters['event'] = $event;
+
+    foreach ($this->getListeners($event->getName()) as $listener)
     {
-      $event->isProcessed();
-      $priorityOrderedListeners = $this->eventListenerMatrix[$event->getName()];
-      ksort($priorityOrderedListeners);
-      foreach ($priorityOrderedListeners as $listeners)
+      $result = Functions::call_user_func_assoc_array($listener, $finalParameters);
+      if ($until === true && $event->isProcessed())
       {
-        foreach ($listeners as $listenerInfo)
-        {
-          $listener = $listenerInfo['listener'];
-          $method = $listenerInfo['method'];
-
-          // @todo add try catch block
-          $namedParameters = new NamedParameters();
-          $callResult = $namedParameters->callMethod($listener, $method, $event->getParameters());
-
-          $result = $result && !($callResult === false);
-
-          if ($until && $callResult === false)
-          {
-            $event->interruptChain();
-            return $result;
-          }
-        }
+        return $result;
       }
     }
     return $result;
+  }
+
+  /**
+   * Connects a listener to a given event name.
+   *
+   * Listeners with a higher priority are executed first.
+   *
+   * @param string  $name      An event name
+   * @param mixed   $listener  A PHP callable
+   * @param integer $priority  The priority (between -10 and 10 -- defaults to 0)
+   */
+  public function connect($name, $callback, $priority = 0)
+  {
+    $this->listeners[$name][$priority][] = $callback;
+  }
+
+  /**
+   * Disconnects one, or all listeners for the given event name.
+   *
+   * @param string     $name     An event name
+   * @param mixed|null $listener The listener to remove, or null to remove all
+   *
+   * @return void
+   */
+  public function disconnect($name, $callback = null)
+  {
+    if (!isset($this->listeners[$name]))
+    {
+      return;
+    }
+
+    if (null === $callback)
+    {
+      unset($this->listeners[$name]);
+      return;
+    }
+
+    foreach ($this->listeners[$name] as $priority => $callables)
+    {
+      foreach ($callables as $i => $callable)
+      {
+        if ($callback === $callable)
+        {
+          unset($this->listeners[$name][$priority][$i]);
+        }
+      }
+    }
   }
 
   /**
@@ -87,10 +148,9 @@ class Dispatcher
    * @param Listener $listener
    * @throws Exception
    */
-  public function register(Listener $listener, $priority = 500)
+  public function connectListener($listener, $priority = 0)
   {
     $annotationFound = false;
-    $this->listeners[] = $listener;
 
     $reflectedListener = new ReflectionClass($listener);
     $publicMethods = $reflectedListener->getMethods(ReflectionMethod::IS_PUBLIC);
@@ -101,12 +161,12 @@ class Dispatcher
 
       foreach ($annotations as $annotation)
       {
+        $annotationFound = true;
         $eventNames = $annotation->getNames();
         foreach ($eventNames as $eventName)
         {
-          $annotationFound = true;
-          $listenerInfo = array('listener' => $listener,'method' => $reflectedMethod->getName());
-          $this->eventListenerMatrix[$eventName][$priority][] = $listenerInfo;
+          $callback = array($listener,$reflectedMethod->getName());
+          $this->connect($eventName, $callback, $priority);
         }
       }
     }
@@ -115,5 +175,49 @@ class Dispatcher
     {
       throw new Exception('The listener you added (' . get_class($listener) . ') does not listen to any event.');
     }
+  }
+
+  /**
+   * Returns true if the given event name has some listeners.
+   *
+   * @param  string $name The event name
+   *
+   * @return Boolean true if some listeners are connected, false otherwise
+   */
+  public function hasListeners($name)
+  {
+    return array_key_exists($name, $this->listeners);
+  }
+
+  /**
+   * Returns all listeners associated with a given event name.
+   *
+   * @param  string $name The event name
+   *
+   * @return array  An array of listeners
+   */
+  public function getListeners($name)
+  {
+    $eventNames = $this->getWildcardEventNames($name);
+    $eventNames[] = $name;
+
+    $listeners = array();
+
+    foreach ($eventNames as $eventName)
+    {
+      if (array_key_exists($eventName, $this->listeners))
+      {
+        $listeners = array_merge_recursive($listeners, $this->listeners[$eventName]);
+      }
+    }
+
+    krsort($listeners);
+
+    if (count($listeners) == 0)
+    {
+      return array();
+    }
+
+    return call_user_func_array('array_merge', $listeners);
   }
 }
