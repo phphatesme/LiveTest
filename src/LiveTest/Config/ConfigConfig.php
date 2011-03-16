@@ -48,9 +48,9 @@ class ConfigConfig implements Config
    * @param string $className
    * @param array $parameters
    */
-  public function addListener($name, $className, array $parameters)
+  public function addListener($name, $className, array $parameters, $priority)
   {
-    $this->listeners[$name] = array ('className' => $className, 'parameters' => $parameters);
+    $this->listeners[$name] = array ('className' => $className, 'parameters' => $parameters, 'priority' => $priority);
   }
 
   /**

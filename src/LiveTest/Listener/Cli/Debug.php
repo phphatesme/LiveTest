@@ -9,6 +9,8 @@
 
 namespace LiveTest\Listener\Cli;
 
+use Base\String\Manipulator;
+
 use phmLabs\Components\Annovent\Event\Event;
 
 use LiveTest\Listener\Base;
@@ -40,6 +42,33 @@ class Debug extends Base
   }
 
   /**
+   * @Event("LiveTest.Configuration.Exception")
+   *
+   * @param \Exception $e
+   */
+  public function handleConfigurationException(\Exception $exception, Event $event)
+  {
+    $event->setProcessed();
+    if ($this->debug)
+    {
+      echo "  Configuration Warning (debug modus):\n\n";
+      echo "  Class  : " . get_class($exception) . "\n";
+      echo "  Message: " . $exception->getMessage() . "\n";
+      echo "  File   : " . $exception->getFile() . "\n";
+      echo "  Line   : " . $exception->getLine() . "\n\n";
+      $trace = str_replace('#', '           #', $exception->getTraceAsString());
+      $trace = str_replace('           #0', '#0', $trace);
+      echo "  Trace  : " . $trace;
+    }
+    else
+    {
+      echo "  Configuration Warning: " . Manipulator::addCharsOnWhitespace($exception->getMessage(),
+                                                                           "\n                        ",
+                                                                           78);
+    }
+  }
+
+  /**
    * @Event("LiveTest.Runner.Error")
    *
    * @param \Exception $e
@@ -60,7 +89,7 @@ class Debug extends Base
     }
     else
     {
-      echo "  An error occured: " . $exception->getMessage() . " (" . get_class($exception) . ")";
+      echo "  An error occured: " . $exception->getMessage();
     }
   }
 }

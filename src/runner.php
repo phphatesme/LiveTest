@@ -42,6 +42,11 @@ try
     $runner->run();
   }
 }
+catch ( Livetest\ConfigurationException $e )
+{
+  $event = new Event('LiveTest.Configuration.Exception', array('exception' => $e));
+  $dispatcher->notify($event);
+}
 catch ( Exception $e )
 {
   $event = new Event('LiveTest.Runner.Error', array('exception' => $e));

@@ -9,6 +9,8 @@
 
 namespace LiveTest\Cli;
 
+use LiveTest\ConfigurationException;
+
 use phmLabs\Components\Annovent\Event\Event;
 
 use Zend\Http\Client\Adapter\Curl;
@@ -98,8 +100,8 @@ class Runner extends ArgumentRunner
 
   public function initCoreListener($arguments)
   {
-    $this->eventDispatcher->connectListener(new \LiveTest\Listener\Cli\Debug($this->runId, $this->eventDispatcher));
-    $this->eventDispatcher->connectListener(new \LiveTest\Packages\Feedback\Listener\Send($this->runId, $this->eventDispatcher));
+    $this->eventDispatcher->connectListener(new \LiveTest\Listener\Cli\Debug($this->runId, $this->eventDispatcher), 10);
+    $this->eventDispatcher->connectListener(new \LiveTest\Packages\Feedback\Listener\Send($this->runId, $this->eventDispatcher), 10);
     $this->eventDispatcher->simpleNotify('LiveTest.Runner.InitCore', array('arguments' => $arguments));
   }
 
@@ -167,7 +169,18 @@ class Runner extends ArgumentRunner
    */
   private function initTestRun()
   {
-    $properties = Properties::createByYamlFile($this->getArgument('testsuite'), $this->config->getDefaultDomain());
+    if (!$this->hasArgument('testsuite') || $this->getArgument('testsuite') == '')
+    {
+      throw new ConfigurationException('The mandatory --testsuite argument was not found. ' . 'Please use LiveTest --help for more information.');
+    }
+    try
+    {
+      $properties = Properties::createByYamlFile($this->getArgument('testsuite'), $this->config->getDefaultDomain());
+    }
+    catch ( \Zend\Config\Exception\InvalidArgumentException $e )
+    {
+      throw new ConfigurationException('The given testsuite configuration file ("' . $this->getArgument('testsuite') . '") was not found.');
+    }
 
     $client = new Zend();
     $client->setAdapter(new Curl());

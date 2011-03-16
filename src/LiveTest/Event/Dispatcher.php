@@ -40,7 +40,7 @@ class Dispatcher extends AnnoventDispatcher
       }
       $listenerObject = new $className($runId, $this);
       \LiveTest\Functions::initializeObject($listenerObject, $listener['parameters']);
-      $this->connectListener($listenerObject);
+      $this->connectListener($listenerObject, $listener['priority']);
     }
   }
 

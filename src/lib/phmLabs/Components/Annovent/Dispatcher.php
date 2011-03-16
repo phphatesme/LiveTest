@@ -83,6 +83,8 @@ class Dispatcher implements DispatcherInterface
     $finalParameters = $event->getParameters();
     $finalParameters['event'] = $event;
 
+    $result = '';
+
     foreach ($this->getListeners($event->getName()) as $listener)
     {
       $result = Functions::call_user_func_assoc_array($listener, $finalParameters);
