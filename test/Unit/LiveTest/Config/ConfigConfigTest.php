@@ -19,7 +19,7 @@ class ConfigConfigTest extends \PHPUnit_Framework_TestCase
     $defaultDomain = $config->getDefaultDomain();
     $this->assertEquals($domain, $defaultDomain);
   }
-  
+
   public function testAddListener()
   {
     $config = new ConfigConfig();
@@ -33,5 +33,4 @@ class ConfigConfigTest extends \PHPUnit_Framework_TestCase
     $this->assertEquals('MyClassName', $listener['className']);
     $this->assertArrayHasKey('foo', $listener['parameters']);
   }
-  
 }
