@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+  <env:Body>
+    <m:markupvalidationresponse
+                env:encodingStyle="http://www.w3.org/2003/05/soap-encoding"
+                xmlns:m="http://www.w3.org/2005/10/markup-validator">
+                
+      <m:uri>http://www.fixture.tld/</m:uri>
+      <m:checkedby>http://validator.w3.org/</m:checkedby>
+      <m:doctype>-//W3C//DTD XHTML 1.0 Strict//EN</m:doctype>
+      <m:charset>utf-8</m:charset>
+      <m:validity>false</m:validity>
+      <m:errors>
+        <m:errorcount>1</m:errorcount>
+        <m:errorlist>
+          <m:error>
+            <m:line>1234</m:line>
+            <m:col>12</m:col>
+            <m:message>
+              an attribute value literal can occur in an attribute specification
+              list only after a VI delimiter
+            </m:message>
+            <m:messageid>1</m:messageid>
+            <m:explanation>
+            <![CDATA[
+            <p class="helpwanted">
+              <a
+                href="feedback.html?uri=http%3A%2F%2Fwww.fixture.tld%2F;errmsg_id=1#errormsg"
+                title="Suggest improvements on this error message through our feedback channels">
+                &#x2709;
+              </a>
+            </p>
+
+            <div class="ve mid-111">
+              <p>
+              Have you forgotten the "equal" sign marking the separation
+              between the attribute and its declared value?
+              Typical  syntax is <code>attribute="value"</code>.
+              </p>
+            </div>
+            ]]>
+            </m:explanation>
+            <m:source>
+              <![CDATA[...  
+              &#60;a title=&#34;fixture document with wrong &#34;quotes
+              <strong title="Position where error was detected.">&#34;</strong>
+              !&#34; href=&#34;http://www.fixture.tld...
+              ]]>
+            </m:source>
+          </m:error>
+
+
+        </m:errorlist>
+      </m:errors>
+      <m:warnings>
+        <m:warningcount>0</m:warningcount>
+        <m:warninglist></m:warninglist>
+      </m:warnings>
+    </m:markupvalidationresponse>
+  </env:Body>
+</env:Envelope>

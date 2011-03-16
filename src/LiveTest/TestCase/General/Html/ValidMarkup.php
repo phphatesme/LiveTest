@@ -9,14 +9,14 @@
 
 namespace LiveTest\TestCase\General\Html;
 
-use Base\Service\W3\Adapter\ZendHttp;
+use Base\Www\Html\Validator\W3;
 use Base\Www\Html\Document;
 use LiveTest\TestCase\Exception;
 
 /**
  * This test case validates the given markup.
  *
- * @author luckyduck networks - Jan Brinkmann
+ * @author Jan Brinkmann <lucky@the-luckyduck.de>
  * @example:
  *  ValidMarkup_html:
  *   TestCase: LiveTest\TestCase\General\Html\ValidMarkup
@@ -26,15 +26,9 @@ class ValidMarkup extends TestCase
 {
   /**
    *
-   * @var Base\Service\W3\Base The used markup validator
+   * @var Base\Www\Html\Validator The used validator
    */
   private $_validator = null;
-
-  /**
-   *
-   * @var int Seconds between API calls
-   */
-  private $_sleep = 1;
 
   /**
    * Initialize the validation webservice
@@ -42,10 +36,13 @@ class ValidMarkup extends TestCase
    * @param string URI of an alternative validation service
    * @param int Seconds between API calls
    */
-  public function init($validatorUri = null, $sleep = 1)
+  public function init($validatorUri = null)
   {
-    $this->_validator = new ZendHttp($validatorUri);
-    $this->_sleep = $sleep;
+    // prepare http client
+    $httpClient = new \Base\Http\Client\Zend();
+
+    // create validator and inject http client
+    $this->_validator = new W3($httpClient);
   }
 
   /**
@@ -55,13 +52,9 @@ class ValidMarkup extends TestCase
    */
   protected function runTest(Document $htmlDocument)
   {
-    $htmlCode = $htmlDocument->getHtml();
-    if ($this->_validator->validateHtml($htmlCode) === false)
+    if ($this->_validator->validate($htmlDocument) === false)
     {
       throw new Exception('The document contains invalid markup.');
     }
-
-    // Be nice
-    sleep($this->_sleep);
   }
 }
