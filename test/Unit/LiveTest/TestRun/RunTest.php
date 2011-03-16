@@ -50,24 +50,24 @@ class RunTest extends \PHPUnit_Framework_TestCase
     $this->dispatcher = new Dispatcher();
 
     $this->preRunListener = new PreRunListener('', $this->dispatcher);
-    $this->dispatcher->registerListener($this->preRunListener);
+    $this->dispatcher->connectListener($this->preRunListener);
 
     $this->postRunListener = new PostRunListener('', $this->dispatcher);
-    $this->dispatcher->registerListener($this->postRunListener);
+    $this->dispatcher->connectListener($this->postRunListener);
 
     $this->connectionStatusListener = new ConnectionStatusListener('', $this->dispatcher);
-    $this->dispatcher->registerListener($this->connectionStatusListener);
+    $this->dispatcher->connectListener($this->connectionStatusListener);
 
     $this->infoListener = new InfoListener('', $this->dispatcher);
-    $this->dispatcher->registerListener($this->infoListener);
+    $this->dispatcher->connectListener($this->infoListener);
 
     $this->handleResultListener = new HandleResultListener('', $this->dispatcher);
-    $this->dispatcher->registerListener($this->handleResultListener);
-    
+    $this->dispatcher->connectListener($this->handleResultListener);
+
     $this->properties = Properties::createByYamlFile(__DIR__ . '/Fixtures/testsuite.yml', $this->defaultUri);
     $this->httpClient = new HttpClientMockup(new ResponseMockup());
     $this->run = new Run($this->properties, $this->httpClient, $this->dispatcher);
-   
+
   }
 
   public function testNotifications()
@@ -122,10 +122,10 @@ class RunTest extends \PHPUnit_Framework_TestCase
   	$this->run->run();
   	$results = $this->handleResultListener->getResults();
   	$responses = $this->handleResultListener->getResponses();
-  	
+
   	$tmpResponse = 0;
   	$tmpStatus = 0;
-  	
+
   	foreach( $results as $key => $aResult)
   	{
   		if($aResult->getStatus() == $aResult::STATUS_SUCCESS)
@@ -133,18 +133,18 @@ class RunTest extends \PHPUnit_Framework_TestCase
   			$tmpStatus = $aResult->getStatus();
   			$tmpResponse = $responses[$key];
   			break;
-  		}	
+  		}
   	}
-  	
+
   	$this->assertEquals( $tmpStatus, $aResult::STATUS_SUCCESS );
   	$this->assertEquals( $tmpResponse->getBody(), 'body');
-  	
-  	
-  	
+
+
+
   	$httpClient = new HttpClientMockup(new ResponseMockup(404,'Not Found'));
   	$run = new Run($this->properties, $httpClient, $this->dispatcher);
   	$run->run();
-  	
+
   	$results = $this->handleResultListener->getResults();
   	$responses = $this->handleResultListener->getResponses();
   	foreach( $results as $key => $aResult)
@@ -154,11 +154,11 @@ class RunTest extends \PHPUnit_Framework_TestCase
   			$tmpStatus = $aResult->getStatus();
   			$tmpResponse = $responses[$key];
   			break;
-  		}	
+  		}
   	}
-  	
+
   	$this->assertEquals( $aResult::STATUS_FAILED, $tmpStatus );
   	$this->assertEquals( $tmpResponse->getBody(), 'Not Found');
-  	
+
   }
 }

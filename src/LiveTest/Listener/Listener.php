@@ -9,7 +9,7 @@
 
 namespace LiveTest\Listener;
 
-use phmLabs\Components\Annovent\Dispatcher;
+use LiveTest\Event\Dispatcher;
 
 /**
  * The listener interface. Listeners are called via the internal event system.

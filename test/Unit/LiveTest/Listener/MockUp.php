@@ -3,7 +3,6 @@
 namespace Unit\LiveTest\Listener;
 
 use LiveTest\Event\Dispatcher;
-
 use LiveTest\Listener\Listener;
 
 class MockUp implements Listener
@@ -22,6 +21,14 @@ class MockUp implements Listener
   public function init( $foo )
   {
     $this->foo = $foo;
+  }
+
+  /**
+   * @Event("Test")
+   */
+  public function getNotified( )
+  {
+
   }
 
   public function getFoo( )

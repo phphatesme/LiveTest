@@ -9,7 +9,7 @@
 
 namespace LiveTest\Listener;
 
-use phmLabs\Components\Annovent\Dispatcher;
+use LiveTest\Event\Dispatcher;
 
 abstract class Base implements Listener
 {

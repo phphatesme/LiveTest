@@ -2,6 +2,8 @@
 
 namespace Test\Unit\LiveTest\Listener\Cli;
 
+use phmLabs\Components\Annovent\Event\Event;
+
 use LiveTest\Event\Dispatcher;
 
 use LiveTest\Listener\Cli\Help;
@@ -18,7 +20,7 @@ class HelpTest extends \PHPUnit_Framework_TestCase
     $help = new Help('', new Dispatcher());
 
     ob_start();
-    $help->runnerInit( array( ) );
+    $help->runnerInit( array( ), new Event('*') );
     $output = ob_get_contents();
     ob_clean();
 
@@ -30,7 +32,7 @@ class HelpTest extends \PHPUnit_Framework_TestCase
     $help = new Help('', new Dispatcher());
 
     ob_start();
-    $help->runnerInit( array( 'help' => '' ) );
+    $help->runnerInit( array( 'help' => '' ), new Event('*') );
     $output = ob_get_contents();
     ob_clean();
 
@@ -42,7 +44,7 @@ class HelpTest extends \PHPUnit_Framework_TestCase
     $help = new Help('', new Dispatcher());
 
     ob_start();
-    $help->runnerInit( array( 'testsuite' => '' ) );
+    $help->runnerInit( array( 'testsuite' => '' ), new Event('*') );
     $output = ob_get_contents();
     ob_clean();
 
