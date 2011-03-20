@@ -9,13 +9,13 @@ Listener:
   class: LiveTest\Packages\Upgrade\Listener\Upgrade
 
  ProgressBar:
-  class: LiveTest\Listener\Cli\ProgressBar
+  class: LiveTest\Packages\Core\Cli\Listeners\ProgressBar
   
  Help:
-  class: LiveTest\Listener\Cli\Help
+  class: LiveTest\Packages\Core\Cli\Listeners\Help
     
  RunInfoHeader:
-  class: LiveTest\Listener\Cli\InfoHeader
+  class: LiveTest\Packages\Core\Cli\Listeners\InfoHeader
 
  Verbose:
   class: LiveTest\Listener\Verbose
@@ -45,4 +45,4 @@ Listener:
      filename: logs/tmp.log
      
  StatusBar:
-  class: LiveTest\Listener\Cli\StatusBar
+  class: LiveTest\Packages\Core\Cli\Listeners\StatusBar

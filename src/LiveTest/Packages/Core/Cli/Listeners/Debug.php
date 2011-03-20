@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace LiveTest\Listener\Cli;
+namespace LiveTest\Packages\Core\Cli\Listeners;
 
 use Base\String\Manipulator;
 

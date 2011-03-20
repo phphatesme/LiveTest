@@ -100,7 +100,7 @@ class Runner extends ArgumentRunner
 
   public function initCoreListener($arguments)
   {
-    $this->eventDispatcher->connectListener(new \LiveTest\Listener\Cli\Debug($this->runId, $this->eventDispatcher), 10);
+    $this->eventDispatcher->connectListener(new \LiveTest\Packages\Core\Cli\Listeners\Debug($this->runId, $this->eventDispatcher), 10);
     $this->eventDispatcher->connectListener(new \LiveTest\Packages\Feedback\Listener\Send($this->runId, $this->eventDispatcher), 10);
     $this->eventDispatcher->simpleNotify('LiveTest.Runner.InitCore', array('arguments' => $arguments));
   }
