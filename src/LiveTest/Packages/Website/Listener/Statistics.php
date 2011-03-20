@@ -1,6 +1,6 @@
 <?php
 
-namespace LiveTest\Packages\phmLabs\Listener;
+namespace LiveTest\Packages\Website\Listener;
 
 use LiveTest\TestRun\Information;
 use LiveTest\TestRun\Properties;
