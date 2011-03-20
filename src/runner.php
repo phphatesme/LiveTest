@@ -1,24 +1,15 @@
 <?php
 
-use phmLabs\Components\Annovent\Event\Event;
-error_reporting(E_ALL);
-ini_set( 'display_errors', 1);
-
-use phmLabs\Components\Annovent\Event\Simple;
-use LiveTest\Event\Dispatcher;
-use LiveTest\Cli\Runner;
-use Base\Cli\ArgumentConverter;
+// @todo default config must be set here
 
 // @todo this must be defined somewhere else
 define('LIVETEST_VERSION', '0.8.4');
 
-include 'bootstrap.php';
-
-//echo "\nLiveTest " . LIVETEST_VERSION . " by Nils Langner & Mike Lohmann\n\n"; // (visit http://livetest.phphatesme.com)\n\n";
+include_once 'bootstrap.php';
 
 try
 {
-  $converter = new ArgumentConverter($_SERVER['argv'], '--');
+  $converter = new Base\Cli\ArgumentConverter($_SERVER['argv'], '--');
 
   // @todo this should be done in another class/function
   if ($converter->hasArgument('bootstrap'))
@@ -35,8 +26,8 @@ try
     }
   }
 
-  $dispatcher = new Dispatcher();
-  $runner = new Runner($converter->getArguments(), $dispatcher);
+  $dispatcher = new LiveTest\Event\Dispatcher();
+  $runner = new LiveTest\Cli\Runner($converter->getArguments(), $dispatcher);
   if ($runner->isRunAllowed())
   {
     $runner->run();
@@ -44,12 +35,12 @@ try
 }
 catch ( Livetest\ConfigurationException $e )
 {
-  $event = new Event('LiveTest.Configuration.Exception', array('exception' => $e));
+  $event = new phmLabs\Components\Annovent\Event\Event('LiveTest.Configuration.Exception', array('exception' => $e));
   $dispatcher->notify($event);
 }
 catch ( Exception $e )
 {
-  $event = new Event('LiveTest.Runner.Error', array('exception' => $e));
+  $event = new phmLabs\Components\Annovent\Event\Event('LiveTest.Runner.Error', array('exception' => $e));
   $dispatcher->notify($event);
   if (!$event->isProcessed())
   {

@@ -1,6 +1,5 @@
 <?php
 
-// include standard namespaces
 include_once 'lib/Symfony/Component/ClassLoader/UniversalClassLoader.php';
 
 $classLoader = new \Symfony\Component\ClassLoader\UniversalClassLoader();
