@@ -5,6 +5,10 @@
  */
 namespace LiveTest\Packages\Feedback\Listener;
 
+use Zend\Http\Client\Adapter\Curl;
+
+use Zend\Http\Client;
+
 use Zend\Mail\Mail;
 
 use LiveTest\Config\ConfigConfig;
@@ -12,11 +16,13 @@ use LiveTest\Listener\Base;
 
 class Send extends Base
 {
+  const PHM_API = 'http://www.phmlabs.com/livetest/api/feedback.php';
+
   private $sendFeedback = false;
 
   private $feedbackAddress = 'error-livetest@phmlabs.com';
 
-  private $kernelLibraries = array('Base','LiveTest','Feedback');
+  private $kernelLibraries = array ('Base', 'LiveTest', 'Feedback' );
 
   private $exception;
   private $config;
@@ -53,7 +59,7 @@ class Send extends Base
 
   private function createAttachment()
   {
-    $body = "Error Report (LiveTest Version ".LIVETEST_VERSION.") \n\n";
+    $body = "Error Report (LiveTest Version " . LIVETEST_VERSION . ") \n\n";
     $body .= "  Message: " . $this->exception->getMessage() . "\n";
     $body .= "  File   : " . $this->exception->getFile() . "\n";
     $body .= "  Line   : " . $this->exception->getLine() . "\n\n";
@@ -83,20 +89,26 @@ class Send extends Base
     {
       if ($this->sendFeedback)
       {
-        $body = $this->createAttachment();
-        $mail = new Mail();
+        try
+        {
+          $feedback = array ();
+          $feedback = $this->createAttachment();
 
-        $mail->setFrom('');
-        $mail->addTo($this->feedbackAddress);
-        $mail->setSubject('LiveTest: Error Report');
+          $zend = new Client(self::PHM_API);
+          $zend->setAdapter(new Curl());
+          $zend->setParameterPost('feedback', $feedback);
+          $zend->request('POST');
 
-        $mail->setBodyText($body);
-        $mail->send();
-        echo "\n\n  An e-mail with all error related information was sent. Thank you for helping to improve LiveTest.";
+          echo "\n\n  All error related informations were sent. Thank you for helping to improve LiveTest.";
+        }
+        catch ( \Exception $e )
+        {
+          echo "\n\n  Unable to send feedback (".$e->getMessage().")";
+        }
       }
       else
       {
-        echo "\n\n  If this error occurs again please use the --feedback argument to send an automated \n" . "  e-mail with all error related information to our team.";
+        echo "\n\n  If this error occurs again please use the --feedback argument to send all \n" . "  all error related information to our team.";
       }
     }
   }
