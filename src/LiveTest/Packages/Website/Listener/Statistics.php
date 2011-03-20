@@ -48,7 +48,7 @@ class Statistics extends Base
     try
     {
       $client = new Zend(self::PHM_API . '?urls=' . $this->urls . '&tests=' . $this->tests);
-      $client->request();
+      $response = $client->request();
     }
     catch (\Exception $e )
     {

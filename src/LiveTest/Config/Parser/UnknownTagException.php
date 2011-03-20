@@ -9,7 +9,9 @@
 
 namespace LiveTest\Config\Parser;
 
-class Exception extends \Exception
+use LiveTest\ConfigurationException;
+
+class UnknownTagException extends ConfigurationException
 {
 
 }

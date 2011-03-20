@@ -9,6 +9,10 @@
 
 namespace LiveTest\TestRun;
 
+use LiveTest\ConfigurationException;
+
+use LiveTest\Config\Parser\UnknownTagException;
+
 use LiveTest\Config\TestSuite;
 use LiveTest\Config\Parser\Parser;
 
@@ -129,14 +133,22 @@ class Properties
     {
       $yamlConfig = new Yaml($filename);
     }
-    catch (\Zend_Config_Exception $e )
+    catch (\Zend\Config\Exception $e )
     {
       throw new \LiveTest\ConfigurationException('Unable to load test suite yaml file (filename: ' . $filename . ')');
     }
     $testSuiteConfig = new TestSuite();
     $testSuiteConfig->setBaseDir(dirname($filename));
     $parser = new Parser('LiveTest\\Config\\Tags\\TestSuite\\');
-    $testSuiteConfig = $parser->parse($yamlConfig->toArray(), $testSuiteConfig);
+    try
+    {
+      $testSuiteConfig = $parser->parse($yamlConfig->toArray(), $testSuiteConfig);
+    }
+    catch( UnknownTagException $e )
+    {
+      throw new ConfigurationException('Error parsing testsuite configuration ('.$filename.'): '.$e->getMessage(),
+                                       null, $e);
+    }
 
     return new self($testSuiteConfig, $defaultUri);
     ;

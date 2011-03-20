@@ -108,7 +108,7 @@ class Send extends Base
       }
       else
       {
-        echo "\n\n  If this error occurs again please use the --feedback argument to send all \n" . "  all error related information to our team.";
+        echo "\n\n  If this error occurs again please use the --feedback argument to send all \n" . "  error related information to our team.";
       }
     }
   }
