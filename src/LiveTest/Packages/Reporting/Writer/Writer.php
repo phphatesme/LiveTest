@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace LiveTest\Report\Writer;
+namespace LiveTest\Packages\Reporting\Writer;
 
 /**
  * A writer is used to write a formatted text to a defined medium (e.g.: file, echo, email). 

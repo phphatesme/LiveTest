@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace LiveTest\Report\Writer;
+namespace LiveTest\Packages\Reporting\Writer;
 
 /**
  * This writer echoes the output.

@@ -21,26 +21,26 @@ Listener:
   class: LiveTest\Listener\Verbose
 
  Report_Echo:
-  class: LiveTest\Listener\Report
+  class: LiveTest\Packages\Reporting\Listeners\Report
   parameter:
    logStatuses:
     - error
     - failure
    format:
-    class: LiveTest\Report\Format\SimpleList
+    class: LiveTest\Packages\Reporting\Format\SimpleList
    writer:
-    class: LiveTest\Report\Writer\SimpleEcho
+    class: LiveTest\Packages\Reporting\Writer\SimpleEcho
 
  Report_File:
-  class: LiveTest\Listener\Report
+  class: LiveTest\Packages\Reporting\Listeners\Report
   parameter:
    logStatuses:
     - error
     - failure
    format:
-    class: LiveTest\Report\Format\SimpleList
+    class: LiveTest\Packages\Reporting\Format\SimpleList
    writer:
-    class: LiveTest\Report\Writer\File
+    class: LiveTest\Packages\Reporting\Writer\File
     parameter:
      filename: logs/tmp.log
      

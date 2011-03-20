@@ -7,17 +7,16 @@
  * file that was distributed with this source code.
  */
 
-namespace LiveTest\Listener;
+namespace LiveTest\Packages\Reporting\Listeners;
 
 use LiveTest;
-
-use Base\Http\ConnectionStatus;
-
 use LiveTest\TestRun\Information;
-use Base\Http\Response\Response;
-
+use LiveTest\Listener\Base;
 use LiveTest\TestRun\Result\ResultSet;
 use LiveTest\TestRun\Result\Result;
+
+use Base\Http\ConnectionStatus;
+use Base\Http\Response\Response;
 
 /**
  * This listener is used to provide all kind of reporting mechanism. Creating a report
@@ -127,7 +126,7 @@ class Report extends Base
   {
     if( $this->reportOnSuccess || $this->resultSet->getStatus() != Result::STATUS_SUCCESS)
     {
-      $report = new \LiveTest\Report\Report($this->writer,
+      $report = new \LiveTest\Packages\Reporting\Report($this->writer,
                                             $this->format,
                                             $this->resultSet,
                                             $this->connectionStatuses,

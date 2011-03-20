@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace LiveTest\Report\Format;
+namespace LiveTest\Packages\Reporting\Format;
 
 use LiveTest\TestRun\Result\Result;
 

@@ -7,12 +7,12 @@
  * file that was distributed with this source code.
  */
 
-namespace LiveTest\Report;
+namespace LiveTest\Packages\Reporting;
 
 use LiveTest\TestRun\Information;
 
-use LiveTest\Report\Writer\Writer;
-use LiveTest\Report\Format\Format;
+use LiveTest\Packages\Reporting\Writer\Writer;
+use LiveTest\Packages\Reporting\Format\Format;
 use LiveTest\TestRun\Result\ResultSet;
 
 class Report
