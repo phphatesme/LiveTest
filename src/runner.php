@@ -14,7 +14,7 @@ define('LIVETEST_VERSION', '0.8.4');
 
 include 'bootstrap.php';
 
-echo "\nLiveTest " . LIVETEST_VERSION . " by Nils Langner & Mike Lohmann\n\n"; // (visit http://livetest.phphatesme.com)\n\n";
+//echo "\nLiveTest " . LIVETEST_VERSION . " by Nils Langner & Mike Lohmann\n\n"; // (visit http://livetest.phphatesme.com)\n\n";
 
 try
 {

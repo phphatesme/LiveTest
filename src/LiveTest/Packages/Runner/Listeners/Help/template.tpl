@@ -1,6 +1,8 @@
 
   Usage: LiveTest --testsuite testsuite.yml [--config config.yml]
 
+         For more information please visit www.phmlabs.com/livetest
+
     --help              Prints this usage information.
 
     --testsuite <file>  Defines the testsuite to be run.

@@ -2,6 +2,9 @@ DefaultDomain: http://www.example.com
 
 Listener:
 
+ credentials:
+  class: LiveTest\Packages\Runner\Listeners\Credentials
+
  phmLabs_Statistics:
   class: LiveTest\Packages\Website\Listener\Statistics
 
