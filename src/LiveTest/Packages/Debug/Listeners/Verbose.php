@@ -7,7 +7,9 @@
  * file that was distributed with this source code.
  */
 
-namespace LiveTest\Listener;
+namespace LiveTest\Packages\Debug\Listeners;
+
+use LiveTest\Listener\Base;
 
 use Base\Http\ConnectionStatus;
 use Base\Http\Response\Response;

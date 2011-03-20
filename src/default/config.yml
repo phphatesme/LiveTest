@@ -9,16 +9,16 @@ Listener:
   class: LiveTest\Packages\Upgrade\Listener\Upgrade
 
  ProgressBar:
-  class: LiveTest\Packages\Core\Cli\Listeners\ProgressBar
+  class: LiveTest\Packages\Runner\Listeners\ProgressBar
   
  Help:
-  class: LiveTest\Packages\Core\Cli\Listeners\Help
+  class: LiveTest\Packages\Runner\Listeners\Help
     
  RunInfoHeader:
-  class: LiveTest\Packages\Core\Cli\Listeners\InfoHeader
+  class: LiveTest\Packages\Runner\Listeners\InfoHeader
 
  Verbose:
-  class: LiveTest\Listener\Verbose
+  class: LiveTest\Packages\Debug\Listeners\Verbose
 
  Report_Echo:
   class: LiveTest\Packages\Reporting\Listeners\Report
@@ -30,19 +30,6 @@ Listener:
     class: LiveTest\Packages\Reporting\Format\SimpleList
    writer:
     class: LiveTest\Packages\Reporting\Writer\SimpleEcho
-
- Report_File:
-  class: LiveTest\Packages\Reporting\Listeners\Report
-  parameter:
-   logStatuses:
-    - error
-    - failure
-   format:
-    class: LiveTest\Packages\Reporting\Format\SimpleList
-   writer:
-    class: LiveTest\Packages\Reporting\Writer\File
-    parameter:
-     filename: logs/tmp.log
      
  StatusBar:
-  class: LiveTest\Packages\Core\Cli\Listeners\StatusBar
+  class: LiveTest\Packages\Runner\Listeners\StatusBar

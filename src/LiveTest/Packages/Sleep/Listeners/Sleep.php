@@ -7,7 +7,9 @@
  * file that was distributed with this source code.
  */
 
-namespace LiveTest\Listener;
+namespace LiveTest\Package\Sleep\Listeners;
+
+use LiveTest\Listener\Base;
 
 use Base\Http\ConnectionStatus;
 

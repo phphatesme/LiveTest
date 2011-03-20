@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace LiveTest\Packages\Core\Cli\Listeners;
+namespace LiveTest\Packages\Runner\Listeners;
 
 use LiveTest\Listener\Base;
 use LiveTest\TestRun\Properties;

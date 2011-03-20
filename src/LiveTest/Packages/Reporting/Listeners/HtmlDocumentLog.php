@@ -7,7 +7,9 @@
  * file that was distributed with this source code.
  */
 
-namespace LiveTest\Listener;
+namespace LiveTest\Packages\Reporting\Listeners;
+
+use LiveTest\Listener\Base;
 
 use Base\File\File;
 

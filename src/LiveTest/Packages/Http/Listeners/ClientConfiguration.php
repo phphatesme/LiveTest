@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace LiveTest\Listener\Http;
+namespace LiveTest\Packages\Http\Listeners;
 
 use LiveTest\Listener\Base;
 
