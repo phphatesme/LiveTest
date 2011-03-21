@@ -24,6 +24,6 @@ class Credentials extends Base
    */
   public function runnerInit()
   {
-    echo "\nLiveTest " . LIVETEST_VERSION . " by Nils Langner & Mike Lohmann\n";
+    echo "\nLiveTest " . LIVETEST_VERSION . " by Nils Langner & Mike Lohmann\n\n";
   }
 }

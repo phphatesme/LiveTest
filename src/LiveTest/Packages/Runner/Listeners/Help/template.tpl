@@ -1,4 +1,3 @@
-
   Usage: LiveTest --testsuite testsuite.yml [--config config.yml]
 
          For more information please visit www.phmlabs.com/livetest
@@ -12,3 +11,4 @@
          --debug             Show all uncaught exceptions.
          --verbose           Be verbose.
          --feedback          Send error report to the LiveTest team.
+         --check-upgrade     Checks for a newer version of LiveTest.
