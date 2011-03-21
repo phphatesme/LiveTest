@@ -88,11 +88,9 @@ class Runner extends ArgumentRunner
     parent::__construct($arguments);
 
     $this->initConfig();
-    $this->initListeners();
-
     $this->eventDispatcher->simpleNotify('LiveTest.Runner.InitConfig', array('config' => $this->config));
-    // @todo should there be a naming convention for events? Something like checkSomething if the return
-    //       value will change the workflow. see symfony ::filter (e.g. manipulate)
+
+    $this->initListeners();
     $event = new Event('LiveTest.Runner.Init', array('arguments' => $arguments));
     $this->eventDispatcher->notifyUntil($event);
     $this->runAllowed = !$event->isProcessed();
