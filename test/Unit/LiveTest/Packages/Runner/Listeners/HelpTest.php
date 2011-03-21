@@ -1,18 +1,18 @@
 <?php
 
-namespace Test\Unit\LiveTest\Listener\Cli;
+namespace Unit\LiveTest\Packages\Runner\Listeners;
 
 use phmLabs\Components\Annovent\Event\Event;
 
 use LiveTest\Event\Dispatcher;
 
-use LiveTest\Listener\Cli\Help;
+use LiveTest\Packages\Runner\Listeners\Help;
 
 class HelpTest extends \PHPUnit_Framework_TestCase
 {
   private function getTemplateContent( )
   {
-    return file_get_contents(__DIR__.'/../../../../../src/LiveTest/Listener/Cli/Help/template.tpl');
+    return file_get_contents(__DIR__.'/../../../../../../src/LiveTest/Packages/Runner/Listeners/Help/template.tpl');
   }
 
   public function testPreRunNone()

@@ -1,6 +1,6 @@
 <?php
 
-namespace Test\Unit\LiveTest\Listener;
+namespace Test\Unit\LiveTest\Packages\Reporting\Listeners;
 
 use Unit\Base\Http\Response\MockUp;
 
@@ -12,7 +12,7 @@ use Base\Config\Yaml;
 
 use LiveTest\TestRun\Result\Result;
 use LiveTest\TestRun\Test;
-use LiveTest\Listener\HtmlDocumentLog;
+use LiveTest\Packages\Reporting\Listeners\HtmlDocumentLog;
 
 class HtmlDocumentLogTest extends \PHPUnit_Framework_TestCase
 {

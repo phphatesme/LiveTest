@@ -1,8 +1,8 @@
 <?php
 
-namespace Unit\LiveTest\Report\Format;
+namespace Unit\LiveTest\Packages\Reporting\Format;
 
-use LiveTest\Report\Format\Html;
+use LiveTest\Packages\Reporting\Format\Html;
 
 use LiveTest\Report\Format\Csv;
 

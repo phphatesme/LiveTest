@@ -1,8 +1,8 @@
 <?php
 
-namespace Unit\LiveTest\Report\Writer;
+namespace Unit\LiveTest\Packages\Reporting\Writer;
 
-use LiveTest\Report\Writer\File;
+use LiveTest\Packages\Reporting\Writer\File;
 
 class FileTest extends \PHPUnit_Framework_TestCase
 {

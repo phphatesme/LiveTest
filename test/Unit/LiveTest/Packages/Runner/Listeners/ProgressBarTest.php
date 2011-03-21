@@ -13,7 +13,7 @@ use Base\Http\ConnectionStatus;
 
 use LiveTest\TestRun\Test;
 use LiveTest\TestRun\Result\Result;
-use LiveTest\Listener\Cli\ProgressBar;
+use LiveTest\Packages\Runner\Listeners\ProgressBar;
 
 class ProgressBarTest extends \PHPUnit_Framework_TestCase
 {

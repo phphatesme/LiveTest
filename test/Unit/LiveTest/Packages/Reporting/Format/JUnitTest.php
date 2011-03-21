@@ -1,8 +1,8 @@
 <?php
 
-namespace Unit\LiveTest\Report\Format;
+namespace Unit\LiveTest\Packages\Reporting\Format;
 
-use LiveTest\Report\Format\JUnit;
+use LiveTest\Packages\Reporting\Format\JUnit;
 
 class JUnitTest extends FormatTest
 {

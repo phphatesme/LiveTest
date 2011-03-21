@@ -1,6 +1,6 @@
 <?php
 
-namespace Test\Unit\LiveTest\Extensions;
+namespace Test\Unit\LiveTest\Packages\Sleep\Listeners;
 
 use Unit\Base\Http\Response\MockUp;
 
@@ -12,7 +12,7 @@ use Base\Http\Response\Response;
 
 use Base\Timer\Timer;
 
-use LiveTest\Listener\Sleep;
+use LiveTest\Packages\Sleep\Listeners\Sleep;
 
 use Base\Www\Uri;
 use Base\Http\ConnectionStatus;

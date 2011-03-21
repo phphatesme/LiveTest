@@ -1,6 +1,6 @@
 <?php
 
-namespace Unit\LiveTest\Report\Format;
+namespace Unit\LiveTest\Packages\Reporting\Format;
 
 use Base\Http\ConnectionStatus;
 

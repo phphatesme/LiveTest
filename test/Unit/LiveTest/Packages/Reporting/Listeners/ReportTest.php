@@ -1,19 +1,18 @@
 <?php
 
-namespace Test\Unit\LiveTest\Extensions;
+namespace Test\Unit\LiveTest\Packages\Reporting\Listeners;
+
+use LiveTest\Packages\Reporting\Listeners\Report;
+use LiveTest\TestRun\Test;
+use LiveTest\TestRun\Result\Result;
 
 use Unit\Base\Http\Response\MockUp;
 
 use LiveTest\TestRun\Information;
-use LiveTest\Listener\Report;
-
 use LiveTest\Event\Dispatcher;
 
 use Base\Www\Uri;
 use Base\Http\ConnectionStatus;
-
-use LiveTest\TestRun\Test;
-use LiveTest\TestRun\Result\Result;
 
 class ReportTest extends \PHPUnit_Framework_TestCase
 {
@@ -23,8 +22,8 @@ class ReportTest extends \PHPUnit_Framework_TestCase
   {
     $this->listener = new Report('', new Dispatcher());
 
-    $writerConfig = array('class' => 'LiveTest\Report\Writer\SimpleEcho');
-    $formatConfig = array('class' => 'LiveTest\Report\Format\Csv');
+    $writerConfig = array('class' => 'LiveTest\Packages\Reporting\Writer\SimpleEcho');
+    $formatConfig = array('class' => 'LiveTest\Packages\Reporting\Format\Csv');
 
     $this->listener->init($formatConfig, $writerConfig);
   }
@@ -54,8 +53,8 @@ class ReportTest extends \PHPUnit_Framework_TestCase
   {
     $this->listener = new Report('', new Dispatcher());
 
-    $writerConfig = array('class' => 'LiveTest\Report\Writer\SimpleEcho');
-    $formatConfig = array('class' => 'LiveTest\Report\Format\Csv');
+    $writerConfig = array('class' => 'LiveTest\Packages\Reporting\Writer\SimpleEcho');
+    $formatConfig = array('class' => 'LiveTest\Packages\Reporting\Format\Csv');
 
     $this->listener->init($formatConfig, $writerConfig, array(Result::STATUS_FAILED));
 
@@ -84,8 +83,8 @@ class ReportTest extends \PHPUnit_Framework_TestCase
   {
     $this->listener = new Report('', new Dispatcher());
 
-    $writerConfig = array('class' => 'LiveTest\Report\Writer\SimpleEcho');
-    $formatConfig = array('class' => 'LiveTest\Report\Format\Csv');
+    $writerConfig = array('class' => 'LiveTest\Packages\Reporting\Writer\SimpleEcho');
+    $formatConfig = array('class' => 'LiveTest\Packages\Reporting\Format\Csv');
 
     $this->listener->init($formatConfig, $writerConfig, null, false);
 
@@ -107,8 +106,8 @@ class ReportTest extends \PHPUnit_Framework_TestCase
   {
     $this->listener = new Report('', new Dispatcher());
 
-    $writerConfig = array('class' => 'LiveTest\Report\Writer\File','parameter' => array('filename' => 'test.log'));
-    $formatConfig = array('class' => 'LiveTest\Report\Format\Html','parameter' => array('template' => 'test.tpl'));
+    $writerConfig = array('class' => 'LiveTest\Packages\Reporting\Writer\File','parameter' => array('filename' => 'test.log'));
+    $formatConfig = array('class' => 'LiveTest\Packages\Reporting\Format\Html','parameter' => array('template' => 'test.tpl'));
 
     $this->listener->init($formatConfig, $writerConfig);
   }

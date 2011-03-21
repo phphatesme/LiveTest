@@ -1,6 +1,6 @@
 <?php
 
-namespace Test\Unit\LiveTest\Listener\Cli;
+namespace Unit\LiveTest\Packages\Runner\Listeners;
 
 use LiveTest\Event\Dispatcher;
 
@@ -8,7 +8,7 @@ use Base\Config\Yaml;
 use Base\Www\Uri;
 
 use LiveTest\TestRun\Properties;
-use LiveTest\Listener\Cli\InfoHeader;
+use LiveTest\Packages\Runner\Listeners\InfoHeader;
 
 class InfoHeaderTest extends \PHPUnit_Framework_TestCase
 {

@@ -34,7 +34,7 @@ class ParserTest extends \PHPUnit_Framework_TestCase
     $configYaml = new Yaml(__DIR__ . '/fixtures/badtestsuite.yml');
 
     $parser = new Parser('LiveTest\\Config\\Tags\\TestSuite\\');
-    $this->setExpectedException('LiveTest\Config\Parser\Exception');
+    $this->setExpectedException('LiveTest\Config\Parser\UnknownTagException');
     $parsedConfig = $parser->parse($configYaml->toArray(), $config);
   }
 }

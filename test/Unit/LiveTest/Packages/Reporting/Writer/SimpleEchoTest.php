@@ -1,8 +1,8 @@
 <?php
 
-namespace Unit\LiveTest\Report\Writer;
+namespace Unit\LiveTest\Packages\Reporting\Writer;
 
-use LiveTest\Report\Writer\SimpleEcho;
+use LiveTest\Packages\Reporting\Writer\SimpleEcho;
 
 class SimpleEchoTest extends \PHPUnit_Framework_TestCase
 {

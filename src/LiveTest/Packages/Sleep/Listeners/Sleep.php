@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace LiveTest\Package\Sleep\Listeners;
+namespace LiveTest\Packages\Sleep\Listeners;
 
 use LiveTest\Listener\Base;
 

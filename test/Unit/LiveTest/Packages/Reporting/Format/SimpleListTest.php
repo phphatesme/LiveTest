@@ -1,6 +1,6 @@
 <?php
 
-namespace Unit\LiveTest\Report\Format;
+namespace Unit\LiveTest\Packages\Reporting\Format;
 
 use LiveTest\TestRun\Information;
 
@@ -9,7 +9,7 @@ use Base\Www\Uri;
 use LiveTest\TestRun\Test;
 use LiveTest\TestRun\Result\Result;
 use LiveTest\TestRun\Result\ResultSet;
-use LiveTest\Report\Format\SimpleList;
+use LiveTest\Packages\Reporting\Format\SimpleList;
 
 class SimpleListTest extends FormatTest
 {

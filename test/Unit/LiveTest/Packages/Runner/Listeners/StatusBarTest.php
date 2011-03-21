@@ -1,6 +1,6 @@
 <?php
 
-namespace Test\Unit\LiveTest\Listener\Cli;
+namespace Unit\LiveTest\Packages\Runner\Listeners;
 
 use Unit\Base\Http\Response\MockUp;
 
@@ -8,7 +8,7 @@ use Base\Www\Uri;
 
 use LiveTest\Event\Dispatcher;
 
-use LiveTest\Listener\Cli\StatusBar;
+use LiveTest\Packages\Runner\Listeners\StatusBar;
 use LiveTest\TestRun\Information;
 use LiveTest\TestRun\Test;
 use LiveTest\TestRun\Result\Result;
