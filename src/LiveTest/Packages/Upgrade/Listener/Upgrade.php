@@ -1,21 +1,43 @@
 <?php
 
+/*
+ * This file is part of the LiveTest package.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace LiveTest\Packages\Upgrade\Listener;
 
 use Zend\Http\Client\Adapter\Curl;
-
 use Zend\Http\Client;
 
 use phmLabs\Components\Annovent\Event\Event;
 
 use LiveTest\Listener\Base;
 
+/**
+ * This listener adds the --check-upgrade argument to check for a newer version
+ * of LiveTest.
+ *
+ * @author Nils Langner
+ *
+ */
 class Upgrade extends Base
 {
+  /**
+   * The url where the latest stable version number can be found
+   * @var string
+   */
   const PHM_API = 'http://www.phmlabs.com/livetest/api/version';
 
   /**
+   * This function checks if a newer version of livetest is avaiable.
+   *
    * @Event("LiveTest.Runner.Init")
+   *
+   * @param array $arguments
+   * @param Event $event
    */
   public function doUpgradeCheck($arguments, Event $event)
   {
