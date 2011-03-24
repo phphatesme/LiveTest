@@ -177,7 +177,8 @@ class Runner extends ArgumentRunner
     }
     catch ( \Zend\Config\Exception\InvalidArgumentException $e )
     {
-      throw new ConfigurationException('The given testsuite configuration file ("' . $this->getArgument('testsuite') . '") was not found.');
+    	var_dump( $e->getMessage() );
+      throw new ConfigurationException('The given testsuite configuration file ("' . $this->getArgument('testsuite') . '") was not found.', null, $e);
     }
 
     $client = new Zend();
