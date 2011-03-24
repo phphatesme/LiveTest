@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the LiveTest package.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace LiveTest\TestCase\General\Html\Dom\XPath;
 
 use LiveTest\ConfigurationException;
@@ -7,12 +14,25 @@ use LiveTest\ConfigurationException;
 use LiveTest\TestCase\Exception;
 use DOMXPath;
 
+/**
+ * This testcase checks if the elements that a specified by a xpath have a valid size.
+ *
+ * @author Nils Langner
+ */
 class Size extends TestCase
 {
 	private $xpath;
 	private $minSize;
 	private $maxSize;
 
+	/**
+	 * Sets the xpath, minSize, maxSize. At least one of the both sizes has to set.
+	 *
+	 * @param string $xpath
+	 * @param int $minSize
+	 * @param int $maxSize
+	 * @throws ConfigurationException
+	 */
 	public function init($xpath, $minSize = null, $maxSize = null)
 	{
 		if(is_null($minSize) && is_null($maxSize))
@@ -26,6 +46,13 @@ class Size extends TestCase
 		$this->xpath = $xpath;
 	}
 
+	/**
+	 * Checks if the elements that a specified by a xpath have a valid size.
+	 *
+	 * @see LiveTest\TestCase\General\Html\Dom\XPath.TestCase::doXPathTest()
+	 *
+	 * @param DOMXPath $domXPath
+	 */
 	public function doXPathTest(DOMXPath $domXPath)
 	{
 		$elements = $domXPath->query($this->xpath);
@@ -57,8 +84,6 @@ class Size extends TestCase
       {
       	throw new Exception('The size of the xpath element ("'.$this->xpath.'") is too small (current: '.$size.', min: '.$this->minSize.').');
       }
-
-
     }
 	}
 }
