@@ -13,6 +13,7 @@ class HttpClientMockup implements Client
   private $uri;
   private $nextRequestFails = false;
   private $timeout;
+  private $postParam = array();
 
   public function __construct(Response $response)
   {
@@ -37,6 +38,11 @@ class HttpClientMockup implements Client
   public function setUri($uri)
   {
     $this->uri = $uri;
+  }
+
+  public function setParameterPost($paramName, $paramValue)
+  {
+    $this->postParam[$paramName] = $paramValue;
   }
 
   public function getTimeout()
