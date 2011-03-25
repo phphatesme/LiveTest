@@ -18,7 +18,11 @@ class UriTest extends \PHPUnit_Framework_TestCase
                               'http://www.example.com/index.php?foo:bar',
                               'ww.example.com',
                               'test.example.com',
-    						  'ftp://www.example.com',
+                              'ftp://www.example.com',
+                              'http://localhost/', // localhost is valid uri
+                              'http://testservershostname/', // hostname in a local network
+                              'http://localhost/~username/homedir/websites.php', // apache can be configured to read website from user homes
+                              'http://172.123.4.56/', // ips should be vaild to
                             );
     
     foreach ( $validUriStrings as $validUriString )
