@@ -2,7 +2,11 @@
 
 include_once __DIR__.'/../src/bootstrap.php';
 
-function LiveTestUnit_Autoload($classname)
+$classLoader->registerNamespace('Unit\Base', __DIR__.DIRECTORY_SEPARATOR.'lib');
+$classLoader->registerNamespace('Unit\LiveTest', __DIR__.DIRECTORY_SEPARATOR.'LiveTest');
+$classLoader->register();
+
+/*function LiveTestUnit_Autoload($classname)
 {
   $currentDir = __DIR__;
   //$classname = str_replace('Test\\', '\\', $classname);
@@ -28,4 +32,4 @@ function LibUnit_Autoload($classname)
   }
 }
 
-spl_autoload_register('LibUnit_Autoload');
+spl_autoload_register('LibUnit_Autoload');*/

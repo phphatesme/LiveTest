@@ -11,7 +11,7 @@ class UriTest extends \PHPUnit_Framework_TestCase
     $validUriStrings = array( 'http://example.com',
                               'https://example.com',
                               'http://www.example.com',
-                              'www.example.com'.
+                              'www.example.com',
                               'www.example.com/index.php',
                               'http://www.example.com/index.php',
                               'http://www.example.com/index.php?foo=bar&blub=bla',
@@ -19,26 +19,29 @@ class UriTest extends \PHPUnit_Framework_TestCase
                               'ww.example.com',
                               'test.example.com',
     						  'ftp://www.example.com',
+                              'https://user:pass@www.somewhere.com:8080/login.php?do=login&style=%23#pagetop',
+							  'http://user@www.somewhere.com/#pagetop',
+							  'https://somewhere.com/index.html',
+							  'ftp://user:****@somewhere.com:21/',
+                              'http://somewhere.com/index.html/'
                             );
-    
+     
     foreach ( $validUriStrings as $validUriString )
     {
-      $this->assertTrue(Uri::isValid($validUriString));      
+      $this->assertTrue(Uri::isValid($validUriString), 'The uri "'.$validUriString . '" was not accepted as valid uri, but is.');      
     }
   }
   
   public function testBadIsValid( )
   {
     $invalidUriStrings = array( '',
-                                'test',
                                 'www..examplepage',
-                                'test.longdomainame',
                                 '#',
                                 ';',
                                 'http://',
                                 'http:/www.example.com',
                                 'ftp:/www.example.com',     
-                                'tp://www.example.com',                        
+                                'tp://www.example.com',
                               );
     
     foreach ( $invalidUriStrings as $invalidUriString )
