@@ -52,7 +52,7 @@ class Parser
       }
       else
       {
-        throw new UnknownTagException('Unknown tag (' . $configTag . ')');
+        throw new UnknownTagException('Unknown tag (' . $configTag . ')', $configTag);
       }
     }
 

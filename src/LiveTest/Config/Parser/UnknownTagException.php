@@ -13,5 +13,15 @@ use LiveTest\ConfigurationException;
 
 class UnknownTagException extends ConfigurationException
 {
-
+	private $tagName;
+	
+	public function __construct($message, $tagName, $code = null, $previous = null)
+	{
+		$this->tagName = $tagName;
+	}
+	
+	public function getTagName( )
+	{
+		return $this->tagName;
+	}
 }

@@ -100,6 +100,7 @@ class Runner extends ArgumentRunner
   {
     $this->eventDispatcher->connectListener(new \LiveTest\Packages\Debug\Listeners\Debug($this->runId, $this->eventDispatcher), 10);
     $this->eventDispatcher->connectListener(new \LiveTest\Packages\Feedback\Listener\Send($this->runId, $this->eventDispatcher), 10);
+    $this->eventDispatcher->connectListener(new \LiveTest\Packages\Runner\Listeners\Credentials($this->runId, $this->eventDispatcher), 10);
     $this->eventDispatcher->simpleNotify('LiveTest.Runner.InitCore', array('arguments' => $arguments));
   }
 
@@ -123,7 +124,14 @@ class Runner extends ArgumentRunner
     $config = new ConfigConfig();
 
     $parser = new Parser('\\LiveTest\Config\\Tags\\Config\\');
-    $config = $parser->parse($configArray, $config);
+    try
+    {
+    	$config = $parser->parse($configArray, $config);
+    }
+    catch( \LiveTest\Config\Parser\UnknownTagException $e)
+    {
+    	throw new ConfigurationException('Unknown tag ("'.$e->getTagName().'") found in the configuration file.', null, $e);	
+    }
 
     return $config;
   }

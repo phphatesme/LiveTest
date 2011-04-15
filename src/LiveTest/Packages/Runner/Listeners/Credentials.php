@@ -20,7 +20,7 @@ use LiveTest\TestRun\Properties;
 class Credentials extends Base
 {
   /**
-   * @Event("LiveTest.Runner.Init")
+   * @Event("LiveTest.Runner.InitCore")
    */
   public function runnerInit()
   {
