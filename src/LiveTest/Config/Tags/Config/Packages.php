@@ -16,13 +16,13 @@ use LiveTest\Config\ConfigConfig;
  * extend LiveTest without touching the core.
  *
  * @example
- *  IncludePaths:
+ *  Packages:
  *   - /tmp
  *   - c:/
  *
  * @author Nils Langner
  */
-class IncludePaths extends Base
+class Packages extends Base
 {
   private $includedPaths = array();
 

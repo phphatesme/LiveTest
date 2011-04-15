@@ -150,7 +150,6 @@ class Properties
                                        null, $e);
     }
 
-    return new self($testSuiteConfig, $defaultUri);
-    ;
+    return new self($testSuiteConfig, $defaultUri);    
   }
 }

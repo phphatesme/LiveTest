@@ -100,6 +100,7 @@ class Runner extends ArgumentRunner
   {
     $this->eventDispatcher->connectListener(new \LiveTest\Packages\Debug\Listeners\Debug($this->runId, $this->eventDispatcher), 10);
     $this->eventDispatcher->connectListener(new \LiveTest\Packages\Feedback\Listener\Send($this->runId, $this->eventDispatcher), 10);
+    $this->eventDispatcher->connectListener(new \LiveTest\Packages\Runner\Listeners\Credentials($this->runId, $this->eventDispatcher), 10);
     $this->eventDispatcher->simpleNotify('LiveTest.Runner.InitCore', array('arguments' => $arguments));
   }
 
@@ -123,7 +124,14 @@ class Runner extends ArgumentRunner
     $config = new ConfigConfig();
 
     $parser = new Parser('\\LiveTest\Config\\Tags\\Config\\');
-    $config = $parser->parse($configArray, $config);
+    try
+    {
+    	$config = $parser->parse($configArray, $config);
+    }
+    catch( \LiveTest\Config\Parser\UnknownTagException $e)
+    {
+    	throw new ConfigurationException('Unknown tag ("'.$e->getTagName().'") found in the configuration file.', null, $e);	
+    }
 
     return $config;
   }
@@ -178,6 +186,10 @@ class Runner extends ArgumentRunner
     catch ( \Zend\Config\Exception\InvalidArgumentException $e )
     {
       throw new ConfigurationException('The given testsuite configuration file ("' . $this->getArgument('testsuite') . '") was not found.', null, $e);
+    }
+    catch( \InvalidArgumentException $e )
+    {
+    	throw new ConfigurationException('Error parsing testsuite configuration: '.$e->getMessage(), null, $e);
     }
 
     $client = new Zend();
