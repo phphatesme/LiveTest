@@ -192,6 +192,7 @@ class UniversalClassLoader
                     if (0 === strpos($namespace, $ns)) {
                         $className = substr($class, $pos + 1);
                         $file = $dir.DIRECTORY_SEPARATOR.str_replace('\\', DIRECTORY_SEPARATOR, $namespace).DIRECTORY_SEPARATOR.str_replace('_', DIRECTORY_SEPARATOR, $className).'.php';
+                        var_dump($file);
                         if (file_exists($file)) {
                             require $file;
                             return;

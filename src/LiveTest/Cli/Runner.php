@@ -71,7 +71,7 @@ class Runner extends ArgumentRunner
   /**
    * This function intializes the runner. It sets the runId, inits the configuration
    * and registers the assigned listeners. Afterwards all listeners are notified. If
-   * a listener returns false on notification the runner is noit able to run.
+   * a listener returns false on notification the runner is not able to run.
    *
    * @notify LiveTest.Runner.InitConfig
    * @notify LiveTest.Runner.Init
