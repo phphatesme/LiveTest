@@ -96,7 +96,7 @@ class Runner extends ArgumentRunner
     $this->runAllowed = !$event->isProcessed();
   }
 
-  public function initCoreListener($arguments)
+  private function initCoreListener($arguments)
   {
     $this->eventDispatcher->connectListener(new \LiveTest\Packages\Debug\Listeners\Debug($this->runId, $this->eventDispatcher), 10);
     $this->eventDispatcher->connectListener(new \LiveTest\Packages\Feedback\Listener\Send($this->runId, $this->eventDispatcher), 10);
