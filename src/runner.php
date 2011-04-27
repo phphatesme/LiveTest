@@ -3,7 +3,7 @@
 // @todo default config must be set here
 
 // @todo this must be defined somewhere else
-define('LIVETEST_VERSION', '0.8.4');
+define('LIVETEST_VERSION', '0.8.9');
 
 include_once 'bootstrap.php';
 
