@@ -13,7 +13,7 @@ use Base\Www;
 
 /**
  * This class contains all information about the listeners and the default domain. It is used to
- * represent the config yaml and is filled by the tag system and the parse.
+ * represent the config yaml and is filled by the tag system and the parser.
  *
  * @author Nils Langner
  */

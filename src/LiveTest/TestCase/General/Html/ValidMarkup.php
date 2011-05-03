@@ -35,6 +35,7 @@ class ValidMarkup extends TestCase
    *
    * @param string URI of an alternative validation service
    * @param int Seconds between API calls
+   * @todo check if Validator can be injected into init
    */
   public function init($validatorUri = null)
   {
@@ -42,7 +43,7 @@ class ValidMarkup extends TestCase
     $httpClient = new \Base\Http\Client\Zend();
 
     // create validator and inject http client
-    $this->_validator = new W3($httpClient);
+    $this->_validator = new W3($httpClient, $validatorUri);
   }
 
   /**

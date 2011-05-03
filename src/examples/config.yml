@@ -3,6 +3,8 @@ DefaultDomain: http://www.phphatesme.com
 IncludePaths:
  - /tmp
  - c:/
+ 
+MemoryLimit: 512M
 
 Listener:
 
