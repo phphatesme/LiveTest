@@ -1,6 +1,6 @@
 #! /bin/bash
 
-script_dir=`pear config-get php_dir`;
+script_dir=`pear config-get php_dir`"/LiveTest";
 if [ ! -e $script_dir/src/runner.php ];then
     script_dir="$(dirname "$(readlink -f ${BASH_SOURCE[0]})")";
     script_dir=$script_dir"/../";
