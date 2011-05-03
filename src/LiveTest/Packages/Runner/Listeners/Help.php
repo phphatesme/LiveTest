@@ -26,6 +26,11 @@ class Help extends Base
    * @var string The filename. Relative to __DIR__.
    */
   private $template = 'Help/template.tpl';
+  
+  private $templatePlaceholders = array('@@configPath@@',
+  										'@@testSuitePath@@');
+  
+  private $examplesPath = 'examples';
 
   /**
    * This function echoes the global help if the --help command line argument is set
@@ -36,11 +41,55 @@ class Help extends Base
    */
   public function runnerInit(array $arguments, Event $event)
   {
+    $path = $this->getBasePathFrom($arguments);
+    
     if (array_key_exists('help', $arguments) || count($arguments) == 0)
     {
-      echo file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . $this->template);
+      $templateContent = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . $this->template);
+      echo $this->replacePlaceholdersInTemplateContentWithPath($templateContent, $path);
+      
       $event->setProcessed();
     }
     return true;
+  }
+  
+  
+  /**
+   * 
+   * Replaces the template's placeholders with defined content.
+   * 
+   * @param String $content
+   * @param String $path
+   * 
+   * @return String $content
+   */
+  private function replacePlaceholdersInTemplateContentWithPath($content, $path)
+  {
+    foreach($this->templatePlaceholders as $placeholder)
+    {
+        $content = str_replace($placeholder, 
+                               $this->getBasePath($path), 
+                               $content);
+    }
+    
+    return $content;
+  }
+  
+  private function getBasePath($path)
+  {
+    return $path . $this->examplesPath. DIRECTORY_SEPARATOR;
+  }
+  
+  private function getBasePathFrom($arguments)
+  {
+    if(!array_key_exists('pwd', $arguments))
+    {
+      return '.' . DIRECTORY_SEPARATOR;
+    }
+    else
+    {
+      return $arguments['pwd'] . DIRECTORY_SEPARATOR;
+    }
+    
   }
 }

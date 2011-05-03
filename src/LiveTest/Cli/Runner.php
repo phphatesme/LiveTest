@@ -9,6 +9,8 @@
 
 namespace LiveTest\Cli;
 
+use LiveTest\MandatoryParameterException;
+
 use LiveTest\ConfigurationException;
 
 use phmLabs\Components\Annovent\Event\Event;
@@ -177,7 +179,7 @@ class Runner extends ArgumentRunner
   {
     if (!$this->hasArgument('testsuite') || $this->getArgument('testsuite') == '')
     {
-      throw new ConfigurationException('The mandatory --testsuite argument was not found. ' . 'Please use LiveTest --help for more information.');
+      throw new MandatoryParameterException('The mandatory --testsuite argument was not found. ' . 'Please use LiveTest --help for more information.');
     }
     try
     {

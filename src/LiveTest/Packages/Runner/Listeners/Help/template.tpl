@@ -1,5 +1,11 @@
   Usage: LiveTest --testsuite testsuite.yml [--config config.yml]
-
+         
+  Example: LiveTest --testsuite @@testSuitePath@@testsuite.yml --config @@configPath@@config.yml
+         
+         Just copy and paste the above line to your terminal/console and execute
+         it to start the example testrun.
+         
+         
          For more information please visit www.phmlabs.com/livetest
 
          --help              Prints this usage information.

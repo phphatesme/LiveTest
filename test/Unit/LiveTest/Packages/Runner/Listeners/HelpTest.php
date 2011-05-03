@@ -10,9 +10,25 @@ use LiveTest\Packages\Runner\Listeners\Help;
 
 class HelpTest extends \PHPUnit_Framework_TestCase
 {
+  
+  private $templatePlaceholders = array('@@configPath@@',
+  										'@@testSuitePath@@');
+  
+  private $examplesPath = 'examples';
+  
   private function getTemplateContent( )
   {
-    return file_get_contents(__DIR__.'/../../../../../../src/LiveTest/Packages/Runner/Listeners/Help/template.tpl');
+    $content = file_get_contents(__DIR__.'/../../../../../../src/LiveTest/Packages/Runner/Listeners/Help/template.tpl');
+    $replacePath = '.' . DIRECTORY_SEPARATOR . $this->examplesPath. DIRECTORY_SEPARATOR;
+    
+    foreach($this->templatePlaceholders as $placeholder)
+    {
+        $content = str_replace($placeholder, 
+                               $replacePath, 
+                               $content);
+    }
+    
+    return $content;
   }
 
   public function testPreRunNone()
@@ -23,7 +39,7 @@ class HelpTest extends \PHPUnit_Framework_TestCase
     $help->runnerInit( array( ), new Event('*') );
     $output = ob_get_contents();
     ob_clean();
-
+    
     $this->assertEquals( $this->getTemplateContent(), $output );
   }
 

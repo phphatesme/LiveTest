@@ -3,13 +3,20 @@
 // @todo default config must be set here
 
 // @todo this must be defined somewhere else
-define('LIVETEST_VERSION', '0.8.9');
+use phmLabs\Components\Annovent\Event\Event;
+use LiveTest\MandatoryParameterException;
+use LiveTest\Event\Dispatcher;
+use LiveTest\Packages\Runner\Listeners\Help;
+
+define('LIVETEST_VERSION', '1.0.0');
 
 include_once 'bootstrap.php';
 
 try
 {
-  $converter = new Base\Cli\ArgumentConverter($_SERVER['argv'], '--');
+  
+  $commandLineArguments = array_merge($_SERVER['argv'],array('--pwd', realpath(__DIR__)));
+  $converter = new Base\Cli\ArgumentConverter($commandLineArguments, '--');
 
   // @todo this should be done in another class/function
   if ($converter->hasArgument('bootstrap'))
@@ -27,10 +34,24 @@ try
   }
 
   $dispatcher = new LiveTest\Event\Dispatcher();
+  
   $runner = new LiveTest\Cli\Runner($converter->getArguments(), $dispatcher);
   if ($runner->isRunAllowed())
   {
-    $runner->run();
+    try
+    {
+      $runner->run();
+    }
+    catch (MandatoryParameterException $e)
+    {
+      $help = new Help('', new Dispatcher());
+      echo $e->getMessage() . "\n\n";
+      $commandLineArguments = array_merge(array( '--help', '' ), $commandLineArguments);
+      $converter = new Base\Cli\ArgumentConverter($commandLineArguments, '--');
+    
+      $help->runnerInit( $converter->getArguments(), new Event('*') );
+      
+    }
   }
 }
 catch ( Livetest\ConfigurationException $e )
