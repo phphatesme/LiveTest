@@ -32,4 +32,18 @@ class RegExNotPresentTest extends \PHPUnit_Framework_TestCase
 
     $testCase->test( $response, new Uri( 'http://www.example.com' ) );
   }
+  
+  public function testAnOtherRegExNotFound()
+  {
+    $testCase = new RegExNotPresent();
+    $testCase->init( '@^database.*error$@' );
+
+    $response = new MockUp();
+    $response->setBody('database connection error');
+    $this->setExpectedException('LiveTest\TestCase\Exception');
+    $testCase->test( $response, new Uri( 'http://www.example.com' ) );
+    
+    $response->setBody('database connection established');
+    $testCase->test( $response, new Uri( 'http://www.example.com' ) );
+  }
 }
