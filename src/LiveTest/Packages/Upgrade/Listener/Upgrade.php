@@ -29,7 +29,7 @@ class Upgrade extends Base
    * The url where the latest stable version number can be found
    * @var string
    */
-  const PHM_API = 'http://www.phmlabs.com/livetest/api/version';
+  const PHM_API = 'http://livetest.phmlabs.com/api/version';
 
   /**
    * This function checks if a newer version of livetest is avaiable.
