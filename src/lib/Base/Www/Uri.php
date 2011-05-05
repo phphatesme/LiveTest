@@ -74,7 +74,7 @@ class Uri
     // PORT (optional)
     $urlregex .= "(\:[0-9]{2,5})?";
     // PATH (optional)
-    $urlregex .= "(\/([a-z0-9+\$_-]\.?)+)*\/?";
+    $urlregex .= "(\/([a-z0-9+\$_-~]\.?)+)*\/?";
     // GET Query (optional)
     $urlregex .= "(\?[a-z+&\$_.-][a-z0-9;:@/&%=+\$_.-]*)?";
     // ANCHOR (optional)
