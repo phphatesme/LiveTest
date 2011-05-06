@@ -13,7 +13,7 @@ class Statistics extends Base
   private $urls;
   private $tests;
 
-  const PHM_API = 'http://www.phmlabs.com/livetest/api/statistics.php';
+  const PHM_API = 'http://livetest.phmlabs.com/api/statistics.php';
 
   /**
    * @Event("LiveTest.Run.PreRun")
