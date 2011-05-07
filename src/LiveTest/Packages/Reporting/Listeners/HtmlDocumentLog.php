@@ -9,6 +9,8 @@
 
 namespace LiveTest\Packages\Reporting\Listeners;
 
+use LiveTest\ConfigurationException;
+
 use LiveTest\Listener\Base;
 
 use Base\File\File;
@@ -47,12 +49,9 @@ class HtmlDocumentLog extends Base
   public function init( $logPath, array $logStatuses = null )
   {
     $this->logPath = $logPath . '/' . $this->getRunId() . '/';
-
-    if (!file_exists($this->logPath))
-    {
-      mkdir($this->logPath, 0777, true);
-    }
-
+    
+    $this->createLogDirIfNotExists($this->logPath);
+   
     if (!is_null($logStatuses))
     {
       $this->logStatuses = $logStatuses;
@@ -62,7 +61,36 @@ class HtmlDocumentLog extends Base
       $this->logStatuses = array(Result::STATUS_ERROR,Result::STATUS_FAILED);
     }
   }
-
+  
+  /**
+   * 
+   * Checks if a directory exists. If not it is created.
+   * @param String $logDir Path to directory which should be created if not exists
+   */
+  private function createLogDirIfNotExists($logDir)
+  {
+    if (!is_dir($logDir))
+    {
+      $this->createLogDirRecursively($logDir);
+    }
+  }
+  
+  /**
+   * 
+   * Trys to create the given $logDir recursively. If an error occurs, an exception
+   * is thrown.
+   * @param String $logDir Path to directory which should be created
+   * @throws ConfigurationException
+   */
+  private function createLogDirRecursively($logDir)
+  {
+     if(false === @mkdir($logDir, 0777, true))
+     {
+       $lastError = error_get_last();
+       throw new ConfigurationException('Could not create Log-Directory: '.$logDir.'; Error: '.$lastError['message']);
+     }
+  }
+  
   /**
    * This function writes the html documents to a specified directory
    *
