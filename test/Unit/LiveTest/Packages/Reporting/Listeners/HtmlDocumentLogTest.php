@@ -48,7 +48,13 @@ class HtmlDocumentLogTest extends \PHPUnit_Framework_TestCase
 
     $this->assertTrue(file_exists($this->fullLogPath . $this->createdFile));
   }
-
+  
+  public function testResultLogException()
+  {
+    $this->setExpectedException('LiveTest\ConfigurationException');
+    $this->listener->init('/', array( Result::STATUS_SUCCESS) );
+  }
+  
   public function testHandleResultLogStatuses()
   {
     $this->listener->init(__DIR__ . DIRECTORY_SEPARATOR . $this->logPath, array( Result::STATUS_SUCCESS) );
