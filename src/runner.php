@@ -13,8 +13,7 @@ define('LIVETEST_VERSION', '1.0.0');
 include_once 'bootstrap.php';
 
 try
-{
-  
+{  
   $commandLineArguments = array_merge($_SERVER['argv'],array('--pwd', realpath(__DIR__)));
   $converter = new Base\Cli\ArgumentConverter($commandLineArguments, '--');
 
@@ -49,8 +48,7 @@ try
       $commandLineArguments = array_merge(array( '--help', '' ), $commandLineArguments);
       $converter = new Base\Cli\ArgumentConverter($commandLineArguments, '--');
     
-      $help->runnerInit( $converter->getArguments(), new Event('*') );
-      
+      $help->runnerInit( $converter->getArguments(), new Event('*') );      
     }
   }
 }

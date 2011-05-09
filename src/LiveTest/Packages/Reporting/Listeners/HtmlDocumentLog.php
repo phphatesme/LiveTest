@@ -15,6 +15,7 @@ use Base\File\File;
 
 use Base\Http\Response\Response;
 use LiveTest\TestRun\Result\Result;
+use LiveTest\ConfigurationException;
 
 /**
  * This listener writes all specified html documents in to a defined directory. The
@@ -29,13 +30,13 @@ class HtmlDocumentLog extends Base
    * @var string
    */
   private $logPath;
-
+  
   /**
    * The result statuses to log
    * @var array
    */
-  private $logStatuses = array();
-
+  private $logStatuses = array ();
+  
   /**
    * This function initializes the log path and if given the log statuses
    *
@@ -44,25 +45,26 @@ class HtmlDocumentLog extends Base
    * @param string $logPath
    * @param array $logStatuses
    */
-  public function init( $logPath, array $logStatuses = null )
+  public function init($logPath, array $logStatuses = null)
   {
     $this->logPath = $logPath . '/' . $this->getRunId() . '/';
-
+    
     if (!file_exists($this->logPath))
     {
+    	// @todo if uanble to create dir "Warning: mkdir(): Permission denied in /app1/ela/var/www/app/LiveTest/src/LiveTest/Packages/Reporting/Listeners/HtmlDocumentLog.php on line 54"    	
       mkdir($this->logPath, 0777, true);
     }
-
+    
     if (!is_null($logStatuses))
     {
       $this->logStatuses = $logStatuses;
     }
     else
     {
-      $this->logStatuses = array(Result::STATUS_ERROR,Result::STATUS_FAILED);
+      $this->logStatuses = array (Result::STATUS_ERROR, Result::STATUS_FAILED);
     }
   }
-
+  
   /**
    * This function writes the html documents to a specified directory
    *
@@ -75,7 +77,14 @@ class HtmlDocumentLog extends Base
       $filename = $this->logPath . urlencode($result->getUri()->toString());
       $file = new File($filename);
       $file->setContent($response->getBody());
-      $file->save();
+      try
+      {
+        $file->save();
+      }
+      catch (\Exception $e)
+      {
+      	throw new ConfigurationException( 'Unable to write the html response to file "'.$filename.'"' );
+      }
     }
   }
 }
