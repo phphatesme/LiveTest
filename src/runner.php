@@ -8,8 +8,8 @@ use LiveTest\MandatoryParameterException;
 use LiveTest\Event\Dispatcher;
 use LiveTest\Packages\Runner\Listeners\Help;
 
-define('LIVETEST_VERSION', '1.0.0');
 
+include_once 'version.php';
 include_once 'bootstrap.php';
 
 try
