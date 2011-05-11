@@ -2,9 +2,9 @@ DefaultDomain: http://www.example.com
 
 Listener:
 
- credentials:
-  class: LiveTest\Packages\Runner\Listeners\Credentials
-  
+ Preconditions:
+  class: LiveTest\Packages\Runner\Listeners\Preconditions
+
  version:
   class: LiveTest\Packages\Runner\Listeners\Version
 

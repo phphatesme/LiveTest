@@ -9,8 +9,6 @@
 
 namespace LiveTest\Cli;
 
-use LiveTest\MandatoryParameterException;
-
 use LiveTest\ConfigurationException;
 
 use phmLabs\Components\Annovent\Event\Event;
@@ -132,7 +130,7 @@ class Runner extends ArgumentRunner
     }
     catch( \LiveTest\Config\Parser\UnknownTagException $e)
     {
-    	throw new ConfigurationException('Unknown tag ("'.$e->getTagName().'") found in the configuration file.', null, $e);	
+    	throw new ConfigurationException('Unknown tag ("'.$e->getTagName().'") found in the configuration file.', null, $e);
     }
 
     return $config;
@@ -178,10 +176,8 @@ class Runner extends ArgumentRunner
    */
   private function initTestRun()
   {
-    if (!$this->hasArgument('testsuite') || $this->getArgument('testsuite') == '')
-    {
-      throw new MandatoryParameterException('The mandatory --testsuite argument was not found. ' . 'Please use LiveTest --help for more information.');
-    }
+    $this->eventDispatcher->simpleNotify('LiveTest.Runner.InitTestRun');
+
     try
     {
       $properties = Properties::createByYamlFile($this->getArgument('testsuite'), $this->config->getDefaultDomain());

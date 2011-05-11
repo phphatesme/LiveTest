@@ -9,14 +9,12 @@
 
 namespace LiveTest\Packages\Reporting\Listeners;
 
-use LiveTest\ConfigurationException;
+use Base\File\File;
+use Base\Http\Response\Response;
 
 use LiveTest\Listener\Base;
-
-use Base\File\File;
-
-use Base\Http\Response\Response;
 use LiveTest\TestRun\Result\Result;
+use LiveTest\ConfigurationException;
 
 /**
  * This listener writes all specified html documents in to a defined directory. The
@@ -36,8 +34,8 @@ class HtmlDocumentLog extends Base
    * The result statuses to log
    * @var array
    */
-  private $logStatuses = array();
-
+  private $logStatuses = array ();
+  
   /**
    * This function initializes the log path and if given the log statuses
    *
@@ -46,7 +44,7 @@ class HtmlDocumentLog extends Base
    * @param string $logPath
    * @param array $logStatuses
    */
-  public function init( $logPath, array $logStatuses = null )
+  public function init($logPath, array $logStatuses = null)
   {
     $this->logPath = $logPath . '/' . $this->getRunId() . '/';
     
@@ -58,13 +56,13 @@ class HtmlDocumentLog extends Base
     }
     else
     {
-      $this->logStatuses = array(Result::STATUS_ERROR,Result::STATUS_FAILED);
+      $this->logStatuses = array (Result::STATUS_ERROR, Result::STATUS_FAILED);
     }
   }
   
   /**
-   * 
    * Checks if a directory exists. If not it is created.
+   * @todo this should be done in the base library
    * @param String $logDir Path to directory which should be created if not exists
    */
   private function createLogDirIfNotExists($logDir)
@@ -76,9 +74,9 @@ class HtmlDocumentLog extends Base
   }
   
   /**
-   * 
    * Trys to create the given $logDir recursively. If an error occurs, an exception
    * is thrown.
+   * @todo this should be done in the base library
    * @param String $logDir Path to directory which should be created
    * @throws ConfigurationException
    */
@@ -103,7 +101,14 @@ class HtmlDocumentLog extends Base
       $filename = $this->logPath . urlencode($result->getUri()->toString());
       $file = new File($filename);
       $file->setContent($response->getBody());
-      $file->save();
+      try
+      {
+        $file->save();
+      }
+      catch (\Exception $e)
+      {
+      	throw new ConfigurationException( 'Unable to write the html response to file "'.$filename.'"' );
+      }
     }
   }
 }
