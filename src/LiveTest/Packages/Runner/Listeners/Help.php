@@ -26,10 +26,10 @@ class Help extends Base
    * @var string The filename. Relative to __DIR__.
    */
   private $template = 'Help/template.tpl';
-  
+
   private $templatePlaceholders = array('@@configPath@@',
   										'@@testSuitePath@@');
-  
+
   private $examplesPath = 'examples';
 
   /**
@@ -41,55 +41,48 @@ class Help extends Base
    */
   public function runnerInit(array $arguments, Event $event)
   {
-    $path = $this->getBasePathFrom($arguments);
-    
+    $path = $this->getBasePathFrom();
+
     if (array_key_exists('help', $arguments) || count($arguments) == 0)
     {
       $templateContent = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . $this->template);
       echo $this->replacePlaceholdersInTemplateContentWithPath($templateContent, $path);
-      
+
       $event->setProcessed();
     }
     return true;
   }
-  
-  
+
   /**
-   * 
+   *
    * Replaces the template's placeholders with defined content.
-   * 
+   * @todo this replacement should be done in another class
+   * @todo method name too long
+   *
    * @param String $content
    * @param String $path
-   * 
+   *
    * @return String $content
    */
   private function replacePlaceholdersInTemplateContentWithPath($content, $path)
   {
     foreach($this->templatePlaceholders as $placeholder)
     {
-        $content = str_replace($placeholder, 
-                               $this->getBasePath($path), 
+        $content = str_replace($placeholder,
+                               $this->getBasePath($path),
                                $content);
     }
-    
+
     return $content;
   }
-  
+
   private function getBasePath($path)
   {
     return $path . $this->examplesPath. DIRECTORY_SEPARATOR;
   }
-  
+
   private function getBasePathFrom($arguments)
   {
-    if(!array_key_exists('pwd', $arguments))
-    {
-      return '.' . DIRECTORY_SEPARATOR;
-    }
-    else
-    {
-      return $arguments['pwd'] . DIRECTORY_SEPARATOR;
-    }
-    
+    return realpath(__DIR__.'/../../../examples/');
   }
 }
