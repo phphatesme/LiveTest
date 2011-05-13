@@ -28,6 +28,6 @@ class Preconditions extends Base
       echo "  The mandatory cURL library (http://php.net/manual/de/book.curl.php) was not found.\n";
       echo "  LiveTest will not work without cURL support.";
 			$event->setProcessed();  
-    }
+    } 
   }
 }
