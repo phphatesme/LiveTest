@@ -81,7 +81,7 @@ class Help extends Base
     return $path . $this->examplesPath. DIRECTORY_SEPARATOR;
   }
 
-  private function getBasePathFrom()
+  private function getBasePathFrom($arguments)
   {
     return realpath(__DIR__.'/../../../examples/');
   }
