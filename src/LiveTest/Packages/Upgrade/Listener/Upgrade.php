@@ -53,7 +53,7 @@ class Upgrade extends Base
       if( version_compare(LIVETEST_VERSION, $latestStable, '<' ))
       {
         echo 'Newer version found (latest stable: '.$latestStable.").\n".
-             '                                                Please visit www.phmlabs.com/livetest for more information.';
+             '                                                Please visit livetest.www.phmlabs.com for more information.';
       }
       else
       {
