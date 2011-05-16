@@ -13,7 +13,7 @@ use LiveTest\Config\TestSuite as TestSuiteConfig;
 
 /**
  * This tag is used to add a PageManupulator to a given config. This is needed
- * if a test case wants to manipulate the url of a page.
+ * if a test case wants to manipulate the url of a pageRequest.
 
  * @author Nils Langner
  */

@@ -29,7 +29,7 @@ class PageFiles extends Base
     $config->doNotInherit();
     foreach ($parameters as $file)
     {
-      $config->includePages(file($config->getBaseDir() . '/' . $file));
+      $config->createPageRequestsFromParameters(file($config->getBaseDir() . '/' . $file));
     }
   }
 }

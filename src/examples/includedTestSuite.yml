@@ -6,4 +6,11 @@ TestSuite:
    TestCase: LiveTest\TestCase\General\Http\SuccessfulStatusCode
 
  Pages:
-  - http://www.phphatesme.com
+  - http://www.phphatesme.com:
+        requestType:
+            get
+        requestParameter:
+            - phmuser1:
+                value1
+            - phmuser2:
+                value2

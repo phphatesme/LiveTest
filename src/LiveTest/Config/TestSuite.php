@@ -9,6 +9,8 @@
 
 namespace LiveTest\Config;
 
+use Base\Http\Request\Request;
+
 /**
  * This class contains all information about the tests and the depending pages.
  *
@@ -20,15 +22,15 @@ class TestSuite implements Config
 {
   /**
    * Pages that are included
-   * @var string[]
+   * @var array[]
    */
-  private $includedPages = array ();
+  private $includedPageRequests = array ();
 
   /**
-   * Pages that are excluded
-   * @var string[]
+   * PageRequests that are excluded
+   * @var array[]
    */
-  private $excludedPages = array ();
+  private $excludedPageRequests = array ();
 
   /**
    * The created tests.
@@ -109,22 +111,23 @@ class TestSuite implements Config
    *
    * @param string $page
    */
-  public function includePage($page)
+  public function includePageRequest(Request $pageRequest)
   {
-    $this->includedPages[$page] = $page;
+    $this->includedPageRequests[$pageRequest->getUri()] = $pageRequest;
   }
 
   /**
    * Includes an array containing pages to the config.
    *
-   * @param string[] $pages
+   * @param array[] $pageRequests
    */
-  public function includePages($pages)
+  public function includePageRequests(array $pageRequests)
   {
-    foreach ( $pages as $page )
+    foreach ( $pageRequests as $aPageRequest )
     {
-      $this->includePage(trim($page));
+      $this->includePageRequest($aPageRequest);
     }
+    
   }
 
   /**
@@ -132,21 +135,21 @@ class TestSuite implements Config
    *
    * @param string $page
    */
-  public function excludePage($page)
+  public function excludePageRequest(Request $pageRequest)
   {
-    $this->excludedPages[$page] = $page;
+    $this->excludedPageRequests[$pageRequest->getUri()] = $pageRequest;
   }
 
   /**
-   * Removes a set of pages from this config.
+   * Removes a set of pageRequests from this config.
    *
-   * @param string[] $pages
+   * @param array[] $pageRequests
    */
-  public function excludePages($pages)
+  public function excludePageRequests($pageRequests)
   {
-    foreach ( $pages as $page )
+    foreach ( $pageRequests as $aPageRequest )
     {
-      $this->excludePage($page);
+      $this->excludePageRequest($aPageRequest);
     }
   }
 
@@ -157,7 +160,9 @@ class TestSuite implements Config
   {
     $this->inherit = false;
   }
-
+  
+ 
+  
   /**
    * This function adds a test to the config and returns a new config connected to the
    * test.
@@ -180,32 +185,49 @@ class TestSuite implements Config
   /**
    * Returns the list of pages.
    *
-   * @return string[]
+   * @return array[]
    */
-  public function getPages()
+  public function getPageRequests()
   {
+     
     if ($this->inherit && !is_null($this->parentConfig))
     {
-      $result = array_merge($this->includedPages, $this->parentConfig->getPages());
+      $results = array_merge($this->includedPageRequests, $this->parentConfig->getPageRequests());
     }
     else
     {
-      $result = $this->includedPages;
+      $results = $this->includedPageRequests;
     }
-
-    $pages = array_diff($result, $this->excludedPages);
-
+    
+    var_dump($results);
+    var_dump($this->excludedPageRequests);
+    
+    $pageRequests = $this->getReducedPageRequests($results, $this->excludedPageRequests);
+   
     foreach( $this->pageManipulators as $manipulator )
     {
-      foreach( $pages as &$page )
+      foreach( $pageRequests as &$pageRequest )
       {
-        $page = $manipulator->manipulate($page);
+        $pageRequest = $manipulator->manipulate($pageRequest);
       }
     }
 
-    return $pages;
+    return $pageRequests;
   }
-
+  
+  private function getReducedPageRequests(array $includedPageRequest, array $excludedPageRequests)
+  {
+     foreach($excludedPageRequests as $urlKey => $pageRequest)
+      {
+        if(array_key_exists($urlKey, $includedPageRequest))
+        {
+          unset($includedPageRequest[$urlKey]);
+        }
+      }
+      
+      return $includedPageRequest;
+  }
+  
   /**
    * Returns the tests.
    *
