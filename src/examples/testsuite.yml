@@ -7,13 +7,11 @@ TestCases:
   TestCase: LiveTest\TestCase\General\Html\TextPresent
   Parameter:
    text: "unpresent_text"
-   
+
 Pages:
   - http://www.stern.de:
-        requestType:
-            get
-        requestParameter:
-            - sternuser1:
-                value1
-            - sternuser2:
-                value2
+        get:
+          - sternuser1:
+            value1
+          - sternuser2:
+            value2
