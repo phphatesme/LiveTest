@@ -4,7 +4,7 @@ namespace Test\Unit\LiveTest\Config;
 
 use LiveTest\Config\TestSuite;
 
-use Base\Http\Request\PhmLabs as Request;
+use LiveTest\Config\Request\LiveTest as Request;
 
 class TestSuiteTest extends \PHPUnit_Framework_TestCase
 {
@@ -20,40 +20,47 @@ class TestSuiteTest extends \PHPUnit_Framework_TestCase
 
     $this->assertEquals('http://www.example.com/', $pageRequests['http://www.example.com/']->getUri());
     $this->assertEquals('http://www.phphatesme.com/', $pageRequests['http://www.phphatesme.com/']->getUri());
-   
+
   }
 
   public function testCreatePageRequestsFromParameters()
   {
-    $includedPages = array(0=>array(0=>'http://www.example.com/'),1=>array(0=>'http://www.phphatesme.com/'));
+    $includedPages = array('http://www.example.com/','http://www.phphatesme.com/');
 
     $config = new TestSuite();
     $pageRequestsToInclude = Request::createRequestsFromParameters($includedPages);
+
     $config->includePageRequests($pageRequestsToInclude);
-    
+
     $pageRequests = $config->getPageRequests();
     $this->assertEquals(count($includedPages), count($pageRequests));
   }
 
+  public function testCreatePageRequestsFromParametersSortOrder()
+  {
+
+  }
+
   public function testExcludePageRequest()
   {
-    $includedPages = array('http://www.example.com','http://www.phphatesme.com');
-    
+    $includedPages = array('http://www.example.com/','http://www.phphatesme.com/');
+
     $config = new TestSuite();
     $pageRequests = Request::createRequestsFromParameters($includedPages);
     $config->includePageRequests($pageRequests);
-    
+    $pageRequests = $config->getPageRequests();
+
     $config->excludePageRequest($pageRequests['http://www.example.com/']);
 
     $pageRequests = $config->getPageRequests();
     $this->assertEquals(1, count($pageRequests));
 
-    $this->assertEquals('http://www.phphatesme.com', $pageRequests['http://www.phphatesme.com']->getRequestUri());
+    $this->assertEquals('http://www.phphatesme.com/', $pageRequests['http://www.phphatesme.com/']->getUri());
   }
 
   public function testExcludePageRequests()
   {
-    $includedPages = array('http://www.example.com','http://www.phphatesme.com');
+    $includedPages = array('http://www.example.com/','http://www.phphatesme.com/');
 
     $config = new TestSuite();
     $pageRequestsToExclude = Request::createRequestsFromParameters($includedPages);
