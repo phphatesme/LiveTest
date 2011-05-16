@@ -114,6 +114,7 @@ class TestSuite implements Config
   public function includePageRequest(Request $pageRequest)
   {
     $this->includedPageRequests[$pageRequest->getUri()] = $pageRequest;
+
   }
 
   /**
@@ -127,7 +128,7 @@ class TestSuite implements Config
     {
       $this->includePageRequest($aPageRequest);
     }
-    
+
   }
 
   /**
@@ -160,9 +161,9 @@ class TestSuite implements Config
   {
     $this->inherit = false;
   }
-  
- 
-  
+
+
+
   /**
    * This function adds a test to the config and returns a new config connected to the
    * test.
@@ -189,7 +190,7 @@ class TestSuite implements Config
    */
   public function getPageRequests()
   {
-     
+
     if ($this->inherit && !is_null($this->parentConfig))
     {
       $results = array_merge($this->includedPageRequests, $this->parentConfig->getPageRequests());
@@ -198,12 +199,9 @@ class TestSuite implements Config
     {
       $results = $this->includedPageRequests;
     }
-    
-    var_dump($results);
-    var_dump($this->excludedPageRequests);
-    
+
     $pageRequests = $this->getReducedPageRequests($results, $this->excludedPageRequests);
-   
+
     foreach( $this->pageManipulators as $manipulator )
     {
       foreach( $pageRequests as &$pageRequest )
@@ -214,7 +212,7 @@ class TestSuite implements Config
 
     return $pageRequests;
   }
-  
+
   private function getReducedPageRequests(array $includedPageRequest, array $excludedPageRequests)
   {
      foreach($excludedPageRequests as $urlKey => $pageRequest)
@@ -224,10 +222,10 @@ class TestSuite implements Config
           unset($includedPageRequest[$urlKey]);
         }
       }
-      
+
       return $includedPageRequest;
   }
-  
+
   /**
    * Returns the tests.
    *
