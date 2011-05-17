@@ -9,8 +9,9 @@
 
 namespace LiveTest\TestRun;
 
+use Base\Http\Request\Request;
+
 use LiveTest\TestRun\Test;
-use Base\Www\Uri;
 
 /**
  * A test set contains a number of tests that will be run on a spefific uri.
@@ -22,10 +23,10 @@ use Base\Www\Uri;
 class TestSet
 {
   /**
-   * The uri for this test set
-   * @var Uri
+   * The request for this test set
+   * @var Request
    */
-  private $uri;
+  private $request;
 
   /**
    * The tests
@@ -33,19 +34,19 @@ class TestSet
    */
   private $tests = array ();
 
-  public function __construct(Uri $uri)
+  public function __construct(Request $request)
   {
-    $this->uri = $uri;
+    $this->request = $request;
   }
 
   /**
-   * Returns the uri of this test set.
+   * Returns the request of this test set.
    *
-   * @return Uri
+   * @return Request
    */
-  public function getUri()
+  public function getRequest()
   {
-    return $this->uri;
+    return $this->request;
   }
 
   /**

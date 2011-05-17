@@ -9,6 +9,8 @@
 
 namespace LiveTest\TestRun;
 
+use Base\Http\Request\Request;
+
 use LiveTest\ConfigurationException;
 
 use LiveTest\Config\Parser\UnknownTagException;
@@ -72,7 +74,7 @@ class Properties
         $uri = $this->defaultDomain->concatUri($page);
         if (!array_key_exists($page, $this->testSets))
         {
-          $this->testSets[$page] = new TestSet($uri);
+          $this->testSets[$page] = new TestSet(LiveTest\Config\Request\LiveTest::create());
         }
 
         $test = new Test($testCase['name'], $testCase['className'], $testCase['parameters']);

@@ -20,7 +20,7 @@ class LiveTest extends SymfonyRequest implements RequestInterface
   public static function createRequestsFromParameters(array $parameters)
   {
 
-    if(count($parameters) <= 0)
+    if(count($parameters) == 0)
     {
       throw new Exception('Parameter has to be set.');
     }
@@ -39,7 +39,7 @@ class LiveTest extends SymfonyRequest implements RequestInterface
   public static function createPageRequestFromParameters(array $parameters)
   {
      $request =  self::create(
-                  $parameters['uri'],
+                  $this->concatUri($parameters['uri']),
                   $parameters['requestType'],
                   $parameters['requestParameter']);
 
@@ -114,6 +114,27 @@ class LiveTest extends SymfonyRequest implements RequestInterface
       }
     }
     return implode( $glue, $retVal );
+  }
+  
+  private function concatUri($uriString)
+  {
+    if (strpos($uriString, 'http://') === false)
+    {
+      if (strpos($uriString, '/') === 0)
+      {
+        $url = $this->uri . $uriString;
+      }
+      else
+      {
+        $url = $this->uri . '/' . $uriString;
+      }
+    }
+    else
+    {
+      $url = $uriString;
+    }
+    
+    return $url;
   }
 
 }
