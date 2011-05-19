@@ -51,7 +51,7 @@ class Debug extends Base
     $event->setProcessed();
     if ($this->debug)
     {
-      echo "\n\n  Configuration Warning (debug modus):\n\n";
+      echo "  Configuration Warning (debug modus):\n\n";
       echo "  Class  : " . get_class($exception) . "\n";
       echo "  Message: " . $exception->getMessage() . "\n";
       echo "  File   : " . $exception->getFile() . "\n";
@@ -62,7 +62,7 @@ class Debug extends Base
     }
     else
     {
-      echo "\n\n  Configuration Warning: " . Manipulator::addCharsOnWhitespace($exception->getMessage(),
+      echo "  Configuration Warning: " . Manipulator::addCharsOnWhitespace($exception->getMessage(),
                                                                            "\n                        ",
                                                                            78);
     }
@@ -78,7 +78,7 @@ class Debug extends Base
     $event->setProcessed();
     if ($this->debug)
     {
-      echo "\n\n  An error occured (debug modus):\n\n";
+      echo "  An error occured (debug modus):\n\n";
       echo "  Class  : " . get_class($exception) . "\n";
       echo "  Message: " . $exception->getMessage() . "\n";
       echo "  File   : " . $exception->getFile() . "\n";
@@ -89,7 +89,7 @@ class Debug extends Base
     }
     else
     {
-      echo "\n\n  An error occured: " . $exception->getMessage();
+      echo "  An error occured: " . $exception->getMessage();
     }
   }
 }
