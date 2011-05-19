@@ -177,7 +177,8 @@ class Runner extends ArgumentRunner
   private function initTestRun()
   {
     $this->eventDispatcher->simpleNotify('LiveTest.Runner.InitTestRun');
-
+    var_dump($this->getArgument('testsuite')); 
+    
     try
     {
       $properties = Properties::createByYamlFile($this->getArgument('testsuite'), $this->config->getDefaultDomain());

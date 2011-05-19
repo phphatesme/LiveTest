@@ -9,8 +9,6 @@
 
 namespace LiveTest\TestRun;
 
-use Base\Http\Request\Request;
-
 use LiveTest\ConfigurationException;
 
 use LiveTest\Config\Parser\UnknownTagException;
@@ -20,6 +18,8 @@ use LiveTest\Config\Parser\Parser;
 
 use Base\Config\Yaml;
 use Base\Www\Uri;
+
+use LiveTest\Config\Request\LiveTest as Request;
 
 /**
  * A properties class holds all information about a test run. It prepares athe data given by
@@ -69,16 +69,18 @@ class Properties
     foreach ($testCases as $testCase)
     {
       $config = $testCase['config'];
-      foreach ($config->getPages() as $page)
+      foreach ($config->getPageRequests() as $aPageRequest)
       {
-        $uri = $this->defaultDomain->concatUri($page);
-        if (!array_key_exists($page, $this->testSets))
+        
+        $uri = $this->defaultDomain->concatUri($aPageRequest->getUri());
+        
+        if (!array_key_exists($aPageRequest->getIdentifier(), $this->testSets))
         {
-          $this->testSets[$page] = new TestSet(LiveTest\Config\Request\LiveTest::create());
+          $this->testSets[$aPageRequest->getIdentifier()] = new TestSet($aPageRequest);
         }
 
         $test = new Test($testCase['name'], $testCase['className'], $testCase['parameters']);
-        $this->testSets[$page]->addTest($test);
+        $this->testSets[$aPageRequest->getIdentifier()]->addTest($test);
       }
     }
   }
@@ -139,6 +141,7 @@ class Properties
     {
       throw new \LiveTest\ConfigurationException('Unable to load test suite yaml file (filename: ' . $filename . ')');
     }
+    
     $testSuiteConfig = new TestSuite();
     $testSuiteConfig->setBaseDir(dirname($filename));
     $parser = new Parser('LiveTest\\Config\\Tags\\TestSuite\\');

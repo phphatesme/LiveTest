@@ -2,6 +2,8 @@
 
 namespace LiveTest\Config\Request;
 
+use Base\ArrayLists\Recursive;
+
 use LiveTest\Exception;
 
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
@@ -11,6 +13,7 @@ class LiveTest extends SymfonyRequest implements RequestInterface
 {
 
   private static $identifier;
+  private static $baseUri;
 
  /**
    *
@@ -38,18 +41,18 @@ class LiveTest extends SymfonyRequest implements RequestInterface
 
   public static function createPageRequestFromParameters(array $parameters)
   {
-     $request =  self::create(
-                  $this->concatUri($parameters['uri']),
+     $request =  parent::create(
+                  self::concatUri($parameters['uri']),
                   $parameters['requestType'],
                   $parameters['requestParameter']);
 
     $request->setIdentifier($parameters);
     return $request;
   }
-
+  
   private function setIdentifier(array $parameters)
   {
-    $this->identifier = md5($this->recursiveImplode('_',$parameters));
+    $this->identifier = md5(Recursive::implode('_',$parameters));
   }
 
   private static function prepareRequestParameters(array $parameters)
@@ -89,44 +92,19 @@ class LiveTest extends SymfonyRequest implements RequestInterface
   {
     return $this->identifier;
   }
-
-  /**
-   *
-   * Lend from: http://de.php.net/manual/de/function.implode.php#96100
-   * Thanks kromped!
-   * @param unknown_type $glue
-   * @param unknown_type $pieces
-   */
-  private function recursiveImplode( $glue, $pieces )
-  {
-    $retVal = array();
-
-    foreach( $pieces as $r_pieces )
-    {
-      if( is_array( $r_pieces ) )
-      {
-        ksort($r_pieces);
-        $retVal[] = $this->recursiveImplode( $glue, $r_pieces );
-      }
-      else
-      {
-        $retVal[] = $r_pieces;
-      }
-    }
-    return implode( $glue, $retVal );
-  }
   
-  private function concatUri($uriString)
+  
+  public static function concatUri($uriString)
   {
     if (strpos($uriString, 'http://') === false)
     {
       if (strpos($uriString, '/') === 0)
       {
-        $url = $this->uri . $uriString;
+        $url = self::baseUri . $uriString;
       }
       else
       {
-        $url = $this->uri . '/' . $uriString;
+        $url = self::baseUri . '/' . $uriString;
       }
     }
     else
@@ -136,5 +114,4 @@ class LiveTest extends SymfonyRequest implements RequestInterface
     
     return $url;
   }
-
 }

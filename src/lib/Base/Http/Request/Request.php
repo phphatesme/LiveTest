@@ -9,4 +9,5 @@ interface Request
   public function getMethod();
   public function getUri();
   public function getRequestUri();
+  public function getIdentifier(); //@todo: in LiveTestInterface
 }

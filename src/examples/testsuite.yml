@@ -10,8 +10,6 @@ TestCases:
 
 Pages:
   - http://www.stern.de:
-        get:
-          - sternuser1:
-            value1
-          - sternuser2:
-            value2
+    get:
+      - sternusereins:test
+      - sternuserzwei:test

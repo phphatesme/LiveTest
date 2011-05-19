@@ -193,7 +193,7 @@ class TestSuite implements Config
 
     if ($this->inherit && !is_null($this->parentConfig))
     {
-      $results = array_merge($this->includedPageRequests, $this->parentConfig->getPageRequests());
+      $results = array_merge_recursive($this->includedPageRequests, $this->parentConfig->getPageRequests());
     }
     else
     {

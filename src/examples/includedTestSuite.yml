@@ -8,7 +8,5 @@ TestSuite:
  Pages:
   - http://www.phphatesme.com:
     get:
-      - phmuser1:
-        value1
-      - phmuser2:
-        value2
+      - phmuser1:value1
+      - phmuser2:value2

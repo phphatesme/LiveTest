@@ -44,6 +44,19 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
     #$this->assertTrue($listener[0] instanceof \Unit\LiveTest\Listener\MockUp);
   }
   
+  public function testRunnerRun()
+  {
+    $runner = new Runner( array('testsuite'=>__DIR__.'/../../../../src/examples/testsuite.yml'), $this->dispatcher );
+    $runner->run();
+    
+    $runner = new Runner( array('testsuite'=>'../../../../src/examples/testsuite.yml'), $this->dispatcher );
+    $this->setExpectedException('LiveTest\ConfigurationException');
+    $runner->run();
+    
+    $this->setExpectedException('LiveTest\ConfigurationException');
+    $this->runner->run();
+  }
+  
   private function getListenerForEvent( $eventName )
   {
     $listeners = $this->dispatcher->getListeners($eventName);
