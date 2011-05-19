@@ -1,7 +1,6 @@
 <?php
 
 // @todo default config must be set here
-
 use phmLabs\Components\Annovent\Event\Event;
 use LiveTest\MandatoryParameterException;
 use LiveTest\Event\Dispatcher;
