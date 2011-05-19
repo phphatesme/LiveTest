@@ -9,6 +9,8 @@
 
 namespace LiveTest\Config;
 
+use Base\Www\Uri;
+
 use Base\Http\Request\Request;
 
 /**
@@ -58,6 +60,13 @@ class TestSuite implements Config
    */
   private $parentConfig;
 
+  /**
+   *
+   * The default domain
+   * @var Uri $defaultDomain
+   */
+  private $defaultDomain;
+
   private $pageManipulators = array ();
 
   /**
@@ -90,6 +99,26 @@ class TestSuite implements Config
   public function setBaseDir($baseDir)
   {
     $this->baseDir = $baseDir;
+  }
+
+  /**
+   *
+   * sets the base domain
+   * @param Uri $domain
+   */
+  public function setDefaultDomain(Uri $domain)
+  {
+    $this->defaultDomain = $domain;
+  }
+
+  /**
+   *
+   * gets the base domain
+   * @return Uri $defaultDomain
+   */
+  public function getDefaultDomain()
+  {
+    return $this->defaultDomain;
   }
 
   /**

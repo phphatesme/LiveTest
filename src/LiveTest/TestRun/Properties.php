@@ -71,9 +71,9 @@ class Properties
       $config = $testCase['config'];
       foreach ($config->getPageRequests() as $aPageRequest)
       {
-        
+
         $uri = $this->defaultDomain->concatUri($aPageRequest->getUri());
-        
+
         if (!array_key_exists($aPageRequest->getIdentifier(), $this->testSets))
         {
           $this->testSets[$aPageRequest->getIdentifier()] = new TestSet($aPageRequest);
@@ -141,9 +141,11 @@ class Properties
     {
       throw new \LiveTest\ConfigurationException('Unable to load test suite yaml file (filename: ' . $filename . ')');
     }
-    
+
     $testSuiteConfig = new TestSuite();
     $testSuiteConfig->setBaseDir(dirname($filename));
+    $testSuiteConfig->setDefaultDomain($defaultUri);
+
     $parser = new Parser('LiveTest\\Config\\Tags\\TestSuite\\');
     try
     {
@@ -155,6 +157,6 @@ class Properties
                                        null, $e);
     }
 
-    return new self($testSuiteConfig, $defaultUri);    
+    return new self($testSuiteConfig, $defaultUri);
   }
 }

@@ -15,4 +15,5 @@ interface Client
   public function setTimeout($timeInSeconds);
   public function setUri($requestUri);
   public function setParameterPost($paramName, $paramValue);
+  public function setParameterGet($paramName, $paramValue);
 }

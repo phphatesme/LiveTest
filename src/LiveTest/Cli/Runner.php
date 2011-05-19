@@ -126,11 +126,11 @@ class Runner extends ArgumentRunner
     $parser = new Parser('\\LiveTest\Config\\Tags\\Config\\');
     try
     {
-    	$config = $parser->parse($configArray, $config);
+      $config = $parser->parse($configArray, $config);
     }
     catch( \LiveTest\Config\Parser\UnknownTagException $e)
     {
-    	throw new ConfigurationException('Unknown tag ("'.$e->getTagName().'") found in the configuration file.', null, $e);
+      throw new ConfigurationException('Unknown tag ("'.$e->getTagName().'") found in the configuration file.', null, $e);
     }
 
     return $config;
@@ -143,7 +143,7 @@ class Runner extends ArgumentRunner
    */
   private function initConfig()
   {
-    $config = new Yaml(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 
+    $config = new Yaml(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR .
     '..' .DIRECTORY_SEPARATOR . 'default' .DIRECTORY_SEPARATOR. 'config.yml', true);
 
     if ($this->hasArgument('config'))
@@ -177,8 +177,7 @@ class Runner extends ArgumentRunner
   private function initTestRun()
   {
     $this->eventDispatcher->simpleNotify('LiveTest.Runner.InitTestRun');
-    var_dump($this->getArgument('testsuite')); 
-    
+
     try
     {
       $properties = Properties::createByYamlFile($this->getArgument('testsuite'), $this->config->getDefaultDomain());
@@ -189,7 +188,7 @@ class Runner extends ArgumentRunner
     }
     catch( \InvalidArgumentException $e )
     {
-    	throw new ConfigurationException('Error parsing testsuite configuration: '.$e->getMessage(), null, $e);
+      throw new ConfigurationException('Error parsing testsuite configuration: '.$e->getMessage(), null, $e);
     }
 
     $client = new Zend();

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<buildpath>
+	<buildpathentry kind="con" path="org.eclipse.php.core.LANGUAGE"/>
+	<buildpathentry kind="src" path="test"/>
+	<buildpathentry kind="src" path="src"/>
+	<buildpathentry external="true" kind="lib" path="C:/Program Files (x86)/Zend/Zend Studio - 8.0.0/plugins/com.zend.php.phpunit_8.0.0.v20101001-0100/resources/library"/>
+</buildpath>

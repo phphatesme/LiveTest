@@ -124,7 +124,14 @@ class Run
 
     try
     {
-      $this->httpClient->setUri($testSet->getUri()->toString());
+      var_dump($testSet->getRequest()->get('sternusereins'));
+
+      $this->httpClient->setUri($testSet->getRequest()->getUri());
+      $method = $testSet->getRequest()->getMethod();
+      $this->httpClient->setMethod($method);
+
+      $parameterSet = 'setParameter'.ucfirst($method);
+      $this->httpClient->$parameterSet();
       $response = $this->httpClient->request();
     }
     catch ( \Zend\Http\Exception $e )
