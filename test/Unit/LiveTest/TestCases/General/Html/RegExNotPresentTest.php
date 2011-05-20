@@ -2,6 +2,8 @@
 
 namespace Test\Unit\LiveTest\TestCases\General\Html;
 
+use LiveTest\Config\Request\Symfony;
+
 use Unit\Base\Http\Response\MockUp;
 
 use LiveTest\TestCase\General\Html\RegExNotPresent;
@@ -19,7 +21,7 @@ class RegExNotPresentTest extends \PHPUnit_Framework_TestCase
     $response->setBody('acdefgb');
 
     $this->setExpectedException('LiveTest\TestCase\Exception');
-    $testCase->test( $response, new Uri( 'http://www.example.com' ) );
+    $testCase->test( $response, Symfony::create(new Uri('http://www.example.com/')) );
   }
 
   public function testRegExNotFound()
@@ -30,9 +32,9 @@ class RegExNotPresentTest extends \PHPUnit_Framework_TestCase
     $response = new MockUp();
     $response->setBody('bcdefg');
 
-    $testCase->test( $response, new Uri( 'http://www.example.com' ) );
+    $testCase->test( $response, Symfony::create(new Uri('http://www.example.com/')) );
   }
-  
+
   public function testAnOtherRegExNotFound()
   {
     $testCase = new RegExNotPresent();
@@ -41,9 +43,9 @@ class RegExNotPresentTest extends \PHPUnit_Framework_TestCase
     $response = new MockUp();
     $response->setBody('database connection error');
     $this->setExpectedException('LiveTest\TestCase\Exception');
-    $testCase->test( $response, new Uri( 'http://www.example.com' ) );
-    
+    $testCase->test( $response, Symfony::create(new Uri('http://www.example.com/')) );
+
     $response->setBody('database connection established');
-    $testCase->test( $response, new Uri( 'http://www.example.com' ) );
+    $testCase->test( $response, Symfony::create(new Uri('http://www.example.com/')) );
   }
 }

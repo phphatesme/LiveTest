@@ -2,6 +2,8 @@
 
 namespace Test\Unit\LiveTest\TestCases\General\Html;
 
+use LiveTest\Config\Request\Symfony;
+
 use Unit\Base\Http\Response\MockUp;
 
 use Base\Www\Uri;
@@ -26,7 +28,7 @@ class SizeTest extends \PHPUnit_Framework_TestCase
     $response->setBody('<body>');
 
     $this->setExpectedException('LiveTest\TestCase\Exception');
-    $testCase->test( $response, new Uri('http://www.example.com') );
+    $testCase->test( $response, Symfony::create(new Uri('http://www.example.com/')) );
   }
 
   public function testGoodMinSize( )
@@ -37,7 +39,7 @@ class SizeTest extends \PHPUnit_Framework_TestCase
     $response = new MockUp();
     $response->setBody('<body>');
 
-    $testCase->test( $response, new Uri('http://www.example.com') );
+    $testCase->test( $response, Symfony::create(new Uri('http://www.example.com/')) );
   }
 
   public function testBadMaxSize( )
@@ -49,7 +51,7 @@ class SizeTest extends \PHPUnit_Framework_TestCase
     $response->setBody('<body>');
 
     $this->setExpectedException('LiveTest\TestCase\Exception');
-    $testCase->test( $response, new Uri('http://www.example.com') );
+    $testCase->test( $response, Symfony::create(new Uri('http://www.example.com/')) );
   }
 
   public function testGoodMaxSize( )
@@ -60,6 +62,6 @@ class SizeTest extends \PHPUnit_Framework_TestCase
     $response = new MockUp();
     $response->setBody('<body>');
 
-    $testCase->test( $response, new Uri('http://www.example.com') );
+    $testCase->test( $response, Symfony::create(new Uri('http://www.example.com/')) );
   }
 }

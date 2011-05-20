@@ -10,6 +10,7 @@
 namespace LiveTest\Config\Tags\TestSuite;
 
 use LiveTest\Config\TestSuite as TestSuiteConfig;
+use LiveTest\Config\Request\Symfony as Request;
 
 /**
  * This tag includes a list of pages.
@@ -28,6 +29,6 @@ class IncludePages extends Base
    */
   protected function doProcess(TestSuiteConfig $config, array $parameters)
   {
-    $config->includePages($parameters);
+    $config->includePageRequests(Request::createRequestsFromParameters($parameters, $config->getDefaultDomain()));
   }
 }

@@ -71,9 +71,6 @@ class Properties
       $config = $testCase['config'];
       foreach ($config->getPageRequests() as $aPageRequest)
       {
-
-        $uri = $this->defaultDomain->concatUri($aPageRequest->getUri());
-
         if (!array_key_exists($aPageRequest->getIdentifier(), $this->testSets))
         {
           $this->testSets[$aPageRequest->getIdentifier()] = new TestSet($aPageRequest);

@@ -9,10 +9,11 @@
 
 namespace LiveTest\TestCase\General\Http;
 
+use Base\Http\Request\Request;
+
 use LiveTest\TestCase\TestCase;
 use LiveTest\TestCase\Exception;
 
-use Base\Www\Uri;
 use Base\Http\Response\Response;
 
 /**
@@ -39,7 +40,7 @@ class ExpectedStatusCode implements TestCase
    *
    * @see LiveTest\TestCase.HttpTestCase::test()
    */
-  public function test(Response $response, Uri $uri)
+  public function test(Response $response, Request $request)
   {
     $status = $response->getStatus();
     if ($status != $this->statusCode)

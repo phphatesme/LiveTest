@@ -9,9 +9,8 @@ use Base\ArrayLists\Recursive;
 use LiveTest\Exception;
 
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
-use Base\Http\Request\Request as RequestInterface;
 
-class Symfony implements RequestInterface
+class Symfony implements Request
 {
 
   private $identifier;
@@ -42,9 +41,10 @@ class Symfony implements RequestInterface
 
     foreach($preparedRequestParameters as $aPreparedParameter)
     {
-      $requests[] = self::create($baseUri->concatUri($parameters['uri']),
-                                  $parameters['method'],
-                                  $parameters['parameters']);
+
+      $requests[] = self::create($baseUri->concatUri($aPreparedParameter['uri']),
+                                  $aPreparedParameter['method'],
+                                  $aPreparedParameter['parameters']);
     }
 
     return $requests;
@@ -52,8 +52,9 @@ class Symfony implements RequestInterface
 
   public static function create(Uri $uri,
                                 $method = 'get',
-                                array $requestParameters)
+                                $requestParameters = array())
   {
+
     $request =  SymfonyRequest::create($uri->toString(),
                           $method,
                           $requestParameters);
@@ -114,17 +115,17 @@ class Symfony implements RequestInterface
       }
     }
 
-    return  array_merge($defaults, $parameters);
+    return  array_merge($defaults, $mergedParameters);
   }
 
   public function getMethod()
   {
-    $this->request->getMethod();
+    return $this->request->getMethod();
   }
 
   public function getUri()
   {
-    $this->request->getUri();
+    return $this->request->getUri();
   }
 
   public function getIdentifier()
@@ -134,6 +135,6 @@ class Symfony implements RequestInterface
 
   public function getParameters()
   {
-    return $this->identifier;
+    return $this->parameters;
   }
 }

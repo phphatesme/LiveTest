@@ -16,7 +16,6 @@ use LiveTest\TestRun\Result\Result;
 use Base\Http\Client\Client;
 use Base\Http\ConnectionStatus;
 use Base\Http\Response\Response;
-use Base\Www\Uri;
 use Base\Timer\Timer;
 
 class Run
@@ -93,7 +92,7 @@ class Run
       try
       {
         $testCase = $this->getInitializedTestCase($test);
-        $testCase->test($response, $testSet->getUri());
+        $testCase->test($response, $testSet->getRequest());
       }
       catch (\LiveTest\TestCase\Exception $e )
       {
@@ -105,7 +104,7 @@ class Run
         $runStatus = Result::STATUS_ERROR;
         $runMessage = $e->getMessage();
       }
-      $result = new Result($test, $runStatus, $runMessage, $testSet->getUri());
+      $result = new Result($test, $runStatus, $runMessage, $testSet->getRequest());
       $this->eventDispatcher->simpleNotify('LiveTest.Run.HandleResult', array ('result' => $result, 'response' => $response ));
     }
   }
@@ -124,15 +123,14 @@ class Run
 
     try
     {
-      var_dump($testSet->getRequest()->get('sternusereins'));
-
-      $this->httpClient->setUri($testSet->getRequest()->getUri());
+      $uri = $testSet->getRequest()->getUri();
       $method = $testSet->getRequest()->getMethod();
-      $this->httpClient->setMethod($method);
-
+      $parameters = $testSet->getRequest()->getParameters();
       $parameterSet = 'setParameter'.ucfirst($method);
-      $this->httpClient->$parameterSet();
-      $response = $this->httpClient->request();
+
+      $this->httpClient->setUri($uri);
+      $this->httpClient->$parameterSet($parameters);
+      $response = $this->httpClient->request($method);
     }
     catch ( \Zend\Http\Exception $e )
     {
@@ -140,7 +138,7 @@ class Run
       $connectionStatusMessage = $e->getMessage();
     }
 
-    $connectionStatus = new ConnectionStatus($connectionStatusValue, $testSet->getUri(), $connectionStatusMessage);
+    $connectionStatus = new ConnectionStatus($connectionStatusValue, $testSet->getRequest(), $connectionStatusMessage);
 
     $this->eventDispatcher->simpleNotify('LiveTest.Run.HandleConnectionStatus', array ('connectionStatus' => $connectionStatus ));
 

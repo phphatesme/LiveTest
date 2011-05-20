@@ -11,7 +11,7 @@ namespace LiveTest\TestRun\Result;
 
 use LiveTest\TestRun\Test;
 
-use Base\Www\Uri;
+use Base\Http\Request\Request;
 
 /**
  * This class contains all information about a test case run.
@@ -44,16 +44,16 @@ class Result
 
   /**
    * The uri the test was run against
-   * @var Uri
+   * @var Request
    */
-  private $uri;
+  private $request;
 
-  public function __construct(Test $test, $status, $message, Uri $uri)
+  public function __construct(Test $test, $status, $message, Request $request)
   {
     $this->test = $test;
     $this->status = $status;
     $this->message = $message;
-    $this->uri = $uri;
+    $this->request = $request;
   }
 
   /**
@@ -90,10 +90,10 @@ class Result
   /**
    * Returns the uri of the page the test was run against.
    *
-   * @return Uri
+   * @return Request
    */
-  public function getUri()
+  public function getRequest()
   {
-    return $this->uri;
+    return $this->request;
   }
 }

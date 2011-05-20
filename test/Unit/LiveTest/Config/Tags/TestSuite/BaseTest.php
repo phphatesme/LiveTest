@@ -2,7 +2,7 @@
 namespace LiveTest\Config\Tags\TestSuite;
 
 
-require_once '/Users/mikelohmann/Sites/livetest.local/LiveTest_mikelohmann/src/LiveTest/Config/Tags/TestSuite/Base.php';
+require_once __DIR__.'/../../../../../../src/LiveTest/Config/Tags/TestSuite/Base.php';
 
 /**
  * Test class for Base.
@@ -21,7 +21,6 @@ class BaseTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new Base;
     }
 
     /**

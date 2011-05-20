@@ -46,7 +46,7 @@ class SimpleList implements Format
       {
         if ($connectionStatus->getType() == ConnectionStatus::ERROR)
         {
-          $text .= "       Url     : " . $connectionStatus->getUri()->toString() . "\n";
+          $text .= "       Url     : " . $connectionStatus->getRequest()->getUri() . "\n";
           $text .= "       Message : " . $connectionStatus->getMessage() . "\n\n";
         }
       }
@@ -60,7 +60,7 @@ class SimpleList implements Format
       {
         $test = $result->getTest();
         /* @var $test Test*/
-        $text .= '     Url        :  ' . $result->getUri()->toString() . "\n";
+        $text .= '     Url        :  ' . $result->getRequest()->getUri() . "\n";
         $text .= '     Test       :  ' . $test->getName() . "\n";
         $text .= '     Test Class :  ' . $test->getClassName() . "\n";
         switch ($result->getStatus())

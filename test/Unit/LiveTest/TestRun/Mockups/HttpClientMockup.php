@@ -40,9 +40,16 @@ class HttpClientMockup implements Client
     $this->uri = $uri;
   }
 
-  public function setParameterPost($paramName, $paramValue)
+  public function setParameterPost($name, $value = null)
   {
-    $this->postParam[$paramName] = $paramValue;
+    if(is_array($name))
+    {
+      $this->postParam = $name;
+    }
+    else
+    {
+      $this->postParam[$name] = $value;
+    }
   }
 
   public function getTimeout()
@@ -54,4 +61,17 @@ class HttpClientMockup implements Client
   {
     $this->timeout = $timeout;
   }
+
+  public function setParameterGet($name, $value = null)
+  {
+    if(is_array($name))
+    {
+      $this->postParam = $name;
+    }
+    else
+    {
+      $this->postParam[$name] = $value;
+    }
+  }
+
 }

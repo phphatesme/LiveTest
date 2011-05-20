@@ -9,7 +9,8 @@
 
 namespace LiveTest\TestCase;
 
-use Base\Www\Uri;
+use Base\Http\Request\Request;
+
 use Base\Http\Response\Response;
 
 interface TestCase
@@ -19,7 +20,7 @@ interface TestCase
    * thrown. The idea was adapted from the PHPUnit concept.
    *
    * @param Base\Http\Response $httpResponse
-   * @param Base\Www\Uri $uri
+   * @param Base\Http\Request\Request $request
    */
-  public function test(Response $response, Uri $uri);
+  public function test(Response $response, Request $request);
 }

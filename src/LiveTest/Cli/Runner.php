@@ -23,7 +23,6 @@ use LiveTest\TestRun\Properties;
 use LiveTest\TestRun\Run;
 
 use Base;
-use Base\Www\Uri;
 use Base\Cli\ArgumentRunner;
 use Base\Config\Yaml;
 use Base\Http\Client\Zend;

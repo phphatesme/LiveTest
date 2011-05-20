@@ -11,8 +11,8 @@
 
 <html>
 <head>
-	<title>LiveTest | Html Report</title>
-	<link rel="stylesheet" media="all" type="text/css" href="http://www.phphatesme.com/LiveTest/report.css" />
+  <title>LiveTest | Html Report</title>
+  <link rel="stylesheet" media="all" type="text/css" href="http://www.phphatesme.com/LiveTest/report.css" />
 </head>
 <body>
   <table>
@@ -48,46 +48,46 @@
     <?php if( count( $connectionStatuses ) > 0 ): ?>
     <tr style="height: 30px"><td></td></tr>
     <tr>
-    	<td id="legend" valign="top">Connection Errors</td>
-    	<td>
-    	<?php foreach ($connectionStatuses as $status ):?>
-    		<li><a href="<?php echo $status->getUri()->toString(); ?>"><?php echo $status->getUri()->toString(); ?></a></li>
-    	<?php endforeach; ?>
-    	</td>
-	</tr>
-	<?php endif; ?>
+      <td id="legend" valign="top">Connection Errors</td>
+      <td>
+      <?php foreach ($connectionStatuses as $status ):?>
+        <li><a href="<?php echo $status->getRequest()->getUri(); ?>"><?php echo $status->getRequest()->getUri(); ?></a></li>
+      <?php endforeach; ?>
+      </td>
+  </tr>
+  <?php endif; ?>
     <tr style="height: 30px"><td></td></tr>
-		<tr>
-			<td></td>
-    	    <?php foreach ( $tests as $test ): ?>
-    		<td class="test_label">
-        		<b><?php echo $test->getName(); ?></b><br/>
-        		<?php echo $test->getClassName()?>
-    		</td>
-    	    <?php endforeach;?>
-    	</tr>
-    	<?php foreach ($matrix as $url => $testInfo): $testList = $testInfo['tests']; ?>
-    	<tr>
-    		<td class="url_column <?php echo getRowClass( $testInfo['status'] );?>">
-    			<a href="<?php echo $url ?>" target="_blank"><?php echo $url; ?></a>
-    		</td>
-  			<?php foreach ($tests as $test):
-  			      if( array_key_exists($test->getName(), $testList) ) {
-  			        $content = getHtmlContent( $testList[$test->getName()] );
-  			      }else{
-  			        $content = array( 'css_class'=> 'result_none', 'message' => '');
-  			      }
-  			?>
-				  <td class="<?php echo $content['css_class']; ?> result_column"><?php echo htmlentities($content['message']); ?></td>
-  			<?php endforeach; ?>
-    	</tr>
-    	<?php endforeach; ?>
-    	<tr>
-    		<td></td>
-    		<td colspan="2" id="copyright">
-    			Html Report by <b><a href="http://livetest.phphatesme.com">LiveTest</a></b>
-    		</td>
-    	</tr>
-	</table>
+    <tr>
+      <td></td>
+          <?php foreach ( $tests as $test ): ?>
+        <td class="test_label">
+            <b><?php echo $test->getName(); ?></b><br/>
+            <?php echo $test->getClassName()?>
+        </td>
+          <?php endforeach;?>
+      </tr>
+      <?php foreach ($matrix as $url => $testInfo): $testList = $testInfo['tests']; ?>
+      <tr>
+        <td class="url_column <?php echo getRowClass( $testInfo['status'] );?>">
+          <a href="<?php echo $url ?>" target="_blank"><?php echo $url; ?></a>
+        </td>
+        <?php foreach ($tests as $test):
+              if( array_key_exists($test->getName(), $testList) ) {
+                $content = getHtmlContent( $testList[$test->getName()] );
+              }else{
+                $content = array( 'css_class'=> 'result_none', 'message' => '');
+              }
+        ?>
+          <td class="<?php echo $content['css_class']; ?> result_column"><?php echo htmlentities($content['message']); ?></td>
+        <?php endforeach; ?>
+      </tr>
+      <?php endforeach; ?>
+      <tr>
+        <td></td>
+        <td colspan="2" id="copyright">
+          Html Report by <b><a href="http://livetest.phphatesme.com">LiveTest</a></b>
+        </td>
+      </tr>
+  </table>
 </body>
 </html>

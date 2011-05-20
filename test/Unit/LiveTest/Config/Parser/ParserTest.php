@@ -2,6 +2,8 @@
 
 namespace Test\Unit\LiveTest\Config\Parser;
 
+use Base\Www\Uri;
+
 use LiveTest\Config\TestSuite;
 use LiveTest\Config\Parser\Parser;
 

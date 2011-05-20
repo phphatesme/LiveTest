@@ -1,6 +1,8 @@
 <?php
 namespace Unit\LiveTest\TestRun;
 
+use LiveTest\Config\Request\Symfony;
+
 use LiveTest\TestRun\Result\Result;
 
 use LiveTest\TestRun\Test;
@@ -14,14 +16,14 @@ class ResultTest extends \PHPUnit_Framework_TestCase
     $test = new Test('name', 'className');
     $status = Result::STATUS_SUCCESS;
     $message = 'foo';
-    $uri = new Uri('http://www.example.com');
+    $uri = Symfony::create(new Uri('http://www.example.com/'));
 
     $result = new Result($test, $status, $message, $uri);
 
     $this->assertEquals($test, $result->getTest());
     $this->assertEquals($status, $result->getStatus());
     $this->assertEquals($message, $result->getMessage());
-    $this->assertEquals($uri, $result->getUri());
+    $this->assertEquals($uri, $result->getRequest()->getUri());
   }
 
 }

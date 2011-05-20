@@ -9,6 +9,8 @@
 
 namespace Test\Unit\LiveTest\TestCases\General\Html;
 
+use LiveTest\Config\Request\Symfony;
+
 use Unit\Base\Http\Response\MockUp;
 
 use LiveTest\TestCase\General\Html\ValidMarkup;
@@ -29,7 +31,7 @@ class ValidMarkupTest extends \PHPUnit_Framework_TestCase
   {
     // local fixture dir
     $fixtDir = __DIR__ . '/fixtures';
-    
+
     // fixture: valid html document reponse
     if (file_exists($fixtDir . '/w3responseValid.xml')) {
       $this->_reponseValidDocument = file_get_contents(
@@ -53,7 +55,7 @@ class ValidMarkupTest extends \PHPUnit_Framework_TestCase
     $response = new MockUp();
     $response->setBody( $this->_reponseValidDocument );
 
-    $testCase->test( $response, new Uri( 'http://www.example.com' ));
+    $testCase->test( $response, Symfony::create(new Uri('http://www.example.com/')));
 
   }
 
@@ -66,7 +68,7 @@ class ValidMarkupTest extends \PHPUnit_Framework_TestCase
     $response->setBody( $this->_reponseInvalidDocument );
 
     $this->setExpectedException('LiveTest\TestCase\Exception');
-    $testCase->test( $response, new Uri( 'http://www.example.com' ) );
+    $testCase->test( $response, Symfony::create(new Uri('http://www.example.com/')) );
   }
 
   public function testInvalidValidatorReponseRaisesException()
@@ -78,6 +80,6 @@ class ValidMarkupTest extends \PHPUnit_Framework_TestCase
     $response->setBody( "no valid validator reponse at all" );
 
     $this->setExpectedException('LiveTest\TestCase\Exception');
-    $testCase->test( $response, new Uri( 'http://www.example.com' ) );
+    $testCase->test( $response, Symfony::create(new Uri('http://www.example.com/')) );
   }
 }

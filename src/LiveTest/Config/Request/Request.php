@@ -7,6 +7,6 @@ use Base\Http\Request\Request as BaseRequest;
 
 interface Request extends BaseRequest
 {
-  public static function create(Uri $uri, $method = 'get', array $requestParameters);
+  public static function create(Uri $uri, $method = 'get', $requestParameters = array());
   public function getIdentifier();
 }

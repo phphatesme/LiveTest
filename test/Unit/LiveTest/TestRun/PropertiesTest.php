@@ -21,14 +21,14 @@ class PropertiesTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $uri = $this->getMock("Uri");
-        $uri->expects($this->any())
-            ->method('concatUri')
-            ->will($this->returnValue('/index.html'));
-        
-        var_dump($uri->concatUri());
-            
-        //$this->object = new Properties();
+//        $uri = $this->getMock("Uri");
+//        $uri->expects($this->any())
+//            ->method('concatUri')
+//            ->will($this->returnValue('/index.html'));
+//
+//        var_dump($uri->concatUri());
+//
+//        //$this->object = new Properties();
     }
 
     /**

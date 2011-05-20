@@ -2,6 +2,8 @@
 
 namespace Test\Unit\LiveTest\TestCases\General\Http;
 
+use LiveTest\Config\Request\Symfony;
+
 use LiveTest\TestCase\General\Http\HeaderExists;
 
 use Unit\Base\Http\Response\MockUp;
@@ -21,7 +23,7 @@ class HeaderExistsTest extends \PHPUnit_Framework_TestCase
     $response = new MockUp();
     $response->setHeaders(array( 'Cache' => '' ));
 
-    $testCase->test($response, new Uri('http://www.example.com'));
+    $testCase->test($response, Symfony::create(new Uri('http://www.example.com/')));
   }
 
   public function testPositiveTest()
@@ -33,6 +35,6 @@ class HeaderExistsTest extends \PHPUnit_Framework_TestCase
     $response->setHeaders(array( 'No-Cache' => '' ));
 
     $this->setExpectedException('LiveTest\TestCase\Exception');
-    $testCase->test($response, new Uri('http://www.example.com'));
+    $testCase->test($response, Symfony::create(new Uri('http://www.example.com/')));
   }
 }

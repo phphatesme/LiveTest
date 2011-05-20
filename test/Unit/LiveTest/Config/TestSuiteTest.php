@@ -4,7 +4,7 @@ namespace Test\Unit\LiveTest\Config;
 
 use LiveTest\Config\TestSuite;
 
-use LiveTest\Config\Request\LiveTest as Request;
+use LiveTest\Config\Request\Symfony as Request;
 
 class TestSuiteTest extends \PHPUnit_Framework_TestCase
 {

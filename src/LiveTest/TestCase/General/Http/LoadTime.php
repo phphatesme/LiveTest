@@ -9,10 +9,11 @@
 
 namespace LiveTest\TestCase\General\Http;
 
+use Base\Http\Request\Request;
+
 use LiveTest\TestCase\Exception;
 use LiveTest\TestCase\TestCase;
 
-use Base\Www\Uri;
 use Base\Http\Response\Response;
 
 class LoadTime implements TestCase
@@ -24,7 +25,7 @@ class LoadTime implements TestCase
     $this->maxLoadTime = $maxLoadTime;
   }
 
-  public function test(Response $response, Uri $uri)
+  public function test(Response $response, Request $request)
   {
     $loadTime = $response->getDuration();
     if ($loadTime > $this->maxLoadTime)

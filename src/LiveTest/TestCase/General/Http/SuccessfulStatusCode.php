@@ -9,7 +9,7 @@
 
 namespace LiveTest\TestCase\General\Http;
 
-use Base\Www\Uri;
+use Base\Http\Request\Request;
 use Base\Http\Response\Response;
 
 use LiveTest\TestCase\TestCase;
@@ -27,7 +27,7 @@ class SuccessfulStatusCode implements TestCase
    *
    * @see LiveTest\TestCase.HttpTestCase::test()
    */
-  public function test(Response $response, Uri $uri)
+  public function test(Response $response, Request $request)
   {
     $status = (int)$response->getStatus();
     if ($status >= 400 )

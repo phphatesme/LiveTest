@@ -102,7 +102,7 @@ class RunTest extends \PHPUnit_Framework_TestCase
 
     $status = $this->connectionStatusListener->getConnectionStatus();
     $this->assertEquals( $status->getType(), ConnectionStatus::SUCCESS );
-    $this->assertEquals( $status->getUri()->toString(), 'http://www.example.com/index.html/' );
+    $this->assertEquals( $status->getRequest()->getUri(), 'http://www.example.com/index.html/' );
   }
 
   public function testHandleFailedConnectionStatus( )
@@ -113,52 +113,52 @@ class RunTest extends \PHPUnit_Framework_TestCase
 
     $status = $this->connectionStatusListener->getConnectionStatus();
     $this->assertEquals( $status->getType(), ConnectionStatus::ERROR );
-    $this->assertEquals( $status->getUri()->toString(), 'http://www.example.com/index.html/' );
+    $this->assertEquals( $status->getRequest()->getUri(), 'http://www.example.com/index.html/' );
     $this->assertEquals( $status->getMessage(), 'TestException' );
   }
 
   public function testHandleResultNotification( )
   {
-  	$this->run->run();
-  	$results = $this->handleResultListener->getResults();
-  	$responses = $this->handleResultListener->getResponses();
+    $this->run->run();
+    $results = $this->handleResultListener->getResults();
+    $responses = $this->handleResultListener->getResponses();
 
-  	$tmpResponse = 0;
-  	$tmpStatus = 0;
+    $tmpResponse = 0;
+    $tmpStatus = 0;
 
-  	foreach( $results as $key => $aResult)
-  	{
-  		if($aResult->getStatus() == $aResult::STATUS_SUCCESS)
-  		{
-  			$tmpStatus = $aResult->getStatus();
-  			$tmpResponse = $responses[$key];
-  			break;
-  		}
-  	}
+    foreach( $results as $key => $aResult)
+    {
+      if($aResult->getStatus() == $aResult::STATUS_SUCCESS)
+      {
+        $tmpStatus = $aResult->getStatus();
+        $tmpResponse = $responses[$key];
+        break;
+      }
+    }
 
-  	$this->assertEquals( $tmpStatus, $aResult::STATUS_SUCCESS );
-  	$this->assertEquals( $tmpResponse->getBody(), 'body');
+    $this->assertEquals( $tmpStatus, $aResult::STATUS_SUCCESS );
+    $this->assertEquals( $tmpResponse->getBody(), 'body');
 
 
 
-  	$httpClient = new HttpClientMockup(new ResponseMockup(404,'Not Found'));
-  	$run = new Run($this->properties, $httpClient, $this->dispatcher);
-  	$run->run();
+    $httpClient = new HttpClientMockup(new ResponseMockup(404,'Not Found'));
+    $run = new Run($this->properties, $httpClient, $this->dispatcher);
+    $run->run();
 
-  	$results = $this->handleResultListener->getResults();
-  	$responses = $this->handleResultListener->getResponses();
-  	foreach( $results as $key => $aResult)
-  	{
-  		if($aResult->getStatus() == $aResult::STATUS_FAILED)
-  		{
-  			$tmpStatus = $aResult->getStatus();
-  			$tmpResponse = $responses[$key];
-  			break;
-  		}
-  	}
+    $results = $this->handleResultListener->getResults();
+    $responses = $this->handleResultListener->getResponses();
+    foreach( $results as $key => $aResult)
+    {
+      if($aResult->getStatus() == $aResult::STATUS_FAILED)
+      {
+        $tmpStatus = $aResult->getStatus();
+        $tmpResponse = $responses[$key];
+        break;
+      }
+    }
 
-  	$this->assertEquals( $aResult::STATUS_FAILED, $tmpStatus );
-  	$this->assertEquals( $tmpResponse->getBody(), 'Not Found');
+    $this->assertEquals( $aResult::STATUS_FAILED, $tmpStatus );
+    $this->assertEquals( $tmpResponse->getBody(), 'Not Found');
 
   }
 }

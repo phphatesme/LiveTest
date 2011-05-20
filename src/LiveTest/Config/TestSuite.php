@@ -142,7 +142,7 @@ class TestSuite implements Config
    */
   public function includePageRequest(Request $pageRequest)
   {
-    $this->includedPageRequests[$pageRequest->getUri()] = $pageRequest;
+    $this->includedPageRequests[$pageRequest->getIdentifier()] = $pageRequest;
 
   }
 
@@ -167,7 +167,7 @@ class TestSuite implements Config
    */
   public function excludePageRequest(Request $pageRequest)
   {
-    $this->excludedPageRequests[$pageRequest->getUri()] = $pageRequest;
+    $this->excludedPageRequests[$pageRequest->getIdentifier()] = $pageRequest;
   }
 
   /**

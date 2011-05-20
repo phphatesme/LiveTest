@@ -58,7 +58,7 @@ class Verbose extends Base
   {
     if ($this->verbose)
     {
-      echo "\n  - Connection: " . $connectionStatus->getUri()->toString() . " - " . $connectionStatus->getType();
+      echo "\n  - Connection: " . $connectionStatus->getRequest()->getUri() . " - " . $connectionStatus->getType();
     }
   }
 
@@ -74,7 +74,7 @@ class Verbose extends Base
   {
     if ($this->verbose)
     {
-      echo "\n  HandleResult: - " . $result->getUri()->toString();
+      echo "\n  HandleResult: - " . $result->getRequest()->getUri();
     }
   }
 }

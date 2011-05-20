@@ -2,6 +2,8 @@
 
 namespace Test\Unit\LiveTest\TestCases\General\Html;
 
+use LiveTest\Config\Request\Symfony;
+
 use Unit\Base\Http\Response\MockUp;
 
 use Base\Www\Uri;
@@ -15,10 +17,10 @@ class RegExPresentTest extends \PHPUnit_Framework_TestCase
     $testCase = new RegExPresent();
     $testCase->init( '^a(.*)b^' );
 
-	$response = new MockUp();
+  $response = new MockUp();
     $response->setBody('acdefgb');
 
-    $testCase->test( $response, new Uri( 'http://www.example.com' ) );
+    $testCase->test( $response, Symfony::create(new Uri('http://www.example.com/')) );
   }
 
   public function testRegExNotFound()
@@ -30,6 +32,6 @@ class RegExPresentTest extends \PHPUnit_Framework_TestCase
     $response->setBody('bcdefg');
 
     $this->setExpectedException('LiveTest\TestCase\Exception');
-    $testCase->test( $response, new Uri( 'http://www.example.com' ) );
+    $testCase->test( $response, Symfony::create(new Uri('http://www.example.com/')) );
   }
 }

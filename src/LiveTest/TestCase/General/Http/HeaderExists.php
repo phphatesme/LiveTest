@@ -9,7 +9,7 @@
 
 namespace LiveTest\TestCase\General\Http;
 
-use Base\Www\Uri;
+use Base\Http\Request\Request;
 use Base\Http\Response\Response;
 
 use LiveTest\TestCase\TestCase;
@@ -22,28 +22,28 @@ use LiveTest\TestCase\Exception;
  */
 class HeaderExists implements TestCase
 {
-	private $headerName;
+  private $headerName;
 
-	/**
-	 * Sets the header key
-	 *
-	 * @param string $headerName
-	 */
-	public function init( $headerName )
-	{
-		$this->headerName = $headerName;
-	}
+  /**
+   * Sets the header key
+   *
+   * @param string $headerName
+   */
+  public function init( $headerName )
+  {
+    $this->headerName = $headerName;
+  }
 
   /**
    * Checks if a specified http header is existing
    *
    * @see LiveTest\TestCase.HttpTestCase::test()
    */
-  public function test(Response $response, Uri $uri)
+  public function test(Response $response, Request $request)
   {
-  	if( !( array_key_exists($this->headerName, $response->getHeaders())))
-  	{
-			throw new Exception('The expected header "'.$this->headerName.'" was not found.');
-  	}
+    if( !( array_key_exists($this->headerName, $response->getHeaders())))
+    {
+      throw new Exception('The expected header "'.$this->headerName.'" was not found.');
+    }
   }
 }

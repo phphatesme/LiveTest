@@ -2,6 +2,8 @@
 
 namespace Test\Unit\LiveTest\TestCases\General\Http;
 
+use LiveTest\Config\Request\Symfony;
+
 use Unit\Base\Http\Response\MockUp;
 
 use Base\Www\Uri;
@@ -20,7 +22,7 @@ class ExpectedStatusCodeTest extends \PHPUnit_Framework_TestCase
     $response->setStatus(500);
 
     $this->setExpectedException('LiveTest\TestCase\Exception');
-    $testCase->test($response, new Uri('http://www.example.com'));
+    $testCase->test($response, Symfony::create(new Uri('http://www.example.com/')));
   }
 
   public function testPositiveTest()
@@ -31,6 +33,6 @@ class ExpectedStatusCodeTest extends \PHPUnit_Framework_TestCase
     $response = new MockUp();
     $response->setStatus(400);
 
-    $testCase->test($response, new Uri('http://www.example.com'));
+    $testCase->test($response, Symfony::create(new Uri('http://www.example.com/')));
   }
 }
