@@ -9,6 +9,9 @@
 
 namespace LiveTest\Config\Tags\TestSuite;
 
+use LiveTest\Config\Request\Symfony as Request;
+
+
 /**
  * This tag excludes a list of pages.
  *
@@ -26,6 +29,6 @@ class ExcludePages extends Base
    */
   protected function doProcess(\LiveTest\Config\TestSuite $config, array $parameters)
   {
-    $config->excludePages($parameters);
+    $config->excludePageRequests(Request::createRequestsFromParameters($parameters, $config->getDefaultDomain()));
   }
 }

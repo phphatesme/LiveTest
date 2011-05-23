@@ -65,7 +65,7 @@ class TestSuite implements Config
    * The default domain
    * @var Uri $defaultDomain
    */
-  private $defaultDomain;
+  private $defaultDomain = null;
 
   private $pageManipulators = array ();
 

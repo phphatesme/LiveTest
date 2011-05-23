@@ -29,22 +29,35 @@ class Symfony implements Request
    * Enter description here ...
    * @param array $parameters
    */
-  public static function createRequestsFromParameters(array $parameters, Uri $baseUri)
+  public static function createRequestsFromParameters(array $parameters, Uri $baseUri =  null)
   {
     if(count($parameters) == 0)
     {
       throw new Exception('Parameter has to be set.');
     }
-
+    
+    
     $requests = array();
     $preparedRequestParameters = self::prepareRequestParameters($parameters);
 
     foreach($preparedRequestParameters as $aPreparedParameter)
     {
-
-      $requests[] = self::create($baseUri->concatUri($aPreparedParameter['uri']),
-                                  $aPreparedParameter['method'],
-                                  $aPreparedParameter['parameters']);
+      
+      if($baseUri == null)
+      {
+        //@todo: this is not really clean, but URI needs a valid URI to be constructed
+        $uri = new Uri($aPreparedParameter['uri']);
+        $uri = $uri->concatUri($aPreparedParameter['uri']);
+        
+      }
+      else
+      {
+        $uri = $baseUri->concatUri($aPreparedParameter['uri']);
+      }
+      
+      $requests[] = self::create($uri,
+                                 $aPreparedParameter['method'],
+                                 $aPreparedParameter['parameters']);
     }
 
     return $requests;
