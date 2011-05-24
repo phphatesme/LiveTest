@@ -10,7 +10,7 @@ class Uri
 
   public function __construct($uriString)
   {
-    $uriString = trim($uriString);
+    $uriString = $this->checkCorrectUrl($uriString);
     //@todo: http://www.example.com fails on validation with ParserTest.php and I
     //cannot find any error in it. So: lets validate it by Symfony's Request-Object.
     /*if (!self::isValid($uriString))
@@ -20,16 +20,29 @@ class Uri
     $this->uri = $uriString;
   }
 
+  /**
+   * 
+   * Enter description here ...
+   */
   public function __toString()
   {
     return $this->toString();
   }
-
+  
+  /**
+   * 
+   * Enter description here ...
+   */
   public function toString()
   {
     return $this->uri;
   }
-
+  
+  /**
+   * 
+   * Enter description here ...
+   * @param unknown_type $uriString
+   */
   public function concatUri($uriString)
   {
     if (strpos($uriString, 'http://') === false)
@@ -45,7 +58,23 @@ class Uri
     }
     else
     {
-      if (strrpos($uriString, '/') === 0)
+      $url = $uriString;
+    }
+
+    return new self($url);
+  }
+  
+  /**
+   * 
+   * Enter description here ...
+   * @param unknown_type $uriString
+   */
+  private function checkCorrectUrl($uriString)
+  {
+      $uriString = trim($uriString);
+      $uriParts = parse_url($uriString);
+     
+      if (key_exists('path', $uriParts))
       {
         $url = $uriString;
       }
@@ -53,11 +82,8 @@ class Uri
       {
         $url = $uriString.'/';
       }
-
-
-    }
-
-    return new self($url);
+      
+      return $url;
   }
 
   /**

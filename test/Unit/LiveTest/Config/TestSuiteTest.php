@@ -56,8 +56,8 @@ class TestSuiteTest extends \PHPUnit_Framework_TestCase
     $config->includePageRequests($createdPageRequests);
 
     $config->excludePageRequest(Request::create(new Uri('http://www.example.com/')));
-
     $pageRequests = $config->getPageRequests();
+    
     $this->assertEquals(1, count($pageRequests));
 
     //$this->assertEquals('http://www.phphatesme.com/', $pageRequests['http://www.phphatesme.com/']->getUri());

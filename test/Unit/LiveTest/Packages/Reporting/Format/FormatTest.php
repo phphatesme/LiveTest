@@ -2,6 +2,8 @@
 
 namespace Unit\LiveTest\Packages\Reporting\Format;
 
+use LiveTest\Config\Request\Symfony as Request;
+
 use Base\Http\ConnectionStatus;
 
 use LiveTest\TestRun\Information;
@@ -13,6 +15,7 @@ use LiveTest\TestRun\Result\Result;
 use LiveTest\TestRun\Result\ResultSet;
 use LiveTest\Report\Format\SimpleList;
 
+
 abstract class FormatTest extends \PHPUnit_Framework_TestCase
 {
   abstract protected function getFormat();
@@ -20,8 +23,8 @@ abstract class FormatTest extends \PHPUnit_Framework_TestCase
   private function getConnectionStatuses( )
   {
     $statuses = array();
-    $statuses[] = new ConnectionStatus(ConnectionStatus::SUCCESS, new Uri('http://www.connection-success.com'));
-    $statuses[] = new ConnectionStatus(ConnectionStatus::ERROR, new Uri('http://www.connection-error.com'), 'error message');
+    $statuses[] = new ConnectionStatus(ConnectionStatus::SUCCESS, Request::create(new Uri('http://www.connection-success.com')));
+    $statuses[] = new ConnectionStatus(ConnectionStatus::ERROR, Request::create(new Uri('http://www.connection-error.com')), 'error message');
 
     return $statuses;
   }
@@ -31,19 +34,20 @@ abstract class FormatTest extends \PHPUnit_Framework_TestCase
     $format = $this->getFormat();
 
     $set = new ResultSet();
-
-    $uri = new Uri('http://www.example.com');
+    
+    $defaultUri = new Uri('http://www.example.com');
+    $request = Request::create($defaultUri);
     $test = new Test('TestName', 'TestClass', array('foo' => 'bar'));
 
-    $successResult = new Result($test, Result::STATUS_SUCCESS, 'Success Message', $uri);
-    $failureResult = new Result($test, Result::STATUS_FAILED, 'Failed Message', $uri);
-    $errorResult = new Result($test, Result::STATUS_ERROR, 'Error Message', $uri);
+    $successResult = new Result($test, Result::STATUS_SUCCESS, 'Success Message', $request);
+    $failureResult = new Result($test, Result::STATUS_FAILED, 'Failed Message', $request);
+    $errorResult = new Result($test, Result::STATUS_ERROR, 'Error Message', $request);
 
     $set->addResult($successResult);
     $set->addResult($failureResult);
     $set->addResult($errorResult);
 
-    $information = new Information(1, $uri);
+    $information = new Information(1, $defaultUri);
     return $format->formatSet($set, $this->getConnectionStatuses(), $information);
   }
 }

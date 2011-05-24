@@ -143,7 +143,6 @@ class TestSuite implements Config
   public function includePageRequest(Request $pageRequest)
   {
     $this->includedPageRequests[$pageRequest->getIdentifier()] = $pageRequest;
-
   }
 
   /**
@@ -219,10 +218,10 @@ class TestSuite implements Config
    */
   public function getPageRequests()
   {
-
+    
     if ($this->inherit && !is_null($this->parentConfig))
     {
-      $results = array_merge_recursive($this->includedPageRequests, $this->parentConfig->getPageRequests());
+      $results = array_merge($this->includedPageRequests, $this->parentConfig->getPageRequests());
     }
     else
     {
@@ -231,24 +230,24 @@ class TestSuite implements Config
 
     $pageRequests = $this->getReducedPageRequests($results, $this->excludedPageRequests);
 
-    foreach( $this->pageManipulators as $manipulator )
+    /*foreach( $this->pageManipulators as $manipulator )
     {
       foreach( $pageRequests as &$pageRequest )
       {
         $pageRequest = $manipulator->manipulate($pageRequest);
       }
-    }
+    }*/
 
     return $pageRequests;
   }
 
   private function getReducedPageRequests(array $includedPageRequest, array $excludedPageRequests)
   {
-     foreach($excludedPageRequests as $urlKey => $pageRequest)
+     foreach($excludedPageRequests as $identifier => $pageRequest)
       {
-        if(array_key_exists($urlKey, $includedPageRequest))
+        if(array_key_exists($identifier, $includedPageRequest))
         {
-          unset($includedPageRequest[$urlKey]);
+          unset($includedPageRequest[$identifier]);
         }
       }
 

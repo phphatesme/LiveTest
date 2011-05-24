@@ -19,7 +19,7 @@ class HelpTest extends \PHPUnit_Framework_TestCase
   private function getTemplateContent( )
   {
     $content = file_get_contents(__DIR__.'/../../../../../../src/LiveTest/Packages/Runner/Listeners/Help/template.tpl');
-    $replacePath = '.' . DIRECTORY_SEPARATOR . $this->examplesPath. DIRECTORY_SEPARATOR;
+    $replacePath =  $this->examplesPath. DIRECTORY_SEPARATOR;
     
     foreach($this->templatePlaceholders as $placeholder)
     {
@@ -27,7 +27,7 @@ class HelpTest extends \PHPUnit_Framework_TestCase
                                $replacePath, 
                                $content);
     }
-    
+
     return $content;
   }
 

@@ -21,7 +21,7 @@ class Symfony implements Request
   {
     $this->request = $request;
     $this->parameters = $parameters;
-    $this->setIdentifier($parameters);
+    $this->setIdentifier(array($request->getUri(),$request->getMethod(),$parameters));
   }
 
  /**
@@ -45,10 +45,7 @@ class Symfony implements Request
       
       if($baseUri == null)
       {
-        //@todo: this is not really clean, but URI needs a valid URI to be constructed
         $uri = new Uri($aPreparedParameter['uri']);
-        $uri = $uri->concatUri($aPreparedParameter['uri']);
-        
       }
       else
       {
@@ -67,7 +64,6 @@ class Symfony implements Request
                                 $method = 'get',
                                 $requestParameters = array())
   {
-
     $request =  SymfonyRequest::create($uri->toString(),
                           $method,
                           $requestParameters);
@@ -77,7 +73,11 @@ class Symfony implements Request
 
   private function setIdentifier(array $parameters)
   {
-    $this->identifier = md5(Recursive::implode('_',$parameters));
+    if(empty($parameters))
+    {
+      throw new \Exception('Parameters should not be empty.');
+    }
+    $this->identifier = Recursive::implode('_',$parameters);
   }
 
   private static function prepareRequestParameters(array $parameters)

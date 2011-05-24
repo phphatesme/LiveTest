@@ -2,6 +2,8 @@
 
 namespace Test\Unit\LiveTest\Packages\Reporting\Listeners;
 
+use LiveTest\Config\Request\Symfony as Request;
+
 use Unit\Base\Http\Response\MockUp;
 
 use Base\Www\Uri;
@@ -42,7 +44,7 @@ class HtmlDocumentLogTest extends \PHPUnit_Framework_TestCase
     $response = new MockUp();
     $response->setBody('<body></body>');
 
-    $result = new Result($test, Result::STATUS_FAILED, '', new Uri('http://www.example.com'));
+    $result = new Result($test, Result::STATUS_FAILED, '', Request::create(new Uri('http://www.example.com')));
 
     $this->listener->handleResult($result, $response);
 
@@ -65,7 +67,7 @@ class HtmlDocumentLogTest extends \PHPUnit_Framework_TestCase
     $response->setStatus(200);
     $response->setBody('<body></body>');
 
-    $result = new Result($test, Result::STATUS_FAILED, '', new Uri( 'http://www.example.com'));
+    $result = new Result($test, Result::STATUS_FAILED, '',  Request::create(new Uri( 'http://www.example.com')));
 
     $this->listener->handleResult($result, $response);
 

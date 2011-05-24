@@ -15,7 +15,7 @@ class CsvTest extends FormatTest
   {
     $formattedText = $this->getStandardFormattedContent();
 
-    $expected = "http://www.example.com;TestName;TestClass;success\nhttp://www.example.com;TestName;TestClass;failure\nhttp://www.example.com;TestName;TestClass;error\n";
+    $expected = "http://www.example.com/;TestName;TestClass;success\nhttp://www.example.com/;TestName;TestClass;failure\nhttp://www.example.com/;TestName;TestClass;error\n";
 
     $this->assertEquals($expected, $formattedText);
   }
