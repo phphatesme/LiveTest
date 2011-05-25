@@ -36,7 +36,7 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
     $this->assertEquals('bar', $listener->getArgument('foo'));
    
     $listener = $this->getListenerForEvent( 'LiveTest.Runner.InitConfig' );
-    $this->assertEquals('http://www.example.com', $listener->getConfigDefaultDomain());
+    $this->assertEquals('http://www.example.com/', $listener->getConfigDefaultDomain());
     
     $listener = $this->getListenerForEvent( 'LiveTest.Runner.InitCore' );
     $this->assertEquals('bar', $listener->getCoreArgument('foo'));
