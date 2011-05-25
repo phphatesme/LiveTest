@@ -1,8 +1,12 @@
 <?php
-namespace LiveTest\Config\Tags\TestSuite;
+namespace Unit\LiveTest\Config\Tags\TestSuite;
 
 
-require_once __DIR__.'/../../../../../../src/LiveTest/Config/Tags/TestSuite/Base.php';
+use LiveTest\Config\Parser\Parser;
+
+use LiveTest\Config\TestSuite;
+
+use Unit\LiveTest\Config\Tags\TestSuite\Mockups\ExtendsBase as Base;
 
 /**
  * Test class for Base.
@@ -10,36 +14,39 @@ require_once __DIR__.'/../../../../../../src/LiveTest/Config/Tags/TestSuite/Base
  */
 class BaseTest extends \PHPUnit_Framework_TestCase
 {
+    
     /**
-     * @var Base
+     * @expectedException PHPUnit_Framework_Error
      */
-    protected $object;
-
-    /**
-     * Sets up the fixture, for example, opens a network connection.
-     * This method is called before a test is executed.
-     */
-    protected function setUp()
-    {
+    public function testConstructFailingOnConfigParameters()
+    {    
+        $base = new Base('test',new TestSuite(), new Parser('Test'));
     }
-
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
+    
+	/**
+     * @expectedException PHPUnit_Framework_Error
      */
-    protected function tearDown()
-    {
+    public function testConstructFailingOnTestSuiteParameter()
+    {    
+        $base = new Base(array(),null, new Parser('Test'));
     }
-
-    /**
-     * @todo Implement testProcess().
+    
+	/**
+     * @expectedException PHPUnit_Framework_Error
      */
+    public function testConstructFailingOnParserParameter()
+    {    
+        $base = new Base(array(), new TestSuite(), null);
+    }  
+    
+    
     public function testProcess()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
-    }
+    {    
+        $base = new Base(array(), new TestSuite(), new Parser('Test'));
+        $base->process();
+        
+        $this->assertEquals("OK", $base->getConfig());
+        $this->assertEquals("OK", $base->getParameters());
+    }  
 }
 ?>
