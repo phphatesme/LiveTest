@@ -1,6 +1,6 @@
 <?php
 
-namespace Test\Unit\LiveTest\Listener;
+namespace Test\Unit\LiveTest\Packages\Runner\Listener;
 
 use Unit\Base\Http\Response\MockUp;
 
