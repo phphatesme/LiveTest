@@ -2,6 +2,8 @@
 
 namespace Unit\LiveTest\Packages\Runner\Listeners;
 
+use LiveTest\Config\Request\Symfony as Request;
+
 use Unit\Base\Http\Response\MockUp;
 
 use Base\Www\Uri;
@@ -24,13 +26,13 @@ class StatusBarTest extends \PHPUnit_Framework_TestCase
     $response = new MockUp();
     $response->setStatus(200);
 
-    $result = new Result($test, Result::STATUS_SUCCESS, '', new Uri('http://www.example.com'));
+    $result = new Result($test, Result::STATUS_SUCCESS, '', Request::create(new Uri('http://www.example.com')));
     $listener->handleResult($result, $response);
 
-    $result = new Result($test, Result::STATUS_FAILED, '', new Uri('http://www.example.com'));
+    $result = new Result($test, Result::STATUS_FAILED, '', Request::create(new Uri('http://www.example.com')));
     $listener->handleResult($result, $response);
 
-    $result = new Result($test, Result::STATUS_ERROR, '', new Uri('http://www.example.com'));
+    $result = new Result($test, Result::STATUS_ERROR, '', Request::create(new Uri('http://www.example.com')));
     $listener->handleResult($result, $response);
 
     ob_start();
