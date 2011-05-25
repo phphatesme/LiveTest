@@ -4,6 +4,8 @@ namespace Test\Unit\LiveTest\Packages\Sleep\Listeners;
 
 use Unit\Base\Http\Response\MockUp;
 
+use LiveTest\Config\Request\Symfony as Request;
+
 use Base\Http\Response\Zend;
 
 use LiveTest\Event\Dispatcher;
@@ -36,7 +38,7 @@ class SleepTest extends \PHPUnit_Framework_TestCase
     $response = new MockUp();
 
     $timer = new Timer();
-    $this->listener->handleConnectionStatus( new ConnectionStatus(ConnectionStatus::SUCCESS, new Uri( 'http://www.example.com')));
+    $this->listener->handleConnectionStatus( new ConnectionStatus(ConnectionStatus::SUCCESS, Request::create(new Uri( 'http://www.example.com'))));
     $this->assertGreaterThanOrEqual($this->sleepTime, $timer->stop());
   }
 }
