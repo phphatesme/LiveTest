@@ -1,5 +1,5 @@
 <?php
-namespace Unit\LiveTest\TestRun;
+namespace Unit\LiveTest\Result\TestRun;
 
 use LiveTest\Config\Request\Symfony;
 
@@ -23,7 +23,7 @@ class ResultTest extends \PHPUnit_Framework_TestCase
     $this->assertEquals($test, $result->getTest());
     $this->assertEquals($status, $result->getStatus());
     $this->assertEquals($message, $result->getMessage());
-    $this->assertEquals($uri, $result->getRequest()->getUri());
+    $this->assertEquals($uri->getUri(), $result->getRequest()->getUri());
   }
 
 }

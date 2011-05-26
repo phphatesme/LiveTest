@@ -101,7 +101,12 @@ class Properties
   {
     return $this->testSets;
   }
-
+  
+  /**
+   * Assembles all properties to a string.
+   * 
+   * @return String Properties
+   */
   public function __toString()
   {
     $testSets = $this->getTestSets();

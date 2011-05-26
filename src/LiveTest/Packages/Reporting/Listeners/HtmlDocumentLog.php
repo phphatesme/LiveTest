@@ -56,7 +56,7 @@ class HtmlDocumentLog extends Base
     }
     else
     {
-      $this->logStatuses = array (Result::STATUS_ERROR, Result::STATUS_FAILED);
+      $this->logStatuses = array (Result::STATUS_ERROR, Result::STATUS_FAILED, Result::STATUS_SUCCESS);
     }
   }
 
@@ -96,9 +96,7 @@ class HtmlDocumentLog extends Base
    */
   public function handleResult(Result $result, Response $response)
   {
-    var_dump($result->getStatus());
-    echo "\n\n";
-    var_dump($this->logStatuses);
+    
     if (in_array($result->getStatus(), $this->logStatuses))
     {
       $filename = $this->logPath . urlencode($result->getRequest()->getUri());

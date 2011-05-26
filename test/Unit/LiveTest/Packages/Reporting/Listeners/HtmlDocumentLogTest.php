@@ -19,7 +19,7 @@ use LiveTest\Packages\Reporting\Listeners\HtmlDocumentLog;
 class HtmlDocumentLogTest extends \PHPUnit_Framework_TestCase
 {
   private $logPath = 'logs';
-  private $createdFile = 'http%3A%2F%2Fwww.example.com';
+  private $createdFile = 'http%3A%2F%2Fwww.example.com%2F';
   private $fullLogPath;
   private $listener;
 
@@ -47,7 +47,6 @@ class HtmlDocumentLogTest extends \PHPUnit_Framework_TestCase
     $result = new Result($test, Result::STATUS_FAILED, '', Request::create(new Uri('http://www.example.com')));
 
     $this->listener->handleResult($result, $response);
-
     $this->assertTrue(file_exists($this->fullLogPath . $this->createdFile));
   }
   
