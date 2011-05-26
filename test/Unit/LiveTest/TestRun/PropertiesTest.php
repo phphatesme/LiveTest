@@ -1,8 +1,12 @@
 <?php
 namespace Unit\LiveTest\TestRun;
 
+use LiveTest\Config\TestSuite;
 
+use Base\Www\Uri;
+use LiveTest\Config\Request\Symfony;
 use LiveTest\TestRun\Properties;
+
 
 /**
  * Test class for Properties.
@@ -21,66 +25,41 @@ class PropertiesTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-//        $uri = $this->getMock("Uri");
-//        $uri->expects($this->any())
-//            ->method('concatUri')
-//            ->will($this->returnValue('/index.html'));
-//
-//        var_dump($uri->concatUri());
-//
-//        //$this->object = new Properties();
+      $testSuiteConfig = new TestSuite();
+      $uri = new Uri('http://www.example.com');  
+      
+      $this->object = new Properties($testSuiteConfig, $uri);
     }
 
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-    }
-
-    /**
-     * @todo Implement testGetDefaultDomain().
-     */
     public function testGetDefaultDomain()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->assertEquals("http://www.example.com/",  $this->object->getDefaultDomain()->toString());
     }
 
-    /**
-     * @todo Implement testGetTestSets().
-     */
     public function testGetTestSets()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->assertEquals(array(), $this->object->getTestSets());
     }
 
-    /**
-     * @todo Implement test__toString().
-     */
     public function test__toString()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+      $this->assertEquals("",$this->object->__toString());
     }
 
     /**
-     * @todo Implement testCreateByYamlFile().
+     * @expectedException \LiveTest\ConfigurationException
      */
-    public function testCreateByYamlFile()
+    public function testCreateByYamlFileConfigException()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+       Properties::createByYamlFile('none', new Uri("http://www.example.com"));
+    }
+    
+	/**
+     * @expectedException LiveTest\ConfigurationException
+     */
+    public function testCreateByYamlFileConfigurationException()
+    {
+       Properties::createByYamlFile(__DIR__.'/Fixtures/testsuite_error.yml', new Uri("http://www.example.com"));
     }
 }
 ?>

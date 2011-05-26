@@ -1,0 +1,18 @@
+TestSuite:
+
+ TestCasesFictive:
+ 
+  UseResponseObjectives: 
+   TestCase: Unit\LiveTest\TestCases\Mockups\Html\ResponseObjectTest
+ 
+  TextPresentHtml_standard: 
+   TestCase: LiveTest\TestCase\General\Html\TextPresent
+   Parameter: 
+    Text: Stern
+    
+  CorrectHttpHeader_standard: 
+   TestCase: LiveTest\TestCase\General\Http\SuccessfulStatusCode
+   
+    
+ Pages:
+  - /
