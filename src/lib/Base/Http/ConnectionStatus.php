@@ -2,29 +2,29 @@
 
 namespace Base\Http;
 
-use Base\Www\Uri;
+use Base\Http\Request\Request;
 
 class ConnectionStatus
 {
   const SUCCESS = 'success';
   const ERROR = 'error';
-  
+
   private $type;
   private $message;
-  private $uri;
-  
-  public function __construct($type, Uri $uri, $message = null)
+  private $request;
+
+  public function __construct($type, Request $request, $message = null)
   {
     $this->type = $type;
     $this->message = $message;
-    $this->uri = $uri;
+    $this->request = $request;
   }
 
-  public function getUri( )
+  public function getRequest( )
   {
-    return $this->uri;
+    return $this->request;
   }
-  
+
   public function getType()
   {
     return $this->type;

@@ -3,58 +3,76 @@
 namespace Test\Unit\LiveTest\Config;
 
 use LiveTest\Config\TestSuite;
+use Base\Www\Uri;
+
+use LiveTest\Config\Request\Symfony as Request;
 
 class TestSuiteTest extends \PHPUnit_Framework_TestCase
 {
   public function testIncludePage()
   {
     $config = new TestSuite();
-    $config->includePage('http://www.example.com');
-    $config->includePage('http://www.phphatesme.com');
+    $config->includePageRequest(Request::create(new Uri('http://www.example.com/'),'get'));
+    $config->includePageRequest(Request::create(new Uri('http://www.phphatesme.com/'),'get'));
 
-    $pages = $config->getPages();
-    $this->assertEquals(2, count($pages));
+    $pageRequests = $config->getPageRequests();
+    $this->assertEquals(2, count($pageRequests));
+    
+    $validatePages = array('http://www.example.com/', 'http://www.phphatesme.com/');
+    
+    $counter = 0;
+    foreach($pageRequests as $aPageRequest)
+    {
+      $this->assertEquals($validatePages[$counter], $aPageRequest->getUri());
+      $counter++;
+    }
 
-    $this->assertEquals('http://www.example.com', $pages['http://www.example.com']);
-    $this->assertEquals('http://www.phphatesme.com', $pages['http://www.phphatesme.com']);
   }
 
-  public function testIncludePages()
+  public function testCreatePageRequestsFromParameters()
   {
-    $includedPages = array('http://www.example.com','http://www.phphatesme.com');
+    $includedPages = array('http://www.example.com/','http://www.phphatesme.com/');
 
     $config = new TestSuite();
-    $config->includePages($includedPages);
+    $pageRequestsToInclude = Request::createRequestsFromParameters($includedPages);
 
-    $pages = $config->getPages();
-    $this->assertEquals(count($includedPages), count($pages));
+    $config->includePageRequests($pageRequestsToInclude);
+
+    $pageRequests = $config->getPageRequests();
+    $this->assertEquals(count($includedPages), count($pageRequests));
   }
 
-  public function testExcludePage()
+  public function testCreatePageRequestsFromParametersSortOrder()
   {
-    $includedPages = array('http://www.example.com','http://www.phphatesme.com');
 
-    $config = new TestSuite();
-    $config->includePages($includedPages);
-
-    $config->excludePage('http://www.example.com');
-
-    $pages = $config->getPages();
-    $this->assertEquals(1, count($pages));
-
-    $this->assertEquals('http://www.phphatesme.com', $pages['http://www.phphatesme.com']);
   }
 
-  public function testExcludePages()
+  public function testExcludePageRequest()
   {
-    $includedPages = array('http://www.example.com','http://www.phphatesme.com');
+    $includedPages = array('http://www.example.com/','http://www.phphatesme.com/');
 
     $config = new TestSuite();
-    $config->includePages($includedPages);
-    $config->excludePages($includedPages);
+    $createdPageRequests = Request::createRequestsFromParameters($includedPages);
+    $config->includePageRequests($createdPageRequests);
 
-    $pages = $config->getPages();
-    $this->assertEquals(0, count($pages));
+    $config->excludePageRequest(Request::create(new Uri('http://www.example.com/')));
+    $pageRequests = $config->getPageRequests();
+    
+    $this->assertEquals(1, count($pageRequests));
+
+    //$this->assertEquals('http://www.phphatesme.com/', $pageRequests['http://www.phphatesme.com/']->getUri());
+  }
+
+  public function testExcludePageRequests()
+  {
+    $includedPages = array('http://www.example.com/','http://www.phphatesme.com/');
+
+    $config = new TestSuite();
+    $pageRequestsToExclude = Request::createRequestsFromParameters($includedPages);
+    $config->excludePageRequests($pageRequestsToExclude);
+
+    $pageRequests = $config->getPageRequests();
+    $this->assertEquals(0, count($pageRequests));
   }
 
   public function testCreateTestCase()

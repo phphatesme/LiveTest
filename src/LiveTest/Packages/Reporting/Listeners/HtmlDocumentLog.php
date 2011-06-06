@@ -35,7 +35,7 @@ class HtmlDocumentLog extends Base
    * @var array
    */
   private $logStatuses = array ();
-  
+
   /**
    * This function initializes the log path and if given the log statuses
    *
@@ -47,19 +47,19 @@ class HtmlDocumentLog extends Base
   public function init($logPath, array $logStatuses = null)
   {
     $this->logPath = $logPath . '/' . $this->getRunId() . '/';
-    
+
     $this->createLogDirIfNotExists($this->logPath);
-   
+
     if (!is_null($logStatuses))
     {
       $this->logStatuses = $logStatuses;
     }
     else
     {
-      $this->logStatuses = array (Result::STATUS_ERROR, Result::STATUS_FAILED);
+      $this->logStatuses = array (Result::STATUS_ERROR, Result::STATUS_FAILED, Result::STATUS_SUCCESS);
     }
   }
-  
+
   /**
    * Checks if a directory exists. If not it is created.
    * @todo this should be done in the base library
@@ -72,7 +72,7 @@ class HtmlDocumentLog extends Base
       $this->createLogDirRecursively($logDir);
     }
   }
-  
+
   /**
    * Trys to create the given $logDir recursively. If an error occurs, an exception
    * is thrown.
@@ -88,7 +88,7 @@ class HtmlDocumentLog extends Base
        throw new ConfigurationException('Could not create Log-Directory: '.$logDir.'; Error: '.$lastError['message']);
      }
   }
-  
+
   /**
    * This function writes the html documents to a specified directory
    *
@@ -96,9 +96,11 @@ class HtmlDocumentLog extends Base
    */
   public function handleResult(Result $result, Response $response)
   {
+    
     if (in_array($result->getStatus(), $this->logStatuses))
     {
-      $filename = $this->logPath . urlencode($result->getUri()->toString());
+      $filename = $this->logPath . urlencode($result->getRequest()->getUri());
+     
       $file = new File($filename);
       $file->setContent($response->getBody());
       try
@@ -107,7 +109,7 @@ class HtmlDocumentLog extends Base
       }
       catch (\Exception $e)
       {
-      	throw new ConfigurationException( 'Unable to write the html response to file "'.$filename.'"' );
+        throw new ConfigurationException( 'Unable to write the html response to file "'.$filename.'"' );
       }
     }
   }

@@ -2,6 +2,8 @@
 
 namespace Test\Unit\LiveTest\Packages\Reporting\Listeners;
 
+use LiveTest\Config\Request\Symfony as Request;
+
 use Unit\Base\Http\Response\MockUp;
 
 use Base\Www\Uri;
@@ -17,7 +19,7 @@ use LiveTest\Packages\Reporting\Listeners\HtmlDocumentLog;
 class HtmlDocumentLogTest extends \PHPUnit_Framework_TestCase
 {
   private $logPath = 'logs';
-  private $createdFile = 'http%3A%2F%2Fwww.example.com';
+  private $createdFile = 'http%3A%2F%2Fwww.example.com%2F';
   private $fullLogPath;
   private $listener;
 
@@ -42,10 +44,9 @@ class HtmlDocumentLogTest extends \PHPUnit_Framework_TestCase
     $response = new MockUp();
     $response->setBody('<body></body>');
 
-    $result = new Result($test, Result::STATUS_FAILED, '', new Uri('http://www.example.com'));
+    $result = new Result($test, Result::STATUS_FAILED, '', Request::create(new Uri('http://www.example.com')));
 
     $this->listener->handleResult($result, $response);
-
     $this->assertTrue(file_exists($this->fullLogPath . $this->createdFile));
   }
   
@@ -65,7 +66,7 @@ class HtmlDocumentLogTest extends \PHPUnit_Framework_TestCase
     $response->setStatus(200);
     $response->setBody('<body></body>');
 
-    $result = new Result($test, Result::STATUS_FAILED, '', new Uri( 'http://www.example.com'));
+    $result = new Result($test, Result::STATUS_FAILED, '',  Request::create(new Uri( 'http://www.example.com')));
 
     $this->listener->handleResult($result, $response);
 

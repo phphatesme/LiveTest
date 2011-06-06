@@ -16,7 +16,6 @@ use LiveTest\TestRun\Result\Result;
 use Base\Http\Client\Client;
 use Base\Http\ConnectionStatus;
 use Base\Http\Response\Response;
-use Base\Www\Uri;
 use Base\Timer\Timer;
 
 class Run
@@ -93,7 +92,7 @@ class Run
       try
       {
         $testCase = $this->getInitializedTestCase($test);
-        $testCase->test($response, $testSet->getUri());
+        $testCase->test($response, $testSet->getRequest());
       }
       catch (\LiveTest\TestCase\Exception $e )
       {
@@ -105,7 +104,7 @@ class Run
         $runStatus = Result::STATUS_ERROR;
         $runMessage = $e->getMessage();
       }
-      $result = new Result($test, $runStatus, $runMessage, $testSet->getUri());
+      $result = new Result($test, $runStatus, $runMessage, $testSet->getRequest());
       $this->eventDispatcher->simpleNotify('LiveTest.Run.HandleResult', array ('result' => $result, 'response' => $response ));
     }
   }
@@ -124,8 +123,14 @@ class Run
 
     try
     {
-      $this->httpClient->setUri($testSet->getUri()->toString());
-      $response = $this->httpClient->request();
+      $uri = $testSet->getRequest()->getUri();
+      $method = $testSet->getRequest()->getMethod();
+      $parameters = $testSet->getRequest()->getParameters();
+      $parameterSet = 'setParameter'.ucfirst($method);
+
+      $this->httpClient->setUri($uri);
+      $this->httpClient->$parameterSet($parameters);
+      $response = $this->httpClient->request($method);
     }
     catch ( \Zend\Http\Exception $e )
     {
@@ -133,7 +138,7 @@ class Run
       $connectionStatusMessage = $e->getMessage();
     }
 
-    $connectionStatus = new ConnectionStatus($connectionStatusValue, $testSet->getUri(), $connectionStatusMessage);
+    $connectionStatus = new ConnectionStatus($connectionStatusValue, $testSet->getRequest(), $connectionStatusMessage);
 
     $this->eventDispatcher->simpleNotify('LiveTest.Run.HandleConnectionStatus', array ('connectionStatus' => $connectionStatus ));
 

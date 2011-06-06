@@ -10,6 +10,7 @@
 namespace LiveTest\Config\Tags\TestSuite;
 
 use LiveTest\Config\Parser;
+use LiveTest\Config\Request\Symfony as Request;
 
 /**
  * This tag sets a list of pages to the configuration and stops the inheritance of the config file. If
@@ -30,6 +31,6 @@ class Pages extends Base
   protected function doProcess(\LiveTest\Config\TestSuite $config, array $parameters)
   {
     $config->doNotInherit();
-    $config->includePages($parameters);
+    $config->includePageRequests(Request::createRequestsFromParameters($parameters, $config->getDefaultDomain()));
   }
 }

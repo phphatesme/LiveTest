@@ -2,6 +2,8 @@
 
 namespace Test\Unit\LiveTest\TestCases\General\Html;
 
+use LiveTest\Config\Request\Symfony;
+
 use Unit\Base\Http\Response\MockUp;
 
 use Base\Www\Uri;
@@ -18,7 +20,7 @@ class XPathTest extends \PHPUnit_Framework_TestCase
     $response = new MockUp();
     $response->setBody('<html><head><meta name="robots" content="bla" /></head></html>');
 
-    $testCase->test($response, new Uri('http://www.example.com'));
+    $testCase->test($response, Symfony::create(new Uri('http://www.example.com/')));
   }
 
   public function testXPathAttributeDoesntMatch()
@@ -30,7 +32,7 @@ class XPathTest extends \PHPUnit_Framework_TestCase
     $response->setBody('<html><head><meta name="robots" content="NOMATCH" /></head></html>');
 
     $this->setExpectedException('LiveTest\TestCase\Exception');
-    $testCase->test($response, new Uri('http://www.example.com'));
+    $testCase->test($response, Symfony::create(new Uri('http://www.example.com/')));
   }
 
   public function testXPathAttributeNotFound()
@@ -42,7 +44,7 @@ class XPathTest extends \PHPUnit_Framework_TestCase
     $response->setBody('<html><head><meta name="WRONGNAME" content="bla" /></head></html>');
 
     $this->setExpectedException('LiveTest\TestCase\Exception');
-    $testCase->test($response, new Uri('http://www.example.com'));
+    $testCase->test($response, Symfony::create(new Uri('http://www.example.com/')));
   }
 
   public function testXPathEmptyHTML()
@@ -53,7 +55,7 @@ class XPathTest extends \PHPUnit_Framework_TestCase
     $response = new MockUp();
 
     $this->setExpectedException('LiveTest\TestCase\Exception');
-    $testCase->test($response, new Uri('http://www.example.com'));
+    $testCase->test($response, Symfony::create(new Uri('http://www.example.com/')));
   }
 
   public function testXPathTextFound()
@@ -64,7 +66,7 @@ class XPathTest extends \PHPUnit_Framework_TestCase
     $response = new MockUp();
     $response->setBody('<html><head><title>titleBla</title></head></html>');
 
-    $testCase->test($response, new Uri('http://www.example.com'));
+    $testCase->test($response, Symfony::create(new Uri('http://www.example.com/')));
   }
 
   public function testXPathTextDoesntMatch()
@@ -76,7 +78,7 @@ class XPathTest extends \PHPUnit_Framework_TestCase
     $response->setBody('<html><head><title>WRONGTITLE</title></head></html>');
 
     $this->setExpectedException('LiveTest\TestCase\Exception');
-    $testCase->test($response, new Uri('http://www.example.com'));
+    $testCase->test($response, Symfony::create(new Uri('http://www.example.com/')));
   }
 
   public function testXPathInvalidXPath()
@@ -88,6 +90,6 @@ class XPathTest extends \PHPUnit_Framework_TestCase
     $response->setBody('<html><head><title>titleBla</title></head></html>');
 
     $this->setExpectedException('LiveTest\TestCase\Exception');
-    $testCase->test($response, new Uri('http://www.example.com'));
+    $testCase->test($response, Symfony::create(new Uri('http://www.example.com/')));
   }
 }

@@ -76,14 +76,14 @@ class Html implements Format
     foreach ( $set as $result )
     {
       $testCount++;
-      $matrix [$result->getUri()->toString()] ['tests'] [$result->getTest()->getName()] = $result;
-      if (array_key_exists('status', $matrix [$result->getUri()->toString()]))
+      $matrix [$result->getRequest()->getUri()] ['tests'] [$result->getTest()->getName()] = $result;
+      if (array_key_exists('status', $matrix [$result->getRequest()->getUri()]))
       {
-        $matrix [$result->getUri()->toString()] ['status'] = max($matrix [$result->getUri()->toString()] ['status'], $this->statuses [$result->getStatus()]);
+        $matrix [$result->getRequest()->getUri()] ['status'] = max($matrix [$result->getRequest()->getUri()] ['status'], $this->statuses [$result->getStatus()]);
       }
       else
       {
-        $matrix [$result->getUri()->toString()] ['status'] = $this->statuses [$result->getStatus()];
+        $matrix [$result->getRequest()->getUri()] ['status'] = $this->statuses [$result->getStatus()];
       }
       $tests [$result->getTest()->getName()] = $result->getTest();
     }

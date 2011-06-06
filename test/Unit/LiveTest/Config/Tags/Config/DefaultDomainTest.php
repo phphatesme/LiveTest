@@ -11,7 +11,7 @@ class DefaultDomainTest extends \PHPUnit_Framework_TestCase
   
   public function testSetDefaultDomain()
   {
-    $domain = 'http://test.test.test';
+    $domain = 'http://test.test.test/';
     $config = new ConfigConfig();
 	$defaultDomain = new DefaultDomain($domain, $config, new Parser('/'));
 	$defaultDomain->process();

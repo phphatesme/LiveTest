@@ -19,6 +19,8 @@ use LiveTest\Config\Parser\Parser;
 use Base\Config\Yaml;
 use Base\Www\Uri;
 
+use LiveTest\Config\Request\LiveTest as Request;
+
 /**
  * A properties class holds all information about a test run. It prepares athe data given by
  * a config file to be used in a test run.
@@ -67,16 +69,15 @@ class Properties
     foreach ($testCases as $testCase)
     {
       $config = $testCase['config'];
-      foreach ($config->getPages() as $page)
+      foreach ($config->getPageRequests() as $aPageRequest)
       {
-        $uri = $this->defaultDomain->concatUri($page);
-        if (!array_key_exists($page, $this->testSets))
+        if (!array_key_exists($aPageRequest->getIdentifier(), $this->testSets))
         {
-          $this->testSets[$page] = new TestSet($uri);
+          $this->testSets[$aPageRequest->getIdentifier()] = new TestSet($aPageRequest);
         }
 
         $test = new Test($testCase['name'], $testCase['className'], $testCase['parameters']);
-        $this->testSets[$page]->addTest($test);
+        $this->testSets[$aPageRequest->getIdentifier()]->addTest($test);
       }
     }
   }
@@ -100,7 +101,12 @@ class Properties
   {
     return $this->testSets;
   }
-
+  
+  /**
+   * Assembles all properties to a string.
+   * 
+   * @return String Properties
+   */
   public function __toString()
   {
     $testSets = $this->getTestSets();
@@ -137,8 +143,11 @@ class Properties
     {
       throw new \LiveTest\ConfigurationException('Unable to load test suite yaml file (filename: ' . $filename . ')');
     }
+
     $testSuiteConfig = new TestSuite();
     $testSuiteConfig->setBaseDir(dirname($filename));
+    $testSuiteConfig->setDefaultDomain($defaultUri);
+
     $parser = new Parser('LiveTest\\Config\\Tags\\TestSuite\\');
     try
     {
@@ -150,6 +159,6 @@ class Properties
                                        null, $e);
     }
 
-    return new self($testSuiteConfig, $defaultUri);    
+    return new self($testSuiteConfig, $defaultUri);
   }
 }

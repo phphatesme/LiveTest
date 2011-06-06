@@ -2,6 +2,8 @@
 
 namespace Test\Unit\LiveTest\TestCases\General\Html;
 
+use LiveTest\Config\Request\Symfony;
+
 use Unit\Base\Http\Response\MockUp;
 
 use Base\Www\Uri;
@@ -19,11 +21,11 @@ class TestCaseTest extends \PHPUnit_Framework_TestCase
 
     $response = new MockUp();
     $response->setBody('<html></html>');
-    
-    $uri = new Uri('http://www.example.com/');
 
-    $stub->test($response, $uri);
+    $request = Symfony::create(new Uri('http://www.example.com/'),'get',array());
 
-    $this->assertEquals($uri, $stub->getUri());
+    $stub->test($response, $request);
+
+    $this->assertEquals($request->getUri(), $stub->getRequest()->getUri());
   }
 }

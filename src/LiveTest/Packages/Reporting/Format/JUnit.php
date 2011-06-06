@@ -52,7 +52,7 @@ class JUnit implements Format
       $xml_testcase = $dom->createElement('testcase');
 
       $xml_testcase->setAttribute('name', $result->getTest()->getName());
-      $xml_testcase->setAttribute('file', $result->getUri());
+      $xml_testcase->setAttribute('file', $result->getRequest()->getUri());
 
       if ($result->getStatus() == Result::STATUS_FAILED)
       {

@@ -1,6 +1,8 @@
 <?php
 
-namespace Test\Unit\LiveTest\Listener;
+namespace Test\Unit\LiveTest\Packages\Runner\Listeners;
+
+use LiveTest\Config\Request\Symfony as Request;
 
 use Unit\Base\Http\Response\MockUp;
 
@@ -32,13 +34,13 @@ class ProgressBarTest extends \PHPUnit_Framework_TestCase
     $response->setStatus(200);
 
     ob_start();
-    $result = new Result($test, Result::STATUS_SUCCESS, '', new Uri( 'http://www.example.com'));
+    $result = new Result($test, Result::STATUS_SUCCESS, '', Request::create(new Uri( 'http://www.example.com')));
     $this->listener->handleResult($result, $response);
 
-    $result = new Result($test, Result::STATUS_FAILED, '', new Uri( 'http://www.example.com'));
+    $result = new Result($test, Result::STATUS_FAILED, '', Request::create(new Uri( 'http://www.example.com')));
     $this->listener->handleResult($result, $response);
 
-    $result = new Result($test, Result::STATUS_ERROR, '', new Uri( 'http://www.example.com'));
+    $result = new Result($test, Result::STATUS_ERROR, '', Request::create(new Uri( 'http://www.example.com')));
     $this->listener->handleResult($result, $response);
 
     $output = ob_get_contents();
@@ -50,7 +52,7 @@ class ProgressBarTest extends \PHPUnit_Framework_TestCase
   public function testHandleConnectionStatusSuccess()
   {
     ob_start();
-    $this->listener->handleConnectionStatus(new ConnectionStatus(ConnectionStatus::SUCCESS, new Uri('http://www.example.com')));
+    $this->listener->handleConnectionStatus(new ConnectionStatus(ConnectionStatus::SUCCESS, Request::create(new Uri('http://www.example.com'))));
     $output = ob_get_contents();
     ob_clean();
     $this->assertEquals('', $output);
@@ -59,7 +61,7 @@ class ProgressBarTest extends \PHPUnit_Framework_TestCase
   public function testHandleConnectionStatusError()
   {
     ob_start();
-    $this->listener->handleConnectionStatus(new ConnectionStatus(ConnectionStatus::ERROR, new Uri('http://www.example.com')));
+    $this->listener->handleConnectionStatus(new ConnectionStatus(ConnectionStatus::ERROR, Request::create(new Uri('http://www.example.com'))));
     $output = ob_get_contents();
     ob_clean();
     $this->assertEquals('  Running: E', $output);

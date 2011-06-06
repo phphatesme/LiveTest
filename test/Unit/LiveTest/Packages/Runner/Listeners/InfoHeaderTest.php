@@ -35,7 +35,7 @@ class InfoHeaderTest extends \PHPUnit_Framework_TestCase
 
     $output = explode("\n", $output);
 
-    $this->assertEquals( '  Default Domain  : http://www.example.com', $output[0] );
+    $this->assertEquals( '  Default Domain  : http://www.example.com/', $output[0] );
     $this->assertEquals( '  Number of URIs  : 3', $output[3] );
     $this->assertEquals( '  Number of Tests : 6', $output[4] );
   }

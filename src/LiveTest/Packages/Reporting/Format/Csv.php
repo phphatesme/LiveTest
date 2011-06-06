@@ -35,7 +35,7 @@ class Csv implements Format
     {
       $test = $result->getTest();
 
-      $text .= $result->getUri() . ";".$test->getName().";".$test->getClassName().";"
+      $text .= $result->getRequest()->getUri() . ";".$test->getName().";".$test->getClassName().";"
                . $result->getStatus()."\n";
     }
     return $text;

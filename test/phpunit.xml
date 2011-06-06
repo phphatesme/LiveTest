@@ -6,7 +6,7 @@
 >
     <testsuites>
         <testsuite name="LiveTest Unit Tests">
-            <directory>Unit/</directory>
+            <directory>Unit</directory>
         </testsuite>
     </testsuites>
 

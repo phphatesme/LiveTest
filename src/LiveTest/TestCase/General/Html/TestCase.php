@@ -9,7 +9,7 @@
 
 namespace LiveTest\TestCase\General\Html;
 
-use Base\Www\Uri;
+use Base\Http\Request\Request;
 use Base\Www\Html\Document;
 
 use Base\Http\Response\Response;
@@ -17,28 +17,28 @@ use Base\Http\Response\Response;
 abstract class TestCase implements \LiveTest\TestCase\TestCase
 {
   private $httpResponse;
-  private $uri;
+  private $request;
 
   /**
-   * This function return the uri the test case was tested with
+   * This function return the Request the test case was tested with
    *
-   * @return Uri
+   * @return Request
    */
-  public function getUri()
+  public function getRequest()
   {
-    return $this->uri;
+    return $this->request;
   }
 
   /**
    * This function is used to create the html document out of the response. It
-   * calls the runTest method where all chckes shouls be made.
+   * calls the runTest method where all checks shouls be made.
    *
    * @see LiveTest\TestCase.TestCase::test()
    */
-  final public function test(Response $httpResponse, Uri $uri)
+  final public function test(Response $httpResponse, Request $request)
   {
     $this->httpResponse = $httpResponse;
-    $this->uri = $uri;
+    $this->request = $request;
 
     $htmlDocument = new Document($httpResponse->getBody());
     $this->runTest($htmlDocument);

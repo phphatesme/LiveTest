@@ -14,6 +14,8 @@ use LiveTest\Event\Dispatcher;
 use Base\Www\Uri;
 use Base\Http\ConnectionStatus;
 
+use LiveTest\Config\Request\Symfony as Request;
+
 class ReportTest extends \PHPUnit_Framework_TestCase
 {
   private $listener;
@@ -36,7 +38,7 @@ class ReportTest extends \PHPUnit_Framework_TestCase
 
     $response = new MockUp();
 
-    $result = new Result($test, Result::STATUS_SUCCESS, 'Success', new Uri('http://www.example.com'));
+    $result = new Result($test, Result::STATUS_SUCCESS, 'Success', Request::create(new Uri('http://www.example.com')));
     $this->listener->handleResult($result, $response);
 
     ob_start();
@@ -44,7 +46,7 @@ class ReportTest extends \PHPUnit_Framework_TestCase
     $actual = ob_get_contents();
     ob_clean();
 
-    $expected = "\n\nhttp://www.example.com;TestName;ClassName;success\n";
+    $expected = "\n\nhttp://www.example.com/;TestName;ClassName;success\n";
 
     $this->assertEquals($expected, $actual);
   }
@@ -62,10 +64,10 @@ class ReportTest extends \PHPUnit_Framework_TestCase
 
     $response = new MockUp();
 
-    $result = new Result($test, Result::STATUS_SUCCESS, 'Success', new Uri('http://www.example.com'));
+    $result = new Result($test, Result::STATUS_SUCCESS, 'Success', Request::create(new Uri('http://www.example.com')));
     $this->listener->handleResult($result, $response);
 
-    $result = new Result($test, Result::STATUS_FAILED, 'Failed', new Uri('http://www.example.com'));
+    $result = new Result($test, Result::STATUS_FAILED, 'Failed', Request::create(new Uri('http://www.example.com')));
 
     $this->listener->handleResult($result, $response);
 
@@ -74,7 +76,7 @@ class ReportTest extends \PHPUnit_Framework_TestCase
     $actual = ob_get_contents();
     ob_clean();
 
-    $expected = "\n\nhttp://www.example.com;TestName;ClassName;failure\n";
+    $expected = "\n\nhttp://www.example.com/;TestName;ClassName;failure\n";
 
     $this->assertEquals($expected, $actual);
   }
@@ -92,7 +94,7 @@ class ReportTest extends \PHPUnit_Framework_TestCase
 
     $response = new MockUp();
 
-    $result = new Result($test, Result::STATUS_SUCCESS, 'Success', new Uri('http://www.example.com'));
+    $result = new Result($test, Result::STATUS_SUCCESS, 'Success', Request::create(new Uri('http://www.example.com')));
     $this->listener->handleResult($result, $response);
     ob_start();
     $this->listener->postRun(new Information('5000', new Uri('http://www.example.com')));

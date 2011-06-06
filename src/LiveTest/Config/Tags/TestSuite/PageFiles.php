@@ -9,6 +9,9 @@
 
 namespace LiveTest\Config\Tags\TestSuite;
 
+use LiveTest\Config\Request\Symfony as Request;
+
+
 /**
  * This tag is used to add a list (text file) of pages to the configuration.
  *
@@ -29,7 +32,7 @@ class PageFiles extends Base
     $config->doNotInherit();
     foreach ($parameters as $file)
     {
-      $config->includePages(file($config->getBaseDir() . '/' . $file));
+      $config->includePageRequests(Request::createRequestsFromParameters(file($config->getBaseDir() . '/' . $file)));
     }
   }
 }
