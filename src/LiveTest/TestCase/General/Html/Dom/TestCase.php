@@ -2,7 +2,8 @@
 
 namespace LiveTest\TestCase\General\Html\Dom;
 
-use LiveTest\Config\Request\Request;
+use Base\Http\Request\Request;
+
 use Base\Http\Response\Response;
 
 use DOMDocument;
