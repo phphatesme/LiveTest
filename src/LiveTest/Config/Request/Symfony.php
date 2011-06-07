@@ -34,9 +34,8 @@ class Symfony implements Request
    * @var array $parameters
    */
   private $parameters;
-
+  
   /**
-   * 
    * Constructor for new Requests.
    * 
    * @param SymfonyRequest $request
@@ -45,32 +44,31 @@ class Symfony implements Request
   public function __construct(SymfonyRequest $request, array $parameters)
   {
     $this->request = $request;
-    $this->parameters = $parameters;
-    $this->setIdentifier(array($request->getUri(),$request->getMethod(),$parameters));
+    ksort($parameters);
+    $this->parameters = $parameters;    
+    $this->setIdentifier(array ($request->getUri(), $request->getMethod(), array_keys($parameters), array_values($parameters)));
   }
-
- /**
-   *
+  
+  /**
    * Creates Requests from a list of urls. If $baseUri is given, urls are merged with baseUri.
    * 
    * @param array $parameters
    * @param Uri $baseUri
    */
-  public static function createRequestsFromParameters(array $parameters, Uri $baseUri =  null)
+  public static function createRequestsFromParameters(array $parameters, Uri $baseUri = null)
   {
-    if(count($parameters) == 0)
+    if (count($parameters) == 0)
     {
       throw new Exception('Parameter has to be set.');
     }
     
-    
-    $requests = array();
+    $requests = array ();
     $preparedRequestParameters = self::prepareRequestParameters($parameters);
-
-    foreach($preparedRequestParameters as $aPreparedParameter)
+    
+    foreach ($preparedRequestParameters as $aPreparedParameter)
     {
       
-      if($baseUri == null)
+      if ($baseUri == null)
       {
         $uri = new Uri($aPreparedParameter['uri']);
       }
@@ -79,11 +77,9 @@ class Symfony implements Request
         $uri = $baseUri->concatUri($aPreparedParameter['uri']);
       }
       
-      $requests[] = self::create($uri,
-                                 $aPreparedParameter['method'],
-                                 $aPreparedParameter['parameters']);
+      $requests[] = self::create($uri, $aPreparedParameter['method'], $aPreparedParameter['parameters']);
     }
-
+    
     return $requests;
   }
   
@@ -95,14 +91,10 @@ class Symfony implements Request
    * @param String $method
    * @param array $requestParameters
    */
-  public static function create(Uri $uri,
-                                $method = 'get',
-                                $requestParameters = array())
+  public static function create(Uri $uri, $method = 'get', $requestParameters = array())
   {
-    $request =  SymfonyRequest::create($uri->toString(),
-                          $method,
-                          $requestParameters);
-
+    $request = SymfonyRequest::create($uri->toString(), $method, $requestParameters);
+    
     return new static($request, $requestParameters);
   }
   
@@ -114,11 +106,7 @@ class Symfony implements Request
    */
   private function setIdentifier(array $parameters)
   {
-    if(empty($parameters))
-    {
-      throw new \Exception('Parameters should not be empty.');
-    }
-    $this->identifier = Recursive::implode('_',$parameters);
+    $this->identifier = Recursive::implode('_', $parameters);
   }
   
   /**
@@ -133,20 +121,20 @@ class Symfony implements Request
    */
   private static function prepareRequestParameters(array $parameters)
   {
-    $mergedRequestParameters = array();
-    foreach($parameters as $aRequest)
+    $mergedRequestParameters = array ();
+    foreach ($parameters as $aRequest)
     {
-      if(is_array($aRequest))
+      if (is_array($aRequest))
       {
-        foreach($aRequest as $uri => $requestParameters)
+        foreach ($aRequest as $uri => $requestParameters)
         {
-         $mergedRequestParameters[] = self::getMergedRequestParameters($uri, $requestParameters);
+          $mergedRequestParameters[] = self::getMergedRequestParameters($uri, $requestParameters);
         }
       }
       else
       {
         $uri = $aRequest;
-        $mergedRequestParameters[] = self::getMergedRequestParameters($uri, array());
+        $mergedRequestParameters[] = self::getMergedRequestParameters($uri, array ());
       }
     }
     return $mergedRequestParameters;
@@ -162,32 +150,26 @@ class Symfony implements Request
    */
   private static function getMergedRequestParameters($uri, array $parameters)
   {
-     $mergedParameters = array();
-
-     $defaults = array(
-            'uri'          => '',
-            'method' => 'get',
-            'parameters' => array(),
-        );
-
+    $mergedParameters = array ();
+    
+    $defaults = array ('uri' => '', 'method' => 'get', 'parameters' => array ());
+    
     $mergedParameters['uri'] = $uri;
-
-
-    if(key_exists('get', $parameters) ||
-       key_exists('post', $parameters))
+    
+    if (key_exists('get', $parameters) || key_exists('post', $parameters))
     {
       $method = array_keys($parameters);
       $mergedParameters['method'] = $method[0];
-
+      
       $requestParameters = $parameters[$mergedParameters['method']];
-
-      if(count($requestParameters) > 0)
+      
+      if (count($requestParameters) > 0)
       {
         $mergedParameters['parameters'] = $requestParameters;
       }
     }
-
-    return  array_merge($defaults, $mergedParameters);
+    
+    return array_merge($defaults, $mergedParameters);
   }
   
   /**

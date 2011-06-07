@@ -78,7 +78,6 @@ class IdPresent extends Exists
     catch (XPathException $e)
     {
       preg_match('#//\*\[@id="(.*)"\]#', $e->getXPath(), $matches);
-      var_dump( $e->getXPath() );
       throw new Exception('The given html id ("' . $matches[1] . '") was not found.', null, $e);
     }
   }
