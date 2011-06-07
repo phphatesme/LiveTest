@@ -2,14 +2,15 @@
 
 namespace LiveTest\TestCase\General\Html\Dom;
 
-use Base\Www\Uri;
+use Base\Http\Request\Request;
+
 use Base\Http\Response\Response;
 
 use DOMDocument;
 
 abstract class TestCase implements \LiveTest\TestCase\TestCase
 {
-  final public function test(Response $response, Uri $uri)
+  final public function test(Response $response, Request $request)
   {
     $doc = new DOMDocument();
     if (!@$doc->loadHTML($response->getBody()))

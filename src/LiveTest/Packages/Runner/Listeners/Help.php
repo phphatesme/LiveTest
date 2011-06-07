@@ -48,7 +48,7 @@ class Help extends Base
       $templateContent = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . $this->template);
       echo $this->replacePlaceholdersInTemplateContentWithPath($templateContent, $path);
 
-      $event->setProcessed();
+      $event->setProcessed(); 
     }
     return true;
   }
@@ -72,17 +72,17 @@ class Help extends Base
                                $this->getBasePath($path),
                                $content);
     }
-
+    
     return $content;
   }
 
   private function getBasePath($path)
   {
-    return $path . $this->examplesPath. DIRECTORY_SEPARATOR;
+    return ($path . DIRECTORY_SEPARATOR. $this->examplesPath. DIRECTORY_SEPARATOR);
   }
 
   private function getBasePathFrom()
   {
-    return realpath(__DIR__.'/../../../examples/');
+    return realpath(__DIR__.'/../../../../');
   }
 }

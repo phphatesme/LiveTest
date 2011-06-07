@@ -2,7 +2,10 @@ DefaultDomain: http://www.example.com
 
 Listener:
 
- Preconditions:
+ CorePreconditions:
+  class: LiveTest\Packages\Core\Listeners\Preconditions
+
+ RunnerPreconditions:
   class: LiveTest\Packages\Runner\Listeners\Preconditions
 
  version:

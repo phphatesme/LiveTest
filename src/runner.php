@@ -1,7 +1,6 @@
 <?php
 
 // @todo default config must be set here
-
 use phmLabs\Components\Annovent\Event\Event;
 use LiveTest\MandatoryParameterException;
 use LiveTest\Event\Dispatcher;
@@ -9,6 +8,8 @@ use LiveTest\Packages\Runner\Listeners\Help;
 
 include_once 'version.php';
 include_once 'bootstrap.php';
+
+$exitStatusCode = 0;
 
 try
 {
@@ -41,6 +42,7 @@ catch ( Livetest\ConfigurationException $e )
 {
   $event = new phmLabs\Components\Annovent\Event\Event('LiveTest.Configuration.Exception', array ('exception' => $e ));
   $dispatcher->notify($event);
+  $exitStatusCode = 1;
 }
 catch ( Exception $e )
 {
@@ -50,5 +52,7 @@ catch ( Exception $e )
   {
     echo 'An error occured: ' . $e->getMessage() . '(' . get_class($e) . ')';
   }
+  $exitStatusCode = 1;
 }
 echo "\n\n";
+exit($exitStatusCode);
