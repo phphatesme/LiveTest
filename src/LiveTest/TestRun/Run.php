@@ -123,14 +123,16 @@ class Run
 
     try
     {
-      $uri = $testSet->getRequest()->getUri();
-      $method = $testSet->getRequest()->getMethod();
-      $parameters = $testSet->getRequest()->getParameters();
-      $parameterSet = 'setParameter'.ucfirst($method);
-
-      $this->httpClient->setUri($uri);
-      $this->httpClient->$parameterSet($parameters);
-      $response = $this->httpClient->request($method);
+    	// @todo should look like this:
+    	$response = $this->httpClient->request( $testSet->getRequest() );
+//      $uri = $testSet->getRequest()->getUri();
+//      $method = $testSet->getRequest()->getMethod();
+//      $parameters = $testSet->getRequest()->getParameters();
+//      $parameterSet = 'setParameter'.ucfirst($method);
+//
+//      $this->httpClient->setUri($uri);
+//      $this->httpClient->$parameterSet($parameters);
+//      $response = $this->httpClient->request($method);
     }
     catch ( \Zend\Http\Exception $e )
     {

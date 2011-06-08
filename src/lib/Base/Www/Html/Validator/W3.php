@@ -9,6 +9,12 @@
 
 namespace Base\Www\Html\Validator;
 
+use Base\Www\Uri;
+
+use Symfony\Component\HttpFoundation\Request;
+
+use LiveTest\Config\Request\Symfony;
+
 use Base\Www\Html\Validator;
 use Base\Www\Html\Document;
 use Base\Http\Client\Client;
@@ -33,6 +39,11 @@ class W3 implements Validator
    * @var Base\Http\Client\Client client used for validating
    */
   private $_httpClient = null;
+  
+  /**
+   * @var Symfony
+   */
+  private $request;
 
   /**
    *
@@ -47,8 +58,6 @@ class W3 implements Validator
 
     // prepare the injected http client
     $this->_httpClient = $httpClient;
-    $this->_httpClient->setUri($this->_validatorUri);
-    $this->_httpClient->setParameterPost('output', 'soap12');
   }
 
   /**
@@ -61,9 +70,11 @@ class W3 implements Validator
   public function validate(Document $htmlDocument)
   {
     $rawDocument = $htmlDocument->getHtml();
-      
-    $this->_httpClient->setParameterPost('fragment',$rawDocument);
-    $response = $this->_httpClient->request('POST');
+    
+    $postVars = array( 'output' => 'soap12', 'fragment' => $rawDocument);
+    $request = Symfony::create(new Uri($this->_validatorUri), \Base\Http\Request\Request::POST, $postVars );
+
+    $response = $this->_httpClient->request($request);
 
     return $this->_parseReponse($response->getBody());
   }
@@ -95,5 +106,3 @@ class W3 implements Validator
     }
   }
 }
-
-?>

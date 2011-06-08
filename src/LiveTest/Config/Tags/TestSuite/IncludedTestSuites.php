@@ -33,6 +33,7 @@ class IncludedTestSuites extends Base
       $filename = $config->getBaseDir() . DIRECTORY_SEPARATOR . $file;
       try
       {
+      	// @todo yaml dependency must be replaced. It must be possible to use xml as well. 
       	$yamlFile = new Yaml($filename);
       }
       catch(InvalidArgumentException $e)

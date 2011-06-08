@@ -2,11 +2,16 @@
 
 namespace LiveTest\Packages\Website\Listener;
 
+use Zend\Http\Client as ZendClient;
+
+use Base\Http\Request\Request;
+use Base\Http\Client\Zend;
+use Base\Www\Uri;
+
+use LiveTest\Config\Request\Symfony;
+use LiveTest\Listener\Base;
 use LiveTest\TestRun\Information;
 use LiveTest\TestRun\Properties;
-use LiveTest\Listener\Base;
-
-use Base\Http\Client\Zend;
 
 class Statistics extends Base
 {
@@ -47,8 +52,12 @@ class Statistics extends Base
   {
     try
     {
-      $client = new Zend(self::PHM_API . '?urls=' . $this->urls . '&tests=' . $this->tests);
-      $response = $client->request();
+    	$request = Symfony::create( new Uri(self::PHM_API), 
+    	                            Request::GET,
+    	                            array( 'urls' => $this->urls, 'tests' => $this->tests));
+    	                            
+      $client = new Zend();
+      $response = $client->request($request);
     }
     catch (\Exception $e )
     {

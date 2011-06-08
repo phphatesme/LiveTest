@@ -10,7 +10,6 @@
 namespace LiveTest\Config;
 
 use Base\Www\Uri;
-
 use Base\Http\Request\Request;
 
 /**
@@ -189,8 +188,6 @@ class TestSuite implements Config
   {
     $this->inherit = false;
   }
-
-
 
   /**
    * This function adds a test to the config and returns a new config connected to the
