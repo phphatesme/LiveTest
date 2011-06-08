@@ -9,11 +9,15 @@
 
 namespace Base\Http\Client;
 
+use Base\Http\Request\Request;
+
 interface Client
 {
-  public function request($method = null);
+  public function request(Request $request);
   public function setTimeout($timeInSeconds);
-  public function setUri($requestUri);
-  public function setParameterPost($name, $value = null);
-  public function setParameterGet($name, $value = null);
+
+  //  public function request($method = null);
+//  public function setUri($requestUri);
+//  public function setParameterPost($name, $value = null);
+//  public function setParameterGet($name, $value = null);
 }

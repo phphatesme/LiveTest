@@ -1,6 +1,8 @@
 <?php
 namespace Unit\LiveTest\TestRun\Mockups;
 
+use Base\Http\Request\Request;
+
 use Base\Http\Response\Zend;
 
 use Base\Http\Response\Response;
@@ -14,6 +16,7 @@ class HttpClientMockup implements Client
   private $nextRequestFails = false;
   private $timeout;
   private $postParam = array();
+  private $request;
 
   public function __construct(Response $response)
   {
@@ -25,8 +28,9 @@ class HttpClientMockup implements Client
     $this->nextRequestFails = true;
   }
 
-  public function request($method = null)
+  public function request(Request $request)
   {
+  	$this->request = $request;
     if ($this->nextRequestFails)
     {
       $this->nextRequestFails = false;
@@ -35,6 +39,11 @@ class HttpClientMockup implements Client
     return $this->response;
   }
 
+  public function getRequest( )
+  {
+  	return $this->request;
+  }
+  
   public function setUri($uri)
   {
     $this->uri = $uri;

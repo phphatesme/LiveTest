@@ -10,7 +10,8 @@
 namespace LiveTest\TestCase\General\Html\Dom\XPath;
 
 use LiveTest\ConfigurationException;
-use LiveTest\TestCase\Exception;
+use LiveTest\InvalidArgumentException;
+use LiveTest\TestCase\General\Html\Dom\XPath\Exception;
 use DOMXPath;
 
 /**
@@ -52,7 +53,7 @@ class Exists extends TestCase
     {
       if (is_array($xpath))
       {
-        throw new ConfigurationException('The xpath parameter must be a string.');
+      	throw new InvalidArgumentException('The xpath parameter must be a string.', 'xpath', null, null);
       }
       $this->xpaths = array($xpath);
     }
@@ -60,7 +61,7 @@ class Exists extends TestCase
     {
       if (!is_array($xpaths))
       {
-        throw new ConfigurationException('The xpaths parameter must be an array.');
+        throw new InvalidArgumentException('The xpaths parameter must be an array', 'xpaths', null, null);
       }
       $this->xpaths = $xpaths;
     }
@@ -85,7 +86,7 @@ class Exists extends TestCase
       $elements = $domXPath->query($xpath);
       if ($elements->length == 0)
       {
-        throw new Exception('The given xpath ("' . $xpath . '") was not found.');
+        throw new Exception('The given xpath ("' . $xpath . '") was not found.', $xpath);
       }
     }
   }

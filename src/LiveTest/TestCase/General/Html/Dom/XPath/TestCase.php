@@ -16,4 +16,4 @@ abstract class TestCase extends \LiveTest\TestCase\General\Html\Dom\TestCase
   }
 
   abstract protected function doXPathTest(DOMXPath $domXPath);
-}
+} 
