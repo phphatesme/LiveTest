@@ -66,7 +66,7 @@ class Parser
    */
   private function getTagClassName($tag)
   {
-    if (strpos($tag, '_') === false)
+    if (strpos($tag, '\\') === false)
     {
       $className = $this->standardNameSpace . $tag;
     }
