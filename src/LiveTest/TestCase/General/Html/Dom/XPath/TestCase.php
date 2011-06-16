@@ -2,8 +2,6 @@
 
 namespace LiveTest\TestCase\General\Html\Dom\XPath;
 
-use LiveTest\TestCase\Exception;
-
 use DOMDocument, DOMXPath;
 
 abstract class TestCase extends \LiveTest\TestCase\General\Html\Dom\TestCase

@@ -11,7 +11,7 @@ namespace LiveTest\TestCase\General\Html\Dom\XPath;
 
 use LiveTest\ConfigurationException;
 use LiveTest\InvalidArgumentException;
-use LiveTest\TestCase\General\Html\Dom\XPath\Exception;
+//use LiveTest\TestCase\General\Html\Dom\XPath\Exception;
 use DOMXPath;
 
 /**
