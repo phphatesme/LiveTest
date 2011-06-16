@@ -11,7 +11,7 @@ namespace LiveTest\TestCase\General\Html\Dom\XPath;
 
 use LiveTest\ConfigurationException;
 
-use LiveTest\TestCase\Exception;
+use LiveTest\TestCase\Exception as TestCaseException;
 use DOMXPath;
 
 /**
@@ -21,47 +21,47 @@ use DOMXPath;
  */
 class Size extends TestCase
 {
-	private $xpath;
-	private $minSize;
-	private $maxSize;
-
-	/**
-	 * Sets the xpath, minSize, maxSize. At least one of the both sizes has to set.
-	 *
-	 * @param string $xpath
-	 * @param int $minSize
-	 * @param int $maxSize
-	 * @throws ConfigurationException
-	 */
-	public function init($xpath, $minSize = null, $maxSize = null)
-	{
-		if(is_null($minSize) && is_null($maxSize))
-		{
-			throw new ConfigurationException('Neither minSoize nor maxSize is set.');
-		}
-
-		$this->minSize = $minSize;
-		$this->maxSize = $maxSize;
-
-		$this->xpath = $xpath;
-	}
-
-	/**
-	 * Checks if the elements that a specified by a xpath have a valid size.
-	 *
-	 * @see LiveTest\TestCase\General\Html\Dom\XPath.TestCase::doXPathTest()
-	 *
-	 * @param DOMXPath $domXPath
-	 */
-	public function doXPathTest(DOMXPath $domXPath)
-	{
-		$elements = $domXPath->query($this->xpath);
+  private $xpath;
+  private $minSize;
+  private $maxSize;
+  
+  /**
+   * Sets the xpath, minSize, maxSize. At least one of the both sizes has to set.
+   *
+   * @param string $xpath
+   * @param int $minSize
+   * @param int $maxSize
+   * @throws ConfigurationException
+   */
+  public function init($xpath, $minSize = null, $maxSize = null)
+  {
+    if (is_null($minSize) && is_null($maxSize))
+    {
+      throw new ConfigurationException('Neither minSoize nor maxSize is set.');
+    }
+    
+    $this->minSize = $minSize;
+    $this->maxSize = $maxSize;
+    
+    $this->xpath = $xpath;
+  }
+  
+  /**
+   * Checks if the elements that a specified by a xpath have a valid size.
+   *
+   * @see LiveTest\TestCase\General\Html\Dom\XPath.TestCase::doXPathTest()
+   *
+   * @param DOMXPath $domXPath
+   */
+  public function doXPathTest(DOMXPath $domXPath)
+  {
+    $elements = $domXPath->query($this->xpath);
     if ($elements->length == 0)
     {
-      throw new Exception('The given xpath ("' . $this->xpath . '") was not found.');
+      throw new TestCaseException('The given xpath ("' . $this->xpath . '") was not found.');
     }
-
-    foreach( $elements as $element )
+    
+    foreach ($elements as $element)
     {
       switch (get_class($element))
       {
@@ -72,18 +72,18 @@ class Size extends TestCase
         case 'DOMElement':
           $value = $element->textContent;
       }
-
-			$size = strlen($value);
-
-      if( !is_null( $this->maxSize ) && $this->maxSize < $size )
+      
+      $size = strlen($value);
+      
+      if (!is_null($this->maxSize) && $this->maxSize < $size)
       {
-      	throw new Exception('The size of the xpath element ("'.$this->xpath.'") is too big (current: '.$size.', max: '.$this->maxSize.').');
+        throw new TestCaseException('The size of the xpath element ("' . $this->xpath . '") is too big (current: ' . $size . ', max: ' . $this->maxSize . ').');
       }
-
-      if( !is_null( $this->minSize ) && $this->minSize > $size )
+      
+      if (!is_null($this->minSize) && $this->minSize > $size)
       {
-      	throw new Exception('The size of the xpath element ("'.$this->xpath.'") is too small (current: '.$size.', min: '.$this->minSize.').');
+        throw new TestCaseException('The size of the xpath element ("' . $this->xpath . '") is too small (current: ' . $size . ', min: ' . $this->minSize . ').');
       }
     }
-	}
+  }
 }
