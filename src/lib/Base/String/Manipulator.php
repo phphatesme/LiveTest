@@ -8,18 +8,24 @@ abstract class Manipulator
   {
     $oldString = $string;
     $newString = '';
-    while ( strlen($oldString) > $length )
+    while (strlen($oldString) > $length)
     {
-      for($i = $length; $i >= 0; $i--)
+      $whitespaceFound = false;
+      for($i = $length; $i > 0; $i--)
       {
-        if ($oldString[$i] == ' ' || $i == 0)
+        if ($oldString[$i] == ' ')
         {
           $newString .= substr($oldString, 0, $i) . $chars;
           $oldString = substr($oldString, $i);
+          $whitespaceFound = true;
           break;
         }
       }
+      if (!$whitespaceFound)
+      {
+        $length++;
+      }
     }
-    return $newString.$oldString;
+    return $newString . $oldString;
   }
 }
