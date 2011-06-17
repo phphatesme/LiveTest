@@ -96,11 +96,11 @@ class HtmlDocumentLog extends Base
    */
   public function handleResult(Result $result, Response $response)
   {
-    
+
     if (in_array($result->getStatus(), $this->logStatuses))
     {
-      $filename = $this->logPath . urlencode($result->getRequest()->getUri());
-     
+      $filename = $this->logPath . urlencode($result->getRequest()->getIdentifier().'.html');
+
       $file = new File($filename);
       $file->setContent($response->getBody());
       try
