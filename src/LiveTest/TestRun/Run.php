@@ -82,7 +82,7 @@ class Run
    * @param TestSet $testSet
    * @param Response $response
    */
-  private function runTests(TestSet $testSet, Response $response)
+  private function runTests(TestSet $testSet, Response $response, $sessionName)
   {
     foreach ($testSet->getTests() as $test)
     {
@@ -104,7 +104,7 @@ class Run
         $runStatus = Result::STATUS_ERROR;
         $runMessage = $e->getMessage();
       }
-      $result = new Result($test, $runStatus, $runMessage, $testSet->getRequest());
+      $result = new Result($test, $runStatus, $runMessage, $testSet->getRequest(), $sessionName);
       $this->eventDispatcher->simpleNotify('LiveTest.Run.HandleResult', array ('result' => $result, 'response' => $response));
     }
   }
@@ -137,7 +137,7 @@ class Run
     
     if ($connectionStatusValue === ConnectionStatus::SUCCESS)
     {
-      $this->runTests($testSet, $response);
+      $this->runTests($testSet, $response, $sessionName);
     }
   }
   

@@ -48,12 +48,15 @@ class Result
    */
   private $request;
 
-  public function __construct(Test $test, $status, $message, Request $request)
+  private $sessionName;
+  
+  public function __construct(Test $test, $status, $message, Request $request, $sessionName)
   {
     $this->test = $test;
     $this->status = $status;
     $this->message = $message;
     $this->request = $request;
+    $this->sessionName = $sessionName;
   }
 
   /**
@@ -87,6 +90,11 @@ class Result
     return $this->message;
   }
 
+  public function getSessionName( )
+  {
+  	return $this->sessionName;
+  }
+  
   /**
    * Returns the uri of the page the test was run against.
    *

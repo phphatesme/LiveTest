@@ -9,6 +9,8 @@
 
 namespace LiveTest\Packages\Reporting\Format;
 
+use LiveTest\Config\TestSuite;
+
 use Base\Http\ConnectionStatus;
 
 use LiveTest\TestRun\Information;
@@ -36,12 +38,12 @@ class SimpleList implements Format
   public function formatSet(ResultSet $set, array $connectionStatuses, Information $information)
   {
     $text = '';
-
+    
     // @todo create two new functions formatConnectionStatuses & formatResults
     if (count($connectionStatuses) > 0)
     {
       $text .= "     Connection Statuses:\n\n";
-
+      
       foreach ($connectionStatuses as $connectionStatus)
       {
         if ($connectionStatus->getType() == ConnectionStatus::ERROR)
@@ -51,11 +53,11 @@ class SimpleList implements Format
         }
       }
     }
-
+    
     if (count($set) > 0)
     {
       $text .= "     Result Statuses:\n\n";
-
+      
       foreach ($set as $result)
       {
         $test = $result->getTest();
@@ -63,16 +65,20 @@ class SimpleList implements Format
         $text .= '     Url        :  ' . $result->getRequest()->getUri() . "\n";
         $text .= '     Test       :  ' . $test->getName() . "\n";
         $text .= '     Test Class :  ' . $test->getClassName() . "\n";
+        if ($result->getSessionName() != TestSuite::DEFAULT_SESSION)
+        {
+          $text .= '     Session    :  ' . $result->getSessionName() . "\n";
+        }
         switch ($result->getStatus())
         {
-          case Result::STATUS_SUCCESS :
+          case Result::STATUS_SUCCESS:
             $text .= '     Status     :  Success' . "\n";
             break;
-          case Result::STATUS_FAILED :
+          case Result::STATUS_FAILED:
             $text .= '     Status     :  Failed' . "\n";
             $text .= '     Message    :  ' . $result->getMessage() . "\n";
             break;
-          case Result::STATUS_ERROR :
+          case Result::STATUS_ERROR:
             $text .= '     Status     :  Error' . "\n";
             $text .= '     Message    :  ' . $result->getMessage() . "\n";
             break;
