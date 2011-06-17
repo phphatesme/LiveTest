@@ -9,7 +9,7 @@ use LiveTest\Packages\Runner\Listeners\Help;
 include_once 'version.php';
 include_once 'bootstrap.php';
 
-$exitStatusCode = 0;
+$exitStatusCode = 1;
 
 try
 {
@@ -37,12 +37,11 @@ try
   {
     $runner->run();
   }
+  $exitStatusCode = 0;
 }
 catch ( Livetest\ConfigurationException $e )
 {
-  $event = new phmLabs\Components\Annovent\Event\Event('LiveTest.Configuration.Exception', array ('exception' => $e ));
-  $dispatcher->notify($event);
-  $exitStatusCode = 1;
+  $dispatcher->simpleNotify('LiveTest.Configuration.Exception', array ('exception' => $e ));
 }
 catch ( Exception $e )
 {
@@ -52,7 +51,6 @@ catch ( Exception $e )
   {
     echo 'An error occured: ' . $e->getMessage() . '(' . get_class($e) . ')';
   }
-  $exitStatusCode = 1;
 }
 echo "\n\n";
 exit($exitStatusCode);
