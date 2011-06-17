@@ -9,6 +9,8 @@
 
 namespace LiveTest\TestRun;
 
+use LiveTest\Connection\Session\Session;
+
 use LiveTest\ConfigurationException;
 
 use LiveTest\Config\Parser\UnknownTagException;
@@ -34,19 +36,19 @@ class Properties
    * @var Uri
    */
   private $defaultDomain;
-
+  
   /**
    * The configuration with all needed data
    * @var Config
    */
   private $config;
-
+  
   /**
    * Array of test sets
    * @var TestSet[]
    */
-  private $testSets = array();
-
+  private $testSets = array ();
+  
   /**
    * @param Config $config
    * @param Uri $defaultDomain
@@ -55,35 +57,48 @@ class Properties
   {
     $this->defaultDomain = $defaultDomain;
     $this->config = $config;
-
     $this->initTestSets();
   }
-
+  
+  /**
+   * Returns a list of sessions
+   * 
+   * @return Session[]
+   */
+  public function getSessions( )
+  {
+  	return $this->config->getSessions();
+  }
+  
   /**
    * This function converts the information given in a config file to a number of test sets.
-   */
-
+   */  
   private function initTestSets()
   {
     $testCases = $this->config->getTestCases();
     foreach ($testCases as $testCase)
     {
       $config = $testCase['config'];
-      foreach ($config->getPageRequests() as $aPageRequest)
+      
+      $sessions = $config->getSessions();
+      foreach ($sessions as $sessionName => $session)
       {
-        if (!array_key_exists($aPageRequest->getIdentifier(), $this->testSets))
+        foreach ($session->getPageRequests() as $aPageRequest)
         {
-          $this->testSets[$aPageRequest->getIdentifier()] = new TestSet($aPageRequest);
+          if (!array_key_exists($sessionName, $this->testSets) || !array_key_exists($aPageRequest->getIdentifier(), $this->testSets[$sessionName]))
+          {
+            $this->testSets[$sessionName][$aPageRequest->getIdentifier()] = new TestSet($aPageRequest);
+          }
+          
+          $test = new Test($testCase['name'], $testCase['className'], $testCase['parameters']);
+          $this->testSets[$sessionName][$aPageRequest->getIdentifier()]->addTest($test);
         }
-
-        $test = new Test($testCase['name'], $testCase['className'], $testCase['parameters']);
-        $this->testSets[$aPageRequest->getIdentifier()]->addTest($test);
       }
     }
   }
-
+  
   /**
-   * Returns the default domian
+   * Returns the default domain
    *
    * @return Uri
    */
@@ -91,10 +106,11 @@ class Properties
   {
     return $this->defaultDomain;
   }
-
+  
   /**
    * Returns the test sets
-   *
+   * 
+   * @todo should be getTestSetsBySession
    * @return TestSet[]
    */
   public function getTestSets()
@@ -113,18 +129,18 @@ class Properties
     $propertiesString = '';
     foreach ($testSets as $testSet)
     {
-      $propertiesString .= 'Uri: '.$testSet->getUri()."\n";
+      $propertiesString .= 'Uri: ' . $testSet->getUri() . "\n";
       $tests = $testSet->getTests();
-      foreach($tests as $test)
+      foreach ($tests as $test)
       {
         $propertiesString .= "  Test:\n";
-        $propertiesString .= '    Testname : '.$test->getName()."\n";
-        $propertiesString .= '    Classname: '.$test->getClassName()."\n\n";
+        $propertiesString .= '    Testname : ' . $test->getName() . "\n";
+        $propertiesString .= '    Classname: ' . $test->getClassName() . "\n\n";
       }
     }
     return $propertiesString;
   }
-
+  
   /**
    * Creates a properties object that was created using a yaml file.
    *
@@ -139,26 +155,25 @@ class Properties
     {
       $yamlConfig = new Yaml($filename);
     }
-    catch (\Zend\Config\Exception $e )
+    catch (\Zend\Config\Exception $e)
     {
-      throw new \LiveTest\ConfigurationException('Unable to load test suite yaml file (filename: ' . $filename . ')');
+      throw new ConfigurationException('Unable to load test suite yaml file (filename: ' . $filename . ')');
     }
-
-    $testSuiteConfig = new TestSuite();
+    
+    $testSuiteConfig = new TestSuite(new Session($defaultUri, true));
     $testSuiteConfig->setBaseDir(dirname($filename));
     $testSuiteConfig->setDefaultDomain($defaultUri);
-
+    
     $parser = new Parser('LiveTest\\Config\\Tags\\TestSuite\\');
     try
     {
       $testSuiteConfig = $parser->parse($yamlConfig->toArray(), $testSuiteConfig);
     }
-    catch( UnknownTagException $e )
+    catch (UnknownTagException $e)
     {
-      throw new ConfigurationException('Error parsing testsuite configuration ('.$filename.'): '.$e->getMessage(),
-                                       null, $e);
+      throw new ConfigurationException('Error parsing testsuite configuration (' . $filename . '): ' . $e->getMessage(), null, $e);
     }
-
+    
     return new self($testSuiteConfig, $defaultUri);
   }
 }

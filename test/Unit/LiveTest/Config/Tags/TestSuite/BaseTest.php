@@ -1,6 +1,9 @@
 <?php
 namespace Unit\LiveTest\Config\Tags\TestSuite;
 
+use LiveTest\Connection\Session\Session;
+
+use Base\Www\Uri;
 
 use LiveTest\Config\Parser\Parser;
 
@@ -14,39 +17,36 @@ use Unit\LiveTest\Config\Tags\TestSuite\Mockups\ExtendsBase as Base;
  */
 class BaseTest extends \PHPUnit_Framework_TestCase
 {
+  /**
+   * @expectedException PHPUnit_Framework_Error
+   */
+  public function testConstructFailingOnConfigParameters()
+  {
+    $base = new Base('test', new TestSuite(), new Parser('Test'));
+  }
+  
+  /**
+   * @expectedException PHPUnit_Framework_Error
+   */
+  public function testConstructFailingOnTestSuiteParameter()
+  {
+    $base = new Base(array (), null, new Parser('Test'));
+  }
+  
+  /**
+   * @expectedException PHPUnit_Framework_Error
+   */
+  public function testConstructFailingOnParserParameter()
+  {
+    $base = new Base(array (), new TestSuite(), null);
+  }
+  
+  public function testProcess()
+  {
+    $base = new Base(array (), new TestSuite(new Session(new Uri('http://www.example.com'))), new Parser('Test'));
+    $base->process();
     
-    /**
-     * @expectedException PHPUnit_Framework_Error
-     */
-    public function testConstructFailingOnConfigParameters()
-    {    
-        $base = new Base('test',new TestSuite(), new Parser('Test'));
-    }
-    
-	/**
-     * @expectedException PHPUnit_Framework_Error
-     */
-    public function testConstructFailingOnTestSuiteParameter()
-    {    
-        $base = new Base(array(),null, new Parser('Test'));
-    }
-    
-	/**
-     * @expectedException PHPUnit_Framework_Error
-     */
-    public function testConstructFailingOnParserParameter()
-    {    
-        $base = new Base(array(), new TestSuite(), null);
-    }  
-    
-    
-    public function testProcess()
-    {    
-        $base = new Base(array(), new TestSuite(), new Parser('Test'));
-        $base->process();
-        
-        $this->assertEquals("OK", $base->getConfig());
-        $this->assertEquals("OK", $base->getParameters());
-    }  
+    $this->assertEquals("OK", $base->getConfig());
+    $this->assertEquals("OK", $base->getParameters());
+  }
 }
-?>

@@ -31,6 +31,7 @@ class Pages extends Base
   protected function doProcess(\LiveTest\Config\TestSuite $config, array $parameters)
   {
     $config->doNotInherit();
-    $config->includePageRequests(Request::createRequestsFromParameters($parameters, $config->getDefaultDomain()));
+    $requests = Request::createRequestsFromParameters($parameters, $config->getDefaultDomain());
+    $config->getCurrentSession()->includePageRequests($requests);
   }
 }

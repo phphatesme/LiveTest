@@ -48,8 +48,7 @@ class NamedParameters
 
     $finalParameters = $orderedParameters;
     $finalParameters[] = $parameters;
-
-    return $this->callUserFunc(array ($object, $method ), $finalParameters);
+    return $this->callUserFunc(array ($object, $method), $finalParameters);
   }
 
   /**

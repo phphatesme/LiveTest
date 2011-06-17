@@ -9,6 +9,8 @@
 
 namespace LiveTest\TestRun;
 
+use LiveTest\Connection\Session\Session;
+
 use Base\Http\Request\Request;
 
 use LiveTest\TestRun\Test;

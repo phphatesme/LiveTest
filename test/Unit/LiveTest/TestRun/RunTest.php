@@ -5,14 +5,11 @@ use Base\Http\ConnectionStatus;
 
 use LiveTest\Event\Dispatcher;
 use LiveTest\TestRun\Result;
-use Unit\LiveTest\TestRun\Mockups\TestExtension;
-use Unit\LiveTest\TestRun\Mockups\TestHandleConnectionStatusExtension;
-use Unit\LiveTest\TestRun\Mockups\ResponseMockup;
-use Unit\LiveTest\TestRun\Mockups\HttpClientMockup;
+use LiveTest\Config\TestSuite;
 use LiveTest\TestRun\Run;
 use LiveTest\TestRun\Properties;
-use Base\Config\Yaml;
 
+use Base\Config\Yaml;
 use Base\Www\Uri;
 
 use Unit\LiveTest\TestRun\Helper\ConnectionStatusListener;
@@ -20,7 +17,10 @@ use Unit\LiveTest\TestRun\Helper\HandleResultListener;
 use Unit\LiveTest\TestRun\Helper\InfoListener;
 use Unit\LiveTest\TestRun\Helper\PostRunListener;
 use Unit\LiveTest\TestRun\Helper\PreRunListener;
-
+use Unit\LiveTest\TestRun\Mockups\TestExtension;
+use Unit\LiveTest\TestRun\Mockups\TestHandleConnectionStatusExtension;
+use Unit\LiveTest\TestRun\Mockups\ResponseMockup;
+use Unit\LiveTest\TestRun\Mockups\HttpClientMockup;
 
 /**
  * Test class for Run.
@@ -37,7 +37,7 @@ class RunTest extends \PHPUnit_Framework_TestCase
   private $dispatcher;
   private $properties;
   private $defaultUri;
-  private $httpClient;
+  private $httpClients;
 
   /**
    * Sets up the fixture, for example, opens a network connection.
@@ -65,9 +65,8 @@ class RunTest extends \PHPUnit_Framework_TestCase
     $this->dispatcher->connectListener($this->handleResultListener);
 
     $this->properties = Properties::createByYamlFile(__DIR__ . '/Fixtures/testsuite.yml', $this->defaultUri);
-    $this->httpClient = new HttpClientMockup(new ResponseMockup());
-    $this->run = new Run($this->properties, $this->httpClient, $this->dispatcher);
-
+    $this->httpClients[TestSuite::DEFAULT_SESSION] = new HttpClientMockup(new ResponseMockup());
+    $this->run = new Run($this->properties, $this->httpClients, $this->dispatcher);
   }
 
   public function testNotifications()
@@ -107,7 +106,7 @@ class RunTest extends \PHPUnit_Framework_TestCase
 
   public function testHandleFailedConnectionStatus( )
   {
-    $this->httpClient->nextRequestFails();
+    $this->httpClients[TestSuite::DEFAULT_SESSION]->nextRequestFails();
 
     $this->run->run();
 
@@ -139,10 +138,8 @@ class RunTest extends \PHPUnit_Framework_TestCase
     $this->assertEquals( $tmpStatus, $aResult::STATUS_SUCCESS );
     $this->assertEquals( $tmpResponse->getBody(), 'body');
 
-
-
     $httpClient = new HttpClientMockup(new ResponseMockup(404,'Not Found'));
-    $run = new Run($this->properties, $httpClient, $this->dispatcher);
+    $run = new Run($this->properties, array( TestSuite::DEFAULT_SESSION => $httpClient), $this->dispatcher);
     $run->run();
 
     $results = $this->handleResultListener->getResults();

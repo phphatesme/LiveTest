@@ -28,12 +28,19 @@ class InfoHeader extends Base
    */
   public function preRun(Properties $properties)
   {
-    echo "  Default Domain  : " . $properties->getDefaultDomain()->toString()."\n";
-    echo "  Start Time      : " . date( 'Y-m-d H:i:s' )."\n\n";
-    echo "  Number of URIs  : " . count($properties->getTestSets())."\n";
-    echo "  Number of Tests : " . $this->getTotalTestCount($properties)."\n\n";
+    $sessions = $properties->getTestSets();
+    $uriCount = 0;
+    foreach ($sessions as $testSets)
+    {
+      $uriCount += count($testSets);
+    }
+    
+    echo "  Default Domain  : " . $properties->getDefaultDomain()->toString() . "\n";
+    echo "  Start Time      : " . date('Y-m-d H:i:s') . "\n\n";
+    echo "  Number of URIs  : " . $uriCount . "\n";
+    echo "  Number of Tests : " . $this->getTotalTestCount($properties) . "\n\n";
   }
-
+  
   /**
    * This function returns the total number of tests defined in a given properties object.
    *
@@ -42,9 +49,14 @@ class InfoHeader extends Base
   private function getTotalTestCount(Properties $properties)
   {
     $count = 0;
-    foreach ($properties->getTestSets() as $testSet)
+    foreach ($properties->getTestSets() as $sessionName => $testSets)
     {
-      $count += $testSet->getTestCount();
+      foreach ($testSets as $testSet)
+      {
+        {
+          $count += $testSet->getTestCount();
+        }
+      }
     }
     return $count;
   }

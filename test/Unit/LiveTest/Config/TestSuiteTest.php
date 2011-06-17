@@ -2,6 +2,8 @@
 
 namespace Test\Unit\LiveTest\Config;
 
+use LiveTest\Connection\Session\Session;
+
 use LiveTest\Config\TestSuite;
 use Base\Www\Uri;
 
@@ -11,11 +13,11 @@ class TestSuiteTest extends \PHPUnit_Framework_TestCase
 {
   public function testIncludePage()
   {
-    $config = new TestSuite();
-    $config->includePageRequest(Request::create(new Uri('http://www.example.com/'),'get'));
-    $config->includePageRequest(Request::create(new Uri('http://www.phphatesme.com/'),'get'));
+    $config = new TestSuite(new Session(new Uri('http://www.example.com')));
+    $config->getCurrentSession()->includePageRequest(Request::create(new Uri('http://www.example.com/'),'get'));
+    $config->getCurrentSession()->includePageRequest(Request::create(new Uri('http://www.phphatesme.com/'),'get'));
 
-    $pageRequests = $config->getPageRequests();
+    $pageRequests = $config->getCurrentSession()->getPageRequests();
     $this->assertEquals(2, count($pageRequests));
     
     $validatePages = array('http://www.example.com/', 'http://www.phphatesme.com/');
@@ -33,12 +35,12 @@ class TestSuiteTest extends \PHPUnit_Framework_TestCase
   {
     $includedPages = array('http://www.example.com/','http://www.phphatesme.com/');
 
-    $config = new TestSuite();
+    $config = new TestSuite(new Session(new Uri('http://www.example.com')));
     $pageRequestsToInclude = Request::createRequestsFromParameters($includedPages);
 
-    $config->includePageRequests($pageRequestsToInclude);
+    $config->getCurrentSession()->includePageRequests($pageRequestsToInclude);
 
-    $pageRequests = $config->getPageRequests();
+    $pageRequests = $config->getCurrentSession()->getPageRequests();
     $this->assertEquals(count($includedPages), count($pageRequests));
   }
 
@@ -51,12 +53,12 @@ class TestSuiteTest extends \PHPUnit_Framework_TestCase
   {
     $includedPages = array('http://www.example.com/','http://www.phphatesme.com/');
 
-    $config = new TestSuite();
+    $config = new TestSuite(new Session(new Uri('http://www.example.com')));
     $createdPageRequests = Request::createRequestsFromParameters($includedPages);
-    $config->includePageRequests($createdPageRequests);
+    $config->getCurrentSession()->includePageRequests($createdPageRequests);
 
-    $config->excludePageRequest(Request::create(new Uri('http://www.example.com/')));
-    $pageRequests = $config->getPageRequests();
+    $config->getCurrentSession()->excludePageRequest(Request::create(new Uri('http://www.example.com/')));
+    $pageRequests = $config->getCurrentSession()->getPageRequests();
     
     $this->assertEquals(1, count($pageRequests));
 
@@ -67,17 +69,17 @@ class TestSuiteTest extends \PHPUnit_Framework_TestCase
   {
     $includedPages = array('http://www.example.com/','http://www.phphatesme.com/');
 
-    $config = new TestSuite();
+    $config = new TestSuite(new Session(new Uri('http://www.example.com')));
     $pageRequestsToExclude = Request::createRequestsFromParameters($includedPages);
-    $config->excludePageRequests($pageRequestsToExclude);
+    $config->getCurrentSession()->excludePageRequests($pageRequestsToExclude);
 
-    $pageRequests = $config->getPageRequests();
+    $pageRequests = $config->getCurrentSession()->getPageRequests();
     $this->assertEquals(0, count($pageRequests));
   }
 
   public function testCreateTestCase()
   {
-    $config = new TestSuite();
+    $config = new TestSuite(new Session(new Uri('http://www.example.com')));
     $newConfig = $config->createTestCase('MyTestCase', 'MyClassName', array('foo' => 'bar'));
     $newConfig = $config->createTestCase('MyTestCase2', 'MyClassName2', array('foo' => 'bar'));
 

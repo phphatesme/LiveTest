@@ -25,31 +25,31 @@ class Run
    * @var Properties
    */
   private $properties;
-
+  
   /**
    * The injected http client used to fire http request for the given pages.
    * @var Client
    */
   private $httpClient = null;
-
+  
   /**
    * The injected event dispatcher. Used to notify the registered listeners.
    * @var unknown_type
    */
   private $eventDispatcher;
-
+  
   /**
    * @param Properties $properties
    * @param Client $httpClient
    * @param Dispatcher $dispatcher
    */
-  public function __construct(Properties $properties, Client $httpClient, Dispatcher $dispatcher)
+  public function __construct(Properties $properties, array $httpClients, Dispatcher $dispatcher)
   {
     $this->eventDispatcher = $dispatcher;
-    $this->httpClient = $httpClient;
+    $this->httpClients = $httpClients;
     $this->properties = $properties;
   }
-
+  
   /**
    * This function creates and initializes the test case object using the init method.
    *
@@ -59,7 +59,7 @@ class Run
   private function getInitializedTestCase(Test $test)
   {
     $testCaseName = $test->getClassName();
-
+    
     if (class_exists($testCaseName))
     {
       $testCaseObject = new $testCaseName();
@@ -70,10 +70,10 @@ class Run
       throw new \Exception('Class not found (' . $testCaseName . '). ');
     }
     \LiveTest\Functions::initializeObject($testCaseObject, $test->getParameter());
-
+    
     return $testCaseObject;
   }
-
+  
   /**
    * This function runs the given test set with the assigned response.
    *
@@ -84,31 +84,31 @@ class Run
    */
   private function runTests(TestSet $testSet, Response $response)
   {
-    foreach ( $testSet->getTests() as $test )
+    foreach ($testSet->getTests() as $test)
     {
       $runStatus = Result::STATUS_SUCCESS;
       $runMessage = '';
-
+      
       try
       {
         $testCase = $this->getInitializedTestCase($test);
         $testCase->test($response, $testSet->getRequest());
       }
-      catch (\LiveTest\TestCase\Exception $e )
+      catch (\LiveTest\TestCase\Exception $e)
       {
         $runStatus = Result::STATUS_FAILED;
         $runMessage = $e->getMessage();
       }
-      catch (\Exception $e )
+      catch (\Exception $e)
       {
         $runStatus = Result::STATUS_ERROR;
         $runMessage = $e->getMessage();
       }
       $result = new Result($test, $runStatus, $runMessage, $testSet->getRequest());
-      $this->eventDispatcher->simpleNotify('LiveTest.Run.HandleResult', array ('result' => $result, 'response' => $response ));
+      $this->eventDispatcher->simpleNotify('LiveTest.Run.HandleResult', array ('result' => $result, 'response' => $response));
     }
   }
-
+  
   /**
    * This function sends a http request and assigns the response to the test cases.
    *
@@ -116,40 +116,31 @@ class Run
    *
    * @param TestSet $testSet
    */
-  private function runTestSet(TestSet $testSet)
+  private function runTestSet(TestSet $testSet, $sessionName)
   {
     $connectionStatusValue = ConnectionStatus::SUCCESS;
     $connectionStatusMessage = '';
-
+    
     try
     {
-    	// @todo should look like this:
-    	$response = $this->httpClient->request( $testSet->getRequest() );
-//      $uri = $testSet->getRequest()->getUri();
-//      $method = $testSet->getRequest()->getMethod();
-//      $parameters = $testSet->getRequest()->getParameters();
-//      $parameterSet = 'setParameter'.ucfirst($method);
-//
-//      $this->httpClient->setUri($uri);
-//      $this->httpClient->$parameterSet($parameters);
-//      $response = $this->httpClient->request($method);
+      $response = $this->httpClients[$sessionName]->request($testSet->getRequest());
     }
-    catch ( \Zend\Http\Exception $e )
+    catch (\Zend\Http\Exception $e)
     {
       $connectionStatusValue = ConnectionStatus::ERROR;
       $connectionStatusMessage = $e->getMessage();
     }
-
+    
     $connectionStatus = new ConnectionStatus($connectionStatusValue, $testSet->getRequest(), $connectionStatusMessage);
-
-    $this->eventDispatcher->simpleNotify('LiveTest.Run.HandleConnectionStatus', array ('connectionStatus' => $connectionStatus ));
-
+    
+    $this->eventDispatcher->simpleNotify('LiveTest.Run.HandleConnectionStatus', array ('connectionStatus' => $connectionStatus));
+    
     if ($connectionStatusValue === ConnectionStatus::SUCCESS)
     {
       $this->runTests($testSet, $response);
     }
   }
-
+  
   /**
    * This function runs all test sets defined in the properties file.
    *
@@ -158,18 +149,21 @@ class Run
    */
   public function run()
   {
-    $this->eventDispatcher->simpleNotify('LiveTest.Run.PreRun', array ('properties' => $this->properties ));
-
+    $this->eventDispatcher->simpleNotify('LiveTest.Run.PreRun', array ('properties' => $this->properties));
+    
     // @todo move timer to runner.php
     $timer = new Timer();
-
-    foreach ( $this->properties->getTestSets() as $testSet )
+    
+    foreach ($this->properties->getTestSets() as $sessionName => $testSets)
     {
-      $this->runTestSet($testSet);
+      foreach ($testSets as $testSet)
+      {
+        $this->runTestSet($testSet, $sessionName);
+      }
     }
-
+    
     $information = new Information($timer->stop(), $this->properties->getDefaultDomain());
-
-    $this->eventDispatcher->simpleNotify('LiveTest.Run.PostRun', array ('information' => $information ));
+    
+    $this->eventDispatcher->simpleNotify('LiveTest.Run.PostRun', array ('information' => $information));
   }
 }

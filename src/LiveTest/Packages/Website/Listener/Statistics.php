@@ -17,9 +17,9 @@ class Statistics extends Base
 {
   private $urls;
   private $tests;
-
+  
   const PHM_API = 'http://livetest.phmlabs.com/api/statistics.php';
-
+  
   /**
    * @Event("LiveTest.Run.PreRun")
    * @param Properties $properties
@@ -29,20 +29,25 @@ class Statistics extends Base
     $this->urls = count($properties->getTestSets());
     $this->tests = $this->getTotalTestCount($properties);
   }
-
+  
   /**
    * @param Properties $properties
    */
   private function getTotalTestCount(Properties $properties)
   {
     $count = 0;
-    foreach ( $properties->getTestSets() as $testSet )
+    foreach ($properties->getTestSets() as $sessionName => $testSets)
     {
-      $count += $testSet->getTestCount();
+      foreach ($testSets as $testSet)
+      {
+        {
+          $count += $testSet->getTestCount();
+        }
+      }
     }
     return $count;
   }
-
+  
   /**
    * @Event("LiveTest.Run.PostRun")
    *
@@ -52,14 +57,12 @@ class Statistics extends Base
   {
     try
     {
-    	$request = Symfony::create( new Uri(self::PHM_API), 
-    	                            Request::GET,
-    	                            array( 'urls' => $this->urls, 'tests' => $this->tests));
-    	                            
+      $request = Symfony::create(new Uri(self::PHM_API), Request::GET, array ('urls' => $this->urls, 'tests' => $this->tests));
+      
       $client = new Zend();
       $response = $client->request($request);
     }
-    catch (\Exception $e )
+    catch (\Exception $e)
     {
     }
   }

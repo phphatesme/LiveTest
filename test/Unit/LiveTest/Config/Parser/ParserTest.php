@@ -2,6 +2,8 @@
 
 namespace Test\Unit\LiveTest\Config\Parser;
 
+use LiveTest\Connection\Session\Session;
+
 use Base\Www\Uri;
 
 use LiveTest\Config\TestSuite;
@@ -13,25 +15,17 @@ class ParserTest extends \PHPUnit_Framework_TestCase
 {
   public function testParser()
   {
-    $config = new TestSuite();
+    $config = new TestSuite(new Session(new Uri('http://www.example.com')));
     $config->setBaseDir(__DIR__ . '/fixtures/');
     $configYaml = new Yaml(__DIR__ . '/fixtures/testsuite.yml');
 
     $parser = new Parser('LiveTest\\Config\\Tags\\TestSuite\\');
     $parsedConfig = $parser->parse($configYaml->toArray(), $config);
-
-   //    foreach ($parsedConfig->getTestCases() as $testCase)
-  //    {
-  //      \Base\Debug\DebugHelper::doVarDump($testCase['className']);
-  //      \Base\Debug\DebugHelper::doVarDump($testCase['config']->getPages());
-  //    }
-  //
-  //    \Base\Debug\DebugHelper::doVarDump($parsedConfig->getPages());
   }
 
   public function testUnknownTag()
   {
-    $config = new TestSuite();
+    $config = new TestSuite(new Session(new Uri('http://www.example.com')));
     $config->setBaseDir(__DIR__ . '/fixtures/');
     $configYaml = new Yaml(__DIR__ . '/fixtures/badtestsuite.yml');
 

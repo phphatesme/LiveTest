@@ -1,12 +1,13 @@
 <?php
 namespace Unit\LiveTest\TestRun;
 
+use LiveTest\Connection\Session\Session;
+
 use LiveTest\Config\TestSuite;
 
 use Base\Www\Uri;
 use LiveTest\Config\Request\Symfony;
 use LiveTest\TestRun\Properties;
-
 
 /**
  * Test class for Properties.
@@ -25,9 +26,8 @@ class PropertiesTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-      $testSuiteConfig = new TestSuite();
       $uri = new Uri('http://www.example.com');  
-      
+      $testSuiteConfig = new TestSuite(new Session($uri));      
       $this->object = new Properties($testSuiteConfig, $uri);
     }
 

@@ -35,7 +35,7 @@ class Packages extends Base
 
     foreach ( $paths as $path )
     {
-      set_include_path(get_include_path() . PATH_SEPARATOR . $path);
+      set_include_path(get_include_path() . PATH_SEPARATOR . $path);      
     }
 
     spl_autoload_register(array ($this, 'autoload' ));

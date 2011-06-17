@@ -9,6 +9,10 @@
 
 namespace LiveTest\Config;
 
+use LiveTest\ConfigurationException;
+
+use LiveTest\Connection\Session\Session;
+
 use Base\Www\Uri;
 use Base\Http\Request\Request;
 
@@ -26,19 +30,19 @@ class TestSuite implements Config
    * @var array[]
    */
   private $includedPageRequests = array ();
-
+  
   /**
    * PageRequests that are excluded
    * @var array[]
    */
   private $excludedPageRequests = array ();
-
+  
   /**
    * The created tests.
    * @var array
    */
   private $testCases = array ();
-
+  
   /**
    * This flag indicates if this config file should inherit the pages from its
    * parent.
@@ -46,49 +50,92 @@ class TestSuite implements Config
    * @var bool
    */
   private $inherit = true;
-
+  
   /**
    * The directory of the yaml file this configuration was created from
    * @var string
    */
   private $baseDir;
-
+  
   /**
    * The parent configuration. Used to inherit pages.
    * @var TestSuite
    */
   private $parentConfig;
-
+  
+  private $sessions = array ();
+  
+  private $currentSession;
+  private $defaultSession;
+  
+  const DEFAULT_SESSION = '_DEFAULT';
+  
   /**
    *
    * The default domain
    * @var Uri $defaultDomain
    */
   private $defaultDomain = null;
-
+  
   private $pageManipulators = array ();
-
+  
   /**
    * Set the parent config if needed.
    *
    * @param TestSuite $parentConfig
    */
-  public function __construct(TestSuite $parentConfig = null)
+  public function __construct(Session $defaultSession, TestSuite $parentConfig = null)
   {
     $this->parentConfig = $parentConfig;
+    $this->sessions[self::DEFAULT_SESSION] = $defaultSession;
+    $this->currentSession = $defaultSession;
+    $this->defaultSession = $defaultSession;
   }
-
-  /**
-   * Used to add a page manipulator. These manipulators are used to manipulate the
-   * pages (url strings) registered in this config file.
-
-   * @param PageManipulator $pageManipulator
-   */
-  public function addPageManipulator(PageManipulator $pageManipulator)
+  
+  public function getNewSession($sessionName, $isCurrentSession = true)
   {
-    $this->pageManipulators[] = $pageManipulator;
+    $session = new Session();
+    $this->sessions[$sessionName] = $session;
+    if ($isCurrentSession)
+    {
+      $this->currentSession = $session;
+    }
+    return $session;
   }
-
+  
+  public function hasSession($sessionName)
+  {
+    return array_key_exists($sessionName, $this->sessions);
+  }
+  
+  public function setCurrentSessions($sessionName)
+  {
+    if (!$this->hasSession($sessionName))
+    {
+      throw new ConfigurationException('The session you are trying to access is not available ('.$sessionName.').');
+    }
+    $this->currentSession = $this->sessions[$sessionName];
+  }
+  
+  /**
+   * @todo ->getSessionContainer->getCurrentSession( )
+   * @todo SessionContainer implements Iteratable
+   */  
+  public function getCurrentSession()
+  {
+    return $this->currentSession;
+  }
+  
+  public function switchToDefaultSession()
+  {
+    $this->currentSession = $this->defaultSession;
+  }
+  
+  public function getSessions()
+  {
+    return $this->sessions;
+  }
+  
   /**
    * Sets the base dir. This is needed because some tags need the path to the config
    * entry file.
@@ -99,17 +146,17 @@ class TestSuite implements Config
   {
     $this->baseDir = $baseDir;
   }
-
+  
   /**
-   *
-   * sets the base domain
+   * Sets the base domain
+   * 
    * @param Uri $domain
    */
   public function setDefaultDomain(Uri $domain)
   {
     $this->defaultDomain = $domain;
   }
-
+  
   /**
    *
    * gets the base domain
@@ -119,7 +166,7 @@ class TestSuite implements Config
   {
     return $this->defaultDomain;
   }
-
+  
   /**
    * Returns the base directory of the config file.
    *
@@ -133,54 +180,7 @@ class TestSuite implements Config
     }
     return $this->baseDir;
   }
-
-  /**
-   * Include an additional page to the config.
-   *
-   * @param string $page
-   */
-  public function includePageRequest(Request $pageRequest)
-  {
-    $this->includedPageRequests[$pageRequest->getIdentifier()] = $pageRequest;
-  }
-
-  /**
-   * Includes an array containing pages to the config.
-   *
-   * @param array[] $pageRequests
-   */
-  public function includePageRequests(array $pageRequests)
-  {
-    foreach ( $pageRequests as $aPageRequest )
-    {
-      $this->includePageRequest($aPageRequest);
-    }
-
-  }
-
-  /**
-   * Removes a page from the config.
-   *
-   * @param string $page
-   */
-  public function excludePageRequest(Request $pageRequest)
-  {
-    $this->excludedPageRequests[$pageRequest->getIdentifier()] = $pageRequest;
-  }
-
-  /**
-   * Removes a set of pageRequests from this config.
-   *
-   * @param array[] $pageRequests
-   */
-  public function excludePageRequests($pageRequests)
-  {
-    foreach ( $pageRequests as $aPageRequest )
-    {
-      $this->excludePageRequest($aPageRequest);
-    }
-  }
-
+    
   /**
    * This function is called if this config should not inherit the pages from its parent.
    */
@@ -188,7 +188,7 @@ class TestSuite implements Config
   {
     $this->inherit = false;
   }
-
+  
   /**
    * This function adds a test to the config and returns a new config connected to the
    * test.
@@ -201,56 +201,26 @@ class TestSuite implements Config
    */
   public function createTestCase($name, $className, array $parameters)
   {
-    $config = new self($this);
-
-    $this->testCases[] = array ('config' => $config, 'name' => $name, 'className' => $className, 'parameters' => $parameters );
-
+    $config = new self($this->defaultSession, $this);
+    
+    $this->testCases[] = array ('config' => $config, 'name' => $name, 'className' => $className, 'parameters' => $parameters);
+    
     return $config;
   }
-
-  /**
-   * Returns the list of pages.
-   *
-   * @return array[]
-   */
-  public function getPageRequests()
-  {
     
-    if ($this->inherit && !is_null($this->parentConfig))
-    {
-      $results = array_merge($this->includedPageRequests, $this->parentConfig->getPageRequests());
-    }
-    else
-    {
-      $results = $this->includedPageRequests;
-    }
-
-    $pageRequests = $this->getReducedPageRequests($results, $this->excludedPageRequests);
-
-    /*foreach( $this->pageManipulators as $manipulator )
-    {
-      foreach( $pageRequests as &$pageRequest )
-      {
-        $pageRequest = $manipulator->manipulate($pageRequest);
-      }
-    }*/
-
-    return $pageRequests;
-  }
-
   private function getReducedPageRequests(array $includedPageRequest, array $excludedPageRequests)
   {
-     foreach($excludedPageRequests as $identifier => $pageRequest)
+    foreach ($excludedPageRequests as $identifier => $pageRequest)
+    {
+      if (array_key_exists($identifier, $includedPageRequest))
       {
-        if(array_key_exists($identifier, $includedPageRequest))
-        {
-          unset($includedPageRequest[$identifier]);
-        }
+        unset($includedPageRequest[$identifier]);
       }
-
-      return $includedPageRequest;
+    }
+    
+    return $includedPageRequest;
   }
-
+  
   /**
    * Returns the tests.
    *

@@ -12,7 +12,6 @@ namespace LiveTest\Connection\Session;
 use LiveTest\Config\Request\Request;
 
 use Base\Www\Uri;
-use Base\Http\Request\Request;
 
 /**
  * This class contains all information about the tests and the depending pages.
@@ -61,40 +60,18 @@ class Session
    * @var Uri $defaultDomain
    */
   private $defaultDomain = null;
+  
+  private $isolateRequests;
 
-  /**
-   * Sets the base dir. This is needed because some tags need the path to the config
-   * entry file.
-   *
-   * @param string $baseDir
-   */
-  public function setBaseDir($baseDir)
+  public function __construct(Uri $defaultDomain, $isolateRequests = false)
   {
-    $this->baseDir = $baseDir;
+  	$this->defaultDomains = $defaultDomain;
+  	$this->isolateRequests = $isolateRequests;
   }
-
-  /**
-   *
-   * sets the base domain
-   * @param Uri $domain
-   */
-  public function setDefaultDomain(Uri $domain)
+  
+  public function areRequestsIsolated( )
   {
-    $this->defaultDomain = $domain;
-  }
-
-  /**
-   * Returns the base directory of the config file.
-   *
-   * @return string
-   */
-  public function getBaseDir()
-  {
-    if (is_null($this->baseDir))
-    {
-      return $this->parentConfig->getBaseDir();
-    }
-    return $this->baseDir;
+  	return $this->isolateRequests;
   }
 
   /**
