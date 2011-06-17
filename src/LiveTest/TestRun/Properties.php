@@ -167,7 +167,7 @@ class Properties
     $parser = new Parser('LiveTest\\Config\\Tags\\TestSuite\\');
     try
     {
-      $testSuiteConfig = $parser->parse($yamlConfig->toArray(), $testSuiteConfig);
+      $testSuiteConfig = $parser->parse($yamlConfig->toArray(), $testSuiteConfig);      
     }
     catch (UnknownTagException $e)
     {

@@ -26,30 +26,10 @@ use LiveTest\Config\PageManipulator\PageManipulator;
 class TestSuite implements Config
 {
   /**
-   * Pages that are included
-   * @var array[]
-   */
-  private $includedPageRequests = array ();
-  
-  /**
-   * PageRequests that are excluded
-   * @var array[]
-   */
-  private $excludedPageRequests = array ();
-  
-  /**
    * The created tests.
    * @var array
    */
   private $testCases = array ();
-  
-  /**
-   * This flag indicates if this config file should inherit the pages from its
-   * parent.
-   *
-   * @var bool
-   */
-  private $inherit = true;
   
   /**
    * The directory of the yaml file this configuration was created from
@@ -94,7 +74,7 @@ class TestSuite implements Config
   
   public function getNewSession($sessionName, $isCurrentSession = true)
   {
-    $session = new Session();
+    $session = new Session($this->getDefaultDomain());
     $this->sessions[$sessionName] = $session;
     if ($isCurrentSession)
     {
@@ -112,7 +92,7 @@ class TestSuite implements Config
   {
     if (!$this->hasSession($sessionName))
     {
-      throw new ConfigurationException('The session you are trying to access is not available ('.$sessionName.').');
+      throw new ConfigurationException('The session you are trying to access is not available (' . $sessionName . ').');
     }
     $this->currentSession = $this->sessions[$sessionName];
   }
@@ -120,7 +100,7 @@ class TestSuite implements Config
   /**
    * @todo ->getSessionContainer->getCurrentSession( )
    * @todo SessionContainer implements Iteratable
-   */  
+   */
   public function getCurrentSession()
   {
     return $this->currentSession;
@@ -133,7 +113,12 @@ class TestSuite implements Config
   
   public function getSessions()
   {
-    return $this->sessions;
+    $parentSessions = array ();
+    if (!is_null($this->parentConfig))
+    {
+      $parentSessions = $this->parentConfig->getSessions();
+    }
+    return array_merge($this->sessions, $parentSessions);
   }
   
   /**
@@ -180,14 +165,6 @@ class TestSuite implements Config
     }
     return $this->baseDir;
   }
-    
-  /**
-   * This function is called if this config should not inherit the pages from its parent.
-   */
-  public function doNotInherit()
-  {
-    $this->inherit = false;
-  }
   
   /**
    * This function adds a test to the config and returns a new config connected to the
@@ -207,7 +184,7 @@ class TestSuite implements Config
     
     return $config;
   }
-    
+  
   private function getReducedPageRequests(array $includedPageRequest, array $excludedPageRequests)
   {
     foreach ($excludedPageRequests as $identifier => $pageRequest)

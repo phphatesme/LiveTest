@@ -135,7 +135,6 @@ class Session
    */
   public function getPageRequests()
   {
-
     if ($this->inherit && !is_null($this->parentConfig))
     {
       $results = array_merge($this->includedPageRequests, $this->parentConfig->getPageRequests());

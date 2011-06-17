@@ -31,16 +31,14 @@ class Sessions extends Base
   /**
    * @see LiveTest\Config\Tags\TestSuite.Base::doProcess()
    */
-  protected function doProcess(\LiveTest\Config\TestSuite $config, array $parameters)
+  protected function doProcess(\LiveTest\Config\TestSuite $config, array $sessions)
   {
-    foreach ( $parameters as $name => $value )
+    foreach ($sessions as $sessionName => $session)
     {
-      echo "\n\n";
-      print_r($name);
-      echo "\n";
-      print_r($value);
-      
-    }
-    die();
+      $parser = $this->getParser();
+      $config->getNewSession($sessionName, true);
+      $parser->parse($session, $config);
+      $config->switchToDefaultSession();
+    }    
   }
 }
