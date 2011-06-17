@@ -27,6 +27,6 @@ class Http extends Base
    */
   protected function doProcess(ConfigConfig $config, $parameters)
   {
-    $config->addListener('httpListener', 'LiveTest\Listener\Http\ClientConfiguration', $parameters);
+    $config->addListener('httpListener', 'LiveTest\Packages\Http\Listeners\ClientConfiguration', $parameters);
   }
 }
