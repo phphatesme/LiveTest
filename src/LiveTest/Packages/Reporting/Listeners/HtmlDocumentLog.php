@@ -48,15 +48,13 @@ class HtmlDocumentLog extends Base
   {
     $this->logPath = $logPath . '/' . $this->getRunId() . '/';
 
-    $this->createLogDirIfNotExists($this->logPath);
-
     if (!is_null($logStatuses))
     {
       $this->logStatuses = $logStatuses;
     }
     else
     {
-      $this->logStatuses = array (Result::STATUS_ERROR, Result::STATUS_FAILED, Result::STATUS_SUCCESS);
+      $this->logStatuses = array (Result::STATUS_ERROR, Result::STATUS_FAILED);
     }
   }
 
@@ -105,6 +103,7 @@ class HtmlDocumentLog extends Base
       $file->setContent($response->getBody());
       try
       {
+      	$this->createLogDirIfNotExists($this->logPath);
         $file->save();
       }
       catch (\Exception $e)
