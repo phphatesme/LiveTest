@@ -27,9 +27,9 @@ class PageFiles extends Base
   /**
    * @see LiveTest\Config\Tags\TestSuite.Base::doProcess()
    */
-  protected function doProcess(\LiveTest\Config\TestSuite $config, array $parameters)
+  protected function doProcess(\LiveTest\Config\TestSuite $config, $parameters)
   {
-    $config->doNotInherit();
+    $config->getCurrentSession()->doNotInherit();
     foreach ($parameters as $file)
     {
       $config->getCurrentSession()->includePageRequests(Request::createRequestsFromParameters(file($config->getBaseDir() . '/' . $file)));

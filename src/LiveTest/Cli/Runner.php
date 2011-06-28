@@ -210,6 +210,7 @@ class Runner extends ArgumentRunner
     	$this->eventDispatcher->simpleNotify('LiveTest.Runner.InitHttpClient', array ('client' => $client, 'sessionName' => $sessionName));
       $clients[$sessionName] = $client;
     }
+    
     return $clients;
   }
   

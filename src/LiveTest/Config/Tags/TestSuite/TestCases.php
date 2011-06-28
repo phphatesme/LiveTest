@@ -27,7 +27,7 @@ class TestCases extends Base
   /**
    * @see LiveTest\Config\Tags\TestSuite.Base::doProcess()
    */
-  protected function doProcess(\LiveTest\Config\TestSuite $config, array $parameters)
+  protected function doProcess(\LiveTest\Config\TestSuite $config, $parameters)
   {
     foreach ( $parameters as $name => $value )
     {

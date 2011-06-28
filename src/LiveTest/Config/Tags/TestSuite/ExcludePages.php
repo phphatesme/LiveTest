@@ -27,7 +27,7 @@ class ExcludePages extends Base
   /**
    * @see LiveTest\Config\Tags\TestSuite.Base::doProcess()
    */
-  protected function doProcess(\LiveTest\Config\TestSuite $config, array $parameters)
+  protected function doProcess(\LiveTest\Config\TestSuite $config, $parameters)
   {
     $config->getCurrentSession()->excludePageRequests(Request::createRequestsFromParameters($parameters, $config->getDefaultDomain()));
   }

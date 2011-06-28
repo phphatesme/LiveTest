@@ -28,7 +28,7 @@ class Pages extends Base
   /**
    * @see LiveTest\Config\Tags\TestSuite.Base::doProcess()
    */
-  protected function doProcess(\LiveTest\Config\TestSuite $config, array $parameters)
+  protected function doProcess(\LiveTest\Config\TestSuite $config, $parameters)
   {
     $config->getCurrentSession()->doNotInherit();
     $requests = Request::createRequestsFromParameters($parameters, $config->getDefaultDomain());

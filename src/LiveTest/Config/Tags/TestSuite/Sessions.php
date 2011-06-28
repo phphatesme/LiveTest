@@ -31,7 +31,7 @@ class Sessions extends Base
   /**
    * @see LiveTest\Config\Tags\TestSuite.Base::doProcess()
    */
-  protected function doProcess(\LiveTest\Config\TestSuite $config, array $sessions)
+  protected function doProcess(\LiveTest\Config\TestSuite $config, $sessions)
   {
     foreach ($sessions as $sessionName => $session)
     {

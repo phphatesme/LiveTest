@@ -28,7 +28,7 @@ abstract class Base implements Tag
    * @param \LiveTest\Config\TestSuite $config
    * @param Parser $parser
    */
-  public function __construct(array $configParameters, \LiveTest\Config\TestSuite $config, Parser $parser)
+  public function __construct($configParameters, \LiveTest\Config\TestSuite $config, Parser $parser)
   {
     $this->configParameters = $configParameters;
     $this->config = $config;
@@ -63,5 +63,5 @@ abstract class Base implements Tag
    * @param TestSuite $config
    * @param array $parameters
    */
-  abstract protected function doProcess(\LiveTest\Config\TestSuite $config, array $parameters);
+  abstract protected function doProcess(\LiveTest\Config\TestSuite $config, $parameters);
 }
