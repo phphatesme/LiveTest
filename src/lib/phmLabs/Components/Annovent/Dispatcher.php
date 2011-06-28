@@ -12,15 +12,15 @@ use ReflectionClass, ReflectionMethod;
 class Dispatcher implements DispatcherInterface
 {
   private $annotationReader;
-  private $listeners = array();
-
+  private $listeners = array ();
+  
   public function __construct()
   {
     $this->annotationReader = new AnnotationReader();
     $this->annotationReader->setDefaultAnnotationNamespace('phmLabs\Components\Annovent\Annotation\\');
     $this->annotationReader->setAutoloadAnnotations(true);
   }
-
+  
   /**
    * Notifies all listeners of a given event.
    *
@@ -30,7 +30,7 @@ class Dispatcher implements DispatcherInterface
   {
     $this->processEvent($event);
   }
-
+  
   /**
    * Notifies all listeners of a given event until one processes the event.
    *
@@ -42,7 +42,7 @@ class Dispatcher implements DispatcherInterface
   {
     return $this->processEvent($event, true);
   }
-
+  
   /**
    * Returns all wildcard names of events the listerner should notify
    *
@@ -51,9 +51,9 @@ class Dispatcher implements DispatcherInterface
   private function getWildcardEventNames($eventName)
   {
     $nodes = explode('.', $eventName);
-    $wildcardNames = array('*');
+    $wildcardNames = array ('*');
     $path = '';
-
+    
     for($i = 0; $i < count($nodes) - 1; $i++)
     {
       if ($i == 0)
@@ -69,7 +69,7 @@ class Dispatcher implements DispatcherInterface
     }
     return $wildcardNames;
   }
-
+  
   /**
    * This function is used to call all listeners. It stops processing if the $until parameter is true and the
    * event is processed.
@@ -82,9 +82,9 @@ class Dispatcher implements DispatcherInterface
   {
     $finalParameters = $event->getParameters();
     $finalParameters['event'] = $event;
-
+    
     $result = '';
-
+    
     foreach ($this->getListeners($event->getName()) as $listener)
     {
       $result = Functions::call_user_func_assoc_array($listener, $finalParameters);
@@ -95,7 +95,7 @@ class Dispatcher implements DispatcherInterface
     }
     return $result;
   }
-
+  
   /**
    * Connects a listener to a given event name.
    *
@@ -109,7 +109,7 @@ class Dispatcher implements DispatcherInterface
   {
     $this->listeners[$name][$priority][] = $callback;
   }
-
+  
   /**
    * Disconnects one, or all listeners for the given event name.
    *
@@ -124,13 +124,13 @@ class Dispatcher implements DispatcherInterface
     {
       return;
     }
-
+    
     if (null === $callback)
     {
       unset($this->listeners[$name]);
       return;
     }
-
+    
     foreach ($this->listeners[$name] as $priority => $callables)
     {
       foreach ($callables as $i => $callable)
@@ -142,7 +142,7 @@ class Dispatcher implements DispatcherInterface
       }
     }
   }
-
+  
   /**
    * This function is used to register a listener. Listeners are normal classes that are
    * decorated with annotations.
@@ -153,32 +153,32 @@ class Dispatcher implements DispatcherInterface
   public function connectListener($listener, $priority = 0)
   {
     $annotationFound = false;
-
+    
     $reflectedListener = new ReflectionClass($listener);
     $publicMethods = $reflectedListener->getMethods(ReflectionMethod::IS_PUBLIC);
-
+    
     foreach ($publicMethods as $reflectedMethod)
     {
       $annotations = $this->annotationReader->getMethodAnnotations($reflectedMethod);
-
+      
       foreach ($annotations as $annotation)
       {
         $annotationFound = true;
         $eventNames = $annotation->getNames();
         foreach ($eventNames as $eventName)
         {
-          $callback = array($listener,$reflectedMethod->getName());
+          $callback = array ($listener, $reflectedMethod->getName());
           $this->connect($eventName, $callback, $priority);
         }
       }
     }
-
+    
     if (!$annotationFound)
     {
       throw new Exception('The listener you added (' . get_class($listener) . ') does not listen to any event.');
     }
   }
-
+  
   /**
    * Returns true if the given event name has some listeners.
    *
@@ -190,7 +190,7 @@ class Dispatcher implements DispatcherInterface
   {
     return array_key_exists($name, $this->listeners);
   }
-
+  
   /**
    * Returns all listeners associated with a given event name.
    *
@@ -202,9 +202,9 @@ class Dispatcher implements DispatcherInterface
   {
     $eventNames = $this->getWildcardEventNames($name);
     $eventNames[] = $name;
-
-    $listeners = array();
-
+    
+    $listeners = array ();
+    
     foreach ($eventNames as $eventName)
     {
       if (array_key_exists($eventName, $this->listeners))
@@ -212,14 +212,15 @@ class Dispatcher implements DispatcherInterface
         $listeners = array_merge_recursive($listeners, $this->listeners[$eventName]);
       }
     }
-
-    krsort($listeners);
-
+        
     if (count($listeners) == 0)
     {
-      return array();
+      return array ();
     }
-
-    return call_user_func_array('array_merge', $listeners);
+    else
+    {
+      krsort($listeners);
+      return call_user_func_array('array_merge', $listeners);
+    }
   }
 }

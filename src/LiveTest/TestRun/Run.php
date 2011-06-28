@@ -34,7 +34,7 @@ class Run
   
   /**
    * The injected event dispatcher. Used to notify the registered listeners.
-   * @var unknown_type
+   * @var Dispatcher
    */
   private $eventDispatcher;
   

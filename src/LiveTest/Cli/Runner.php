@@ -102,6 +102,7 @@ class Runner extends ArgumentRunner
     $this->eventDispatcher->connectListener(new \LiveTest\Packages\Debug\Listeners\Debug($this->runId, $this->eventDispatcher), 10);
     $this->eventDispatcher->connectListener(new \LiveTest\Packages\Feedback\Listener\Send($this->runId, $this->eventDispatcher), 10);
     $this->eventDispatcher->connectListener(new \LiveTest\Packages\Runner\Listeners\Credentials($this->runId, $this->eventDispatcher), 10);
+    $this->eventDispatcher->connectListener(new \LiveTest\Packages\Runner\Listeners\DefaultDomain($this->runId, $this->eventDispatcher), 10);    
     $this->eventDispatcher->simpleNotify('LiveTest.Runner.InitCore', array ('arguments' => $arguments));
   }
   
@@ -152,6 +153,7 @@ class Runner extends ArgumentRunner
       $config = $config->merge($currentConfig);
     }
     $this->config = $this->parseConfig($config->toArray());
+    $this->eventDispatcher->simpleNotify('LiveTest.Runner.ConfigInitialized', array ('config' => $this->config));
   }
   
   /**

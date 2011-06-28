@@ -10,7 +10,7 @@ Listener:
 
  version:
   class: LiveTest\Packages\Runner\Listeners\Version
-
+  
  phmLabs_Statistics:
   class: LiveTest\Packages\Website\Listener\Statistics
 
