@@ -22,7 +22,7 @@ class PageManipulators extends Base
   /**
    * @see LiveTest\Config\Tags\TestSuite.Base::doProcess()
    */
-  protected function doProcess(TestSuiteConfig $config, array $manipulators)
+  protected function doProcess(TestSuiteConfig $config, $manipulators)
   {
     foreach ( $manipulators as $manipulator )
     {
