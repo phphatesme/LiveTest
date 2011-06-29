@@ -8,16 +8,14 @@ use LiveTest\Config\ConfigConfig;
 
 class HttpTest extends \PHPUnit_Framework_TestCase
 {
-  
   public function testSetListener()
   {
     $config = new ConfigConfig();
-	$http = new Http(array(), $config, new Parser('/'));
-	$http->process();
-	
-	$listeners = $config->getListeners();
-	
-	$this->assertEquals($listeners['httpListener']['className'], 'LiveTest\Listener\Http\ClientConfiguration');
+    $http = new Http(array (), $config, new Parser('/'));
+    $http->process();
+    
+    $listeners = $config->getListeners();
+    
+    $this->assertEquals($listeners['httpListener']['className'], 'LiveTest\Packages\Http\Listeners\ClientConfiguration');
   }
-  
 }

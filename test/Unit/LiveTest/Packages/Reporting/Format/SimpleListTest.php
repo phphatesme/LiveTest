@@ -26,9 +26,9 @@ class SimpleListTest extends FormatTest
                 "       Url     : http://www.connection-error.com/\n".
                 "       Message : error message\n\n".
                 "     Result Statuses:\n\n".
-                "     Url        :  http://www.example.com/\n     Test       :  TestName\n     Test Class :  TestClass\n     Status     :  Success\n\n".
-                "     Url        :  http://www.example.com/\n     Test       :  TestName\n     Test Class :  TestClass\n     Status     :  Failed\n     Message    :  Failed Message\n\n".
-                "     Url        :  http://www.example.com/\n     Test       :  TestName\n     Test Class :  TestClass\n     Status     :  Error\n     Message    :  Error Message\n\n";
+                "     Url        :  http://www.example.com/\n     Test       :  TestName\n     Test Class :  TestClass\n     Session    :  mySession\n     Status     :  Success\n\n".
+                "     Url        :  http://www.example.com/\n     Test       :  TestName\n     Test Class :  TestClass\n     Session    :  mySession\n     Status     :  Failed\n     Message    :  Failed Message\n\n".
+                "     Url        :  http://www.example.com/\n     Test       :  TestName\n     Test Class :  TestClass\n     Session    :  mySession\n     Status     :  Error\n     Message    :  Error Message\n\n";
 
     $this->assertEquals($expected, $formattedText);
   }
