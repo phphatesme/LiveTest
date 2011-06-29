@@ -44,7 +44,7 @@ class HtmlDocumentLogTest extends \PHPUnit_Framework_TestCase
     $response = new MockUp();
     $response->setBody('<body></body>');
 
-    $result = new Result($test, Result::STATUS_FAILED, '', Request::create(new Uri('http://www.example.com')));
+    $result = new Result($test, Result::STATUS_FAILED, '', Request::create(new Uri('http://www.example.com')), 'mySession');
 
     $this->listener->handleResult($result, $response);
     $this->assertTrue(file_exists($this->fullLogPath . $this->createdFile));
@@ -66,7 +66,7 @@ class HtmlDocumentLogTest extends \PHPUnit_Framework_TestCase
     $response->setStatus(200);
     $response->setBody('<body></body>');
 
-    $result = new Result($test, Result::STATUS_FAILED, '',  Request::create(new Uri( 'http://www.example.com')));
+    $result = new Result($test, Result::STATUS_FAILED, '',  Request::create(new Uri( 'http://www.example.com')), 'mySession');
 
     $this->listener->handleResult($result, $response);
 

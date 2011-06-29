@@ -9,7 +9,7 @@ class ExtendsBase extends Base
   
   private $parameters;
   
-  protected function doProcess(\LiveTest\Config\TestSuite $config, array $parameters)
+  protected function doProcess(\LiveTest\Config\TestSuite $config, $parameters)
   {
     $this->parameters = "OK";
     $this->config = "OK";

@@ -39,9 +39,9 @@ abstract class FormatTest extends \PHPUnit_Framework_TestCase
     $request = Request::create($defaultUri);
     $test = new Test('TestName', 'TestClass', array('foo' => 'bar'));
 
-    $successResult = new Result($test, Result::STATUS_SUCCESS, 'Success Message', $request);
-    $failureResult = new Result($test, Result::STATUS_FAILED, 'Failed Message', $request);
-    $errorResult = new Result($test, Result::STATUS_ERROR, 'Error Message', $request);
+    $successResult = new Result($test, Result::STATUS_SUCCESS, 'Success Message', $request, 'mySession');
+    $failureResult = new Result($test, Result::STATUS_FAILED, 'Failed Message', $request, 'mySession');
+    $errorResult = new Result($test, Result::STATUS_ERROR, 'Error Message', $request, 'mySession');
 
     $set->addResult($successResult);
     $set->addResult($failureResult);

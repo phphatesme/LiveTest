@@ -27,7 +27,7 @@ class IncludePages extends Base
   /**
    * @see LiveTest\Config\Tags\TestSuite.Base::doProcess()
    */
-  protected function doProcess(TestSuiteConfig $config, array $parameters)
+  protected function doProcess(TestSuiteConfig $config, $parameters)
   {
     $config->getCurrentSession()->includePageRequests(Request::createRequestsFromParameters($parameters, $config->getDefaultDomain()));
   }

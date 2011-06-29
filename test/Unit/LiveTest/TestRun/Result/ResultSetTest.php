@@ -14,7 +14,7 @@ class ResultSetTest extends \PHPUnit_Framework_TestCase
   protected function createNewResult($status)
   {
     $test = new Test('name', 'className');
-    return new Result($test, $status, 'foo', Symfony::create(new Uri('http://www.example.com/')));
+    return new Result($test, $status, 'foo', Symfony::create(new Uri('http://www.example.com/')), 'mySessionName');
   }
 
   public function testGetStatus()

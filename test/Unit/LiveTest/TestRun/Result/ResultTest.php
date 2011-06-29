@@ -18,7 +18,7 @@ class ResultTest extends \PHPUnit_Framework_TestCase
     $message = 'foo';
     $uri = Symfony::create(new Uri('http://www.example.com/'));
 
-    $result = new Result($test, $status, $message, $uri);
+    $result = new Result($test, $status, $message, $uri, 'mySession');
 
     $this->assertEquals($test, $result->getTest());
     $this->assertEquals($status, $result->getStatus());
