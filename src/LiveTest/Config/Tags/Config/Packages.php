@@ -27,6 +27,7 @@ class Packages extends Base
   private $includedPaths = array();
 
   /**
+   * @todo check if the directory really exists
    * @see LiveTest\Config\Tags\Config.Base::doProcess()
    */
   protected function doProcess(ConfigConfig $config, $paths)
