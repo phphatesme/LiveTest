@@ -26,7 +26,7 @@
     </tr>
     <tr>
       <td></td>
-      <td>Duration: <b><?php echo $information->getDuration(); ?></b> second(s)</td>
+      <td>Duration: <b><?php echo \Base\Date\Duration::format($information->getDuration(), '%d day(s) ', '%d hour(s), ', '%d minute(s) ', '%d second(s)'); ?></b></td>
     </tr>
     <tr>
       <td></td>
@@ -85,7 +85,7 @@
       <tr>
         <td></td>
         <td colspan="2" id="copyright">
-          Html Report by <b><a href="http://livetest.phphatesme.com">LiveTest</a></b>
+          Html Report by <b><a href="http://livetest.phmlabs.com">LiveTest</a></b>
         </td>
       </tr>
   </table>
