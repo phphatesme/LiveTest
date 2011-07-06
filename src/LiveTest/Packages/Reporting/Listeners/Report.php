@@ -47,7 +47,7 @@ class Report extends Base
     $this->resultSet = new ResultSet();
 
     $this->logStatuses = \Base\Functions::firstNotNull($logStatuses, array (Result::STATUS_ERROR, Result::STATUS_FAILED, Result::STATUS_SUCCESS ));
-    $this->reportOnSuccess = $reportOnSuccess;
+    $this->reportOnSuccess = !($reportOnSuccess === 'false');
 
     $this->initWriter( $writer );
     $this->initFormat( $format );

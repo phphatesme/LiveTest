@@ -88,7 +88,7 @@ class ReportTest extends \PHPUnit_Framework_TestCase
     $writerConfig = array('class' => 'LiveTest\Packages\Reporting\Writer\SimpleEcho');
     $formatConfig = array('class' => 'LiveTest\Packages\Reporting\Format\Csv');
 
-    $this->listener->init($formatConfig, $writerConfig, null, false);
+    $this->listener->init($formatConfig, $writerConfig, null, 'false');
 
     $test = new Test('TestName', 'ClassName');
 
