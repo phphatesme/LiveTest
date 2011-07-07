@@ -15,16 +15,16 @@ namespace LiveTest\Config\Tags\TestSuite;
  *
  * @example
  * Sessions:
-     user_handling:
-       Pages:
-         - /login.php:
-           post:
-             key1: value1
-             key2: value2
-         - /index.php
-         
+ *   user_handling:
+ *      Pages:
+ *        - /login.php:
+ *           post:
+ *             key1: value1
+ *             key2: value2
+ *        - /index.php
  *
- * @author Mike Lohmann
+ *
+ * @author Mike Lohmann & Nils Langner
  */
 class Sessions extends Base
 {
@@ -39,6 +39,6 @@ class Sessions extends Base
       $config->getNewSession($sessionName, true);
       $parser->parse($session, $config);
       $config->switchToDefaultSession();
-    }    
+    }
   }
 }

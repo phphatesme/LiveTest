@@ -10,6 +10,7 @@ TestCases:
 
 Pages:
  - http://www.stern.de
+ - { url: http://www.google.com, get: {name: egon, password: ectoplasm } } 
             
 Sessions:
  login:

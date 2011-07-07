@@ -55,23 +55,27 @@ class Session
   private $parentConfig;
 
   /**
-   *
    * The default domain
    * @var Uri $defaultDomain
    */
   private $defaultDomain = null;
-  
+
   private $isolateRequests;
 
   public function __construct(Uri $defaultDomain, $isolateRequests = false)
   {
-  	$this->defaultDomains = $defaultDomain;
-  	$this->isolateRequests = $isolateRequests;
+    $this->defaultDomains = $defaultDomain;
+    $this->isolateRequests = $isolateRequests;
   }
-  
-  public function areRequestsIsolated( )
+
+  /**
+   * Returns true if every request should be fired isolated.
+   *
+   * @return bool
+   */
+  public function areRequestsIsolated()
   {
-  	return $this->isolateRequests;
+    return $this->isolateRequests;
   }
 
   /**
@@ -91,7 +95,7 @@ class Session
    */
   public function includePageRequests(array $pageRequests)
   {
-    foreach ( $pageRequests as $aPageRequest )
+    foreach ($pageRequests as $aPageRequest)
     {
       $this->includePageRequest($aPageRequest);
     }
@@ -114,7 +118,7 @@ class Session
    */
   public function excludePageRequests($pageRequests)
   {
-    foreach ( $pageRequests as $aPageRequest )
+    foreach ($pageRequests as $aPageRequest)
     {
       $this->excludePageRequest($aPageRequest);
     }
@@ -151,14 +155,13 @@ class Session
 
   private function getReducedPageRequests(array $includedPageRequest, array $excludedPageRequests)
   {
-     foreach($excludedPageRequests as $identifier => $pageRequest)
+    foreach ($excludedPageRequests as $identifier => $pageRequest)
+    {
+      if (array_key_exists($identifier, $includedPageRequest))
       {
-        if(array_key_exists($identifier, $includedPageRequest))
-        {
-          unset($includedPageRequest[$identifier]);
-        }
+        unset($includedPageRequest[$identifier]);
       }
-
-      return $includedPageRequest;
+    }
+    return $includedPageRequest;
   }
 }
