@@ -9,7 +9,7 @@
 
 namespace Test\Unit\LiveTest\TestCases\General\Html;
 
-use LiveTest\Config\Request\Symfony;
+use LiveTest\Connection\Request\Symfony;
 
 use Unit\Base\Http\Response\MockUp;
 

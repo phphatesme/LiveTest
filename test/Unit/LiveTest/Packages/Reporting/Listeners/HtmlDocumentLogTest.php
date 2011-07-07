@@ -2,7 +2,7 @@
 
 namespace Test\Unit\LiveTest\Packages\Reporting\Listeners;
 
-use LiveTest\Config\Request\Symfony as Request;
+use LiveTest\Connection\Request\Symfony as Request;
 
 use Unit\Base\Http\Response\MockUp;
 

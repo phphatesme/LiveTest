@@ -10,7 +10,7 @@
 namespace LiveTest\Config\Tags\TestSuite;
 
 use LiveTest\Config\TestSuite as TestSuiteConfig;
-use LiveTest\Config\Request\Symfony as Request;
+use LiveTest\Connection\Request\Symfony as Request;
 
 /**
  * This tag includes a list of pages.

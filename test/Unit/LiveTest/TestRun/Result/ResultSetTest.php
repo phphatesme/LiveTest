@@ -1,7 +1,7 @@
 <?php
 namespace Unit\LiveTest\TestRun;
 
-use LiveTest\Config\Request\Symfony;
+use LiveTest\Connection\Request\Symfony;
 
 use LiveTest\TestRun\Result\ResultSet;
 

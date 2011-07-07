@@ -21,7 +21,7 @@ use LiveTest\Config\Parser\Parser;
 use Base\Config\Yaml;
 use Base\Www\Uri;
 
-use LiveTest\Config\Request\LiveTest as Request;
+use LiveTest\Connection\Request\LiveTest as Request;
 
 /**
  * A properties class holds all information about a test run. It prepares athe data given by

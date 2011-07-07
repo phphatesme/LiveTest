@@ -2,7 +2,7 @@
 
 namespace Unit\LiveTest\Packages\Reporting\Format;
 
-use LiveTest\Config\Request\Symfony as Request;
+use LiveTest\Connection\Request\Symfony as Request;
 
 use Base\Http\ConnectionStatus;
 

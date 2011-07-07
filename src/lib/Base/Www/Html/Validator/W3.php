@@ -13,7 +13,7 @@ use Base\Www\Uri;
 
 use Symfony\Component\HttpFoundation\Request;
 
-use LiveTest\Config\Request\Symfony;
+use LiveTest\Connection\Request\Symfony;
 
 use Base\Www\Html\Validator;
 use Base\Www\Html\Document;

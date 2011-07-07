@@ -8,7 +8,7 @@ use Base\Http\Request\Request;
 use Base\Http\Client\Zend;
 use Base\Www\Uri;
 
-use LiveTest\Config\Request\Symfony;
+use LiveTest\Connection\Request\Symfony;
 use LiveTest\Listener\Base;
 use LiveTest\TestRun\Information;
 use LiveTest\TestRun\Properties;

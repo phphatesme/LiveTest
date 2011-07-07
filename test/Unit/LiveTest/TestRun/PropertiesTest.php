@@ -6,7 +6,7 @@ use LiveTest\Connection\Session\Session;
 use LiveTest\Config\TestSuite;
 
 use Base\Www\Uri;
-use LiveTest\Config\Request\Symfony;
+use LiveTest\Connection\Request\Symfony;
 use LiveTest\TestRun\Properties;
 
 /**

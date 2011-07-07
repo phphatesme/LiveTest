@@ -4,7 +4,7 @@ namespace Test\Unit\LiveTest\Packages\Sleep\Listeners;
 
 use Unit\Base\Http\Response\MockUp;
 
-use LiveTest\Config\Request\Symfony as Request;
+use LiveTest\Connection\Request\Symfony as Request;
 
 use Base\Http\Response\Zend;
 

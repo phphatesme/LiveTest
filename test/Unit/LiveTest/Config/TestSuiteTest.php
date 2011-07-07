@@ -7,7 +7,7 @@ use LiveTest\Connection\Session\Session;
 use LiveTest\Config\TestSuite;
 use Base\Www\Uri;
 
-use LiveTest\Config\Request\Symfony as Request;
+use LiveTest\Connection\Request\Symfony as Request;
 
 class TestSuiteTest extends \PHPUnit_Framework_TestCase
 {

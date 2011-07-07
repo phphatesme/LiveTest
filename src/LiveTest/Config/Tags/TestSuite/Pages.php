@@ -10,7 +10,7 @@
 namespace LiveTest\Config\Tags\TestSuite;
 
 use LiveTest\Config\Parser;
-use LiveTest\Config\Request\Symfony as SymfonyRequest;
+use LiveTest\Connection\Request\Symfony as SymfonyRequest;
 
 /**
  * This tag sets a list of pages to the configuration and stops the inheritance of the config file. If

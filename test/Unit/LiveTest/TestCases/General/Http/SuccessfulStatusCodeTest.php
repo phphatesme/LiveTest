@@ -5,7 +5,7 @@ namespace Test\Unit\LiveTest\TestCases\General\Http;
 use Unit\Base\Http\Response\MockUp;
 
 use Base\Www\Uri;
-use LiveTest\Config\Request\Symfony;
+use LiveTest\Connection\Request\Symfony;
 use Base\Http\Response\Zend;
 
 use LiveTest\TestCase\General\Http\SuccessfulStatusCode;

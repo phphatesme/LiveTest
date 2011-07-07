@@ -9,7 +9,7 @@
 
 namespace LiveTest\Connection\Session;
 
-use LiveTest\Config\Request\Request;
+use LiveTest\Connection\Request\Request;
 
 use Base\Www\Uri;
 

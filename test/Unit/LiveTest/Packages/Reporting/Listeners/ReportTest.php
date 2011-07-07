@@ -14,7 +14,7 @@ use LiveTest\Event\Dispatcher;
 use Base\Www\Uri;
 use Base\Http\ConnectionStatus;
 
-use LiveTest\Config\Request\Symfony as Request;
+use LiveTest\Connection\Request\Symfony as Request;
 
 class ReportTest extends \PHPUnit_Framework_TestCase
 {

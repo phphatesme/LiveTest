@@ -1,11 +1,11 @@
 <?php
-namespace Unit\LiveTest\Config\Request;
+namespace Unit\LiveTest\Connection\Request;
 
 /**
  * test case.
  */
 use Base\Www\Uri;
-use LiveTest\Config\Request\Symfony as Request;
+use LiveTest\Connection\Request\Symfony as Request;
 
 class SymfonyTest extends \PHPUnit_Framework_TestCase
 {

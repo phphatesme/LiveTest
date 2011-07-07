@@ -2,7 +2,7 @@
 
 namespace Test\Unit\LiveTest\TestCases\General\Http;
 
-use LiveTest\Config\Request\Symfony;
+use LiveTest\Connection\Request\Symfony;
 
 use LiveTest\TestCase\General\Http\HeaderExists;
 
