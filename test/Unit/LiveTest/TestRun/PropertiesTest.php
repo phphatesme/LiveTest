@@ -1,6 +1,8 @@
 <?php
 namespace Unit\LiveTest\TestRun;
 
+use LiveTest\Event\Dispatcher;
+
 use LiveTest\Connection\Session\Session;
 
 use LiveTest\Config\TestSuite;
@@ -26,8 +28,8 @@ class PropertiesTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-      $uri = new Uri('http://www.example.com');  
-      $testSuiteConfig = new TestSuite(new Session($uri));      
+      $uri = new Uri('http://www.example.com');
+      $testSuiteConfig = new TestSuite(new Session($uri));
       $this->object = new Properties($testSuiteConfig, $uri);
     }
 
@@ -51,15 +53,15 @@ class PropertiesTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateByYamlFileConfigException()
     {
-       Properties::createByYamlFile('none', new Uri("http://www.example.com"));
+       Properties::createByYamlFile('none', new Uri("http://www.example.com"), new Dispatcher());
     }
-    
+
 	/**
      * @expectedException LiveTest\ConfigurationException
      */
     public function testCreateByYamlFileConfigurationException()
     {
-       Properties::createByYamlFile(__DIR__.'/Fixtures/testsuite_error.yml', new Uri("http://www.example.com"));
+       Properties::createByYamlFile(__DIR__.'/Fixtures/testsuite_error.yml', new Uri("http://www.example.com"), new Dispatcher());
     }
 }
 ?>

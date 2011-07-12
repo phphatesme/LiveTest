@@ -64,7 +64,7 @@ class RunTest extends \PHPUnit_Framework_TestCase
     $this->handleResultListener = new HandleResultListener('', $this->dispatcher);
     $this->dispatcher->connectListener($this->handleResultListener);
 
-    $this->properties = Properties::createByYamlFile(__DIR__ . '/Fixtures/testsuite.yml', $this->defaultUri);
+    $this->properties = Properties::createByYamlFile(__DIR__ . '/Fixtures/testsuite.yml', $this->defaultUri, new Dispatcher());
     $this->httpClients[TestSuite::DEFAULT_SESSION] = new HttpClientMockup(new ResponseMockup());
     $this->run = new Run($this->properties, $this->httpClients, $this->dispatcher);
   }
@@ -101,7 +101,7 @@ class RunTest extends \PHPUnit_Framework_TestCase
 
     $status = $this->connectionStatusListener->getConnectionStatus();
     $this->assertEquals( $status->getType(), ConnectionStatus::SUCCESS );
-    $this->assertEquals( $status->getRequest()->getUri(), 'http://www.example.com/index.html/' );
+    $this->assertEquals( $status->getRequest()->getUri(), 'http://www.example.com/index.html' );
   }
 
   public function testHandleFailedConnectionStatus( )
@@ -112,7 +112,7 @@ class RunTest extends \PHPUnit_Framework_TestCase
 
     $status = $this->connectionStatusListener->getConnectionStatus();
     $this->assertEquals( $status->getType(), ConnectionStatus::ERROR );
-    $this->assertEquals( $status->getRequest()->getUri(), 'http://www.example.com/index.html/' );
+    $this->assertEquals( $status->getRequest()->getUri(), 'http://www.example.com/index.html' );
     $this->assertEquals( $status->getMessage(), 'TestException' );
   }
 

@@ -34,13 +34,13 @@ class ProgressBarTest extends \PHPUnit_Framework_TestCase
     $response->setStatus(200);
 
     ob_start();
-    $result = new Result($test, Result::STATUS_SUCCESS, '', Request::create(new Uri( 'http://www.example.com')), 'mySession');
+    $result = new Result($test, Result::STATUS_SUCCESS, '', Request::create(new Uri('http://www.example.com')), $response, 'mySession');
     $this->listener->handleResult($result, $response);
 
-    $result = new Result($test, Result::STATUS_FAILED, '', Request::create(new Uri( 'http://www.example.com')), 'mySession');
+    $result = new Result($test, Result::STATUS_FAILED, '', Request::create(new Uri('http://www.example.com')), $response, 'mySession');
     $this->listener->handleResult($result, $response);
 
-    $result = new Result($test, Result::STATUS_ERROR, '', Request::create(new Uri( 'http://www.example.com')), 'mySession');
+    $result = new Result($test, Result::STATUS_ERROR, '', Request::create(new Uri('http://www.example.com')), $response, 'mySession');
     $this->listener->handleResult($result, $response);
 
     $output = ob_get_contents();

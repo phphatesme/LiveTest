@@ -2,6 +2,8 @@
 
 namespace Unit\LiveTest\Packages\Reporting\Format;
 
+use Unit\Base\Http\Response\MockUp;
+
 use LiveTest\Connection\Request\Symfony as Request;
 
 use Base\Http\ConnectionStatus;
@@ -34,14 +36,14 @@ abstract class FormatTest extends \PHPUnit_Framework_TestCase
     $format = $this->getFormat();
 
     $set = new ResultSet();
-    
+
     $defaultUri = new Uri('http://www.example.com');
     $request = Request::create($defaultUri);
     $test = new Test('TestName', 'TestClass', array('foo' => 'bar'));
 
-    $successResult = new Result($test, Result::STATUS_SUCCESS, 'Success Message', $request, 'mySession');
-    $failureResult = new Result($test, Result::STATUS_FAILED, 'Failed Message', $request, 'mySession');
-    $errorResult = new Result($test, Result::STATUS_ERROR, 'Error Message', $request, 'mySession');
+    $successResult = new Result($test, Result::STATUS_SUCCESS, 'Success Message', $request, new MockUp(), 'mySession');
+    $failureResult = new Result($test, Result::STATUS_FAILED, 'Failed Message', $request, new MockUp(), 'mySession');
+    $errorResult = new Result($test, Result::STATUS_ERROR, 'Error Message', $request, new MockUp(), 'mySession');
 
     $set->addResult($successResult);
     $set->addResult($failureResult);

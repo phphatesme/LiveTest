@@ -26,17 +26,17 @@ class StatusBarTest extends \PHPUnit_Framework_TestCase
     $response = new MockUp();
     $response->setStatus(200);
 
-    $result = new Result($test, Result::STATUS_SUCCESS, '', Request::create(new Uri('http://www.example.com')), 'mySession');
+    $result = new Result($test, Result::STATUS_SUCCESS, '', Request::create(new Uri('http://www.example.com')), new MockUp(),'mySession');
     $listener->handleResult($result, $response);
 
-    $result = new Result($test, Result::STATUS_FAILED, '', Request::create(new Uri('http://www.example.com')), 'mySession');
+    $result = new Result($test, Result::STATUS_FAILED, '', Request::create(new Uri('http://www.example.com')), new MockUp(),'mySession');
     $listener->handleResult($result, $response);
 
-    $result = new Result($test, Result::STATUS_ERROR, '', Request::create(new Uri('http://www.example.com')), 'mySession');
+    $result = new Result($test, Result::STATUS_ERROR, '', Request::create(new Uri('http://www.example.com')), new MockUp(),'mySession');
     $listener->handleResult($result, $response);
 
     ob_start();
-    $listener->postRun(new Information('5000', new Uri('http://www.example.com')));
+    $listener->postRun(new Information('5000000', new Uri('http://www.example.com')));
     $actual = ob_get_contents();
     ob_clean();
 
