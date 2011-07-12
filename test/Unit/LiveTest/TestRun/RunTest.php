@@ -91,7 +91,7 @@ class RunTest extends \PHPUnit_Framework_TestCase
 
     $information = $this->postRunListener->getInformation();
 
-    $this->assertEquals(0, floor($information->getDuration()/1000));
+    $this->assertLessThan(1000, $information->getDuration());
     $this->assertEquals($this->defaultUri, $information->getDefaultDomain());
   }
 
