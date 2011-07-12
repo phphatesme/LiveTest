@@ -25,19 +25,19 @@ class Run
    * @var Properties
    */
   private $properties;
-  
+
   /**
    * The injected http client used to fire http request for the given pages.
    * @var Client
    */
   private $httpClient = null;
-  
+
   /**
    * The injected event dispatcher. Used to notify the registered listeners.
    * @var Dispatcher
    */
   private $eventDispatcher;
-  
+
   /**
    * @param Properties $properties
    * @param Client $httpClient
@@ -49,7 +49,7 @@ class Run
     $this->httpClients = $httpClients;
     $this->properties = $properties;
   }
-  
+
   /**
    * This function creates and initializes the test case object using the init method.
    *
@@ -59,7 +59,7 @@ class Run
   private function getInitializedTestCase(Test $test)
   {
     $testCaseName = $test->getClassName();
-    
+
     if (class_exists($testCaseName))
     {
       $testCaseObject = new $testCaseName();
@@ -70,10 +70,10 @@ class Run
       throw new \Exception('Class not found (' . $testCaseName . '). ');
     }
     \LiveTest\Functions::initializeObject($testCaseObject, $test->getParameter());
-    
+
     return $testCaseObject;
   }
-  
+
   /**
    * This function runs the given test set with the assigned response.
    *
@@ -88,7 +88,7 @@ class Run
     {
       $runStatus = Result::STATUS_SUCCESS;
       $runMessage = '';
-      
+
       try
       {
         $testCase = $this->getInitializedTestCase($test);
@@ -104,11 +104,12 @@ class Run
         $runStatus = Result::STATUS_ERROR;
         $runMessage = $e->getMessage();
       }
-      $result = new Result($test, $runStatus, $runMessage, $testSet->getRequest(), $sessionName);
+      $result = new Result($test, $runStatus, $runMessage, $testSet->getRequest(), $response, $sessionName);
+      // @todo response is part of the result so it should not be handled separatly
       $this->eventDispatcher->simpleNotify('LiveTest.Run.HandleResult', array ('result' => $result, 'response' => $response));
     }
   }
-  
+
   /**
    * This function sends a http request and assigns the response to the test cases.
    *
@@ -120,7 +121,7 @@ class Run
   {
     $connectionStatusValue = ConnectionStatus::SUCCESS;
     $connectionStatusMessage = '';
-    
+
     try
     {
       $response = $this->httpClients[$sessionName]->request($testSet->getRequest());
@@ -130,17 +131,21 @@ class Run
       $connectionStatusValue = ConnectionStatus::ERROR;
       $connectionStatusMessage = $e->getMessage();
     }
-    
+
     $connectionStatus = new ConnectionStatus($connectionStatusValue, $testSet->getRequest(), $connectionStatusMessage);
-    
+		if( isset($response))
+		{
+			$connectionStatus->setResponse($response);
+		}
+
     $this->eventDispatcher->simpleNotify('LiveTest.Run.HandleConnectionStatus', array ('connectionStatus' => $connectionStatus));
-    
+
     if ($connectionStatusValue === ConnectionStatus::SUCCESS)
     {
       $this->runTests($testSet, $response, $sessionName);
     }
   }
-  
+
   /**
    * This function runs all test sets defined in the properties file.
    *
@@ -150,10 +155,10 @@ class Run
   public function run()
   {
     $this->eventDispatcher->simpleNotify('LiveTest.Run.PreRun', array ('properties' => $this->properties));
-    
+
     // @todo move timer to runner.php
     $timer = new Timer();
-    
+
     foreach ($this->properties->getTestSets() as $sessionName => $testSets)
     {
       foreach ($testSets as $testSet)
@@ -161,9 +166,9 @@ class Run
         $this->runTestSet($testSet, $sessionName);
       }
     }
-    
+
     $information = new Information($timer->stop(), $this->properties->getDefaultDomain());
-    
+
     $this->eventDispatcher->simpleNotify('LiveTest.Run.PostRun', array ('information' => $information));
   }
 }

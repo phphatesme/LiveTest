@@ -26,7 +26,7 @@
     </tr>
     <tr>
       <td></td>
-      <td>Duration: <b><?php echo \Base\Date\Duration::format($information->getDuration(), '%d day(s) ', '%d hour(s), ', '%d minute(s) ', '%d second(s)'); ?></b></td>
+      <td>Duration: <b><?php echo \Base\Date\Duration::format(floor($information->getDuration()/1000), '%d day(s) ', '%d hour(s), ', '%d minute(s) ', '%d second(s)'); ?></b></td>
     </tr>
     <tr>
       <td></td>

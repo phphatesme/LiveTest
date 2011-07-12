@@ -82,7 +82,7 @@ class StatusBar extends Base
    */
   public function postRun(Information $information)
   {
-  	$formattedDuration = Duration::format($information->getDuration(), '%d day(s) ', '%d hour(s) ', '%d minute(s) ', '%d second(s)' );
+  	$formattedDuration = Duration::format(floor($information->getDuration()/1000), '%d day(s) ', '%d hour(s) ', '%d minute(s) ', '%d second(s)' );
     echo "  Tests: " . $this->testCount . ' (failed: '.$this->failureCount.', error: '.$this->errorCount.') - Duration: ' . $formattedDuration;
   }
 }

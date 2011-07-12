@@ -2,6 +2,8 @@
 
 namespace Base\Http;
 
+use Base\Http\Response\Response;
+
 use Base\Http\Request\Request;
 
 class ConnectionStatus
@@ -12,6 +14,7 @@ class ConnectionStatus
   private $type;
   private $message;
   private $request;
+  private $response;
 
   public function __construct($type, Request $request, $message = null)
   {
@@ -20,7 +23,17 @@ class ConnectionStatus
     $this->request = $request;
   }
 
-  public function getRequest( )
+  public function setResponse(Response $response)
+  {
+    $this->response = $response;
+  }
+
+  public function getResponse()
+  {
+    return $this->response;
+  }
+
+  public function getRequest()
   {
     return $this->request;
   }

@@ -44,31 +44,31 @@ class Runner extends ArgumentRunner
    * @var ConfigConfig
    */
   private $config;
-  
+
   /**
    * The event dispatcher
    * @var Dispatcher
    */
   private $eventDispatcher;
-  
+
   /**
    * The test run instance
    * @var TestRun
    */
   private $testRun;
-  
+
   /**
    * The unique run id
    * @var string
    */
   private $runId;
-  
+
   /**
    * Can the run method be called
    * @var boolean
    */
   private $runAllowed = true;
-  
+
   /**
    * This function intializes the runner. It sets the runId, inits the configuration
    * and registers the assigned listeners. Afterwards all listeners are notified. If
@@ -85,27 +85,27 @@ class Runner extends ArgumentRunner
     $this->eventDispatcher = $dispatcher;
     $this->initRunId();
     $this->initCoreListener($arguments);
-    
+
     parent::__construct($arguments);
-    
+
     $this->initConfig();
     $this->eventDispatcher->simpleNotify('LiveTest.Runner.InitConfig', array ('config' => $this->config));
-    
+
     $this->initListeners();
     $event = new Event('LiveTest.Runner.Init', array ('arguments' => $arguments));
     $this->eventDispatcher->notifyUntil($event);
     $this->runAllowed = !$event->isProcessed();
   }
-  
+
   private function initCoreListener($arguments)
   {
     $this->eventDispatcher->connectListener(new \LiveTest\Packages\Debug\Listeners\Debug($this->runId, $this->eventDispatcher), 10);
     $this->eventDispatcher->connectListener(new \LiveTest\Packages\Feedback\Listener\Send($this->runId, $this->eventDispatcher), 10);
     $this->eventDispatcher->connectListener(new \LiveTest\Packages\Runner\Listeners\Credentials($this->runId, $this->eventDispatcher), 10);
-    $this->eventDispatcher->connectListener(new \LiveTest\Packages\Runner\Listeners\DefaultDomain($this->runId, $this->eventDispatcher), 10);    
+    $this->eventDispatcher->connectListener(new \LiveTest\Packages\Runner\Listeners\DefaultDomain($this->runId, $this->eventDispatcher), 10);
     $this->eventDispatcher->simpleNotify('LiveTest.Runner.InitCore', array ('arguments' => $arguments));
   }
-  
+
   /**
    * Initializes the unique run id
    */
@@ -113,7 +113,7 @@ class Runner extends ArgumentRunner
   {
     $this->runId = (string)time();
   }
-  
+
   /**
    * This function parses the config array and returns a config object. This config
    * object can be handled by the event dispatcher.
@@ -124,7 +124,7 @@ class Runner extends ArgumentRunner
   private function parseConfig($configArray)
   {
     $config = new ConfigConfig();
-    
+
     $parser = new Parser('\\LiveTest\Config\\Tags\\Config\\');
     try
     {
@@ -134,10 +134,10 @@ class Runner extends ArgumentRunner
     {
       throw new ConfigurationException('Unknown tag ("' . $e->getTagName() . '") found in the configuration file.', null, $e);
     }
-    
+
     return $config;
   }
-  
+
   /**
    * Initializes the global configuration. If the config argument is set, the default
    * configuration and the given config file are merged. Otherwise the default config
@@ -146,7 +146,7 @@ class Runner extends ArgumentRunner
   private function initConfig()
   {
     $config = new Yaml(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'default' . DIRECTORY_SEPARATOR . 'config.yml', true);
-    
+
     if ($this->hasArgument('config'))
     {
       $currentConfig = new Yaml($this->getArgument('config'), true);
@@ -155,7 +155,7 @@ class Runner extends ArgumentRunner
     $this->config = $this->parseConfig($config->toArray());
     $this->eventDispatcher->simpleNotify('LiveTest.Runner.ConfigInitialized', array ('config' => $this->config));
   }
-  
+
   /**
    * This function initializes and registrates all the listeners.
    */
@@ -163,7 +163,7 @@ class Runner extends ArgumentRunner
   {
     $this->eventDispatcher->registerByConfig($this->config, $this->runId);
   }
-  
+
   /**
    * Returns true if the runner can be run. It will return false if a listener stops
    * the run workflow.
@@ -172,17 +172,17 @@ class Runner extends ArgumentRunner
   {
     return $this->runAllowed;
   }
-  
+
   /**
    * Initializes the test run.
    */
   private function initTestRun()
   {
     $this->eventDispatcher->simpleNotify('LiveTest.Runner.InitTestRun');
-    
+
     try
     {
-      $properties = Properties::createByYamlFile($this->getArgument('testsuite'), $this->config->getDefaultDomain());
+      $properties = Properties::createByYamlFile($this->getArgument('testsuite'), $this->config->getDefaultDomain(), $this->eventDispatcher);
     }
     catch (\Zend\Config\Exception\InvalidArgumentException $e)
     {
@@ -192,12 +192,12 @@ class Runner extends ArgumentRunner
     {
       throw new ConfigurationException('Error parsing testsuite configuration: ' . $e->getMessage(), null, $e);
     }
-    
+
 		$clients =  $this->getClients($properties->getSessions());
-    
+
     $this->testRun = new Run($properties, $clients, $this->eventDispatcher);
   }
-  
+
   private function getClients( $sessions )
   {
     $clients = array();
@@ -212,10 +212,10 @@ class Runner extends ArgumentRunner
     	$this->eventDispatcher->simpleNotify('LiveTest.Runner.InitHttpClient', array ('client' => $client, 'sessionName' => $sessionName));
       $clients[$sessionName] = $client;
     }
-    
+
     return $clients;
   }
-  
+
   /**
    * Runs the runner. Before running you should check if run is allowed (isRunAllowed())
    *

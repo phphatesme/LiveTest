@@ -21,25 +21,25 @@ class Uri
   }
 
   /**
-   * 
+   *
    * Enter description here ...
    */
   public function __toString()
   {
     return $this->toString();
   }
-  
+
   /**
-   * 
+   *
    * Enter description here ...
    */
   public function toString()
   {
     return $this->uri;
   }
-  
+
   /**
-   * 
+   *
    * Enter description here ...
    * @param unknown_type $uriString
    */
@@ -49,7 +49,7 @@ class Uri
     {
       if (strpos($uriString, '/') === 0)
       {
-        $url = $this->uri . $uriString;
+        $url = $this->uri . substr($uriString, 1);
       }
       else
       {
@@ -63,17 +63,15 @@ class Uri
 
     return new self($url);
   }
-  
+
   /**
-   * 
-   * Enter description here ...
    * @param unknown_type $uriString
    */
   private function checkCorrectUrl($uriString)
   {
       $uriString = trim($uriString);
       $uriParts = parse_url($uriString);
-     
+
       if (key_exists('path', $uriParts))
       {
         $url = $uriString;
@@ -82,7 +80,7 @@ class Uri
       {
         $url = $uriString.'/';
       }
-      
+
       return $url;
   }
 

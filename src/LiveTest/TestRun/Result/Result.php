@@ -10,7 +10,7 @@
 namespace LiveTest\TestRun\Result;
 
 use LiveTest\TestRun\Test;
-
+use Base\Http\Response\Response;
 use Base\Http\Request\Request;
 
 /**
@@ -48,15 +48,23 @@ class Result
    */
   private $request;
 
+  private $response;
+
   private $sessionName;
-  
-  public function __construct(Test $test, $status, $message, Request $request, $sessionName)
+
+  public function __construct(Test $test, $status, $message, Request $request, Response $response, $sessionName)
   {
     $this->test = $test;
     $this->status = $status;
     $this->message = $message;
     $this->request = $request;
+    $this->response = $response;
     $this->sessionName = $sessionName;
+  }
+
+  public function getResponse( )
+  {
+  	return $this->response;
   }
 
   /**
@@ -94,7 +102,7 @@ class Result
   {
   	return $this->sessionName;
   }
-  
+
   /**
    * Returns the uri of the page the test was run against.
    *
