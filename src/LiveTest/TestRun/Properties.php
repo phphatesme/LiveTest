@@ -9,6 +9,8 @@
 
 namespace LiveTest\TestRun;
 
+use LiveTest\Event\Dispatcher;
+
 use LiveTest\Connection\Session\Session;
 
 use LiveTest\ConfigurationException;
@@ -36,19 +38,19 @@ class Properties
    * @var Uri
    */
   private $defaultDomain;
-  
+
   /**
    * The configuration with all needed data
    * @var Config
    */
   private $config;
-  
+
   /**
    * Array of test sets
    * @var TestSet[]
    */
   private $testSets = array ();
-  
+
   /**
    * @param Config $config
    * @param Uri $defaultDomain
@@ -59,27 +61,27 @@ class Properties
     $this->config = $config;
     $this->initTestSets();
   }
-  
+
   /**
    * Returns a list of sessions
-   * 
+   *
    * @return Session[]
    */
   public function getSessions( )
   {
   	return $this->config->getSessions();
   }
-  
+
   /**
    * This function converts the information given in a config file to a number of test sets.
-   */  
+   */
   private function initTestSets()
   {
     $testCases = $this->config->getTestCases();
     foreach ($testCases as $testCase)
     {
       $config = $testCase['config'];
-      
+
       $sessions = $config->getSessions();
       foreach ($sessions as $sessionName => $session)
       {
@@ -89,14 +91,14 @@ class Properties
           {
             $this->testSets[$sessionName][$aPageRequest->getIdentifier()] = new TestSet($aPageRequest);
           }
-          
+
           $test = new Test($testCase['name'], $testCase['className'], $testCase['parameters']);
           $this->testSets[$sessionName][$aPageRequest->getIdentifier()]->addTest($test);
         }
       }
     }
   }
-  
+
   /**
    * Returns the default domain
    *
@@ -106,10 +108,10 @@ class Properties
   {
     return $this->defaultDomain;
   }
-  
+
   /**
    * Returns the test sets
-   * 
+   *
    * @todo should be getTestSetsBySession
    * @return TestSet[]
    */
@@ -117,10 +119,10 @@ class Properties
   {
     return $this->testSets;
   }
-  
+
   /**
    * Assembles all properties to a string.
-   * 
+   *
    * @return String Properties
    */
   public function __toString()
@@ -140,7 +142,7 @@ class Properties
     }
     return $propertiesString;
   }
-  
+
   /**
    * Creates a properties object that was created using a yaml file.
    *
@@ -149,7 +151,7 @@ class Properties
    * @param String $filename The file name of the yaml file
    * @param Uri $defaultUri The default uri
    */
-  public static function createByYamlFile($filename, Uri $defaultUri)
+  public static function createByYamlFile($filename, Uri $defaultUri, Dispatcher $eventDispatcher)
   {
     try
     {
@@ -159,21 +161,23 @@ class Properties
     {
       throw new ConfigurationException('Unable to load test suite yaml file (filename: ' . $filename . ')');
     }
-    
+
     $testSuiteConfig = new TestSuite(new Session($defaultUri, true));
     $testSuiteConfig->setBaseDir(dirname($filename));
     $testSuiteConfig->setDefaultDomain($defaultUri);
-    
+
     $parser = new Parser('LiveTest\\Config\\Tags\\TestSuite\\');
     try
     {
-      $testSuiteConfig = $parser->parse($yamlConfig->toArray(), $testSuiteConfig);      
+      $testSuiteConfig = $parser->parse($yamlConfig->toArray(), $testSuiteConfig);
     }
     catch (UnknownTagException $e)
     {
       throw new ConfigurationException('Error parsing testsuite configuration (' . $filename . '): ' . $e->getMessage(), null, $e);
     }
-    
+
+    $eventDispatcher->simpleNotify('LiveTest.TestRun.Properties.PostTestSuiteInit', array('config' => $testSuiteConfig));
+
     return new self($testSuiteConfig, $defaultUri);
   }
 }
