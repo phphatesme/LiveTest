@@ -51,6 +51,8 @@ class Properties
    */
   private $testSets = array ();
 
+  private $testCount = 0;
+
   /**
    * @param Config $config
    * @param Uri $defaultDomain
@@ -67,9 +69,9 @@ class Properties
    *
    * @return Session[]
    */
-  public function getSessions( )
+  public function getSessions()
   {
-  	return $this->config->getSessions();
+    return $this->config->getSessions();
   }
 
   /**
@@ -90,6 +92,7 @@ class Properties
           if (!array_key_exists($sessionName, $this->testSets) || !array_key_exists($aPageRequest->getIdentifier(), $this->testSets[$sessionName]))
           {
             $this->testSets[$sessionName][$aPageRequest->getIdentifier()] = new TestSet($aPageRequest);
+          	$this->uriCount++;
           }
 
           $test = new Test($testCase['name'], $testCase['className'], $testCase['parameters']);
@@ -118,6 +121,11 @@ class Properties
   public function getTestSets()
   {
     return $this->testSets;
+  }
+
+  public function getUriCount()
+  {
+    return $this->uriCount;
   }
 
   /**
@@ -176,7 +184,7 @@ class Properties
       throw new ConfigurationException('Error parsing testsuite configuration (' . $filename . '): ' . $e->getMessage(), null, $e);
     }
 
-    $eventDispatcher->simpleNotify('LiveTest.TestRun.Properties.PostTestSuiteInit', array('config' => $testSuiteConfig));
+    $eventDispatcher->simpleNotify('LiveTest.TestRun.Properties.PostTestSuiteInit', array ('config' => $testSuiteConfig));
 
     return new self($testSuiteConfig, $defaultUri);
   }
