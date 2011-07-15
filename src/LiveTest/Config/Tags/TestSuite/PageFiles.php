@@ -11,14 +11,13 @@ namespace LiveTest\Config\Tags\TestSuite;
 
 use LiveTest\Connection\Request\Symfony as Request;
 
-
 /**
  * This tag is used to add a list (text file) of pages to the configuration.
  *
  * @example
- *  PageFiles:
- *   - top100.txt
- *   - sitemap.txt
+ * PageFiles:
+ *  - top100.txt
+ *  - sitemap.txt
  *
  * @author Nils Langner
  */
@@ -32,7 +31,7 @@ class PageFiles extends Base
     $config->getCurrentSession()->doNotInherit();
     foreach ($parameters as $file)
     {
-      $config->getCurrentSession()->includePageRequests(Request::createRequestsFromParameters(file($config->getBaseDir() . '/' . $file)));
+      $config->getCurrentSession()->includePageRequests(Request::createRequestsFromParameters(file($config->getBaseDir() . '/' . $file), $config->getDefaultDomain()));
     }
   }
 }
