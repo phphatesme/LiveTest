@@ -62,7 +62,6 @@ class Symfony implements Request
 
     foreach ($preparedRequestParameters as $aPreparedParameter)
     {
-
       if ($baseUri == null)
       {
         $uri = new Uri($aPreparedParameter['uri']);
@@ -120,9 +119,9 @@ class Symfony implements Request
     {
       if (is_array($aRequest))
       {
-        	$url = $aRequest["url"];
-        	unset($aRequest["url"]);
-          $mergedRequestParameters[] = self::getMergedRequestParameters($url, $aRequest);
+        $url = $aRequest["url"];
+        unset($aRequest["url"]);
+        $mergedRequestParameters[] = self::getMergedRequestParameters($url, $aRequest);
       }
       else
       {
