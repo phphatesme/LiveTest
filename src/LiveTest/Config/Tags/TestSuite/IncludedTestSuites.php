@@ -18,8 +18,8 @@ use Zend\Config\Exception\InvalidArgumentException;
  * This tag includes and parses an external test suite file.
  *
  * @example
- *  IncludedTestSuites:
- *   - includedTestSuite.yml
+ * IncludedTestSuites:
+ *  - includedTestSuite.yml
  *
  * @author Nils Langner
  */
@@ -33,12 +33,11 @@ class IncludedTestSuites extends Base
       $filename = $config->getBaseDir() . DIRECTORY_SEPARATOR . $file;
       try
       {
-      	// @todo yaml dependency must be replaced. It must be possible to use xml as well. 
-      	$yamlFile = new Yaml($filename);
-      }
-      catch(InvalidArgumentException $e)
+        // @todo yaml dependency must be replaced. It must be possible to use xml as well.
+        $yamlFile = new Yaml($filename);
+      } catch (InvalidArgumentException $e)
       {
-      	throw new ConfigurationException('The included testsuite configuration file ("' . $filename . '") was not found.', null, $e);
+        throw new ConfigurationException('The included testsuite configuration file ("' . $filename . '") was not found.', null, $e);
       }
       $this->getParser()->parse($yamlFile->toArray(), $config);
     }
