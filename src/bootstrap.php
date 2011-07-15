@@ -1,6 +1,6 @@
 <?php
 
-include_once 'lib/Symfony/Component/ClassLoader/UniversalClassLoader.php';
+include_once __DIR__.'/lib/Symfony/Component/ClassLoader/UniversalClassLoader.php';
 
 $classLoader = new \Symfony\Component\ClassLoader\UniversalClassLoader();
 

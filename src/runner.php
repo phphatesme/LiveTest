@@ -6,8 +6,8 @@ use LiveTest\MandatoryParameterException;
 use LiveTest\Event\Dispatcher;
 use LiveTest\Packages\Runner\Listeners\Help;
 
-include_once 'version.php';
-include_once 'bootstrap.php';
+include_once __DIR__.'/version.php';
+include_once __DIR__.'/bootstrap.php';
 
 $exitStatusCode = 1;
 
