@@ -39,29 +39,27 @@ class TestSuites extends Base
   {
     foreach ($testsuites as $testsuite)
     {
+      $filename = $testsuite['filename'];
+      unset($testsuite['filename']);
+
+      if (strpos($filename, '/') > 0)
+      {
+        $filename = $config->getBaseDir() . '/' . $filename;
+      }
       try
       {
         // @todo must be part of base library
-        if (strpos($testsuite['filename'], '/') > 0)
-        {
-          $filename = $config->getBaseDir() . '/' . $testsuite['filename'];
-        }
-        else
-        {
-          $filename = $testsuite['filename'];
-        }
         $yaml = new Yaml($filename);
       }
       catch (\Exception $e)
       {
-        throw new ConfigurationException("Error parsing included testsuite '" . $testsuite['filename'] . "': " . $e->getMessage(), null, $e);
+        throw new ConfigurationException("Error parsing included testsuite '" . $filename . "': " . $e->getMessage(), null, $e);
       }
       $testSuiteConfig = new TestSuite($config->getCurrentSession(), $config);
       $testSuiteConfig->setDefaultDomain($config->getDefaultDomain());
+
       $parameters = $yaml->toArray();
       $this->getParser()->parse($parameters, $testSuiteConfig);
-      unset($testsuite['filename']);
-      \Base\Debug\DebugHelper::doVarDump($testsuite);
       $this->getParser()->parse($testsuite, $testSuiteConfig);
     }
   }
