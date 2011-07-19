@@ -42,19 +42,21 @@ class TestSuites extends Base
       $filename = $testsuite['filename'];
       unset($testsuite['filename']);
 
+      // @todo must be part of base library
       if (strpos($filename, '/') > 0)
       {
         $filename = $config->getBaseDir() . '/' . $filename;
       }
+
       try
       {
-        // @todo must be part of base library
         $yaml = new Yaml($filename);
       }
       catch (\Exception $e)
       {
         throw new ConfigurationException("Error parsing included testsuite '" . $filename . "': " . $e->getMessage(), null, $e);
       }
+
       $testSuiteConfig = new TestSuite($config->getCurrentSession(), $config);
       $testSuiteConfig->setDefaultDomain($config->getDefaultDomain());
 
