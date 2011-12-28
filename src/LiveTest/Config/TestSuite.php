@@ -69,10 +69,6 @@ class TestSuite implements Config
   public function __construct(TestSuite $parentConfig = null)
   {
     $this->parentConfig = $parentConfig;
-//    $this->sessions[self::DEFAULT_SESSION][] = $defaultSession;
-//    $this->currentSession = $defaultSession;
-//    $this->currentSessionName = self::DEFAULT_SESSION;
-//    $this->defaultSession = $defaultSession;
   }
 
   public function addSession($sessionName, Session $session)
@@ -80,7 +76,7 @@ class TestSuite implements Config
     $this->sessions[$sessionName] = $session;
   }
 
-  public function getSession( $sessionName )
+  public function getSession($sessionName)
   {
     // @todo error handling (hasSession)
     return $this->sessions[$sessionName];
@@ -91,19 +87,33 @@ class TestSuite implements Config
     return array_key_exists($sessionName, $this->sessions);
   }
 
-  public function getSessions( )
+  public function getSessions()
   {
     return $this->sessions;
   }
 
-  public function setCurrentSession( $sessionName )
+  public function hasSessions()
+  {
+    return count($this->sessions) > 0;
+  }
+
+  public function setCurrentSession($sessionName)
   {
     $this->currentSession = $this->sessions[$sessionName];
   }
 
-  public function getCurrentSession( )
+  public function getCurrentSession()
   {
+    if (! $this->hasCurrentSession())
+    {
+      throw new \Exception('No session has been added.');
+    }
     return $this->currentSession;
+  }
+
+  public function hasCurrentSession()
+  {
+    return ! is_null($this->currentSession);
   }
 
   public function _getNewSession($sessionName, $isCurrentSession = true)
@@ -120,7 +130,7 @@ class TestSuite implements Config
 
   public function _setCurrentSession($sessionName)
   {
-    if (!$this->hasSession($sessionName))
+    if (! $this->hasSession($sessionName))
     {
       throw new ConfigurationException('The session you are trying to access is not available (' . $sessionName . ').');
     }
@@ -145,7 +155,7 @@ class TestSuite implements Config
   public function _getSessions()
   {
     $parentSessions = array ();
-    if (!is_null($this->parentConfig))
+    if (! is_null($this->parentConfig))
     {
       $parentSessions = $this->parentConfig->getSessions();
     }
@@ -213,7 +223,7 @@ class TestSuite implements Config
     $this->testCases[$name] = $testCaseConfig;
   }
 
-  public function getCurrentTestCaseConfig( )
+  public function getCurrentTestCaseConfig()
   {
     return end($this->testCases);
   }

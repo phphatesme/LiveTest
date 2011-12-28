@@ -7,11 +7,11 @@ TestCases:
   UseSessions:
    - sessionname1
    - default
-   
+
  TextPresent_body:
   TestCase: LiveTest\TestCase\General\Html\TextPresent
   Parameter:
-   text: "unpresent_text"
+   text: "cookie_number_1"
   UseSessions:
    - sessionname1
    - default
@@ -24,11 +24,11 @@ Sessions:
   Pages:
    - http://livetest.phmlabs.com/test/showRequest.php
    - { url: http://livetest.phmlabs.com/test/setCookie.php, post: {key: cookie_number_1, value: kekseeee } }
-   - { url: http://livetest.phmlabs.com/test/showRequest.php, get: {test: test } } 
-   
+   - { url: http://livetest.phmlabs.com/test/showRequest.php, get: {test: test } }
+
  sessionname1:
-  AllowCookies: false
+  AllowCookies: true
   Pages:
-   - { url: http://livetest.phmlabs.com/test/showRequest.php } } 
+   - { url: http://livetest.phmlabs.com/test/showRequest.php } }
    - { url: http://livetest.phmlabs.com/test/setCookie.php, post: {key: cookie_number_1, value: kekseeee } }
-   - { url: http://livetest.phmlabs.com/test/showRequest.php?test=test } 
+   - { url: http://livetest.phmlabs.com/test/showRequest.php?test=test }

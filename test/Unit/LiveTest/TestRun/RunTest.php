@@ -65,7 +65,7 @@ class RunTest extends \PHPUnit_Framework_TestCase
     $this->dispatcher->connectListener($this->handleResultListener);
 
     $this->properties = Properties::createByYamlFile(__DIR__ . '/Fixtures/testsuite.yml', $this->defaultUri, new Dispatcher());
-    $this->httpClients[TestSuite::DEFAULT_SESSION] = new HttpClientMockup(new ResponseMockup());
+    $this->httpClients['default'] = new HttpClientMockup(new ResponseMockup());
     $this->run = new Run($this->properties, $this->httpClients, $this->dispatcher);
   }
 
@@ -106,7 +106,7 @@ class RunTest extends \PHPUnit_Framework_TestCase
 
   public function testHandleFailedConnectionStatus( )
   {
-    $this->httpClients[TestSuite::DEFAULT_SESSION]->nextRequestFails();
+    $this->httpClients['default']->nextRequestFails();
 
     $this->run->run();
 
@@ -139,7 +139,7 @@ class RunTest extends \PHPUnit_Framework_TestCase
     $this->assertEquals( $tmpResponse->getBody(), 'body');
 
     $httpClient = new HttpClientMockup(new ResponseMockup(404,'Not Found'));
-    $run = new Run($this->properties, array( TestSuite::DEFAULT_SESSION => $httpClient), $this->dispatcher);
+    $run = new Run($this->properties, array( 'default' => $httpClient), $this->dispatcher);
     $run->run();
 
     $results = $this->handleResultListener->getResults();

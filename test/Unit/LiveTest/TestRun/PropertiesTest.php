@@ -29,7 +29,7 @@ class PropertiesTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
       $uri = new Uri('http://www.example.com');
-      $testSuiteConfig = new TestSuite(new Session($uri));
+      $testSuiteConfig = new TestSuite();
       $this->object = new Properties($testSuiteConfig, $uri);
     }
 
@@ -64,4 +64,3 @@ class PropertiesTest extends \PHPUnit_Framework_TestCase
        Properties::createByYamlFile(__DIR__.'/Fixtures/testsuite_error.yml', new Uri("http://www.example.com"), new Dispatcher());
     }
 }
-?>

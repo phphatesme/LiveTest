@@ -74,6 +74,11 @@ class Properties
     return $this->config->getSessions();
   }
 
+  public function hasSessions()
+  {
+    return $this->config->hasSessions();
+  }
+
   /**
    * This function converts the information given in a config file to a number of test sets.
    */
@@ -87,17 +92,22 @@ class Properties
 
       foreach ($sessionNames as $sessionName)
       {
+        if (! $this->config->hasSession($sessionName))
+        {
+          throw new ConfigurationException('The useSession argument ("'.$sessionName.'") is not defined.');
+        }
+
         $session = $this->config->getSession($sessionName);
 
         foreach ($session->getPageRequests() as $aPageRequest)
         {
-          if (!array_key_exists($sessionName, $this->testSets) || !array_key_exists($aPageRequest->getIdentifier(), $this->testSets[$sessionName]))
+          if (! array_key_exists($sessionName, $this->testSets) || ! array_key_exists($aPageRequest->getIdentifier(), $this->testSets[$sessionName]))
           {
             $this->testSets[$sessionName][$aPageRequest->getIdentifier()] = new TestSet($aPageRequest);
-          	$this->uriCount++;
+            $this->uriCount ++;
           }
 
-          $test = new Test($testCaseConfigName, $testCaseConfig->getClassName(),  $testCaseConfig->getParameters());
+          $test = new Test($testCaseConfigName, $testCaseConfig->getClassName(), $testCaseConfig->getParameters());
           $this->testSets[$sessionName][$aPageRequest->getIdentifier()]->addTest($test);
         }
       }

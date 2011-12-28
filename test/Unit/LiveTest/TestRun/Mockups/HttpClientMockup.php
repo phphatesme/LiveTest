@@ -43,7 +43,7 @@ class HttpClientMockup implements Client
   {
   	return $this->request;
   }
-  
+
   public function setUri($uri)
   {
     $this->uri = $uri;
@@ -83,4 +83,7 @@ class HttpClientMockup implements Client
     }
   }
 
+  public function resetParameters( )
+  {
+  }
 }

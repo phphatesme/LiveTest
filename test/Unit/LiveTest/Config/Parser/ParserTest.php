@@ -15,7 +15,7 @@ class ParserTest extends \PHPUnit_Framework_TestCase
 {
   public function testParser()
   {
-    $config = new TestSuite(new Session(new Uri('http://www.example.com')));
+    $config = new TestSuite();
     $config->setBaseDir(__DIR__ . '/fixtures/');
     $configYaml = new Yaml(__DIR__ . '/fixtures/testsuite.yml');
 
@@ -25,7 +25,7 @@ class ParserTest extends \PHPUnit_Framework_TestCase
 
   public function testUnknownTag()
   {
-    $config = new TestSuite(new Session(new Uri('http://www.example.com')));
+    $config = new TestSuite();
     $config->setBaseDir(__DIR__ . '/fixtures/');
     $configYaml = new Yaml(__DIR__ . '/fixtures/badtestsuite.yml');
 

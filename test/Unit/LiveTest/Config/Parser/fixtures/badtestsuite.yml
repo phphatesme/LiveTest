@@ -4,8 +4,11 @@ TestSuite:
 
   CorrectHttpHeader_add:
    TestCase: LiveTest\TestCase\General\Http\SuccessfulStatusCode
-   IncludePages:
-    - http://nntp.de
-  
+ 
+ Sessions:
+  default:
+   Pages:
+    - http://www.example.com
+   
  UnknownTag:
   - pagelist.yml

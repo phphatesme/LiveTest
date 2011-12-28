@@ -193,6 +193,11 @@ class Runner extends ArgumentRunner
       throw new ConfigurationException('Error parsing testsuite configuration: ' . $e->getMessage(), null, $e);
     }
 
+    if (! $properties->hasSessions())
+    {
+      throw new ConfigurationException('No sessions were defined in the testsuite configuration');
+    }
+
     $clients = $this->getClients($properties->getSessions());
 
     $this->testRun = new Run($properties, $clients, $this->eventDispatcher);

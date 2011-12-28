@@ -9,6 +9,8 @@
 
 namespace LiveTest\Config\Tags\TestSuite;
 
+use LiveTest\ConfigurationException;
+
 use LiveTest\Config\Parser;
 use LiveTest\Connection\Request\Symfony as SymfonyRequest;
 
@@ -17,9 +19,9 @@ use LiveTest\Connection\Request\Symfony as SymfonyRequest;
  * you want to inherit use the IncludePages tag.
  *
  * @example
- *  Pages:
- *   - /
- *   - http://www.example.com
+ * Pages:
+ * - /
+ * - http://www.example.com
  *
  * @author Nils Langner
  */
@@ -30,8 +32,15 @@ class Pages extends Base
    */
   protected function doProcess(\LiveTest\Config\TestSuite $config, $parameters)
   {
-//    $config->getCurrentSession();
     $requests = SymfonyRequest::createRequestsFromParameters($parameters, $config->getDefaultDomain());
-    $config->getCurrentSession()->includePageRequests($requests);
+
+    if ($config->hasSessions())
+    {
+      $config->getCurrentSession()->includePageRequests($requests);
+    }
+    else
+    {
+      throw new ConfigurationException('You can not use the Page tag outside a session tag.');
+    }
   }
 }

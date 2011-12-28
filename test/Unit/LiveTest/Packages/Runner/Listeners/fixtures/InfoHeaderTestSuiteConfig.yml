@@ -2,13 +2,21 @@ TestSuite:
  TestCases:
   TextPresentHtml_standard: 
    TestCase: LiveTest\TestCase\General\Html\TextPresent
+   UseSessions:
+    - default 
    Parameter: 
     Text: Stern
+    
   CorrectHttpHeader_standard: 
    TestCase: LiveTest\TestCase\General\Http\SuccessfulStatusCode
+   UseSessions:
+    - default 
    Parameter: 
     StatusCode: 400
- Pages:
-  - http://www.stern.de
-  - /
-  - http://www.phphatesme.com
+    
+Sessions:
+ default:    
+  Pages:
+   - http://www.stern.de
+   - /
+   - http://www.phphatesme.com
