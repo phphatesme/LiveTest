@@ -2,8 +2,3 @@ TestCases:
  
  Standard_Html_Successful_StatusCode:
   TestCase: LiveTest\TestCase\General\Http\SuccessfulStatusCode
-  
- Standard_Html_Closing_Html_Tag_Present:
-  TestCase: LiveTest\TestCase\General\Html\TextPresent
-  Parameter:
-   text: </html>

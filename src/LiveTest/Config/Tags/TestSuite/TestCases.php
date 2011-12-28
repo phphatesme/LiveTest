@@ -11,11 +11,11 @@ namespace LiveTest\Config\Tags\TestSuite;
 
 /**
  * This tag adds the test cases to the configuration. All tags that are not known withing this class are
- * handed to parser.
+ * handled by the parser.
  *
  * @example
  * TestCases:
-  * TextPresent_body:
+ *  TextPresent_body:
  *   TestCase: LiveTest\TestCase\General\Html\TextPresent
  *   Parameter:
  *    text: "unpresent_text"
@@ -29,7 +29,7 @@ class TestCases extends Base
    */
   protected function doProcess(\LiveTest\Config\TestSuite $config, $parameters)
   {
-    foreach ( $parameters as $name => $value )
+    foreach ( $parameters as $testCaseName => $value )
     {
       if (array_key_exists('Parameter', $value))
       {
@@ -41,10 +41,10 @@ class TestCases extends Base
         $testParameters = array ();
       }
 
-      $testCaseConfig = $config->createTestCase($name, $value['TestCase'], $testParameters);
+      $config->createTestCase($testCaseName, $value['TestCase'], $testParameters);
       unset($value['TestCase']);
 
-      $this->getParser()->parse($value, $testCaseConfig);
+      $this->getParser()->parse($value, $config);
     }
   }
 }

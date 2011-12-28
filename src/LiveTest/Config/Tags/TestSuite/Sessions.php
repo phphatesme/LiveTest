@@ -15,17 +15,19 @@ namespace LiveTest\Config\Tags\TestSuite;
  *
  * @example
  * Sessions:
- *   user_handling:
- *      Pages:
- *        - /login.php:
- *           post:
- *             key1: value1
- *             key2: value2
- *        - /index.php
+ * user_handling:
+ * Pages:
+ * - /login.php:
+ * post:
+ * key1: value1
+ * key2: value2
+ * - /index.php
  *
  *
  * @author Mike Lohmann & Nils Langner
  */
+use LiveTest\Connection\Session\Session;
+
 class Sessions extends Base
 {
   /**
@@ -33,12 +35,26 @@ class Sessions extends Base
    */
   protected function doProcess(\LiveTest\Config\TestSuite $config, $sessions)
   {
-    foreach ($sessions as $sessionName => $session)
+    // @todo $hasDefaultSession = false;
+
+    foreach ($sessions as $sessionName => $sessionParameter)
     {
-      $parser = $this->getParser();
-      $config->getNewSession($sessionName, true);
-      $parser->parse($session, $config);
-      $config->switchToDefaultSession();
+      if (array_key_exists('AllowCookies', $sessionParameter))
+      {
+        $allowCookies = $sessionParameter['AllowCookies'];
+      }
+      else
+      {
+        $allowCookies = false;
+      }
+
+      $session = new Session($allowCookies);
+      $config->addSession($sessionName, $session);
+      $config->setCurrentSession($sessionName);
+
+      unset($sessionParameter['AllowCookies']);
+
+      $parser = $this->getParser()->parse($sessionParameter, $config);
     }
   }
 }

@@ -7,7 +7,7 @@ Listener:
  HtmlLogger:
   class: LiveTest\Packages\Reporting\Listeners\HtmlDocumentLog
   parameter:
-   logPath: logs/
+   logPath: /tmp/logs
 
  Report_Html_File:
   class: LiveTest\Packages\Reporting\Listeners\Report

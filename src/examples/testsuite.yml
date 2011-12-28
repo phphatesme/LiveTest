@@ -1,18 +1,34 @@
-IncludedTestSuites:
- - includedTestSuite.yml
-
 TestCases:
 
  TextPresent_body:
   TestCase: LiveTest\TestCase\General\Html\TextPresent
   Parameter:
    text: "unpresent_text"
+  UseSessions:
+   - sessionname1
+   - default
+   
+ TextPresent_body:
+  TestCase: LiveTest\TestCase\General\Html\TextPresent
+  Parameter:
+   text: "unpresent_text"
+  UseSessions:
+   - sessionname1
+   - default
 
-Pages:
- - http://www.stern.de
- - { url: http://www.google.com, get: {name: egon, password: ectoplasm } } 
-            
 Sessions:
- login:
+
+ default:
+  #DefaultSession: true
+  AllowCookies: false
   Pages:
-   - http://www.google.de
+   - http://livetest.phmlabs.com/test/showRequest.php
+   - { url: http://livetest.phmlabs.com/test/setCookie.php, post: {key: cookie_number_1, value: kekseeee } }
+   - { url: http://livetest.phmlabs.com/test/showRequest.php, get: {test: test } } 
+   
+ sessionname1:
+  AllowCookies: false
+  Pages:
+   - { url: http://livetest.phmlabs.com/test/showRequest.php } } 
+   - { url: http://livetest.phmlabs.com/test/setCookie.php, post: {key: cookie_number_1, value: kekseeee } }
+   - { url: http://livetest.phmlabs.com/test/showRequest.php?test=test } 

@@ -124,7 +124,11 @@ class Run
 
     try
     {
-      $response = $this->httpClients[$sessionName]->request($testSet->getRequest());
+      $client = $this->httpClients[$sessionName];
+
+      // the client must be reset, otherwise curl dies
+      $client->resetParameters();
+      $response = $client->request($testSet->getRequest());
     }
     catch (\Zend\Http\Exception $e)
     {
@@ -133,10 +137,10 @@ class Run
     }
 
     $connectionStatus = new ConnectionStatus($connectionStatusValue, $testSet->getRequest(), $connectionStatusMessage);
-		if( isset($response))
-		{
-			$connectionStatus->setResponse($response);
-		}
+    if (isset($response))
+    {
+      $connectionStatus->setResponse($response);
+    }
 
     $this->eventDispatcher->simpleNotify('LiveTest.Run.HandleConnectionStatus', array ('connectionStatus' => $connectionStatus));
 

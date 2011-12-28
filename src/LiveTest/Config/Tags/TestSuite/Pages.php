@@ -30,7 +30,7 @@ class Pages extends Base
    */
   protected function doProcess(\LiveTest\Config\TestSuite $config, $parameters)
   {
-    $config->getCurrentSession()->doNotInherit();
+//    $config->getCurrentSession();
     $requests = SymfonyRequest::createRequestsFromParameters($parameters, $config->getDefaultDomain());
     $config->getCurrentSession()->includePageRequests($requests);
   }

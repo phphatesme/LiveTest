@@ -265,7 +265,6 @@ class Curl implements HttpAdapter, Stream
         if ($this->_connected_to[0] != $uri->getHost() || $this->_connected_to[1] != $uri->getPort()) {
             throw new AdapterException\RuntimeException("Trying to write but we are connected to the wrong host");
         }
-
         // set URL
         curl_setopt($this->_curl, CURLOPT_URL, $uri->__toString());
 
@@ -327,7 +326,7 @@ class Curl implements HttpAdapter, Stream
                 $curlMethod = CURLOPT_CUSTOMREQUEST;
                 $curlValue = "TRACE";
                 break;
-            
+
             case Client::HEAD:
                 $curlMethod = CURLOPT_CUSTOMREQUEST;
                 $curlValue = "HEAD";
@@ -337,7 +336,6 @@ class Curl implements HttpAdapter, Stream
                 // For now, through an exception for unsupported request methods
                 throw new AdapterException\InvalidArgumentException("Method currently not supported");
         }
-
         if(is_resource($body) && $curlMethod != CURLOPT_PUT) {
             throw new AdapterException\RuntimeException("Streaming requests are allowed only with PUT");
         }
@@ -366,7 +364,6 @@ class Curl implements HttpAdapter, Stream
         // set additional headers
         $headers['Accept'] = '';
         curl_setopt($this->_curl, CURLOPT_HTTPHEADER, $headers);
-
         /**
          * Make sure POSTFIELDS is set after $curlMethod is set:
          * @link http://de2.php.net/manual/en/function.curl-setopt.php#81161
@@ -385,7 +382,6 @@ class Curl implements HttpAdapter, Stream
             // This is a PUT by a setRawData string, not by file-handle
             curl_setopt($this->_curl, CURLOPT_POSTFIELDS, $body);
         }
-
         // set additional curl options
         if (isset($this->_config['curloptions'])) {
             foreach ((array)$this->_config['curloptions'] as $k => $v) {
@@ -396,7 +392,6 @@ class Curl implements HttpAdapter, Stream
                 }
             }
         }
-
         // send the request
         $response = curl_exec($this->_curl);
 
@@ -404,7 +399,6 @@ class Curl implements HttpAdapter, Stream
         if(!is_resource($this->out_stream)) {
             $this->_response = $response;
         }
-
         $request  = curl_getinfo($this->_curl, CURLINFO_HEADER_OUT);
         $request .= $body;
 
@@ -432,7 +426,6 @@ class Curl implements HttpAdapter, Stream
         if (stripos($this->_response, "HTTP/1.0 200 Connection established\r\n\r\n") !== false) {
             $this->_response = str_ireplace("HTTP/1.0 200 Connection established\r\n\r\n", '', $this->_response);
         }
-
         return $request;
     }
 

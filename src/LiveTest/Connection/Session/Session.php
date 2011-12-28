@@ -22,18 +22,52 @@ use LiveTest\Config\PageManipulator\PageManipulator;
 
 class Session
 {
+  private $pageRequests = array ();
+  private $allowCookies;
+  
+  public function __construct($allowCookies = false)
+  {
+    $this->allowCookies = $allowCookies;
+  }
+  
+  public function includePageRequest(Request $pageRequest)
+  {
+    $this->pageRequests[] = $pageRequest;
+  }
+  
+  public function includePageRequests(array $pageRequests)
+  {
+    foreach ($pageRequests as $pageRequest)
+    {
+      $this->includePageRequest($pageRequest);
+    }
+  }
+  
+  public function getPageRequests()
+  {
+    return $this->pageRequests;
+  }
+  
+  public function areCookiesAllowed()
+  {
+    return $this->allowCookies;
+  }
+}
+
+class SessionOld
+{
   /**
    * Pages that are included
    * @var array[]
    */
   private $includedPageRequests = array ();
-
+  
   /**
    * PageRequests that are excluded
    * @var array[]
    */
   private $excludedPageRequests = array ();
-
+  
   /**
    * This flag indicates if this config file should inherit the pages from its
    * parent.
@@ -41,33 +75,44 @@ class Session
    * @var bool
    */
   private $inherit = true;
-
+  
   /**
    * The directory of the yaml file this configuration was created from
    * @var string
    */
   private $baseDir;
-
+  
   /**
-   * The parent configuration. Used to inherit pages.
-   * @var TestSuite
+   * @var Session
    */
-  private $parentConfig;
-
+  private $parentSession;
+  
   /**
    * The default domain
    * @var Uri $defaultDomain
    */
   private $defaultDomain = null;
-
+  
   private $isolateRequests;
-
+  
   public function __construct(Uri $defaultDomain, $isolateRequests = false)
   {
-    $this->defaultDomains = $defaultDomain;
+    $this->defaultDomain = $defaultDomain;
     $this->isolateRequests = $isolateRequests;
   }
-
+  
+  public function createChildSession()
+  {
+    $childSession = new self($this->defaultDomain, $this->isolateRequests);
+    $childSession->setParentSession($this);
+    return $childSession;
+  }
+  
+  private function setParentSession(Session $session)
+  {
+    $this->parentSession = $session;
+  }
+  
   /**
    * Returns true if every request should be fired isolated.
    *
@@ -77,7 +122,7 @@ class Session
   {
     return $this->isolateRequests;
   }
-
+  
   /**
    * Include an additional page to the config.
    *
@@ -87,7 +132,7 @@ class Session
   {
     $this->includedPageRequests[$pageRequest->getIdentifier()] = $pageRequest;
   }
-
+  
   /**
    * Includes an array containing pages to the config.
    *
@@ -100,7 +145,7 @@ class Session
       $this->includePageRequest($aPageRequest);
     }
   }
-
+  
   /**
    * Removes a page from the config.
    *
@@ -110,7 +155,7 @@ class Session
   {
     $this->excludedPageRequests[$pageRequest->getIdentifier()] = $pageRequest;
   }
-
+  
   /**
    * Removes a set of pageRequests from this config.
    *
@@ -123,7 +168,7 @@ class Session
       $this->excludePageRequest($aPageRequest);
     }
   }
-
+  
   /**
    * This function is called if this config should not inherit the pages from its parent.
    */
@@ -131,7 +176,7 @@ class Session
   {
     $this->inherit = false;
   }
-
+  
   /**
    * Returns the list of pages.
    *
@@ -139,20 +184,20 @@ class Session
    */
   public function getPageRequests()
   {
-    if ($this->inherit && !is_null($this->parentConfig))
+    if ($this->inherit && ! is_null($this->parentSession))
     {
-      $results = array_merge($this->includedPageRequests, $this->parentConfig->getPageRequests());
+      $results = array_merge($this->includedPageRequests, $this->parentSession->getPageRequests());
     }
     else
     {
       $results = $this->includedPageRequests;
     }
-
+    
     $pageRequests = $this->getReducedPageRequests($results, $this->excludedPageRequests);
-
+    
     return $pageRequests;
   }
-
+  
   private function getReducedPageRequests(array $includedPageRequest, array $excludedPageRequests)
   {
     foreach ($excludedPageRequests as $identifier => $pageRequest)

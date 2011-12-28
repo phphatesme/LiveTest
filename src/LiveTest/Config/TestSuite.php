@@ -30,88 +30,119 @@ class TestSuite implements Config
    * @var array
    */
   private $testCases = array ();
-  
+
   /**
    * The directory of the yaml file this configuration was created from
    * @var string
    */
   private $baseDir;
-  
+
   /**
    * The parent configuration. Used to inherit pages.
    * @var TestSuite
    */
   private $parentConfig;
-  
+
   private $sessions = array ();
-  
+
   private $currentSession;
-  private $defaultSession;
-  
+  private $_currentSessionName;
+
+  private $_defaultSession;
+
   const DEFAULT_SESSION = '_DEFAULT';
-  
+
   /**
    *
    * The default domain
    * @var Uri $defaultDomain
    */
   private $defaultDomain = null;
-  
+
   private $pageManipulators = array ();
-  
+
   /**
    * Set the parent config if needed.
    *
    * @param TestSuite $parentConfig
    */
-  public function __construct(Session $defaultSession, TestSuite $parentConfig = null)
+  public function __construct(TestSuite $parentConfig = null)
   {
     $this->parentConfig = $parentConfig;
-    $this->sessions[self::DEFAULT_SESSION] = $defaultSession;
-    $this->currentSession = $defaultSession;
-    $this->defaultSession = $defaultSession;
+//    $this->sessions[self::DEFAULT_SESSION][] = $defaultSession;
+//    $this->currentSession = $defaultSession;
+//    $this->currentSessionName = self::DEFAULT_SESSION;
+//    $this->defaultSession = $defaultSession;
   }
-  
-  public function getNewSession($sessionName, $isCurrentSession = true)
+
+  public function addSession($sessionName, Session $session)
   {
-    $session = new Session($this->getDefaultDomain());
     $this->sessions[$sessionName] = $session;
-    if ($isCurrentSession)
-    {
-      $this->currentSession = $session;
-    }
-    return $session;
   }
-  
+
+  public function getSession( $sessionName )
+  {
+    // @todo error handling (hasSession)
+    return $this->sessions[$sessionName];
+  }
+
   public function hasSession($sessionName)
   {
     return array_key_exists($sessionName, $this->sessions);
   }
-  
-  public function setCurrentSessions($sessionName)
+
+  public function getSessions( )
+  {
+    return $this->sessions;
+  }
+
+  public function setCurrentSession( $sessionName )
+  {
+    $this->currentSession = $this->sessions[$sessionName];
+  }
+
+  public function getCurrentSession( )
+  {
+    return $this->currentSession;
+  }
+
+  public function _getNewSession($sessionName, $isCurrentSession = true)
+  {
+    $session = new Session($this->getDefaultDomain());
+    $this->sessions[$sessionName][] = $session;
+    if ($isCurrentSession)
+    {
+      $this->currentSession = $session;
+      $this->currentSessionName = $sessionName;
+    }
+    return $session;
+  }
+
+  public function _setCurrentSession($sessionName)
   {
     if (!$this->hasSession($sessionName))
     {
       throw new ConfigurationException('The session you are trying to access is not available (' . $sessionName . ').');
     }
     $this->currentSession = $this->sessions[$sessionName];
+    $this->currentSessionName = $sessionName;
   }
-  
+
   /**
    * @todo ->getSessionContainer->getCurrentSession( )
    * @todo SessionContainer implements Iteratable
    */
-  public function getCurrentSession()
+  public function _getCurrentSession()
   {
     return $this->currentSession;
   }
-  
-  public function switchToDefaultSession()
+
+  public function _switchToDefaultSession()
   {
     $this->currentSession = $this->defaultSession;
   }
-  
-  public function getSessions()
+
+  public function _getSessions()
   {
     $parentSessions = array ();
     if (!is_null($this->parentConfig))
@@ -120,7 +151,7 @@ class TestSuite implements Config
     }
     return array_merge($this->sessions, $parentSessions);
   }
-  
+
   /**
    * Sets the base dir. This is needed because some tags need the path to the config
    * entry file.
@@ -131,17 +162,17 @@ class TestSuite implements Config
   {
     $this->baseDir = $baseDir;
   }
-  
+
   /**
    * Sets the base domain
-   * 
+   *
    * @param Uri $domain
    */
   public function setDefaultDomain(Uri $domain)
   {
     $this->defaultDomain = $domain;
   }
-  
+
   /**
    *
    * gets the base domain
@@ -151,7 +182,7 @@ class TestSuite implements Config
   {
     return $this->defaultDomain;
   }
-  
+
   /**
    * Returns the base directory of the config file.
    *
@@ -165,7 +196,7 @@ class TestSuite implements Config
     }
     return $this->baseDir;
   }
-  
+
   /**
    * This function adds a test to the config and returns a new config connected to the
    * test.
@@ -178,13 +209,15 @@ class TestSuite implements Config
    */
   public function createTestCase($name, $className, array $parameters)
   {
-    $config = new self($this->defaultSession, $this);
-    
-    $this->testCases[] = array ('config' => $config, 'name' => $name, 'className' => $className, 'parameters' => $parameters);
-    
-    return $config;
+    $testCaseConfig = new TestCaseConfig($className, $parameters);
+    $this->testCases[$name] = $testCaseConfig;
   }
-  
+
+  public function getCurrentTestCaseConfig( )
+  {
+    return end($this->testCases);
+  }
+
   private function getReducedPageRequests(array $includedPageRequest, array $excludedPageRequests)
   {
     foreach ($excludedPageRequests as $identifier => $pageRequest)
@@ -194,10 +227,10 @@ class TestSuite implements Config
         unset($includedPageRequest[$identifier]);
       }
     }
-    
+
     return $includedPageRequest;
   }
-  
+
   /**
    * Returns the tests.
    *

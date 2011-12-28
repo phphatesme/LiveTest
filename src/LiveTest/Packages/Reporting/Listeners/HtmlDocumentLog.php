@@ -99,6 +99,7 @@ class HtmlDocumentLog extends Base
       $filename = $this->logPath . urlencode($result->getRequest()->getIdentifier().'.html');
       $file = new File($filename);
       $file->setContent($response->getBody());
+
       try
       {
       	$this->createLogDirIfNotExists($this->logPath);

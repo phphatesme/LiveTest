@@ -80,13 +80,15 @@ class Properties
   private function initTestSets()
   {
     $testCases = $this->config->getTestCases();
-    foreach ($testCases as $testCase)
-    {
-      $config = $testCase['config'];
 
-      $sessions = $config->getSessions();
-      foreach ($sessions as $sessionName => $session)
+    foreach ($testCases as $testCaseConfigName => $testCaseConfig)
+    {
+      $sessionNames = $testCaseConfig->getSessionNames();
+
+      foreach ($sessionNames as $sessionName)
       {
+        $session = $this->config->getSession($sessionName);
+
         foreach ($session->getPageRequests() as $aPageRequest)
         {
           if (!array_key_exists($sessionName, $this->testSets) || !array_key_exists($aPageRequest->getIdentifier(), $this->testSets[$sessionName]))
@@ -95,7 +97,7 @@ class Properties
           	$this->uriCount++;
           }
 
-          $test = new Test($testCase['name'], $testCase['className'], $testCase['parameters']);
+          $test = new Test($testCaseConfigName, $testCaseConfig->getClassName(),  $testCaseConfig->getParameters());
           $this->testSets[$sessionName][$aPageRequest->getIdentifier()]->addTest($test);
         }
       }
@@ -170,7 +172,7 @@ class Properties
       throw new ConfigurationException('Unable to load test suite yaml file (filename: ' . $filename . ')');
     }
 
-    $testSuiteConfig = new TestSuite(new Session($defaultUri, true));
+    $testSuiteConfig = new TestSuite();
     $testSuiteConfig->setBaseDir(dirname($filename));
     $testSuiteConfig->setDefaultDomain($defaultUri);
 

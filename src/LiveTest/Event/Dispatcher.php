@@ -10,10 +10,9 @@
 namespace LiveTest\Event;
 
 use phmLabs\Components\Annovent\Event\Event;
+use phmLabs\Components\Annovent\Dispatcher as AnnoventDispatcher;
 
 use LiveTest\Config\ConfigConfig;
-
-use phmLabs\Components\Annovent\Dispatcher as AnnoventDispatcher;
 
 /**
  * This dispatcher is a standard Annovent dispatcher with the possibility to register

@@ -57,7 +57,7 @@ class Statistics extends Base
   {
     try
     {
-    	$postData = array ('urls' => $this->urls, 'tests' => $this->tests);
+      $postData = array ('urls' => $this->urls, 'tests' => $this->tests);
       $request = Symfony::create(new Uri(self::PHM_API), Request::GET, $postData);
 
       $client = new Zend();

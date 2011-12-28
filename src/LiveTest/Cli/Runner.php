@@ -94,7 +94,7 @@ class Runner extends ArgumentRunner
     $this->initListeners();
     $event = new Event('LiveTest.Runner.Init', array ('arguments' => $arguments));
     $this->eventDispatcher->notifyUntil($event);
-    $this->runAllowed = !$event->isProcessed();
+    $this->runAllowed = ! $event->isProcessed();
   }
 
   private function initCoreListener($arguments)
@@ -193,23 +193,24 @@ class Runner extends ArgumentRunner
       throw new ConfigurationException('Error parsing testsuite configuration: ' . $e->getMessage(), null, $e);
     }
 
-		$clients =  $this->getClients($properties->getSessions());
+    $clients = $this->getClients($properties->getSessions());
 
     $this->testRun = new Run($properties, $clients, $this->eventDispatcher);
   }
 
-  private function getClients( $sessions )
+  private function getClients($sessions)
   {
-    $clients = array();
+    $clients = array ();
     foreach ($sessions as $sessionName => $session)
     {
       $client = new Zend();
-      if (!$session->areRequestsIsolated())
+      \Base\Debug\DebugHelper::doVarDump($session->areCookiesAllowed());
+      if ($session->areCookiesAllowed())
       {
         $client->setCookieJar(new CookieJar());
       }
       $client->setAdapter(new Curl());
-    	$this->eventDispatcher->simpleNotify('LiveTest.Runner.InitHttpClient', array ('client' => $client, 'sessionName' => $sessionName));
+      $this->eventDispatcher->simpleNotify('LiveTest.Runner.InitHttpClient', array ('client' => $client, 'sessionName' => $sessionName));
       $clients[$sessionName] = $client;
     }
 

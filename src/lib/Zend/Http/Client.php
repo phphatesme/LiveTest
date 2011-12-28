@@ -928,7 +928,6 @@ class Client
             // Open the connection, send the request and read the response
             $this->adapter->connect($uri->getHost(), $uri->getPort(),
                 ($uri->getScheme() == 'https' ? true : false));
-
             if($this->config['output_stream']) {
                 if($this->adapter instanceof Client\Adapter\Stream) {
                     $stream = $this->_openTempStream();
@@ -940,12 +939,10 @@ class Client
 
             $this->last_request = $this->adapter->write($this->method,
                 $uri, $this->config['httpversion'], $headers, $body);
-
             $response = $this->adapter->read();
             if (! $response) {
                 throw new Client\Exception\RuntimeException('Unable to read response, or response is empty');
             }
-
             if($this->config['output_stream']) {
                 rewind($stream);
                 // cleanup the adapter
@@ -959,7 +956,6 @@ class Client
             } else {
                 $response = Response::fromString($response);
             }
-
             if ($this->config['storeresponse']) {
                 $this->last_response = $response;
             }
