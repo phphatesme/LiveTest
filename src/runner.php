@@ -20,13 +20,13 @@ try
   {
     $bootstrapFile = $converter->getArgument('bootstrap');
 
-    if (file_exists(getcwd() . DIRECTORY_SEPARATOR . $bootstrapFile) && $bootstrapFile != '')
+    if ($bootstrapFile != '' && file_exists($bootstrapFile) && is_readable($bootstrapFile))
     {
-      include_once $converter->getArgument('bootstrap');
+      include_once $bootstrapFile;
     }
     else
     {
-      echo '  Bootstrap file (' . $converter->getArgument('bootstrap') . ') not found.' . "\n\n";
+      echo '  Bootstrap file (' . $bootstrapFile . ') not found.' . "\n\n";
     }
   }
 
